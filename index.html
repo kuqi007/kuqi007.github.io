@@ -268,90 +268,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://blog.elfred.top/2019/10/04/Jhipster/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Elfred">
-      <meta itemprop="description" content="伪全栈工程师。">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Elfred's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/10/04/Jhipster/" class="post-title-link" itemprop="url">Jhipster学习笔记</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2019-10-04 20:50:21" itemprop="dateCreated datePublished" datetime="2019-10-04T20:50:21+08:00">2019-10-04</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-06 19:57:13" itemprop="dateModified" datetime="2019-10-06T19:57:13+08:00">2019-10-06</time>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="项目生成"><a href="#项目生成" class="headerlink" title="项目生成"></a>项目生成</h4><h5 id="1-使用Jhipster生成一个纯前端项目"><a href="#1-使用Jhipster生成一个纯前端项目" class="headerlink" title="1. 使用Jhipster生成一个纯前端项目"></a>1. 使用Jhipster生成一个纯前端项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将JH-Vuejs 模块符号链接至当前项目的依赖中 (ps:用管理员权限cmd运行)，这一步很重要，如果不这样做后面生成的代码都是NG框架</span></span><br><span class="line">npm link generator-jhipster-vuejs</span><br><span class="line"></span><br><span class="line"><span class="comment">#bash</span></span><br><span class="line">jhipster --skip-server --blueprints vuejs --db mysql --auth jwt</span><br><span class="line"><span class="comment">#或者</span></span><br><span class="line">jhipster --skip-server --blueprints vuejs -d --db mysql --auth jwt</span><br><span class="line"></span><br><span class="line"><span class="comment">#前端项目生成实体命令，必须加--db（???）</span></span><br><span class="line">jhipster entity article --db mysql</span><br></pre></td></tr></table></figure>
-
-<h5 id="2-使用Jhipster生成一个纯后端项目"><a href="#2-使用Jhipster生成一个纯后端项目" class="headerlink" title="2. 使用Jhipster生成一个纯后端项目"></a>2. 使用Jhipster生成一个纯后端项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jhipster --skip-client</span><br></pre></td></tr></table></figure>
-
-<h5 id="3-使用Jhipster生成一个非前后端分离项目"><a href="#3-使用Jhipster生成一个非前后端分离项目" class="headerlink" title="3. 使用Jhipster生成一个非前后端分离项目"></a>3. 使用Jhipster生成一个非前后端分离项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#使用vue作为前端框架生成一个前后端不分离的项目</span></span><br><span class="line">jhipster --blueprint vuejs</span><br></pre></td></tr></table></figure>
-
-<h5 id="4-常用命令"><a href="#4-常用命令" class="headerlink" title="4. 常用命令"></a>4. 常用命令</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#导出jdl文件</span></span><br><span class="line">jhipster <span class="built_in">export</span>-jdl &lt;FILE_NAME&gt;</span><br></pre></td></tr></table></figure>
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </article>
-  
-  
-  
-
-    
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://blog.elfred.top/2019/10/04/为什么要用Spring/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -381,7 +297,7 @@
                 
               
 
-              <time title="创建时间：2019-10-04 20:50:21" itemprop="dateCreated datePublished" datetime="2019-10-04T20:50:21+08:00">2019-10-04</time>
+              <time title="创建时间：2019-10-04 20:50:00" itemprop="dateCreated datePublished" datetime="2019-10-04T20:50:00+08:00">2019-10-04</time>
             </span>
           
             
@@ -392,7 +308,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-06 15:14:26" itemprop="dateModified" datetime="2019-10-06T15:14:26+08:00">2019-10-06</time>
+                <time title="修改时间：2019-10-06 20:37:25" itemprop="dateModified" datetime="2019-10-06T20:37:25+08:00">2019-10-06</time>
               </span>
             
           
@@ -434,6 +350,103 @@
 <li>Spring并不强制应用完全依赖于Spring，开发者可自由选用Spring框架的部分或全部</li>
 </ol>
 
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://blog.elfred.top/2019/10/04/Jhipster/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Elfred">
+      <meta itemprop="description" content="伪全栈工程师。">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Elfred's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2019/10/04/Jhipster/" class="post-title-link" itemprop="url">Jhipster学习笔记</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-04 20:50:00" itemprop="dateCreated datePublished" datetime="2019-10-04T20:50:00+08:00">2019-10-04</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-06 20:37:01" itemprop="dateModified" datetime="2019-10-06T20:37:01+08:00">2019-10-06</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Jhipster/" itemprop="url" rel="index"><span itemprop="name">Jhipster</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="项目生成"><a href="#项目生成" class="headerlink" title="项目生成"></a>项目生成</h4><h5 id="1-使用Jhipster生成一个纯前端项目"><a href="#1-使用Jhipster生成一个纯前端项目" class="headerlink" title="1. 使用Jhipster生成一个纯前端项目"></a>1. 使用Jhipster生成一个纯前端项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将JH-Vuejs 模块符号链接至当前项目的依赖中 (ps:用管理员权限cmd运行)，这一步很重要，如果不这样做后面生成的代码都是NG框架</span></span><br><span class="line">npm link generator-jhipster-vuejs</span><br><span class="line"></span><br><span class="line"><span class="comment">#bash</span></span><br><span class="line">jhipster --skip-server --blueprints vuejs --db mysql --auth jwt</span><br><span class="line"><span class="comment">#或者</span></span><br><span class="line">jhipster --skip-server --blueprints vuejs -d --db mysql --auth jwt</span><br><span class="line"></span><br><span class="line"><span class="comment">#前端项目生成实体命令，必须加--db（???）</span></span><br><span class="line">jhipster entity article --db mysql</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-使用Jhipster生成一个纯后端项目"><a href="#2-使用Jhipster生成一个纯后端项目" class="headerlink" title="2. 使用Jhipster生成一个纯后端项目"></a>2. 使用Jhipster生成一个纯后端项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jhipster --skip-client</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-使用Jhipster生成一个非前后端分离项目"><a href="#3-使用Jhipster生成一个非前后端分离项目" class="headerlink" title="3. 使用Jhipster生成一个非前后端分离项目"></a>3. 使用Jhipster生成一个非前后端分离项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#使用vue作为前端框架生成一个前后端不分离的项目</span></span><br><span class="line">jhipster --blueprint vuejs</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-常用命令"><a href="#4-常用命令" class="headerlink" title="4. 常用命令"></a>4. 常用命令</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#导出jdl文件</span></span><br><span class="line">jhipster <span class="built_in">export</span>-jdl &lt;FILE_NAME&gt;</span><br></pre></td></tr></table></figure>
         
       
     </div>
@@ -582,6 +595,24 @@
           <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+        
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+        
       </div>
     
   </nav>
