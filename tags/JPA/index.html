@@ -6,20 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://blog.elfred.top">
-  <title>Jhipster学习笔记 | Elfred&#39;s Blog</title>
+  <title>Tag: JPA | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="项目生成1. 使用Jhipster生成一个纯前端项目12345678910#将JH-Vuejs 模块符号链接至当前项目的依赖中 (ps:用管理员权限cmd运行)，这一步很重要，如果不这样做后面生成的代码都是NG框架npm link generator-jhipster-vuejs#bashjhipster --skip-server --blueprints vuejs --db mysql --">
-<meta name="keywords" content="Jhipster">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Jhipster学习笔记">
-<meta property="og:url" content="https://blog.elfred.top/2019/10/04/Jhipster/index.html">
+  <meta name="description" content="好记性不如烂笔头">
+<meta name="keywords" content="前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Elfred&#39;s Blog">
+<meta property="og:url" content="https://blog.elfred.top/tags/JPA/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="项目生成1. 使用Jhipster生成一个纯前端项目12345678910#将JH-Vuejs 模块符号链接至当前项目的依赖中 (ps:用管理员权限cmd运行)，这一步很重要，如果不这样做后面生成的代码都是NG框架npm link generator-jhipster-vuejs#bashjhipster --skip-server --blueprints vuejs --db mysql --">
+<meta property="og:description" content="好记性不如烂笔头">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-06T12:37:01.537Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Jhipster学习笔记">
-<meta name="twitter:description" content="项目生成1. 使用Jhipster生成一个纯前端项目12345678910#将JH-Vuejs 模块符号链接至当前项目的依赖中 (ps:用管理员权限cmd运行)，这一步很重要，如果不这样做后面生成的代码都是NG框架npm link generator-jhipster-vuejs#bashjhipster --skip-server --blueprints vuejs --db mysql --">
+<meta name="twitter:title" content="Elfred&#39;s Blog">
+<meta name="twitter:description" content="好记性不如烂笔头">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -145,207 +144,79 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Jhipster" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      Jhipster学习笔记
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2019/10/08/JPA-OneToMany简单应用/" class="archive-article-date">
+  	<time datetime="2019-10-08T13:43:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-08</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2019/10/08/JPA-OneToMany简单应用/">JPA OneToMany简单应用</a>
     </h1>
   
 
-        
-        <a href="/2019/10/04/Jhipster/" class="archive-article-date">
-  	<time datetime="2019-10-04T12:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="项目生成"><a href="#项目生成" class="headerlink" title="项目生成"></a>项目生成</h4><h5 id="1-使用Jhipster生成一个纯前端项目"><a href="#1-使用Jhipster生成一个纯前端项目" class="headerlink" title="1. 使用Jhipster生成一个纯前端项目"></a>1. 使用Jhipster生成一个纯前端项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将JH-Vuejs 模块符号链接至当前项目的依赖中 (ps:用管理员权限cmd运行)，这一步很重要，如果不这样做后面生成的代码都是NG框架</span></span><br><span class="line">npm link generator-jhipster-vuejs</span><br><span class="line"></span><br><span class="line"><span class="comment">#bash</span></span><br><span class="line">jhipster --skip-server --blueprints vuejs --db mysql --auth jwt</span><br><span class="line"><span class="comment">#或者</span></span><br><span class="line">jhipster --skip-server --blueprints vuejs -d --db mysql --auth jwt</span><br><span class="line"></span><br><span class="line"><span class="comment">#前端项目生成实体命令，必须加--db（???）</span></span><br><span class="line">jhipster entity article --db mysql</span><br></pre></td></tr></table></figure>
-
-<h5 id="2-使用Jhipster生成一个纯后端项目"><a href="#2-使用Jhipster生成一个纯后端项目" class="headerlink" title="2. 使用Jhipster生成一个纯后端项目"></a>2. 使用Jhipster生成一个纯后端项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jhipster --skip-client</span><br></pre></td></tr></table></figure>
-
-<h5 id="3-使用Jhipster生成一个非前后端分离项目"><a href="#3-使用Jhipster生成一个非前后端分离项目" class="headerlink" title="3. 使用Jhipster生成一个非前后端分离项目"></a>3. 使用Jhipster生成一个非前后端分离项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#使用vue作为前端框架生成一个前后端不分离的项目</span></span><br><span class="line">jhipster --blueprint vuejs</span><br></pre></td></tr></table></figure>
-
-<h5 id="4-常用命令"><a href="#4-常用命令" class="headerlink" title="4. 常用命令"></a>4. 常用命令</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#导出jdl文件</span></span><br><span class="line">jhipster <span class="built_in">export</span>-jdl &lt;FILE_NAME&gt;</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Jhipster</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JPA</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">MapStruct</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Jhipster//" class="article-tag-list-link color4">Jhipster</a>
+        			<a href="/categories/Java随笔//" class="article-tag-list-link color2">Java随笔</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/2019/10/04/Jhipster/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2019/10/06/测试/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          测试
-        
-      </div>
-    </a>
   
   
-    <a href="/2019/10/04/为什么要用Spring/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">为什么要用Spring</div>
-      <i class="icon-circle-right"></i>
-    </a>
+    </div></section>
   
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
 
     
-    <section id="comments" class="comments">
-      <style>
-        .comments{margin:30px;padding:10px;background:#fff}
-        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
-      </style>
-    <div class="valine_comment"></div>
-<!--载入js，在</body>之前插入即可-->
-<!--Leancloud 操作库:-->
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!--Valine 的核心代码库-->
-<script src='//github.com/DesertsP/Valine/releases/download/v1.2.0/Valine.min.js'></script>
-<!--<script src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>-->
-<!--<script src="//deserts.io/assets/js/Valine.min.js"></script>-->
-<!--<script src="/assets/Valine.min.js"></script>-->
-<script>
-    const notify = 'true' === true;
-    const verify = 'false' === true;
-    window.onload = function () {
-        new Valine({
-            // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
-            av: AV,
-            el: '.valine_comment',
-            emoticon_url: 'https://cloud.panjunwen.com/alu/',
-            emoticon_list: [ '不出所料.png', '不说话.png', '不高兴.png', '中刀.png', '中指.png', '中枪.png', '亲亲.png', '便便.png', '内伤.png', '击掌.png', '口水.png', '吐.png', '吐舌.png', '吐血倒地.png', '呲牙.png', '咽气.png', '哭泣.png', '喜极而泣.png', '喷水.png', '喷血.png', '坐等.png', '害羞.png', '小眼睛.png', '尴尬.png', '得意.png', '惊喜.png', '想一想.png', '愤怒.png', '扇耳光.png', '投降.png', '抠鼻.png', '抽烟.png', '无奈.png', '无所谓.png', '无语.png', '暗地观察.png', '期待.png', '欢呼.png', '汗.png', '深思.png', '狂汗.png', '献花.png', '献黄瓜.png', '皱眉.png', '看不见.png', '看热闹.png', '瞅你.png', '肿包.png', '脸红.png', '蜡烛.png', '装大款.png', '观察.png', '赞一个.png', '邪恶.png', '锁眉.png', '长草.png', '阴暗.png', '高兴.png', '黑线.png', '鼓掌.png'],
-            app_id: 'cFVh8rsB8HaQ1uHQrIPjvDyF-gzGzoHsz',
-            app_key: '1ecASbr0qOJEtToVdq8wyeQF',
-            placeholder: '有话要说？'
-        });
-    }
-</script>
-
-    </section>
-    
-
-  
-
-  
-
-  
-
-  
-
-  
 
 
           </div>
@@ -368,9 +239,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,

@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://blog.elfred.top">
-  <title>Jhipster学习笔记 | Elfred&#39;s Blog</title>
+  <title>JPA OneToMany简单应用 | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="项目生成1. 使用Jhipster生成一个纯前端项目12345678910#将JH-Vuejs 模块符号链接至当前项目的依赖中 (ps:用管理员权限cmd运行)，这一步很重要，如果不这样做后面生成的代码都是NG框架npm link generator-jhipster-vuejs#bashjhipster --skip-server --blueprints vuejs --db mysql --">
-<meta name="keywords" content="Jhipster">
+  <meta name="description" content="1.单向@OneToMany User实体类123456789101112131415161718@Data@Entity@Table(name=&quot;user&quot;)public class User &amp;#123;	    @Id    @GeneratedValue(strategy = GenerationType.IDENTITY)    @Column(name = &quot;id&quot;)    priva">
+<meta name="keywords" content="Spring,JPA,MapStruct">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Jhipster学习笔记">
-<meta property="og:url" content="https://blog.elfred.top/2019/10/04/Jhipster/index.html">
+<meta property="og:title" content="JPA OneToMany简单应用">
+<meta property="og:url" content="https://blog.elfred.top/2019/10/08/JPA-OneToMany简单应用/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="项目生成1. 使用Jhipster生成一个纯前端项目12345678910#将JH-Vuejs 模块符号链接至当前项目的依赖中 (ps:用管理员权限cmd运行)，这一步很重要，如果不这样做后面生成的代码都是NG框架npm link generator-jhipster-vuejs#bashjhipster --skip-server --blueprints vuejs --db mysql --">
+<meta property="og:description" content="1.单向@OneToMany User实体类123456789101112131415161718@Data@Entity@Table(name=&quot;user&quot;)public class User &amp;#123;	    @Id    @GeneratedValue(strategy = GenerationType.IDENTITY)    @Column(name = &quot;id&quot;)    priva">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-06T12:37:01.537Z">
+<meta property="og:updated_time" content="2019-10-08T14:04:05.993Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Jhipster学习笔记">
-<meta name="twitter:description" content="项目生成1. 使用Jhipster生成一个纯前端项目12345678910#将JH-Vuejs 模块符号链接至当前项目的依赖中 (ps:用管理员权限cmd运行)，这一步很重要，如果不这样做后面生成的代码都是NG框架npm link generator-jhipster-vuejs#bashjhipster --skip-server --blueprints vuejs --db mysql --">
+<meta name="twitter:title" content="JPA OneToMany简单应用">
+<meta name="twitter:description" content="1.单向@OneToMany User实体类123456789101112131415161718@Data@Entity@Table(name=&quot;user&quot;)public class User &amp;#123;	    @Id    @GeneratedValue(strategy = GenerationType.IDENTITY)    @Column(name = &quot;id&quot;)    priva">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -145,33 +145,35 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Jhipster" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-JPA-OneToMany简单应用" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Jhipster学习笔记
+      JPA OneToMany简单应用
     </h1>
   
 
         
-        <a href="/2019/10/04/Jhipster/" class="archive-article-date">
-  	<time datetime="2019-10-04T12:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-04</time>
+        <a href="/2019/10/08/JPA-OneToMany简单应用/" class="archive-article-date">
+  	<time datetime="2019-10-08T13:43:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-08</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="项目生成"><a href="#项目生成" class="headerlink" title="项目生成"></a>项目生成</h4><h5 id="1-使用Jhipster生成一个纯前端项目"><a href="#1-使用Jhipster生成一个纯前端项目" class="headerlink" title="1. 使用Jhipster生成一个纯前端项目"></a>1. 使用Jhipster生成一个纯前端项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将JH-Vuejs 模块符号链接至当前项目的依赖中 (ps:用管理员权限cmd运行)，这一步很重要，如果不这样做后面生成的代码都是NG框架</span></span><br><span class="line">npm link generator-jhipster-vuejs</span><br><span class="line"></span><br><span class="line"><span class="comment">#bash</span></span><br><span class="line">jhipster --skip-server --blueprints vuejs --db mysql --auth jwt</span><br><span class="line"><span class="comment">#或者</span></span><br><span class="line">jhipster --skip-server --blueprints vuejs -d --db mysql --auth jwt</span><br><span class="line"></span><br><span class="line"><span class="comment">#前端项目生成实体命令，必须加--db（???）</span></span><br><span class="line">jhipster entity article --db mysql</span><br></pre></td></tr></table></figure>
+        <h3 id="1-单向-OneToMany"><a href="#1-单向-OneToMany" class="headerlink" title="1.单向@OneToMany"></a>1.单向@OneToMany</h3><ol>
+<li>User实体类<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table</span>(name=<span class="string">"user"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="meta">@GeneratedValue</span>(strategy = GenerationType.IDENTITY)</span><br><span class="line">    <span class="meta">@Column</span>(name = <span class="string">"id"</span>)</span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Column</span>(name = <span class="string">"username"</span>)</span><br><span class="line">	<span class="keyword">private</span> String username;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@JoinColumn</span>(name = <span class="string">"article"</span>)</span><br><span class="line">	<span class="meta">@OneToMany</span>(cascade=&#123;CascadeType.REMOVE&#125;)</span><br><span class="line">	<span class="keyword">private</span> Set&lt;Article&gt; articles;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h5 id="2-使用Jhipster生成一个纯后端项目"><a href="#2-使用Jhipster生成一个纯后端项目" class="headerlink" title="2. 使用Jhipster生成一个纯后端项目"></a>2. 使用Jhipster生成一个纯后端项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jhipster --skip-client</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>2.Article实体类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table</span>(name=<span class="string">"article"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Article</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="meta">@GeneratedValue</span>(strategy = GenerationType.IDENTITY)</span><br><span class="line">    <span class="meta">@Column</span>(name = <span class="string">"id"</span>)</span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Column</span>(name = <span class="string">"title"</span>)</span><br><span class="line">	<span class="keyword">private</span> String title;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Column</span>(name = <span class="string">"content"</span>)</span><br><span class="line">	<span class="keyword">private</span> String content;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h5 id="3-使用Jhipster生成一个非前后端分离项目"><a href="#3-使用Jhipster生成一个非前后端分离项目" class="headerlink" title="3. 使用Jhipster生成一个非前后端分离项目"></a>3. 使用Jhipster生成一个非前后端分离项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#使用vue作为前端框架生成一个前后端不分离的项目</span></span><br><span class="line">jhipster --blueprint vuejs</span><br></pre></td></tr></table></figure>
 
-<h5 id="4-常用命令"><a href="#4-常用命令" class="headerlink" title="4. 常用命令"></a>4. 常用命令</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#导出jdl文件</span></span><br><span class="line">jhipster <span class="built_in">export</span>-jdl &lt;FILE_NAME&gt;</span><br></pre></td></tr></table></figure>
       
 
       
@@ -184,7 +186,15 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Jhipster</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JPA</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">MapStruct</a>
         		</li>
       		
 		</ul>
@@ -196,7 +206,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Jhipster//" class="article-tag-list-link color4">Jhipster</a>
+        			<a href="/categories/Java随笔//" class="article-tag-list-link color2">Java随笔</a>
         		</li>
       		
 		</ul>
@@ -251,7 +261,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/2019/10/04/Jhipster/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/2019/10/08/JPA-OneToMany简单应用/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -265,18 +275,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/10/06/测试/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          测试
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/10/04/为什么要用Spring/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">为什么要用Spring</div>
+    <a href="/2019/10/06/图片测试/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">图片测试</div>
       <i class="icon-circle-right"></i>
     </a>
   
