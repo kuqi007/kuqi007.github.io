@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://blog.elfred.top">
-  <title>JPA实现Specification | Elfred&#39;s Blog</title>
+  <title>使用JPA实现Specification规范规格模式 | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="由DDD之父 Eric Evans 和OO之父 Martin Fowler定义的规范(Specification也称规格模式)模式article 越来越受到广泛应用，本文介绍如何使用JavaEE 持久层规范JPA实现规格模式，其实现思想也适合其他持久层框架。案例源码见GitHub。">
 <meta name="keywords" content="前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JPA实现Specification">
+<meta property="og:title" content="使用JPA实现Specification规范规格模式">
 <meta property="og:url" content="https://blog.elfred.top/2019/10/13/JPA实现Specification/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
 <meta property="og:description" content="由DDD之父 Eric Evans 和OO之父 Martin Fowler定义的规范(Specification也称规格模式)模式article 越来越受到广泛应用，本文介绍如何使用JavaEE 持久层规范JPA实现规格模式，其实现思想也适合其他持久层框架。案例源码见GitHub。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-13T14:08:51.641Z">
+<meta property="og:updated_time" content="2019-10-13T14:11:46.653Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JPA实现Specification">
+<meta name="twitter:title" content="使用JPA实现Specification规范规格模式">
 <meta name="twitter:description" content="由DDD之父 Eric Evans 和OO之父 Martin Fowler定义的规范(Specification也称规格模式)模式article 越来越受到广泛应用，本文介绍如何使用JavaEE 持久层规范JPA实现规格模式，其实现思想也适合其他持久层框架。案例源码见GitHub。">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
@@ -152,7 +152,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      JPA实现Specification
+      使用JPA实现Specification规范规格模式
     </h1>
   
 
@@ -209,6 +209,9 @@
 
 <p>使用代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Specification popularAndRunning = <span class="keyword">new</span> IsPopular().and(<span class="keyword">new</span> IsCurrentlyRunning());</span><br><span class="line"><span class="keyword">boolean</span> isPopularAndRunning = popularAndRunning.isSatisfiedBy(poll);</span><br><span class="line">List polls = myRepository.findAllBySpecification(popularAndRunning);</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://www.jdon.com/idea/javaee7/specification-pattern-with-jpa.html" target="_blank" rel="noopener">转载自https://www.jdon.com/idea/javaee7/specification-pattern-with-jpa.html</a></p>
+
       
 
       
