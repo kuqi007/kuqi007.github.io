@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.elfred.top/2019/10/13/ORM/</loc>
+    
+    <lastmod>2019-10-13T13:14:15.476Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.elfred.top/2019/10/08/JPA-OneToMany%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8/</loc>
     
     <lastmod>2019-10-08T14:47:18.941Z</lastmod>
