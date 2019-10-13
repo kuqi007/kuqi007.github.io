@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://blog.elfred.top">
   <title>JPA实现Specification | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="由DDD之父 Eric Evans 和OO之父 Martin Fowler定义的规范(Specification也称规格模式)模式article 越来越受到广泛应用，本文介绍如何使用JavaEE 持久层规范JPA实现规格模式，其实现思想也适合其他持久层框架。案例源码见GitHub。 　　在这个文章中，我们将使用以下POLL类作为创建Specification为例实体。它代表了民意调查，有一个开">
+  <meta name="description" content="由DDD之父 Eric Evans 和OO之父 Martin Fowler定义的规范(Specification也称规格模式)模式article 越来越受到广泛应用，本文介绍如何使用JavaEE 持久层规范JPA实现规格模式，其实现思想也适合其他持久层框架。案例源码见GitHub。">
 <meta name="keywords" content="前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JPA实现Specification">
 <meta property="og:url" content="https://blog.elfred.top/2019/10/13/JPA实现Specification/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="由DDD之父 Eric Evans 和OO之父 Martin Fowler定义的规范(Specification也称规格模式)模式article 越来越受到广泛应用，本文介绍如何使用JavaEE 持久层规范JPA实现规格模式，其实现思想也适合其他持久层框架。案例源码见GitHub。 　　在这个文章中，我们将使用以下POLL类作为创建Specification为例实体。它代表了民意调查，有一个开">
+<meta property="og:description" content="由DDD之父 Eric Evans 和OO之父 Martin Fowler定义的规范(Specification也称规格模式)模式article 越来越受到广泛应用，本文介绍如何使用JavaEE 持久层规范JPA实现规格模式，其实现思想也适合其他持久层框架。案例源码见GitHub。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-13T14:05:14.178Z">
+<meta property="og:updated_time" content="2019-10-13T14:08:51.641Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JPA实现Specification">
-<meta name="twitter:description" content="由DDD之父 Eric Evans 和OO之父 Martin Fowler定义的规范(Specification也称规格模式)模式article 越来越受到广泛应用，本文介绍如何使用JavaEE 持久层规范JPA实现规格模式，其实现思想也适合其他持久层框架。案例源码见GitHub。 　　在这个文章中，我们将使用以下POLL类作为创建Specification为例实体。它代表了民意调查，有一个开">
+<meta name="twitter:description" content="由DDD之父 Eric Evans 和OO之父 Martin Fowler定义的规范(Specification也称规格模式)模式article 越来越受到广泛应用，本文介绍如何使用JavaEE 持久层规范JPA实现规格模式，其实现思想也适合其他持久层框架。案例源码见GitHub。">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -166,6 +166,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>　　由DDD之父 Eric Evans 和OO之父 Martin Fowler定义的规范(Specification也称规格模式)模式article 越来越受到广泛应用，本文介绍如何使用JavaEE 持久层规范JPA实现规格模式，其实现思想也适合其他持久层框架。案例源码见GitHub。</p>
+<a id="more"></a>
+
 <p>　　在这个文章中，我们将使用以下POLL类作为创建Specification为例实体。它代表了民意调查，有一个开始和结束日期。在这两个日期之间的时间内用户可以在不同的选择之间投票表决Poll，投票Poll可以在管理员的结束日期尚未到达前锁定。在这种情况下，一个锁日期将被设置。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Poll</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Id</span></span><br><span class="line">  <span class="meta">@GeneratedValue</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">long</span> id;</span><br><span class="line">  <span class="keyword">private</span> DateTime startDate;</span><br><span class="line">  <span class="keyword">private</span> DateTime endDate;</span><br><span class="line">  <span class="keyword">private</span> DateTime lockDate;</span><br><span class="line">  <span class="meta">@OneToMany</span>(cascade = CascadeType.ALL)</span><br><span class="line">  <span class="keyword">private</span> List votes = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
