@@ -8,21 +8,21 @@
   <link rel="dns-prefetch" href="https://blog.elfred.top">
   <title>【转】CoreOS配置Docker API TLS认证 | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我们经常会利用Portainer来管理docker环境，也经常会用Jenkins来自动构建和部署docker，远程管理都会使用到Docker API，通常我们只是开启了没有安全保护的2375（通常）端口，这个比较危险，会导致远程劫持攻击。那么我们就需要配置TLS认证的2376（通常）端口。 下面我们针对CoreOS系统进行配置： 一、利用系统自带的openssl生成相应的服务端和客户端证书我们利用">
+  <meta name="description" content="我们经常会利用Portainer来管理docker环境，也经常会用Jenkins来自动构建和部署docker，远程管理都会使用到Docker API，通常我们只是开启了没有安全保护的2375（通常）端口，这个比较危险，会导致远程劫持攻击。那么我们就需要配置TLS认证的2376（通常）端口。">
 <meta name="keywords" content="docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【转】CoreOS配置Docker API TLS认证">
 <meta property="og:url" content="https://blog.elfred.top/2019/10/19/CoreOS配置Docker-API-TLS认证/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="我们经常会利用Portainer来管理docker环境，也经常会用Jenkins来自动构建和部署docker，远程管理都会使用到Docker API，通常我们只是开启了没有安全保护的2375（通常）端口，这个比较危险，会导致远程劫持攻击。那么我们就需要配置TLS认证的2376（通常）端口。 下面我们针对CoreOS系统进行配置： 一、利用系统自带的openssl生成相应的服务端和客户端证书我们利用">
+<meta property="og:description" content="我们经常会利用Portainer来管理docker环境，也经常会用Jenkins来自动构建和部署docker，远程管理都会使用到Docker API，通常我们只是开启了没有安全保护的2375（通常）端口，这个比较危险，会导致远程劫持攻击。那么我们就需要配置TLS认证的2376（通常）端口。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://oscimg.oschina.net/oscnet/cf128d18f1e5494241522354509639ac476.jpg">
 <meta property="og:image" content="https://oscimg.oschina.net/oscnet/a52727e6614faf2c2985912dd992a699ef8.jpg">
 <meta property="og:image" content="https://oscimg.oschina.net/oscnet/a42a8fc88e593b51007b357d9588cc7e37c.jpg">
-<meta property="og:updated_time" content="2019-10-19T15:44:54.792Z">
+<meta property="og:updated_time" content="2019-10-27T07:58:01.320Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【转】CoreOS配置Docker API TLS认证">
-<meta name="twitter:description" content="我们经常会利用Portainer来管理docker环境，也经常会用Jenkins来自动构建和部署docker，远程管理都会使用到Docker API，通常我们只是开启了没有安全保护的2375（通常）端口，这个比较危险，会导致远程劫持攻击。那么我们就需要配置TLS认证的2376（通常）端口。 下面我们针对CoreOS系统进行配置： 一、利用系统自带的openssl生成相应的服务端和客户端证书我们利用">
+<meta name="twitter:description" content="我们经常会利用Portainer来管理docker环境，也经常会用Jenkins来自动构建和部署docker，远程管理都会使用到Docker API，通常我们只是开启了没有安全保护的2375（通常）端口，这个比较危险，会导致远程劫持攻击。那么我们就需要配置TLS认证的2376（通常）端口。">
 <meta name="twitter:image" content="https://oscimg.oschina.net/oscnet/cf128d18f1e5494241522354509639ac476.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
@@ -170,6 +170,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>我们经常会利用Portainer来管理docker环境，也经常会用Jenkins来自动构建和部署docker，远程管理都会使用到Docker API，通常我们只是开启了没有安全保护的2375（通常）端口，这个比较危险，会导致远程劫持攻击。那么我们就需要配置TLS认证的2376（通常）端口。</p>
+<a id="more"></a>
+
 <p>下面我们针对CoreOS系统进行配置：</p>
 <h3 id="一、利用系统自带的openssl生成相应的服务端和客户端证书"><a href="#一、利用系统自带的openssl生成相应的服务端和客户端证书" class="headerlink" title="一、利用系统自带的openssl生成相应的服务端和客户端证书"></a>一、利用系统自带的openssl生成相应的服务端和客户端证书</h3><p>我们利用脚本自动生成，这样非常便捷，脚本（auto-tls-certs.sh）如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># </span></span><br><span class="line"><span class="comment"># -------------------------------------------------------------</span></span><br><span class="line"><span class="comment"># 自动创建 Docker TLS 证书</span></span><br><span class="line"><span class="comment"># -------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以下是配置信息</span></span><br><span class="line"><span class="comment"># --[BEGIN]------------------------------</span></span><br><span class="line"></span><br><span class="line">CODE=<span class="string">"dp"</span></span><br><span class="line">IP=<span class="string">"docker服务器ip"</span></span><br><span class="line">PASSWORD=<span class="string">"证书密码"</span></span><br><span class="line">COUNTRY=<span class="string">"CN"</span></span><br><span class="line">STATE=<span class="string">"BEIJING"</span></span><br><span class="line">CITY=<span class="string">"BEIJING"</span></span><br><span class="line">ORGANIZATION=<span class="string">"公司"</span></span><br><span class="line">ORGANIZATIONAL_UNIT=<span class="string">"Dev"</span></span><br><span class="line">COMMON_NAME=<span class="string">"<span class="variable">$IP</span>"</span></span><br><span class="line">EMAIL=<span class="string">"邮箱"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># --[END]--</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Generate CA key</span></span><br><span class="line">openssl genrsa -aes256 -passout <span class="string">"pass:<span class="variable">$PASSWORD</span>"</span> -out <span class="string">"ca-key-<span class="variable">$CODE</span>.pem"</span> 4096</span><br><span class="line"><span class="comment"># Generate CA</span></span><br><span class="line">openssl req -new -x509 -days 365 -key <span class="string">"ca-key-<span class="variable">$CODE</span>.pem"</span> -sha256 -out <span class="string">"ca-<span class="variable">$CODE</span>.pem"</span> -passin <span class="string">"pass:<span class="variable">$PASSWORD</span>"</span> -subj <span class="string">"/C=<span class="variable">$COUNTRY</span>/ST=<span class="variable">$STATE</span>/L=<span class="variable">$CITY</span>/O=<span class="variable">$ORGANIZATION</span>/OU=<span class="variable">$ORGANIZATIONAL_UNIT</span>/CN=<span class="variable">$COMMON_NAME</span>/emailAddress=<span class="variable">$EMAIL</span>"</span></span><br><span class="line"><span class="comment"># Generate Server key</span></span><br><span class="line">openssl genrsa -out <span class="string">"server-key-<span class="variable">$CODE</span>.pem"</span> 4096</span><br><span class="line"></span><br><span class="line"><span class="comment"># Generate Server Certs.</span></span><br><span class="line">openssl req -subj <span class="string">"/CN=<span class="variable">$COMMON_NAME</span>"</span> -sha256 -new -key <span class="string">"server-key-<span class="variable">$CODE</span>.pem"</span> -out server.csr</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"subjectAltName = IP:<span class="variable">$IP</span>,IP:127.0.0.1"</span> &gt;&gt; extfile.cnf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"extendedKeyUsage = serverAuth"</span> &gt;&gt; extfile.cnf</span><br><span class="line"></span><br><span class="line">openssl x509 -req -days 365 -sha256 -<span class="keyword">in</span> server.csr -passin <span class="string">"pass:<span class="variable">$PASSWORD</span>"</span> -CA <span class="string">"ca-<span class="variable">$CODE</span>.pem"</span> -CAkey <span class="string">"ca-key-<span class="variable">$CODE</span>.pem"</span> -CAcreateserial -out <span class="string">"server-cert-<span class="variable">$CODE</span>.pem"</span> -extfile extfile.cnf</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Generate Client Certs.</span></span><br><span class="line">rm -f extfile.cnf</span><br><span class="line"></span><br><span class="line">openssl genrsa -out <span class="string">"key-<span class="variable">$CODE</span>.pem"</span> 4096</span><br><span class="line">openssl req -subj <span class="string">'/CN=client'</span> -new -key <span class="string">"key-<span class="variable">$CODE</span>.pem"</span> -out client.csr</span><br><span class="line"><span class="built_in">echo</span> extendedKeyUsage = clientAuth &gt;&gt; extfile.cnf</span><br><span class="line">openssl x509 -req -days 365 -sha256 -<span class="keyword">in</span> client.csr -passin <span class="string">"pass:<span class="variable">$PASSWORD</span>"</span> -CA <span class="string">"ca-<span class="variable">$CODE</span>.pem"</span> -CAkey <span class="string">"ca-key-<span class="variable">$CODE</span>.pem"</span> -CAcreateserial -out <span class="string">"cert-<span class="variable">$CODE</span>.pem"</span> -extfile extfile.cnf</span><br><span class="line"></span><br><span class="line">rm -vf client.csr server.csr</span><br><span class="line"></span><br><span class="line">chmod -v 0400 <span class="string">"ca-key-<span class="variable">$CODE</span>.pem"</span> <span class="string">"key-<span class="variable">$CODE</span>.pem"</span> <span class="string">"server-key-<span class="variable">$CODE</span>.pem"</span></span><br><span class="line">chmod -v 0444 <span class="string">"ca-<span class="variable">$CODE</span>.pem"</span> <span class="string">"server-cert-<span class="variable">$CODE</span>.pem"</span> <span class="string">"cert-<span class="variable">$CODE</span>.pem"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 打包客户端证书</span></span><br><span class="line">mkdir -p <span class="string">"tls-client-certs-<span class="variable">$CODE</span>"</span></span><br><span class="line">cp -f <span class="string">"ca-<span class="variable">$CODE</span>.pem"</span> <span class="string">"cert-<span class="variable">$CODE</span>.pem"</span> <span class="string">"key-<span class="variable">$CODE</span>.pem"</span> <span class="string">"tls-client-certs-<span class="variable">$CODE</span>/"</span></span><br><span class="line"><span class="built_in">cd</span> <span class="string">"tls-client-certs-<span class="variable">$CODE</span>"</span></span><br><span class="line">tar zcf <span class="string">"tls-client-certs-<span class="variable">$CODE</span>.tar.gz"</span> *</span><br><span class="line">mv <span class="string">"tls-client-certs-<span class="variable">$CODE</span>.tar.gz"</span> ../</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">rm -rf <span class="string">"tls-client-certs-<span class="variable">$CODE</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝服务端证书</span></span><br><span class="line">mkdir -p /etc/docker/certs.d</span><br><span class="line">cp <span class="string">"ca-<span class="variable">$CODE</span>.pem"</span> <span class="string">"server-cert-<span class="variable">$CODE</span>.pem"</span> <span class="string">"server-key-<span class="variable">$CODE</span>.pem"</span> /etc/docker/certs.d/</span><br></pre></td></tr></table></figure>
@@ -275,6 +277,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2019/10/27/使用gitlab-ci和docker自动化部署vue项目/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          使用gitlab-ci和docker自动化部署vue项目
+        
+      </div>
+    </a>
   
   
     <a href="/2019/10/13/ORM框架对比/" id="article-nav-older" class="article-nav-link-wrap">
@@ -440,6 +451,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -449,10 +464,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MapStruct</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
