@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://blog.elfred.top">
   <title>使用gitlab-ci和docker自动化部署vue项目 | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="介绍之前用docker的时候想到gitlab可以直接提交代码触发docker编译部署，非常方便，于是试验了一个单体vue项目如何使用gitlab和docker的强大功能进行编译发布，此教程仅供参考，适用于公司或者个人测试。 一、安装gitlab-runner，在runner机器上安装git等由于公司gitlab版本是8.x，比较老，只能安装1.x版本的gialab-runner，这里比较注意的是，">
+  <meta name="description" content="介绍之前用docker的时候想到gitlab可以直接提交代码触发docker编译部署，非常方便，于是试验了一个单体vue项目如何使用gitlab和docker的强大功能进行编译发布，此教程仅供参考，适用于公司或者个人测试。">
 <meta name="keywords" content="前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用gitlab-ci和docker自动化部署vue项目">
 <meta property="og:url" content="https://blog.elfred.top/2019/10/27/使用gitlab-ci和docker自动化部署vue项目/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="介绍之前用docker的时候想到gitlab可以直接提交代码触发docker编译部署，非常方便，于是试验了一个单体vue项目如何使用gitlab和docker的强大功能进行编译发布，此教程仅供参考，适用于公司或者个人测试。 一、安装gitlab-runner，在runner机器上安装git等由于公司gitlab版本是8.x，比较老，只能安装1.x版本的gialab-runner，这里比较注意的是，">
+<meta property="og:description" content="介绍之前用docker的时候想到gitlab可以直接提交代码触发docker编译部署，非常方便，于是试验了一个单体vue项目如何使用gitlab和docker的强大功能进行编译发布，此教程仅供参考，适用于公司或者个人测试。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-17T14:49:27.681Z">
+<meta property="og:updated_time" content="2019-12-17T15:18:44.925Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用gitlab-ci和docker自动化部署vue项目">
-<meta name="twitter:description" content="介绍之前用docker的时候想到gitlab可以直接提交代码触发docker编译部署，非常方便，于是试验了一个单体vue项目如何使用gitlab和docker的强大功能进行编译发布，此教程仅供参考，适用于公司或者个人测试。 一、安装gitlab-runner，在runner机器上安装git等由于公司gitlab版本是8.x，比较老，只能安装1.x版本的gialab-runner，这里比较注意的是，">
+<meta name="twitter:description" content="介绍之前用docker的时候想到gitlab可以直接提交代码触发docker编译部署，非常方便，于是试验了一个单体vue项目如何使用gitlab和docker的强大功能进行编译发布，此教程仅供参考，适用于公司或者个人测试。">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -166,6 +166,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>之前用docker的时候想到gitlab可以直接提交代码触发docker编译部署，非常方便，于是试验了一个单体vue项目如何使用gitlab和docker的强大功能进行编译发布，此教程仅供参考，适用于公司或者个人测试。</p>
+<a id="more"></a>
+
 <h3 id="一、安装gitlab-runner，在runner机器上安装git等"><a href="#一、安装gitlab-runner，在runner机器上安装git等" class="headerlink" title="一、安装gitlab-runner，在runner机器上安装git等"></a>一、安装gitlab-runner，在runner机器上安装git等</h3><p>由于公司gitlab版本是8.x，比较老，只能安装1.x版本的gialab-runner，这里比较注意的是，一般runner和gitlab会分别安装到两台服务器上，具体安装步骤可以<a href="http://muchstudy.com/2018/07/13/Gitlab-8-x-runner%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" target="_blank" rel="noopener">参考这篇文章</a>。安装好之后创建两个runner：一个<code>docker</code>类型runner，打上CI标签；一个<code>shell</code>类型runner，打上CD标签。因为会使用到shell的runner，所以需要安装git，安装过程不再赘述，当然如果你runner不是这样用，可能还需要安装nodejs等环境。</p>
 <h3 id="二、编写Dockerfile"><a href="#二、编写Dockerfile" class="headerlink" title="二、编写Dockerfile"></a>二、编写Dockerfile</h3><p>在项目根目录下新建docker目录，编写Dockerfile，注意相对路径问题：</p>
 <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置基础镜像</span></span><br><span class="line"><span class="keyword">FROM</span> nginx</span><br><span class="line"><span class="comment">#设置CTS时区</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &amp;&amp; <span class="built_in">echo</span> <span class="string">'Asia/Shanghai'</span> &gt;/etc/timezone</span></span><br><span class="line"><span class="comment"># 将dist文件中的内容复制到 /usr/share/nginx/html/ 这个目录下面</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> ./dist /usr/share/nginx/html/</span></span><br><span class="line"><span class="comment">#用本地的 default.conf 配置来替换nginx镜像里的默认配置</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> docker/default.conf /etc/nginx/conf.d/default.conf</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">"nginx"</span>,<span class="string">"-g"</span>,<span class="string">"daemon off;"</span>]</span></span><br></pre></td></tr></table></figure>
@@ -189,8 +191,6 @@
 
 <p>后来发现是编译安装git的时候缺少了curl-devel的lib依赖，yum安装依赖再重新编译安装git就可以了。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> yum install curl-devel</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="comment"># cd to wherever the source for git is</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /usr/<span class="built_in">local</span>/src/git-1.7.9  </span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./configure</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> make</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> make install</span></span><br></pre></td></tr></table></figure>
-
-
       
 
       
@@ -426,10 +426,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -439,6 +435,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MapStruct</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
