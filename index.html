@@ -168,8 +168,10 @@
       
         <p>最近遇到一个需求，把SpringBoot项目的配置文件放到Jar包外面，Jar包内不包含多余配置文件，Jar包运行时指定外部配置文件启动。我的配置文件放在src/main/resources/config下，打包时拷贝到Jar包同级config目录下（SpringBoot默认支持读取Jar包同级config文件夹中的配置），具体解决方案如下：</p>
 <ul>
-<li>使用maven-jar-plugin插件移除配置文件将其不打包进jar包中</li>
-<li>使用maven-resources-plugin插件将需要复制的文件复制到指定路径（例：将配置文件提取到指定路径）
+<li><p>使用maven-jar-plugin插件移除配置文件将其不打包进jar包中</p>
+</li>
+<li><p>使用maven-resources-plugin插件将需要复制的文件复制到指定路径（例：将配置文件提取到指定路径）</p>
+<p>Maven配置如下：</p>
         
           <a class="article-more-a" href="/2020/02/24/SpringBoot打包时复制指定配置文件到指定目录，并剔除jar包内所有配置文件/#more">more >></a>
         
@@ -857,10 +859,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -870,6 +868,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MapStruct</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
