@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://blog.elfred.top">
-  <title>Archives | Elfred&#39;s Blog</title>
+  <title>面试遇到的简单多线程编程题：线程交替打印的升级版 | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="好记性不如烂笔头">
-<meta name="keywords" content="前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Elfred&#39;s Blog">
-<meta property="og:url" content="https://blog.elfred.top/archives/index.html">
+  <meta name="description" content="前言最近面试遇到一道简单的多线程编码题，线程交替打印的升级版，我们来研究下这道题怎么解决。   题目介绍： 线程A每次处理只能输出一个A线程B每次输出只能输出一个B主线程不能输出A或B请尽可能不使用封装好的工具方法或类来调度线程，然后输出以下内容：ABBBBABBBBABBBBABBBB….加分项：增加线程B1，行为和B一样，要求B和B1负载均衡  题目解析输出一个A然后输出4个B，以此类推，最简">
+<meta name="keywords" content="多线程,面试题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面试遇到的简单多线程编程题：线程交替打印的升级版">
+<meta property="og:url" content="https://blog.elfred.top/2020/03/26/面试遇到的简单多线程编程题：线程交替打印的升级版/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="好记性不如烂笔头">
+<meta property="og:description" content="前言最近面试遇到一道简单的多线程编码题，线程交替打印的升级版，我们来研究下这道题怎么解决。   题目介绍： 线程A每次处理只能输出一个A线程B每次输出只能输出一个B主线程不能输出A或B请尽可能不使用封装好的工具方法或类来调度线程，然后输出以下内容：ABBBBABBBBABBBBABBBB….加分项：增加线程B1，行为和B一样，要求B和B1负载均衡  题目解析输出一个A然后输出4个B，以此类推，最简">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-03-26T07:36:04.489Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Elfred&#39;s Blog">
-<meta name="twitter:description" content="好记性不如烂笔头">
+<meta name="twitter:title" content="面试遇到的简单多线程编程题：线程交替打印的升级版">
+<meta name="twitter:description" content="前言最近面试遇到一道简单的多线程编码题，线程交替打印的升级版，我们来研究下这道题怎么解决。   题目介绍： 线程A每次处理只能输出一个A线程B每次输出只能输出一个B主线程不能输出A或B请尽可能不使用封装好的工具方法或类来调度线程，然后输出以下内容：ABBBBABBBBABBBBABBBB….加分项：增加线程B1，行为和B一样，要求B和B1负载均衡  题目解析输出一个A然后输出4个B，以此类推，最简">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -144,38 +145,58 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-面试遇到的简单多线程编程题：线程交替打印的升级版" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      面试遇到的简单多线程编程题：线程交替打印的升级版
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
+
+        
+        
+	<!-- 不蒜子统计 -->
+	<span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
 <a href="/2020/03/26/面试遇到的简单多线程编程题：线程交替打印的升级版/" class="archive-article-date">
   	<time datetime="2020-03-26T07:34:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-26</time>
 </a>
 
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/26/面试遇到的简单多线程编程题：线程交替打印的升级版/">面试遇到的简单多线程编程题：线程交替打印的升级版</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近面试遇到一道简单的多线程编码题，线程交替打印的升级版，我们来研究下这道题怎么解决。  </p>
+<h3 id="题目介绍："><a href="#题目介绍：" class="headerlink" title="题目介绍："></a>题目介绍：</h3><blockquote>
+<p>线程A每次处理只能输出一个A<br>线程B每次输出只能输出一个B<br>主线程不能输出A或B<br>请尽可能不使用封装好的工具方法或类来调度线程，然后输出以下内容：<br>ABBBBABBBBABBBBABBBB….<br>加分项：增加线程B1，行为和B一样，要求B和B1负载均衡</p>
+</blockquote>
+<h3 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h3><p>输出一个A然后输出4个B，以此类推，最简单的应该是使用synchronized，wait以及notify方法来实现，这里可以指定一个自增的整数，能被5整除时打印A，不能被5整除时打印B，话不多说我们来看代码。</p>
+<h3 id="使用synchronized、wait、notify方法"><a href="#使用synchronized、wait、notify方法" class="headerlink" title="使用synchronized、wait、notify方法"></a>使用synchronized、wait、notify方法</h3><h4 id="非负载均衡"><a href="#非负载均衡" class="headerlink" title="非负载均衡"></a>非负载均衡</h4><p>这里我们先不考虑B1的负载均衡，简单实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadTest</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 递增的整数用来判断打印A还是B</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 设置一个打印上限，最多打印200个字符</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> max = <span class="number">200</span>;</span><br><span class="line">    <span class="comment">// 对象锁（工具人）</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object lock = <span class="keyword">new</span> Object();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Thread tA = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="comment">// 当index小于最大值max时一直循环</span></span><br><span class="line">            <span class="keyword">while</span> (index &lt;= max) &#123;</span><br><span class="line">                <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line">                    <span class="comment">// 被5整除输出A</span></span><br><span class="line">                    <span class="keyword">if</span> (index % <span class="number">5</span> == <span class="number">0</span>) &#123;</span><br><span class="line">                        System.out.print(<span class="string">"A"</span>);</span><br><span class="line">                        <span class="comment">// index加一</span></span><br><span class="line">                        index++;</span><br><span class="line">                        <span class="comment">// 唤醒其他线程</span></span><br><span class="line">                        lock.notifyAll();</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="comment">// 因为不能被5整除则释放锁，等待其他线程唤醒</span></span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            lock.wait();</span><br><span class="line">                            <span class="comment">// 如果被唤醒的话继续下次循环，此时获得锁</span></span><br><span class="line">                        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                            e.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;);</span><br><span class="line">        Thread tB = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">while</span> (index &lt;= max) &#123;</span><br><span class="line">                <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line">                    <span class="comment">// 不能被5整除输出B</span></span><br><span class="line">                    <span class="keyword">if</span> (index % <span class="number">5</span> != <span class="number">0</span>) &#123;</span><br><span class="line">                        System.out.print(<span class="string">"B"</span>);</span><br><span class="line">                        index++;</span><br><span class="line">                        lock.notifyAll();</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="comment">// 释放锁，等待其他线程唤醒</span></span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            lock.wait();</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                            e.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        tA.start();</span><br><span class="line">        tB.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
+<p>我们来看下输出结果：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">ABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBABBBBA</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="负载均衡如何实现？"><a href="#负载均衡如何实现？" class="headerlink" title="负载均衡如何实现？"></a>负载均衡如何实现？</h4><p>如果考虑题目里的负载均衡应该怎么做呢？其实也很简单，增加另一个标志位就可以了，判断index能否被5整除的时候顺便判断下标志位是否是当前线程的标志位即可（个人理解，如有错误还请指正），上代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadTest</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 从0递增的整数用来判断打印A还是B</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 设置一个打印上限，最多打印200个字符，防止打印过多CPU扛不住</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> max = <span class="number">200</span>;</span><br><span class="line">    <span class="comment">// 对象锁（工具人）</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object lock = <span class="keyword">new</span> Object();</span><br><span class="line">    <span class="comment">// 负载标志位，0的时候B线程执行，1的时候B1执行</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> loadFlag = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Thread tA = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="comment">// 当index小于最大值max时一直循环</span></span><br><span class="line">            <span class="keyword">while</span> (index &lt;= max) &#123;</span><br><span class="line">                <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line">                    <span class="comment">// 被5整除输出A</span></span><br><span class="line">                    <span class="keyword">if</span> (index % <span class="number">5</span> == <span class="number">0</span>) &#123;</span><br><span class="line">                        System.out.print(<span class="string">"A"</span>);</span><br><span class="line">                        <span class="comment">// index加一</span></span><br><span class="line">                        index++;</span><br><span class="line">                        <span class="comment">// 唤醒其他线程</span></span><br><span class="line">                        lock.notifyAll();</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="comment">// 因为不能被5整除则释放锁，等待其他线程唤醒</span></span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            lock.wait();</span><br><span class="line">                            <span class="comment">// 如果被唤醒的话继续下次循环，此时获得锁</span></span><br><span class="line">                        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                            e.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;);</span><br><span class="line">        Thread tB = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">while</span> (index &lt;= max) &#123;</span><br><span class="line">                <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line">                    <span class="comment">// 不能被5整除输出B</span></span><br><span class="line">                    <span class="keyword">if</span> (index % <span class="number">5</span> != <span class="number">0</span> &amp;&amp; loadFlag == <span class="number">0</span>) &#123;</span><br><span class="line">                        <span class="comment">// 为了看出负载均衡效果，这里打印B0</span></span><br><span class="line">                        System.out.print(<span class="string">"B0"</span>);</span><br><span class="line">                        index++;</span><br><span class="line">                        <span class="comment">// 标志位设置为1，下次B1线程执行</span></span><br><span class="line">                        loadFlag = <span class="number">1</span>;</span><br><span class="line">                        lock.notifyAll();</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="comment">// 释放锁，等待其他线程唤醒</span></span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            lock.wait();</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                            e.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="comment">// 新建线程B1</span></span><br><span class="line">        Thread tB1 = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">while</span> (index &lt;= max) &#123;</span><br><span class="line">                <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line">                    <span class="comment">// 如果不能被5整除且标志位是1则执行</span></span><br><span class="line">                    <span class="keyword">if</span> (index % <span class="number">5</span> != <span class="number">0</span> &amp;&amp; loadFlag == <span class="number">1</span>) &#123;</span><br><span class="line">                        <span class="comment">// 为了看出负载均衡效果，这里打印B1</span></span><br><span class="line">                        System.out.print(<span class="string">"B1"</span>);</span><br><span class="line">                        index++;</span><br><span class="line">                        <span class="comment">// 标志位设置为0，下次B线程执行</span></span><br><span class="line">                        loadFlag = <span class="number">0</span>;</span><br><span class="line">                        lock.notifyAll();</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="comment">// 释放锁，等待其他线程唤醒</span></span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            lock.wait();</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                            e.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        tA.start();</span><br><span class="line">        tB.start();</span><br><span class="line">        tB1.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看下效果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1AB0B1B0B1A</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -191,444 +212,142 @@
 		</ul>
 	</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/02/29/Spring、SpringMvc、SpringBoot和SpringCloud的联系与区别/" class="archive-article-date">
-  	<time datetime="2020-02-29T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-29</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/02/29/Spring、SpringMvc、SpringBoot和SpringCloud的联系与区别/">Spring、SpringMvc、SpringBoot和SpringCloud的联系与区别</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/02/24/SpringBoot打包时复制指定配置文件到指定目录，并剔除jar包内所有配置文件/" class="archive-article-date">
-  	<time datetime="2020-02-24T03:04:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-24</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/02/24/SpringBoot打包时复制指定配置文件到指定目录，并剔除jar包内所有配置文件/">SpringBoot打包时复制指定配置文件到指定目录，并剔除jar包内所有配置文件</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
       
-        </div></section>
+
       
+
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/10/27/使用gitlab-ci和docker自动化部署vue项目/" class="archive-article-date">
-  	<time datetime="2019-10-27T07:51:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-27</time>
-</a>
+      </div>
+    </span>
+  </div>
+</div>
 
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/27/使用gitlab-ci和docker自动化部署vue项目/">使用gitlab-ci和docker自动化部署vue项目</a>
-    </h1>
-  
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/2020/03/26/面试遇到的简单多线程编程题：线程交替打印的升级版/" alt="微信分享二维码">
+    </div>
+</div>
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/10/19/CoreOS配置Docker-API-TLS认证/" class="archive-article-date">
-  	<time datetime="2019-10-19T15:43:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-19</time>
-</a>
 
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2020/02/29/Spring、SpringMvc、SpringBoot和SpringCloud的联系与区别/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Spring、SpringMvc、SpringBoot和SpringCloud的联系与区别</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/19/CoreOS配置Docker-API-TLS认证/">【转】CoreOS配置Docker API TLS认证</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">docker</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/10/13/ORM框架对比/" class="archive-article-date">
-  	<time datetime="2019-10-13T14:16:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-13</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/13/ORM框架对比/">ORM框架对比</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">框架</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JAVA随笔//" class="article-tag-list-link color2">JAVA随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/10/13/JPA实现Specification/" class="archive-article-date">
-  	<time datetime="2019-10-13T13:55:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-13</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/13/JPA实现Specification/">使用JPA实现Specification规范规格模式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/10/08/JPA-OneToMany简单应用/" class="archive-article-date">
-  	<time datetime="2019-10-08T13:43:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-08</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/08/JPA-OneToMany简单应用/">JPA OneToMany简单应用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JPA</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">MapStruct</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Java随笔//" class="article-tag-list-link color2">Java随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/10/06/常用设计模式/" class="archive-article-date">
-  	<time datetime="2019-10-06T07:16:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-06</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/06/常用设计模式/">常用设计模式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/10/04/为什么要用Spring/" class="archive-article-date">
-  	<time datetime="2019-10-04T12:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-04</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/04/为什么要用Spring/">为什么要用Spring</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/10/04/Jhipster/" class="archive-article-date">
-  	<time datetime="2019-10-04T12:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-04</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/04/Jhipster/">Jhipster学习笔记</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Jhipster</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Jhipster//" class="article-tag-list-link color4">Jhipster</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/10/04/hello-world/" class="archive-article-date">
-  	<time datetime="2019-10-04T03:45:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-04</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/04/hello-world/">Hello World</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
 
     
+    <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+    <div id="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!--Valine 的核心代码库-->
+<script src='//github.com/DesertsP/Valine/releases/download/v1.2.0/Valine.min.js'></script>
+<!--<script src='//leafjame.github.io/js/src/Valine.min.js'></script>-->
+<!--<script src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>-->
+<!--<script src="//deserts.io/assets/js/Valine.min.js"></script>-->
+<script>
+    const notify = 'true' === true;
+    const verify = 'false' === true;
+    window.onload = function () {
+        new Valine({
+            // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
+            av: AV,
+            el: '#valine_comment',
+            emoticon_url: 'https://cloud.panjunwen.com/alu/',
+            emoticon_list: [ '不出所料.png', '不说话.png', '不高兴.png', '中刀.png', '中指.png', '中枪.png', '亲亲.png', '便便.png', '内伤.png', '击掌.png', '口水.png', '吐.png', '吐舌.png', '吐血倒地.png', '呲牙.png', '咽气.png', '哭泣.png', '喜极而泣.png', '喷水.png', '喷血.png', '坐等.png', '害羞.png', '小眼睛.png', '尴尬.png', '得意.png', '惊喜.png', '想一想.png', '愤怒.png', '扇耳光.png', '投降.png', '抠鼻.png', '抽烟.png', '无奈.png', '无所谓.png', '无语.png', '暗地观察.png', '期待.png', '欢呼.png', '汗.png', '深思.png', '狂汗.png', '献花.png', '献黄瓜.png', '皱眉.png', '看不见.png', '看热闹.png', '瞅你.png', '肿包.png', '脸红.png', '蜡烛.png', '装大款.png', '观察.png', '赞一个.png', '邪恶.png', '锁眉.png', '长草.png', '阴暗.png', '高兴.png', '黑线.png', '鼓掌.png'],
+            app_id: 'cFVh8rsB8HaQ1uHQrIPjvDyF-gzGzoHsz',
+            app_key: '1ecASbr0qOJEtToVdq8wyeQF',
+            placeholder: '有话要说？'
+        });
+    }
+</script>
+
+    </section>
+    
+
+  
+
+  
+
+  
+
+  
+
+  
 
 
           </div>
@@ -663,8 +382,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
