@@ -18,7 +18,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210113194641.jpeg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210113191916.png">
-<meta property="og:updated_time" content="2021-01-13T15:03:13.039Z">
+<meta property="og:updated_time" content="2021-01-13T15:22:53.821Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2021面经">
 <meta name="twitter:description" content="叮咚买菜 hashmap的扩容过程  单向链表如何判断有环  HashSet遍历和快慢指针   如何找出一个数组重复元素最多的前K个元素  TopK问题，堆排序，时间复杂度nLogK   MySQL什么情况下会发生死锁？如何解决？  举个例子：事务A按照先后顺序去更新id=1和id=2的记录，事务B同一时间按照先后顺序去更新id=2和id=1的记录，因为行锁是两阶段协议，A获得id=1的行锁不会">
@@ -425,10 +425,10 @@
 </li>
 <li><p>MySQL是如何保证ACID的</p>
 <blockquote>
-<p>A原子性：</p>
-<p>C一致性：</p>
-<p>I隔离性：</p>
-<p>D持久性：</p>
+<p>A原子性：<code>undo log</code>记录了这些回滚需要的信息，当事务执行失败或调用了rollback，导致事务需要回滚，便可以利用undo log中的信息将数据回滚到修改之前的样子。</p>
+<p>C一致性：从数据库层面，数据库通过原子性、隔离性、持久性来保证一致性。也就是说ACID四大特性之中，C(一致性)是目的，A(原子性)、I(隔离性)、D(持久性)是手段，是为了保证一致性，数据库提供的手段。数据库必须要实现AID三大特性，才有可能实现一致性。</p>
+<p>I隔离性：MVCC保证了读的隔离性；排它锁保证写的隔离性</p>
+<p>D持久性：使用了WAL(Write-Ahead Logging，先写日志再写磁盘)。Redo log就是一种WAL的应用。当数据库忽然掉电，再重新启动时，MySQL可以通过Redo log还原数据。</p>
 </blockquote>
 </li>
 </ul>
