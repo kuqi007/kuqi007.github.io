@@ -18,7 +18,8 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210113194641.jpeg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210113191916.png">
-<meta property="og:updated_time" content="2021-01-13T15:26:44.190Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210117110336.jpeg">
+<meta property="og:updated_time" content="2021-01-17T08:15:16.558Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2021面经">
 <meta name="twitter:description" content="叮咚买菜 hashmap的扩容过程  单向链表如何判断有环  HashSet遍历和快慢指针   如何找出一个数组重复元素最多的前K个元素  TopK问题，堆排序，时间复杂度nLogK   MySQL什么情况下会发生死锁？如何解决？  举个例子：事务A按照先后顺序去更新id=1和id=2的记录，事务B同一时间按照先后顺序去更新id=2和id=1的记录，因为行锁是两阶段协议，A获得id=1的行锁不会">
@@ -510,7 +511,47 @@
 <li>redis缓存雪崩如何解决</li>
 <li>redis哨兵模式如何保证高可用</li>
 </ul>
-
+<h3 id="阿里（企业智能）"><a href="#阿里（企业智能）" class="headerlink" title="阿里（企业智能）"></a>阿里（企业智能）</h3><ul>
+<li><p>dubbo的原理是什么</p>
+<blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210117110336.jpeg" alt="Dubbo 工作原理"></p>
+</blockquote>
+</li>
+<li><p>zookeeper的选举机制以及如何保证整个注册中心的稳定性</p>
+<blockquote>
+<p><strong>选举算法和流程：FastLeaderElection(默认提供的选举算法)：</strong></p>
+<p>目前有5台服务器，每台服务器均没有数据，它们的编号分别是1,2,3,4,5,按编号依次启动，它们的选择举过程如下：</p>
+<ol>
+<li>服务器1启动，给自己投票，然后发投票信息，由于其它机器还没有启动所以它收不到反馈信息，服务器1的状态一直属于Looking。</li>
+<li>服务器2启动，给自己投票，同时与之前启动的服务器1交换结果，由于服务器2的编号大所以服务器2胜出，但此时投票数没有大于半数，所以两个服务器的状态依然是LOOKING。</li>
+<li>服务器3启动，给自己投票，同时与之前启动的服务器1,2交换信息，由于服务器3的编号最大所以服务器3胜出，此时投票数正好大于半数，所以服务器3成为leader，服务器1,2成为follower。</li>
+<li>服务器4启动，给自己投票，同时与之前启动的服务器1,2,3交换信息，尽管服务器4的编号大，但之前服务器3已经胜出，所以服务器4只能成为follower。</li>
+<li>服务器5启动，后面的逻辑同服务器4成为follower。</li>
+</ol>
+</blockquote>
+</li>
+<li><p>动态代理的实现方式，AOP的实现方式，有什么区别？</p>
+<blockquote>
+<ol>
+<li>JDK动态代理：利用反射机制生成一个实现代理接口的匿名类，在调用具体方法前调用InvokeHandler来处理。</li>
+<li>CGlib动态代理：利用ASM（开源的Java字节码编辑库，操作字节码）开源包，将代理对象类的class文件加载进来，通过修改其字节码生成子类来处理。</li>
+<li>区别：JDK代理只能对实现接口的类生成代理；CGlib是针对类实现代理，对指定的类生成一个子类，并覆盖其中的方法，这种通过继承类的实现方式，不能代理final修饰的类。</li>
+</ol>
+</blockquote>
+</li>
+<li><p>ThreadLocal的原理</p>
+</li>
+<li><p>Redis持久化机制</p>
+</li>
+<li><p>一致性哈希原理</p>
+</li>
+<li><p>缓存击穿和缓存雪崩是什么？如何解决</p>
+<blockquote>
+<p>击穿：1.热点数据永不失效；2.从数据库加载缓存数据的时候加互斥锁</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="有赞"><a href="#有赞" class="headerlink" title="有赞"></a>有赞</h3>
       
 
       
@@ -581,6 +622,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2021/01/17/2021/Redis常见面试题/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
   
   
     <a href="/2020/03/26/面试遇到的简单多线程编程题：线程交替打印的升级版/" id="article-nav-older" class="article-nav-link-wrap">
