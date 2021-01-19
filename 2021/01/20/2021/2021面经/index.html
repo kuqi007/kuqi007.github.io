@@ -20,7 +20,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118154630.webp">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118154814.webp">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118160303.webp">
-<meta property="og:updated_time" content="2021-01-19T16:09:58.484Z">
+<meta property="og:updated_time" content="2021-01-19T16:13:16.810Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2021面经">
 <meta name="twitter:description" content="叮咚买菜 hashmap的扩容过程  单向链表如何判断有环  HashSet遍历和快慢指针   如何找出一个数组重复元素最多的前K个元素  TopK问题，堆排序，时间复杂度nLogK   MySQL什么情况下会发生死锁？如何解决？  举个例子：事务A按照先后顺序去更新id=1和id=2的记录，事务B同一时间按照先后顺序去更新id=2和id=1的记录，因为行锁是两阶段协议，A获得id=1的行锁不会">
@@ -714,6 +714,17 @@
 <li><p>MySQL可重复读隔离级别下读和写是如何加锁的？</p>
 </li>
 <li><p>行锁是加在什么上面？</p>
+</li>
+<li><p>创建线程的开销</p>
+<blockquote>
+<p><a href="https://qastack.cn/programming/5483047/why-is-creating-a-thread-said-to-be-expensive" target="_blank" rel="noopener">https://qastack.cn/programming/5483047/why-is-creating-a-thread-said-to-be-expensive</a></p>
+<p>Java线程的创建非常昂贵，因为其中涉及大量工作：</p>
+<ul>
+<li>必须为线程堆栈分配并初始化一大块内存。</li>
+<li>需要进行系统调用以在主机OS中创建/注册本机线程。</li>
+<li>需要创建，初始化描述符并将其添加到JVM内部数据结构中</li>
+</ul>
+</blockquote>
 </li>
 </ul>
 
