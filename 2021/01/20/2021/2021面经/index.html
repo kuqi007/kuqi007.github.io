@@ -20,7 +20,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118154630.webp">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118154814.webp">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118160303.webp">
-<meta property="og:updated_time" content="2021-01-20T16:14:44.309Z">
+<meta property="og:updated_time" content="2021-01-20T16:21:51.989Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2021面经">
 <meta name="twitter:description" content="叮咚买菜 hashmap的扩容过程  单向链表如何判断有环  HashSet遍历和快慢指针   如何找出一个数组重复元素最多的前K个元素  TopK问题，堆排序，时间复杂度nLogK   MySQL什么情况下会发生死锁？如何解决？  举个例子：事务A按照先后顺序去更新id=1和id=2的记录，事务B同一时间按照先后顺序去更新id=2和id=1的记录，因为行锁是两阶段协议，A获得id=1的行锁不会">
@@ -808,6 +808,12 @@
 <li>需要进行系统调用以在主机OS中创建/注册本机线程。</li>
 <li>需要创建，初始化描述符并将其添加到JVM内部数据结构中。</li>
 </ul>
+<p><a href="https://zhuanlan.zhihu.com/p/161628226" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/161628226</a></p>
+<p>TODO待补充</p>
+<p>对操作系统来说,创建一个线程的代价是十分昂贵的, 需要给它分配内存、列入调度，同时在线程切换的时候还要执行内存换页，CPU 的缓存被清空,切换回来的时候还要重新从内存中读取信息,破坏了数据的局部性。【分配内存、列入调度、内存换页、清空缓存和重新读取】</p>
+<p><strong>关于内存开销</strong></p>
+<p>Java线程的线程栈区别于堆，它是不受Java程序控制的，只受系统资源限制。默认一个线程的线程栈大小是1M，别小看这1M的空间，如果每个用户请求都新建线程的话，1024个用户光线程就占用了1个G的内存，如果系统比较大的话，一下子系统资源就不够用了，最后程序就崩溃了。</p>
+<p>【创建一个线程默认需要消耗1M的内存，如果每个用户请求都创建一个线程，那么1024个用户就是1G了，并发量一大就扛不住了】</p>
 </blockquote>
 </li>
 <li><p>线程是JVM创建还是操作系统去创建的？</p>
@@ -1085,6 +1091,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -1094,10 +1104,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MapStruct</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
