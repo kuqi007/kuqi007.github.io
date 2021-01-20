@@ -20,7 +20,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118154630.webp">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118154814.webp">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118160303.webp">
-<meta property="og:updated_time" content="2021-01-19T16:14:07.148Z">
+<meta property="og:updated_time" content="2021-01-20T16:14:44.309Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2021面经">
 <meta name="twitter:description" content="叮咚买菜 hashmap的扩容过程  单向链表如何判断有环  HashSet遍历和快慢指针   如何找出一个数组重复元素最多的前K个元素  TopK问题，堆排序，时间复杂度nLogK   MySQL什么情况下会发生死锁？如何解决？  举个例子：事务A按照先后顺序去更新id=1和id=2的记录，事务B同一时间按照先后顺序去更新id=2和id=1的记录，因为行锁是两阶段协议，A获得id=1的行锁不会">
@@ -708,12 +708,96 @@
 <li><p>Redis基础数据结构</p>
 </li>
 <li><p>MySQL INNODB引擎没有设置主键会有什么问题</p>
+<blockquote>
+<ul>
+<li>使用不了主键索引，查询会进行全表扫描</li>
+<li>影响数据插入性能，插入数据需要生成ROW_ID，而生成的ROW_ID是全局共享的，并发会导致锁竞争，影响性能</li>
+</ul>
+</blockquote>
 </li>
 <li><p>B+Tree索引和Hash索引的优劣</p>
 </li>
 <li><p>MySQL可重复读隔离级别下读和写是如何加锁的？</p>
 </li>
-<li><p>行锁是加在什么上面？</p>
+<li><p>行锁是加在什么上面？（索引）</p>
+</li>
+<li><p>JVM优化的思路（保持jvm的稳定，避免频繁gc）</p>
+<blockquote>
+<p><strong>策略 1：</strong>将新对象预留在新生代，由于 Full GC 的成本远高于 Minor GC，因此尽可能将对象分配在新生代是明智的做法，实际项目中根据 GC 日志分析新生代空间大小分配是否合理，适当通过“-Xmn”命令调节新生代大小，最大限度降低新对象直接进入老年代的情况。</p>
+<p><strong>策略 2：</strong>大对象进入老年代，虽然大部分情况下，将对象分配在新生代是合理的。但是对于大对象这种做法却值得商榷，大对象如果首次在新生代分配可能会出现空间不足导致很多年龄不够的小对象被分配的老年代，破坏新生代的对象结构，可能会出现频繁的 full gc。因此，对于大对象，可以设置直接进入老年代（当然短命的大对象对于垃圾回收来说简直就是噩梦）。<code>-XX:PretenureSizeThreshold</code> 可以设置直接进入老年代的对象大小。</p>
+<p><strong>策略 3：</strong>合理设置进入老年代对象的年龄，<code>-XX:MaxTenuringThreshold</code> 设置对象进入老年代的年龄大小，减少老年代的内存占用，降低 full gc 发生的频率。</p>
+<p><strong>策略 4：</strong>设置稳定的堆大小，堆大小设置有两个参数：<code>-Xms</code> 初始化堆大小，<code>-Xmx</code> 最大堆大小。</p>
+<p><strong>策略5：</strong>注意： 如果满足下面的指标，<strong>则一般不需要进行 GC 优化：</strong></p>
+<blockquote>
+<p>MinorGC 执行时间不到50ms； Minor GC 执行不频繁，约10秒一次； Full GC 执行时间不到1s； Full GC 执行频率不算频繁，不低于10分钟1次。</p>
+</blockquote>
+</blockquote>
+</li>
+<li><p>发现虚拟机频繁full GC时应该怎么办（full GC指的是清理整个堆空间，包括年轻代和永久代）</p>
+<blockquote>
+<ol>
+<li>首先用命令查看触发GC的原因是什么 jstat –gccause 进程id</li>
+<li>如果是System.gc()，则看下代码哪里调用了这个方法（可以通过-XX:+ DisableExplicitGC来禁止RMI调用System.gc）</li>
+<li>如果有perm gen的话（jdk1.8就没了），<strong>要给perm gen分配空间，但没有足够的空间时</strong>，会触发full gc。所以看看是不是perm gen区的值设置得太小了。</li>
+<li>如果是一次fullgc之后，剩余对象不多。那么说明你的eden区设置太小，导致生命周期的对象进入了老年代。</li>
+<li>如果一次fullgc之后，老年代回收率不大，那么说明老年代太小。</li>
+<li>如果是heap inspection(内存检查)，可能是哪里执行jmap –histo[:live]命令</li>
+<li>如果是GC locker，可能是程序依赖的JNI库的原因</li>
+</ol>
+</blockquote>
+</li>
+<li><p>垃圾回收算法</p>
+<blockquote>
+<p><strong>Mark-Sweep（标记-清除算法）：</strong></p>
+<p>（1）思想：标记清除算法分为两个阶段，标记阶段和清除阶段。标记阶段任务是标记出所有需要回收的对象，清除阶段就是清除被标记对象的空间。<br>（2）优缺点：实现简单，容易产生内存碎片，导致需要分配一个较大连续空间时容易触发FGC。</p>
+<p><strong>Copying（复制清除算法）：</strong></p>
+<p>（1）思想：将可用内存划分为大小相等的两块，每次只使用其中的一块。当进行垃圾回收的时候了，把其中存活对象全部复制到另外一块中，然后把已使用的内存空间一次清空掉。<br>（2）优缺点：不容易产生内存碎片；可用内存空间少；存活对象多的话，效率低下。</p>
+<p><strong>Mark-Compact（标记-整理算法）：</strong></p>
+<p>（1）思想：先标记存活对象，然后把存活对象向一边移动，然后清理掉端边界以外的内存。<br>（2）优缺点：不容易产生内存碎片；内存利用率高；存活对象多并且分散的时候，移动次数多，效率低下</p>
+<p><strong>分代收集算法：</strong>（目前大部分JVM的垃圾收集器所采用的算法，思想：把堆分成新生代和老年代，永久代指的是方法区）：</p>
+<p>（1） 因为新生代每次垃圾回收都要回收大部分对象，所以新生代采用<strong>Copying</strong>算法。新生代里面分成一份较大的Eden空间和两份较小的Survivor空间。每次只使用Eden和其中一块Survivor空间，然后垃圾回收的时候，把存活对象放到未使用的Survivor（划分出from、to）空间中，清空Eden和刚才使用过的Survivor空间。<br>（2） 由于老年代每次只回收少量的对象，因此采用<strong>mark-compact</strong>算法。<br>（3） 在堆区外有一个永久代。对永久代的回收主要是无效的类和常量</p>
+</blockquote>
+</li>
+<li><p>CMS是怎么进行垃圾回收的？（相关：G1垃圾回收过程）</p>
+</li>
+<li><p>生产环境遇到JVM问题如何去解决？解决的步骤有哪些</p>
+</li>
+<li><p>并发编程线程安全三大问题：可见性、有序性、原子性分别如何去保证？</p>
+<blockquote>
+<p>内存模型解决并发问题主要采用两种方式：<strong>限制处理器优化</strong>和<strong>使用内存屏障</strong>。</p>
+<ul>
+<li><p><strong>可见性</strong>：除了<code>volatile</code>之外，Java中的<code>synchronized</code>和<code>final</code>两个关键字也可以实现可见性</p>
+</li>
+<li><p><strong>有序性</strong>：在Java中，可以使用<code>synchronized</code>和<code>volatile</code>来保证多线程之间操作的有序性。实现方式有所区别：</p>
+<p><code>volatile</code>关键字会禁止指令重排。<code>synchronized</code>关键字保证同一时刻只允许一条线程操作。</p>
+</li>
+<li><p><strong>原子性</strong>：在Java中，为了保证原子性，提供了两个高级的字节码指令<code>monitorenter</code>和<code>monitorexit</code>。这两个字节码，在Java中对应的关键字就是<code>synchronized</code>。</p>
+<p>因此，在Java中可以使用<code>synchronized</code>来保证方法和代码块内的操作是原子性的。</p>
+</li>
+</ul>
+</blockquote>
+</li>
+<li><p>volatile如何保证可见性</p>
+<blockquote>
+<p>如果对声明了volatile的变量进行写操作，JVM就会向处理器发送一条<strong>Lock</strong>前缀的指令，将这个变量所在缓存行的数据写回到系统内存。在多处理器下，为了保证各个处理器的缓存是一致的，就会实现缓存一致性协议，每个处理器通过嗅探在总线上传播的数据来检查自己缓存的值是不是过期了，当处理器发现自己缓存行对应的内存地址被修改，就会将当前处理器的缓存行设置为无效状态，当处理器对这个数据进行修改操作的时候，会重新从系统内存中把数据读到处理器缓存里。</p>
+<p>volatile两条实现原则：</p>
+<ol>
+<li><strong>Lock前缀指令会引起处理器缓存回写到内存</strong>。LOCK#信号确保在声言该信号期间，处理器可以独占共享内存（通过锁住总线，导致其他CPU不能访问总线，不能访问总线就意味着不能访问系统内存）。但在最近的处理器里，LOCK#信号一般不锁总线，而是锁缓存，锁总线开销比较大。在P6和目前的处理器中，如果访问的内存区域已经缓存在处理器内部，则不会声言LOCK#信号。相反，它会锁定这块内存区域的缓存并回写到内存，并使用缓存一致性机制来确定修改的原子性，此操作被称为“缓存锁定”，缓存一致性会阻止同时修改由两个以上处理器缓存的内存区域数据。</li>
+<li><strong>一个处理器的缓存会写到内存会导致其他处理器的缓存无效</strong>。部分处理器使用MESI（修改、独占、共享、无效）控制协议去维护内部缓存和其他处理器缓存的一致性。处理器使用<strong>嗅探技术</strong>保证它的内部缓存、系统内存和其他处理器的缓存的数据在总线上保持一致。</li>
+</ol>
+</blockquote>
+</li>
+<li><p>synchronized锁升级的过程</p>
+</li>
+<li><p>使用线程池有什么好处？</p>
+<blockquote>
+<p>合理的使用线程池能够带来三个好处：</p>
+<ol>
+<li><strong>降低资源消耗</strong>。通过重复利用已创建的线程降低线程创建和销毁造成的消耗。</li>
+<li><strong>提高响应速度</strong>。当任务到达时，任务可以不需要等到线程创建就能立即执行。</li>
+<li><strong>提高线程的可管理性</strong>。线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一分配、调优和监控。</li>
+</ol>
+</blockquote>
 </li>
 <li><p>创建线程的开销</p>
 <blockquote>
@@ -722,9 +806,13 @@
 <ul>
 <li>必须为线程堆栈分配并初始化一大块内存。</li>
 <li>需要进行系统调用以在主机OS中创建/注册本机线程。</li>
-<li>需要创建，初始化描述符并将其添加到JVM内部数据结构中</li>
+<li>需要创建，初始化描述符并将其添加到JVM内部数据结构中。</li>
 </ul>
 </blockquote>
+</li>
+<li><p>线程是JVM创建还是操作系统去创建的？</p>
+</li>
+<li><p>Redis分布式锁获取锁成功，释放锁之前宕机，如何优雅的解决这个问题？</p>
 </li>
 </ul>
 
@@ -997,10 +1085,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -1010,6 +1094,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MapStruct</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">

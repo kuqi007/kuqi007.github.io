@@ -6,24 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://blog.elfred.top">
-  <title>【转】CoreOS配置Docker API TLS认证 | Elfred&#39;s Blog</title>
+  <title>Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我们经常会利用Portainer来管理docker环境，也经常会用Jenkins来自动构建和部署docker，远程管理都会使用到Docker API，通常我们只是开启了没有安全保护的2375（通常）端口，这个比较危险，会导致远程劫持攻击。那么我们就需要配置TLS认证的2376（通常）端口。">
-<meta name="keywords" content="docker">
-<meta property="og:type" content="article">
-<meta property="og:title" content="【转】CoreOS配置Docker API TLS认证">
-<meta property="og:url" content="https://blog.elfred.top/2019/10/19/CoreOS配置Docker-API-TLS认证/index.html">
+  <meta name="description" content="Redis主从复制核心原理 salve node启动，会发送一个PSYNC命令给master node 如果是slave node初次连接到master node，会触发一次full resynchronization 全量复制。此时master回启动一个后台线程，生成RDB快照文件，同时将从客户端新收到的所有写命令缓存到内存中。RDB 文件生成完毕后， master 会将这个 RDB 发送给 s">
+<meta name="keywords" content="前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Elfred&#39;s Blog">
+<meta property="og:url" content="https://blog.elfred.top/草稿箱/Redis常见面试题.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="我们经常会利用Portainer来管理docker环境，也经常会用Jenkins来自动构建和部署docker，远程管理都会使用到Docker API，通常我们只是开启了没有安全保护的2375（通常）端口，这个比较危险，会导致远程劫持攻击。那么我们就需要配置TLS认证的2376（通常）端口。">
+<meta property="og:description" content="Redis主从复制核心原理 salve node启动，会发送一个PSYNC命令给master node 如果是slave node初次连接到master node，会触发一次full resynchronization 全量复制。此时master回启动一个后台线程，生成RDB快照文件，同时将从客户端新收到的所有写命令缓存到内存中。RDB 文件生成完毕后， master 会将这个 RDB 发送给 s">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://oscimg.oschina.net/oscnet/cf128d18f1e5494241522354509639ac476.jpg">
-<meta property="og:image" content="https://oscimg.oschina.net/oscnet/a52727e6614faf2c2985912dd992a699ef8.jpg">
-<meta property="og:image" content="https://oscimg.oschina.net/oscnet/a42a8fc88e593b51007b357d9588cc7e37c.jpg">
-<meta property="og:updated_time" content="2019-10-27T07:58:01.320Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210119165016.png">
+<meta property="og:updated_time" content="2021-01-20T14:32:27.190Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【转】CoreOS配置Docker API TLS认证">
-<meta name="twitter:description" content="我们经常会利用Portainer来管理docker环境，也经常会用Jenkins来自动构建和部署docker，远程管理都会使用到Docker API，通常我们只是开启了没有安全保护的2375（通常）端口，这个比较危险，会导致远程劫持攻击。那么我们就需要配置TLS认证的2376（通常）端口。">
-<meta name="twitter:image" content="https://oscimg.oschina.net/oscnet/cf128d18f1e5494241522354509639ac476.jpg">
+<meta name="twitter:title" content="Elfred&#39;s Blog">
+<meta name="twitter:description" content="Redis主从复制核心原理 salve node启动，会发送一个PSYNC命令给master node 如果是slave node初次连接到master node，会触发一次full resynchronization 全量复制。此时master回启动一个后台线程，生成RDB快照文件，同时将从客户端新收到的所有写命令缓存到内存中。RDB 文件生成完毕后， master 会将这个 RDB 发送给 s">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210119165016.png">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -149,59 +147,21 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-CoreOS配置Docker-API-TLS认证" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="page-" class="article article-type-page " itemscope itemprop="blogPost">
   <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      【转】CoreOS配置Docker API TLS认证
-    </h1>
-  
-
-        
-        
-	<!-- 不蒜子统计 -->
-	<span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
-              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
-        </span>
-
-<a href="/2019/10/19/CoreOS配置Docker-API-TLS认证/" class="archive-article-date">
-  	<time datetime="2019-10-19T15:43:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-19</time>
-</a>
-
-        
-      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>我们经常会利用Portainer来管理docker环境，也经常会用Jenkins来自动构建和部署docker，远程管理都会使用到Docker API，通常我们只是开启了没有安全保护的2375（通常）端口，这个比较危险，会导致远程劫持攻击。那么我们就需要配置TLS认证的2376（通常）端口。</p>
-<a id="more"></a>
-
-<p>下面我们针对CoreOS系统进行配置：</p>
-<h3 id="一、利用系统自带的openssl生成相应的服务端和客户端证书"><a href="#一、利用系统自带的openssl生成相应的服务端和客户端证书" class="headerlink" title="一、利用系统自带的openssl生成相应的服务端和客户端证书"></a>一、利用系统自带的openssl生成相应的服务端和客户端证书</h3><p>我们利用脚本自动生成，这样非常便捷，脚本（auto-tls-certs.sh）如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># </span></span><br><span class="line"><span class="comment"># -------------------------------------------------------------</span></span><br><span class="line"><span class="comment"># 自动创建 Docker TLS 证书</span></span><br><span class="line"><span class="comment"># -------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以下是配置信息</span></span><br><span class="line"><span class="comment"># --[BEGIN]------------------------------</span></span><br><span class="line"></span><br><span class="line">CODE=<span class="string">"dp"</span></span><br><span class="line">IP=<span class="string">"docker服务器ip"</span></span><br><span class="line">PASSWORD=<span class="string">"证书密码"</span></span><br><span class="line">COUNTRY=<span class="string">"CN"</span></span><br><span class="line">STATE=<span class="string">"BEIJING"</span></span><br><span class="line">CITY=<span class="string">"BEIJING"</span></span><br><span class="line">ORGANIZATION=<span class="string">"公司"</span></span><br><span class="line">ORGANIZATIONAL_UNIT=<span class="string">"Dev"</span></span><br><span class="line">COMMON_NAME=<span class="string">"<span class="variable">$IP</span>"</span></span><br><span class="line">EMAIL=<span class="string">"邮箱"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># --[END]--</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Generate CA key</span></span><br><span class="line">openssl genrsa -aes256 -passout <span class="string">"pass:<span class="variable">$PASSWORD</span>"</span> -out <span class="string">"ca-key-<span class="variable">$CODE</span>.pem"</span> 4096</span><br><span class="line"><span class="comment"># Generate CA</span></span><br><span class="line">openssl req -new -x509 -days 365 -key <span class="string">"ca-key-<span class="variable">$CODE</span>.pem"</span> -sha256 -out <span class="string">"ca-<span class="variable">$CODE</span>.pem"</span> -passin <span class="string">"pass:<span class="variable">$PASSWORD</span>"</span> -subj <span class="string">"/C=<span class="variable">$COUNTRY</span>/ST=<span class="variable">$STATE</span>/L=<span class="variable">$CITY</span>/O=<span class="variable">$ORGANIZATION</span>/OU=<span class="variable">$ORGANIZATIONAL_UNIT</span>/CN=<span class="variable">$COMMON_NAME</span>/emailAddress=<span class="variable">$EMAIL</span>"</span></span><br><span class="line"><span class="comment"># Generate Server key</span></span><br><span class="line">openssl genrsa -out <span class="string">"server-key-<span class="variable">$CODE</span>.pem"</span> 4096</span><br><span class="line"></span><br><span class="line"><span class="comment"># Generate Server Certs.</span></span><br><span class="line">openssl req -subj <span class="string">"/CN=<span class="variable">$COMMON_NAME</span>"</span> -sha256 -new -key <span class="string">"server-key-<span class="variable">$CODE</span>.pem"</span> -out server.csr</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"subjectAltName = IP:<span class="variable">$IP</span>,IP:127.0.0.1"</span> &gt;&gt; extfile.cnf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"extendedKeyUsage = serverAuth"</span> &gt;&gt; extfile.cnf</span><br><span class="line"></span><br><span class="line">openssl x509 -req -days 365 -sha256 -<span class="keyword">in</span> server.csr -passin <span class="string">"pass:<span class="variable">$PASSWORD</span>"</span> -CA <span class="string">"ca-<span class="variable">$CODE</span>.pem"</span> -CAkey <span class="string">"ca-key-<span class="variable">$CODE</span>.pem"</span> -CAcreateserial -out <span class="string">"server-cert-<span class="variable">$CODE</span>.pem"</span> -extfile extfile.cnf</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Generate Client Certs.</span></span><br><span class="line">rm -f extfile.cnf</span><br><span class="line"></span><br><span class="line">openssl genrsa -out <span class="string">"key-<span class="variable">$CODE</span>.pem"</span> 4096</span><br><span class="line">openssl req -subj <span class="string">'/CN=client'</span> -new -key <span class="string">"key-<span class="variable">$CODE</span>.pem"</span> -out client.csr</span><br><span class="line"><span class="built_in">echo</span> extendedKeyUsage = clientAuth &gt;&gt; extfile.cnf</span><br><span class="line">openssl x509 -req -days 365 -sha256 -<span class="keyword">in</span> client.csr -passin <span class="string">"pass:<span class="variable">$PASSWORD</span>"</span> -CA <span class="string">"ca-<span class="variable">$CODE</span>.pem"</span> -CAkey <span class="string">"ca-key-<span class="variable">$CODE</span>.pem"</span> -CAcreateserial -out <span class="string">"cert-<span class="variable">$CODE</span>.pem"</span> -extfile extfile.cnf</span><br><span class="line"></span><br><span class="line">rm -vf client.csr server.csr</span><br><span class="line"></span><br><span class="line">chmod -v 0400 <span class="string">"ca-key-<span class="variable">$CODE</span>.pem"</span> <span class="string">"key-<span class="variable">$CODE</span>.pem"</span> <span class="string">"server-key-<span class="variable">$CODE</span>.pem"</span></span><br><span class="line">chmod -v 0444 <span class="string">"ca-<span class="variable">$CODE</span>.pem"</span> <span class="string">"server-cert-<span class="variable">$CODE</span>.pem"</span> <span class="string">"cert-<span class="variable">$CODE</span>.pem"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 打包客户端证书</span></span><br><span class="line">mkdir -p <span class="string">"tls-client-certs-<span class="variable">$CODE</span>"</span></span><br><span class="line">cp -f <span class="string">"ca-<span class="variable">$CODE</span>.pem"</span> <span class="string">"cert-<span class="variable">$CODE</span>.pem"</span> <span class="string">"key-<span class="variable">$CODE</span>.pem"</span> <span class="string">"tls-client-certs-<span class="variable">$CODE</span>/"</span></span><br><span class="line"><span class="built_in">cd</span> <span class="string">"tls-client-certs-<span class="variable">$CODE</span>"</span></span><br><span class="line">tar zcf <span class="string">"tls-client-certs-<span class="variable">$CODE</span>.tar.gz"</span> *</span><br><span class="line">mv <span class="string">"tls-client-certs-<span class="variable">$CODE</span>.tar.gz"</span> ../</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">rm -rf <span class="string">"tls-client-certs-<span class="variable">$CODE</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝服务端证书</span></span><br><span class="line">mkdir -p /etc/docker/certs.d</span><br><span class="line">cp <span class="string">"ca-<span class="variable">$CODE</span>.pem"</span> <span class="string">"server-cert-<span class="variable">$CODE</span>.pem"</span> <span class="string">"server-key-<span class="variable">$CODE</span>.pem"</span> /etc/docker/certs.d/</span><br></pre></td></tr></table></figure>
-
-<p>对脚本中的变量进行修改后运行，自动会创建好tls证书，服务器的证书在/etc/docker/certs.d/目录下:<br><img src="https://oscimg.oschina.net/oscnet/cf128d18f1e5494241522354509639ac476.jpg" alt="image"><br>客户端的证书在运行脚本的目录下，同时还自动打好了一个.tar.gz的包，很方便。<br><img src="https://oscimg.oschina.net/oscnet/a52727e6614faf2c2985912dd992a699ef8.jpg" alt="image"></p>
-<h3 id="二、配置Docker服务（官方说明）"><a href="#二、配置Docker服务（官方说明）" class="headerlink" title="二、配置Docker服务（官方说明）"></a>二、配置Docker服务（官方说明）</h3><p>注意修改证书路径。</p>
-<p>Enable the secure remote API on a new socket<br>Create a file called ++/etc/systemd/system/docker-tls-tcp.socket++ to make Docker available on a secured TCP socket on port 2376.</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=Docker Secured Socket for the API</span><br><span class="line"></span><br><span class="line"><span class="section">[Socket]</span></span><br><span class="line"><span class="attr">ListenStream</span>=<span class="number">2376</span></span><br><span class="line"><span class="attr">BindIPv6Only</span>=both</span><br><span class="line"><span class="attr">Service</span>=docker.service</span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=sockets.target</span><br></pre></td></tr></table></figure>
-
-<p>Then enable this new socket:</p>
-<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable docker-tls-tcp.<span class="built_in">socket</span></span><br><span class="line">systemctl <span class="built_in">stop</span> docker</span><br><span class="line">systemctl <span class="built_in">start</span> docker-tls-tcp.<span class="built_in">socket</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="Drop-in-configuration"><a href="#Drop-in-configuration" class="headerlink" title="Drop-in configuration"></a>Drop-in configuration</h5><p>Create ++/etc/systemd/system/docker.service.d/10-tls-verify.conf++ drop-in for systemd Docker service:</p>
-<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">[</span><span class="comment">Service</span><span class="title">]</span></span><br><span class="line"><span class="comment">Environment="DOCKER_OPTS=</span><span class="literal">-</span><span class="literal">-</span><span class="comment">tlsverify</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">tlscacert=/etc/docker/ca</span><span class="string">.</span><span class="comment">pem</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">tlscert=/etc/docker/server</span><span class="string">.</span><span class="comment">pem</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">tlskey=/etc/docker/server</span><span class="literal">-</span><span class="comment">key</span><span class="string">.</span><span class="comment">pem"</span></span><br></pre></td></tr></table></figure>
-
-<p>Reload systemd config files and restart docker service:</p>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">sudo</span> <span class="string">systemctl daemon-reload</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">systemctl restart docker.service</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="三、配置Portainer远程TLS连接"><a href="#三、配置Portainer远程TLS连接" class="headerlink" title="三、配置Portainer远程TLS连接"></a>三、配置Portainer远程TLS连接</h3><p><img src="https://oscimg.oschina.net/oscnet/a42a8fc88e593b51007b357d9588cc7e37c.jpg" alt="image"></p>
-<p>证书对应选择：</p>
-<p>ca.pem<br>cert.pem<br>key.pem<br>这样就完成了。注意如果之前开启了未认证的2375端口，请关闭并禁用，重启docker服务。</p>
-<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 停止不安全的2375端口</span></span><br><span class="line">systemctl <span class="built_in">stop</span> docker-tcp.<span class="built_in">socket</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 禁用该端口</span></span><br><span class="line">systemctl disable docker-tcp.<span class="built_in">socket</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启docker服务</span></span><br><span class="line">systemctl restart docker.service</span><br></pre></td></tr></table></figure>
-
+        <h3 id="Redis主从复制核心原理"><a href="#Redis主从复制核心原理" class="headerlink" title="Redis主从复制核心原理"></a>Redis主从复制核心原理</h3><ol>
+<li>salve node启动，会发送一个<code>PSYNC</code>命令给master node</li>
+<li>如果是slave node初次连接到master node，会触发一次<code>full resynchronization</code> 全量复制。此时master回启动一个后台线程，生成<code>RDB</code>快照文件，同时将从客户端新收到的所有写命令缓存到内存中。<code>RDB</code> 文件生成完毕后， master 会将这个 <code>RDB</code> 发送给 slave，slave 会先<strong>写入本地磁盘，然后再从本地磁盘加载到内存</strong>中，接着 master 会将内存中缓存的写命令发送到 slave，slave 也会同步这些数据。</li>
+<li>slave node如果跟master node有网络故障，断开了链接，会自动重连，连接之后master node仅会复制给salve部分缺少的数据。<br><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210119165016.png" alt="Redis-master-slave-replication"></li>
+</ol>
+<h3 id="主从复制是如何断点续传的？"><a href="#主从复制是如何断点续传的？" class="headerlink" title="主从复制是如何断点续传的？"></a>主从复制是如何断点续传的？</h3><p>从 Redis2.8 开始，就支持主从复制的断点续传，如果主从复制过程中，网络连接断掉了，那么可以接着上次复制的地方，继续复制下去，而不是从头开始复制一份。</p>
+<p>master node会在内存中维护一个backlog，master和slave都会保存一个replica offset还有一个master run id，offset就是保存在backlog中的。如果master和slave网络连接断掉了，slave会让master从上次replica offset开始复制，如果没有找到对应的offset，那么就会执行一次<code>resynchronization</code> 。</p>
+<blockquote>
+<p> 如果根据 host+ip 定位 master node，是不靠谱的，如果 master node 重启或者数据出现了变化，那么 slave node 应该根据不同的 run id 区分。</p>
+</blockquote>
 
       
 
@@ -210,17 +170,6 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">docker</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 
       
@@ -271,7 +220,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/2019/10/19/CoreOS配置Docker-API-TLS认证/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/草稿箱/Redis常见面试题.html" alt="微信分享二维码">
     </div>
 </div>
 
@@ -283,25 +232,6 @@
 </article>
 
   
-<nav id="article-nav">
-  
-    <a href="/2019/10/27/使用gitlab-ci和docker自动化部署vue项目/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          使用gitlab-ci和docker自动化部署vue项目
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2019/10/13/ORM框架对比/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">ORM框架对比</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -411,7 +341,7 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
