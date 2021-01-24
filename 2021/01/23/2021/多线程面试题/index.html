@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://blog.elfred.top">
   <title>多线程面试题 | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="CAS有什么问题？CAS的缺点有如ABA问题，自旋锁消耗问题、多变量共享一致性问题： 1.ABA：问题描述：线程t1将它的值从A变为B，再从B变为A。同时有线程t2要将值从A变为C。但CAS检查的时候会发现没有改变，但是实质上它已经发生了改变 。可能会造成数据的缺失。 解决方法：CAS还是类似于乐观锁，同数据乐观锁的方式给它加一个版本号或者时间戳，如AtomicStampedReference">
+  <meta name="description" content="原子性、有序性和可见性final关键字的可见性悲观锁和乐观锁CAS有什么问题？CAS的缺点有如ABA问题，自旋锁消耗问题、多变量共享一致性问题： 1.ABA：问题描述：线程t1将它的值从A变为B，再从B变为A。同时有线程t2要将值从A变为C。但CAS检查的时候会发现没有改变，但是实质上它已经发生了改变 。可能会造成数据的缺失。 解决方法：CAS还是类似于乐观锁，同数据乐观锁的方式给它加一个版本号">
 <meta name="keywords" content="面经">
 <meta property="og:type" content="article">
 <meta property="og:title" content="多线程面试题">
 <meta property="og:url" content="https://blog.elfred.top/2021/01/23/2021/多线程面试题/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="CAS有什么问题？CAS的缺点有如ABA问题，自旋锁消耗问题、多变量共享一致性问题： 1.ABA：问题描述：线程t1将它的值从A变为B，再从B变为A。同时有线程t2要将值从A变为C。但CAS检查的时候会发现没有改变，但是实质上它已经发生了改变 。可能会造成数据的缺失。 解决方法：CAS还是类似于乐观锁，同数据乐观锁的方式给它加一个版本号或者时间戳，如AtomicStampedReference">
+<meta property="og:description" content="原子性、有序性和可见性final关键字的可见性悲观锁和乐观锁CAS有什么问题？CAS的缺点有如ABA问题，自旋锁消耗问题、多变量共享一致性问题： 1.ABA：问题描述：线程t1将它的值从A变为B，再从B变为A。同时有线程t2要将值从A变为C。但CAS检查的时候会发现没有改变，但是实质上它已经发生了改变 。可能会造成数据的缺失。 解决方法：CAS还是类似于乐观锁，同数据乐观锁的方式给它加一个版本号">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-01-23T08:29:38.418Z">
+<meta property="og:updated_time" content="2021-01-23T15:44:05.312Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="多线程面试题">
-<meta name="twitter:description" content="CAS有什么问题？CAS的缺点有如ABA问题，自旋锁消耗问题、多变量共享一致性问题： 1.ABA：问题描述：线程t1将它的值从A变为B，再从B变为A。同时有线程t2要将值从A变为C。但CAS检查的时候会发现没有改变，但是实质上它已经发生了改变 。可能会造成数据的缺失。 解决方法：CAS还是类似于乐观锁，同数据乐观锁的方式给它加一个版本号或者时间戳，如AtomicStampedReference">
+<meta name="twitter:description" content="原子性、有序性和可见性final关键字的可见性悲观锁和乐观锁CAS有什么问题？CAS的缺点有如ABA问题，自旋锁消耗问题、多变量共享一致性问题： 1.ABA：问题描述：线程t1将它的值从A变为B，再从B变为A。同时有线程t2要将值从A变为C。但CAS检查的时候会发现没有改变，但是实质上它已经发生了改变 。可能会造成数据的缺失。 解决方法：CAS还是类似于乐观锁，同数据乐观锁的方式给它加一个版本号">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -173,7 +173,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<h3 id="CAS有什么问题？"><a href="#CAS有什么问题？" class="headerlink" title="CAS有什么问题？"></a>CAS有什么问题？</h3><p>CAS的缺点有如ABA问题，自旋锁消耗问题、多变量共享一致性问题：</p>
+<h2 id="原子性、有序性和可见性"><a href="#原子性、有序性和可见性" class="headerlink" title="原子性、有序性和可见性"></a>原子性、有序性和可见性</h2><h3 id="final关键字的可见性"><a href="#final关键字的可见性" class="headerlink" title="final关键字的可见性"></a>final关键字的可见性</h3><h2 id="悲观锁和乐观锁"><a href="#悲观锁和乐观锁" class="headerlink" title="悲观锁和乐观锁"></a>悲观锁和乐观锁</h2><h3 id="CAS有什么问题？"><a href="#CAS有什么问题？" class="headerlink" title="CAS有什么问题？"></a>CAS有什么问题？</h3><p>CAS的缺点有如ABA问题，自旋锁消耗问题、多变量共享一致性问题：</p>
 <p>1.<strong>ABA</strong>：<br>问题描述：线程t1将它的值从A变为B，再从B变为A。同时有线程t2要将值从A变为C。但CAS检查的时候会发现没有改变，但是实质上它已经发生了改变 。可能会造成数据的缺失。</p>
 <p>解决方法：CAS还是类似于乐观锁，同数据乐观锁的方式给它加一个版本号或者时间戳，如AtomicStampedReference</p>
 <p>2.<strong>自旋消耗资源</strong>：<br>问题描述：多个线程争夺同一个资源时，如果自旋一直不成功，将会一直占用CPU。</p>
@@ -280,18 +280,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/01/23/2021/JVM面试题/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/01/23/2021/Redis常见面试题/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          JVM面试题
+          Redis常见面试题
         
       </div>
     </a>
   
   
-    <a href="/2021/01/20/2021/2021面经/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">2021面经</div>
+    <a href="/2021/01/23/2021/JVM面试题/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JVM面试题</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -476,7 +476,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -492,7 +492,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">

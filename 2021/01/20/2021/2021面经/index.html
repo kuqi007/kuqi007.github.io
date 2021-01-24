@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118154814.webp">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118160303.webp">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210121172804.png">
-<meta property="og:updated_time" content="2021-01-23T15:29:20.181Z">
+<meta property="og:updated_time" content="2021-01-24T15:35:14.717Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2021面经">
 <meta name="twitter:description" content="叮咚买菜 hashmap的扩容过程  单向链表如何判断有环  HashSet遍历和快慢指针   如何找出一个数组重复元素最多的前K个元素  TopK问题，堆排序，时间复杂度nLogK   MySQL什么情况下会发生死锁？如何解决？  举个例子：事务A按照先后顺序去更新id=1和id=2的记录，事务B同一时间按照先后顺序去更新id=2和id=1的记录，因为行锁是两阶段协议，A获得id=1的行锁不会">
@@ -397,7 +397,7 @@
 <p><strong><code>BF.ADD</code>、<code>BF.MADD</code>、<code>BF.EXISTS</code> 、<code>BF.MEXISTS</code>、<code>BF.RESERVE</code></strong></p>
 </blockquote>
 </li>
-<li><p>MySQL行锁的原理，锁的到底是什么？</p>
+<li><p>MySQL行锁的原理，锁的到底是什么？（索引）</p>
 </li>
 <li><p>对MVCC的理解，MVCC到底解决了什么问题？（乐观锁实现，提高性能读写冲突不加锁）</p>
 <blockquote>
@@ -417,7 +417,7 @@
 <p><strong>如何解决</strong>：</p>
 <ol>
 <li>根据实际业务需求，看是否能替换成下一页，上一页这种，这里是说，把limit,offset替换为&gt;辅助索引（即搜索条件）id的方式。该id再调用时，需要返回给前端。</li>
-<li>覆盖索引：当辅助索引查询的数据，只有id和辅助索引本身，那么就不必再去回表查询。思路如下：select * from t wherer id in (select id from t where second_index = xxx limit 10000,20)，这句话是说，先从条件查询中，查找数据对应的id，因为主键在辅助索引上就有，所以不用会回表查询。再通过这些已经被limit出来的id，去查聚集索引，这样只会20次随机IO。</li>
+<li>覆盖索引：当辅助索引查询的数据，只有id和辅助索引本身，那么就不必再去回表查询。思路如下：select * from t wherer id in (select id from t where second_index = xxx limit 10000,20)，这句话是说，先从条件查询中，查找数据对应的id，因为主键在辅助索引上就有，所以不用会回表查询。再通过这些已经被limit出来的id，去查聚集索引，这样只会20次随机IO。（或者用JOIN去优化，原理类似select * from t a join (select id from t where second_index = xxx limit 10000,20) b on a.id=b.id）</li>
 </ol>
 </blockquote>
 </li>
@@ -463,11 +463,11 @@
 <li><p>JVM内存区域</p>
 <blockquote>
 <ol>
-<li>堆</li>
-<li>虚拟机栈</li>
-<li>方法区：类信息</li>
-<li>本地方法栈</li>
 <li>程序计数器：指向当前线程正在执行的字节码指令，线程私有</li>
+<li>虚拟机栈</li>
+<li>堆</li>
+<li>方法区</li>
+<li>本地方法栈</li>
 </ol>
 </blockquote>
 </li>
@@ -487,7 +487,7 @@
 </li>
 <li><p>分库分表之后的JOIN如何处理，分页如何处理</p>
 <blockquote>
-<p>JOIN的话</p>
+<p>TODO待补充</p>
 </blockquote>
 </li>
 <li><p>MySQL是如何保证ACID的</p>
@@ -997,11 +997,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/01/23/2021/多线程面试题/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/01/23/2021/JVM面试题/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          多线程面试题
+          JVM面试题
         
       </div>
     </a>
@@ -1193,7 +1193,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1209,7 +1209,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">

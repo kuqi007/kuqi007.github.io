@@ -232,6 +232,106 @@
 
 
   
+    <article id="post-2021/多线程面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/23/2021/多线程面试题/">多线程面试题</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/01/23/2021/多线程面试题/" class="archive-article-date">
+  	<time datetime="2021-01-23T08:23:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-23</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h2 id="原子性、有序性和可见性"><a href="#原子性、有序性和可见性" class="headerlink" title="原子性、有序性和可见性"></a>原子性、有序性和可见性</h2><h3 id="final关键字的可见性"><a href="#final关键字的可见性" class="headerlink" title="final关键字的可见性"></a>final关键字的可见性</h3><h2 id="悲观锁和乐观锁"><a href="#悲观锁和乐观锁" class="headerlink" title="悲观锁和乐观锁"></a>悲观锁和乐观锁</h2><h3 id="CAS有什么问题？"><a href="#CAS有什么问题？" class="headerlink" title="CAS有什么问题？"></a>CAS有什么问题？</h3><p>CAS的缺点有如ABA问题，自旋锁消耗问题、多变量共享一致性问题：</p>
+<p>1.<strong>ABA</strong>：<br>问题描述：线程t1将它的值从A变为B，再从B变为A。同时有线程t2要将值从A变为C。但CAS检查的时候会发现没有改变，但是实质上它已经发生了改变 。可能会造成数据的缺失。</p>
+<p>解决方法：CAS还是类似于乐观锁，同数据乐观锁的方式给它加一个版本号或者时间戳，如AtomicStampedReference</p>
+<p>2.<strong>自旋消耗资源</strong>：<br>问题描述：多个线程争夺同一个资源时，如果自旋一直不成功，将会一直占用CPU。</p>
+<p>解决方法：破坏掉for死循环，当超过一定时间或者一定次数时，return退出。JDK8新增的LongAddr和ConcurrentHashMap类似的方法。当多个线程竞争时，将粒度变小，将一个变量拆分为多个变量，达到多个线程访问多个资源的效果，最后再调用sum把它合起来。</p>
+<p>虽然base和cells都是volatile修饰的，但感觉这个sum操作没有加锁，可能sum的结果不是那么精确。</p>
+<p>3.<strong>多变量共享一致性问题</strong>：<br>解决方法： CAS操作是针对一个变量的，如果对多个变量操作，解决方案如下</p>
+<p>1) 可以加锁来解决<br>2) 封装成对象类解决</p>
+<h3 id="happens-before简介"><a href="#happens-before简介" class="headerlink" title="happens-before简介"></a>happens-before简介</h3><p>在JMM中，如果一个操作执行的结果需要对另一个操作可见，那么这两个操作之间必须要存在happens-before关系。这里提到的两个操作既可以是在一个线程里，也可以是在不同的线程里。</p>
+<p>与程序员密切相关的happens-before规则如下：</p>
+<ul>
+<li>程序顺序规则：一个线程中的每个操作，happens-before于该线程中的任意后续操作。</li>
+<li>监视器锁规则：对一个锁的解锁，happens-before于随后对这个锁的加锁。</li>
+<li>volatile变量规则：对一个volatile域的写，happens-before于任意后续对这个volatile域的读。</li>
+<li>传递性：如果A happens-before B，且B happens-before C，那么A happens-before C。</li>
+</ul>
+<blockquote>
+<p><strong>注意：</strong>两个操作之间具有happens-before关系，并不意味着前一个操作必须要在后一个操作之前执行！happens-before仅仅要求前一个操作（执行的结果）对后一个操作可见，且前一个操作按顺序排在第二个操作之前（the first is visible to and ordered before the second）。</p>
+</blockquote>
+<h3 id="单线程、多线程在单核CPU、多核CPU中的影响"><a href="#单线程、多线程在单核CPU、多核CPU中的影响" class="headerlink" title="单线程、多线程在单核CPU、多核CPU中的影响"></a>单线程、多线程在单核CPU、多核CPU中的影响</h3><p>我们分别来分析下单线程、多线程在单核CPU、多核CPU中的影响。</p>
+<p><strong>单线程。</strong>cpu核心的缓存只被一个线程访问。缓存独占，不会出现访问冲突等问题。</p>
+<p><strong>单核CPU，多线程。</strong>进程中的多个线程会同时访问进程中的共享数据，CPU将某块内存加载到缓存后，不同线程在访问相同的物理地址的时候，都会映射到相同的缓存位置，这样即使发生线程的切换，缓存仍然不会失效。但由于任何时刻只能有一个线程在执行，因此不会出现缓存访问冲突。</p>
+<p><strong>多核CPU，多线程。</strong>每个核都至少有一个L1 缓存。多个线程访问进程中的某个共享内存，且这多个线程分别在不同的核心上执行，则每个核心都会在各自的caehe中保留一份共享内存的缓冲。由于多核是可以并行的，可能会出现多个线程同时写各自的缓存的情况，而各自的cache之间的数据就有可能不同。</p>
+<p>在CPU和主存之间增加缓存，在多线程场景下就可能存在<strong>缓存一致性问题</strong>，也就是说，在多核CPU中，每个核的自己的缓存中，关于同一个数据的缓存内容可能不一致。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/23/2021/多线程面试题/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-2021/JVM面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -323,106 +423,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/01/23/2021/JVM面试题/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-2021/多线程面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/23/2021/多线程面试题/">多线程面试题</a>
-    </h1>
-  
-
-        
-        
-<a href="/2021/01/23/2021/多线程面试题/" class="archive-article-date">
-  	<time datetime="2021-01-23T08:23:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-23</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h3 id="CAS有什么问题？"><a href="#CAS有什么问题？" class="headerlink" title="CAS有什么问题？"></a>CAS有什么问题？</h3><p>CAS的缺点有如ABA问题，自旋锁消耗问题、多变量共享一致性问题：</p>
-<p>1.<strong>ABA</strong>：<br>问题描述：线程t1将它的值从A变为B，再从B变为A。同时有线程t2要将值从A变为C。但CAS检查的时候会发现没有改变，但是实质上它已经发生了改变 。可能会造成数据的缺失。</p>
-<p>解决方法：CAS还是类似于乐观锁，同数据乐观锁的方式给它加一个版本号或者时间戳，如AtomicStampedReference</p>
-<p>2.<strong>自旋消耗资源</strong>：<br>问题描述：多个线程争夺同一个资源时，如果自旋一直不成功，将会一直占用CPU。</p>
-<p>解决方法：破坏掉for死循环，当超过一定时间或者一定次数时，return退出。JDK8新增的LongAddr和ConcurrentHashMap类似的方法。当多个线程竞争时，将粒度变小，将一个变量拆分为多个变量，达到多个线程访问多个资源的效果，最后再调用sum把它合起来。</p>
-<p>虽然base和cells都是volatile修饰的，但感觉这个sum操作没有加锁，可能sum的结果不是那么精确。</p>
-<p>3.<strong>多变量共享一致性问题</strong>：<br>解决方法： CAS操作是针对一个变量的，如果对多个变量操作，解决方案如下</p>
-<p>1) 可以加锁来解决<br>2) 封装成对象类解决</p>
-<h3 id="happens-before简介"><a href="#happens-before简介" class="headerlink" title="happens-before简介"></a>happens-before简介</h3><p>在JMM中，如果一个操作执行的结果需要对另一个操作可见，那么这两个操作之间必须要存在happens-before关系。这里提到的两个操作既可以是在一个线程里，也可以是在不同的线程里。</p>
-<p>与程序员密切相关的happens-before规则如下：</p>
-<ul>
-<li>程序顺序规则：一个线程中的每个操作，happens-before于该线程中的任意后续操作。</li>
-<li>监视器锁规则：对一个锁的解锁，happens-before于随后对这个锁的加锁。</li>
-<li>volatile变量规则：对一个volatile域的写，happens-before于任意后续对这个volatile域的读。</li>
-<li>传递性：如果A happens-before B，且B happens-before C，那么A happens-before C。</li>
-</ul>
-<blockquote>
-<p><strong>注意：</strong>两个操作之间具有happens-before关系，并不意味着前一个操作必须要在后一个操作之前执行！happens-before仅仅要求前一个操作（执行的结果）对后一个操作可见，且前一个操作按顺序排在第二个操作之前（the first is visible to and ordered before the second）。</p>
-</blockquote>
-<h3 id="单线程、多线程在单核CPU、多核CPU中的影响"><a href="#单线程、多线程在单核CPU、多核CPU中的影响" class="headerlink" title="单线程、多线程在单核CPU、多核CPU中的影响"></a>单线程、多线程在单核CPU、多核CPU中的影响</h3><p>我们分别来分析下单线程、多线程在单核CPU、多核CPU中的影响。</p>
-<p><strong>单线程。</strong>cpu核心的缓存只被一个线程访问。缓存独占，不会出现访问冲突等问题。</p>
-<p><strong>单核CPU，多线程。</strong>进程中的多个线程会同时访问进程中的共享数据，CPU将某块内存加载到缓存后，不同线程在访问相同的物理地址的时候，都会映射到相同的缓存位置，这样即使发生线程的切换，缓存仍然不会失效。但由于任何时刻只能有一个线程在执行，因此不会出现缓存访问冲突。</p>
-<p><strong>多核CPU，多线程。</strong>每个核都至少有一个L1 缓存。多个线程访问进程中的某个共享内存，且这多个线程分别在不同的核心上执行，则每个核心都会在各自的caehe中保留一份共享内存的缓冲。由于多核是可以并行的，可能会出现多个线程同时写各自的缓存的情况，而各自的cache之间的数据就有可能不同。</p>
-<p>在CPU和主存之间增加缓存，在多线程场景下就可能存在<strong>缓存一致性问题</strong>，也就是说，在多核CPU中，每个核的自己的缓存中，关于同一个数据的缓存内容可能不一致。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/01/23/2021/多线程面试题/">展开全文 >></a>
         </p>
       
 
@@ -1025,7 +1025,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1041,7 +1041,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
