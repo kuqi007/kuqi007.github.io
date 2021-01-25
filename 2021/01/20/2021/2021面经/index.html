@@ -19,9 +19,10 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210113194641.jpeg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118154630.webp">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118154814.webp">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210125231657.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118160303.webp">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210121172804.png">
-<meta property="og:updated_time" content="2021-01-24T15:35:14.717Z">
+<meta property="og:updated_time" content="2021-01-25T15:31:24.135Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2021面经">
 <meta name="twitter:description" content="叮咚买菜 hashmap的扩容过程  单向链表如何判断有环  HashSet遍历和快慢指针   如何找出一个数组重复元素最多的前K个元素  TopK问题，堆排序，时间复杂度nLogK   MySQL什么情况下会发生死锁？如何解决？  举个例子：事务A按照先后顺序去更新id=1和id=2的记录，事务B同一时间按照先后顺序去更新id=2和id=1的记录，因为行锁是两阶段协议，A获得id=1的行锁不会">
@@ -276,7 +277,7 @@
 </ul>
 </blockquote>
 </li>
-<li><p>CHM（ConcurrentHashMap）1.7版本segment数组长度是多少（2的N次方）</p>
+<li><p>CHM（ConcurrentHashMap）1.7版本segment数组长度是多少（最小16，根据不同型号CPU可能有所不同）</p>
 </li>
 <li><p>序列化原理是什么？为什么要序列化</p>
 </li>
@@ -463,12 +464,13 @@
 <li><p>JVM内存区域</p>
 <blockquote>
 <ol>
-<li>程序计数器：指向当前线程正在执行的字节码指令，线程私有</li>
-<li>虚拟机栈</li>
-<li>堆</li>
-<li>方法区</li>
-<li>本地方法栈</li>
+<li>程序计数器（线程私有）：指向当前线程正在执行的字节码指令</li>
+<li>虚拟机栈（线程私有）：虚拟机栈描述的是Java方法执行的线程内存模型：每个方法执行的时候，Java虚拟机都会同步创建一个栈帧用于存储局部变量、操作数栈、动态连接、方法出口等信息。</li>
+<li>本地方法栈（线程独享）：调用本地native的内存模型</li>
+<li>堆（线程共享）：Java对象存储的地方<br>（1）Java堆是虚拟机管理的内存中最大的一块<br>（2）Java堆是所有线程共享的区域<br>（3）在虚拟机启动时创建<br>（4）此内存区域的唯一目的就是存放对象实例，几乎所有对象实例都在这里分配内存。存放new生成的对象和数组<br>（5）Java堆是垃圾收集器管理的内存区域，因此很多时候称为“GC堆”</li>
+<li>方法区（线程共享）：用于存储已被虚拟机加载的类信息、常量、静态变量、即时编译后的代码等数据<br><strong>运行时常量池：</strong><br>A、是方法区的一部分<br>B、存放编译期生成的各种字面量和符号引用<br>C、Class文件中除了存有类的版本、字段、方法、接口等描述信息，还有一项是常量池，存有这个类的 编译期生成的各种字面量和符号引用，这部分内容将在类加载后，存放到方法区的运行时常量池中。</li>
 </ol>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210125231657.png" alt="图片"></p>
 </blockquote>
 </li>
 <li><p>分库分表之后多条件查询如何处理？（宽表或者ES）</p>
@@ -838,6 +840,12 @@
 </ol>
 </blockquote>
 </li>
+<li><p>volatile能否保证原子性？</p>
+<blockquote>
+<p>不能。Num++这种操作无法保证原子性，Num++可以分为三步：读取i的值，将i的值+1，写入最新的i值。</p>
+<p>举个例子：当线程1执行Num++语句时，先是读入Num的值为0，倘若此时让出CPU执行权，线程2获得执行，线程2会重新从主内存中，读入Num的值还是0，然后线程2执行+1操作，最后把Num=1刷新到主内存中； 线程2执行完后，线程1由开始执行，但之前已经读取的Num的值0，所以它还是在0的基础上执行+1操作，也就是还是等于1，并刷新到主内存中。 所以最后输出结果可能是1也可能是2。</p>
+</blockquote>
+</li>
 <li><p>synchronized如何保证可见性</p>
 <blockquote>
 <p>Synchronized能够实现原子性和可见性；在Java内存模型中，synchronized规定，线程在加锁时，先清空工作内存→在主内存中拷贝最新变量的副本到工作内存→执行完代码→将更改后的共享变量的值刷新到主内存中→释放互斥锁。</p>
@@ -997,11 +1005,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/01/23/2021/JVM面试题/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/01/23/2021/多线程面试题/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          JVM面试题
+          多线程面试题
         
       </div>
     </a>
@@ -1193,10 +1201,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -1210,6 +1214,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
               </li>
              
               <li class="article-tag-list-item">
