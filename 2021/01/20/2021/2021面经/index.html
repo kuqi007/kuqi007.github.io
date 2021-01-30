@@ -22,7 +22,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210125231657.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118160303.webp">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210121172804.png">
-<meta property="og:updated_time" content="2021-01-25T15:31:24.135Z">
+<meta property="og:updated_time" content="2021-01-30T05:55:17.774Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2021面经">
 <meta name="twitter:description" content="叮咚买菜 hashmap的扩容过程  单向链表如何判断有环  HashSet遍历和快慢指针   如何找出一个数组重复元素最多的前K个元素  TopK问题，堆排序，时间复杂度nLogK   MySQL什么情况下会发生死锁？如何解决？  举个例子：事务A按照先后顺序去更新id=1和id=2的记录，事务B同一时间按照先后顺序去更新id=2和id=1的记录，因为行锁是两阶段协议，A获得id=1的行锁不会">
@@ -466,7 +466,7 @@
 <ol>
 <li>程序计数器（线程私有）：指向当前线程正在执行的字节码指令</li>
 <li>虚拟机栈（线程私有）：虚拟机栈描述的是Java方法执行的线程内存模型：每个方法执行的时候，Java虚拟机都会同步创建一个栈帧用于存储局部变量、操作数栈、动态连接、方法出口等信息。</li>
-<li>本地方法栈（线程独享）：调用本地native的内存模型</li>
+<li>本地方法栈（线程私有）：调用本地native的内存模型</li>
 <li>堆（线程共享）：Java对象存储的地方<br>（1）Java堆是虚拟机管理的内存中最大的一块<br>（2）Java堆是所有线程共享的区域<br>（3）在虚拟机启动时创建<br>（4）此内存区域的唯一目的就是存放对象实例，几乎所有对象实例都在这里分配内存。存放new生成的对象和数组<br>（5）Java堆是垃圾收集器管理的内存区域，因此很多时候称为“GC堆”</li>
 <li>方法区（线程共享）：用于存储已被虚拟机加载的类信息、常量、静态变量、即时编译后的代码等数据<br><strong>运行时常量池：</strong><br>A、是方法区的一部分<br>B、存放编译期生成的各种字面量和符号引用<br>C、Class文件中除了存有类的版本、字段、方法、接口等描述信息，还有一项是常量池，存有这个类的 编译期生成的各种字面量和符号引用，这部分内容将在类加载后，存放到方法区的运行时常量池中。</li>
 </ol>
@@ -552,7 +552,7 @@
 </li>
 <li><p>volatile保证的内存可见性是指什么？禁止重排序的原理</p>
 </li>
-<li><p>JMM的工作内存是在哪里？（CPU高速缓存）</p>
+<li><p>JMM的工作内存是在哪里？（CPU高速缓存，逻辑上部分属于栈）</p>
 </li>
 <li><p>操作系统线程和JVM线程的区别</p>
 </li>
@@ -645,7 +645,17 @@
 </li>
 <li><p>缓存击穿和缓存雪崩是什么？如何解决</p>
 <blockquote>
-<p>击穿：1.热点数据永不失效；2.从数据库加载缓存数据的时候加互斥锁</p>
+<p><strong>击穿：</strong>1.热点数据永不失效；2.从数据库加载缓存数据的时候加互斥锁</p>
+<p><strong>雪崩：</strong><br><strong>针对 Redis 服务不可用的情况：</strong></p>
+<ol>
+<li>采用 Redis 集群，避免单机出现问题整个缓存服务都没办法使用。</li>
+<li>限流，避免同时处理大量的请求。</li>
+</ol>
+<p><strong>针对热点缓存失效的情况：</strong></p>
+<ol>
+<li>设置不同的失效时间比如随机设置缓存的失效时间。</li>
+<li>缓存永不失效。</li>
+</ol>
 </blockquote>
 </li>
 <li><p>Java CPU负载100%排查技巧</p>
@@ -825,7 +835,7 @@
 <p>如果对声明了volatile的变量进行写操作，JVM就会向处理器发送一条<strong>Lock</strong>前缀的指令，将这个变量所在缓存行的数据写回到系统内存。在多处理器下，为了保证各个处理器的缓存是一致的，就会实现缓存一致性协议，每个处理器通过嗅探在总线上传播的数据来检查自己缓存的值是不是过期了，当处理器发现自己缓存行对应的内存地址被修改，就会将当前处理器的缓存行设置为无效状态，当处理器对这个数据进行修改操作的时候，会重新从系统内存中把数据读到处理器缓存里。</p>
 <p>volatile两条实现原则：</p>
 <ol>
-<li><strong>Lock前缀指令会引起处理器缓存回写到内存</strong>。LOCK#信号确保在声言该信号期间，处理器可以独占共享内存（通过锁住总线，导致其他CPU不能访问总线，不能访问总线就意味着不能访问系统内存）。但在最近的处理器里，LOCK#信号一般不锁总线，而是锁缓存，锁总线开销比较大。在P6和目前的处理器中，如果访问的内存区域已经缓存在处理器内部，则不会声言LOCK#信号。相反，它会锁定这块内存区域的缓存并回写到内存，并使用缓存一致性机制来确定修改的原子性，此操作被称为“缓存锁定”，缓存一致性会阻止同时修改由两个以上处理器缓存的内存区域数据。</li>
+<li><strong>Lock前缀指令会引起处理器缓存回写到内存</strong>。LOCK#信号确保在声言该信号期间，处理器可以独占共享内存（通过锁住总线，导致其他CPU不能访问总线，不能访问总线就意味着不能访问系统内存）。但在最近的处理器里，LOCK#信号一般不锁总线，而是锁缓存，锁总线开销比较大。在P6和目前的处理器中，如果访问的内存区域已经缓存在处理器内部，则不会声言LOCK#信号。相反，它会锁定这块内存区域的缓存并回写到内存，并使用缓存一致性机制来确定修改的原子性，此操作被称为“缓存锁定”，<strong>缓存一致性会阻止同时修改由两个以上处理器缓存的内存区域数据</strong>。</li>
 <li><strong>一个处理器的缓存会写到内存会导致其他处理器的缓存无效</strong>。部分处理器使用MESI（修改、独占、共享、无效）控制协议去维护内部缓存和其他处理器缓存的一致性。处理器使用<strong>嗅探技术</strong>保证它的内部缓存、系统内存和其他处理器的缓存的数据在总线上保持一致。</li>
 </ol>
 </blockquote>
@@ -869,6 +879,18 @@
 <li><strong>提高响应速度</strong>。当任务到达时，任务可以不需要等到线程创建就能立即执行。</li>
 <li><strong>提高线程的可管理性</strong>。线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一分配、调优和监控。</li>
 </ol>
+</blockquote>
+</li>
+<li><p>线程创建的基本开销和线程切换开销</p>
+<blockquote>
+<p>线程创建开销：</p>
+<ul>
+<li>为线程堆栈分配并初始化一大块内存</li>
+<li>需要进行系统调用以在主机OS中创建/注册本机线程</li>
+<li>创建初始化描述符并将其添加到JVM内部数据结构中</li>
+</ul>
+<p>线程切换开销：</p>
+<p>线程切换的时候还要执行内存换页，CPU 的缓存被清空，切换回来的时候还要重新从内存中读取信息，破坏了数据的局部性。【分配内存、列入调度、内存换页、清空缓存和重新读取】</p>
 </blockquote>
 </li>
 <li><p>创建线程的开销</p>
@@ -920,6 +942,41 @@
 <li>反映Java虚拟机内部情况的JMXBean、JVMTI中注册的回调、本地代码缓存等。</li>
 </ul>
 </blockquote>
+</li>
+</ul>
+<h3 id="滴滴"><a href="#滴滴" class="headerlink" title="滴滴"></a>滴滴</h3><ul>
+<li><p>编程题：找出一个数组中出现次数为奇数的元素，并输出这些元素</p>
+</li>
+<li><p>快排时间复杂度是多少，快排是否稳定？稳定指的是什么？</p>
+<blockquote>
+<p>快排时间复杂度：最差n^2，平均nLogn</p>
+<p>快排是不稳定的：</p>
+<p>稳定：如果 a 原本在 b 前面，而 a=b，排序之后 a 仍然在 b 的前面。<br>不稳定：如果 a 原本在 b 的前面，而 a=b，排序之后 a 可能会出现在 b 的后面。</p>
+</blockquote>
+</li>
+<li><p>kafka为什么支持高吞吐</p>
+</li>
+<li><p>kafka如何做到水平拓展</p>
+</li>
+<li><p>一个http请求过来，SpringMVC的工作流程</p>
+</li>
+<li><p>Spring拦截器和filter的区别</p>
+</li>
+<li><p>线程池工作原理，线程多了会有什么问题？</p>
+</li>
+<li><p>核心线程数如何确定？</p>
+</li>
+<li><p>JUC底下用过哪些包，可重入锁的底层实现（AQS）</p>
+</li>
+<li><p>分库分表除了sharding jdbc还有哪些不需要引入三方jar包的</p>
+</li>
+<li><p>INNODB引擎有哪些锁，这些锁基于什么加的？</p>
+</li>
+<li><p>索引的种类</p>
+</li>
+<li><p>索引的数据结构</p>
+</li>
+<li><p>聚集索引和非聚集索引的区别</p>
 </li>
 </ul>
 
@@ -1201,6 +1258,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -1210,10 +1271,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MapStruct</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
