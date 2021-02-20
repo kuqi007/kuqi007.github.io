@@ -6,24 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://blog.elfred.top">
-  <title>【转】CoreOS配置Docker API TLS认证 | Elfred&#39;s Blog</title>
+  <title>计算机网络 | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我们经常会利用Portainer来管理docker环境，也经常会用Jenkins来自动构建和部署docker，远程管理都会使用到Docker API，通常我们只是开启了没有安全保护的2375（通常）端口，这个比较危险，会导致远程劫持攻击。那么我们就需要配置TLS认证的2376（通常）端口。">
-<meta name="keywords" content="docker">
+  <meta name="description" content="TCP/UDP什么是TCPTCP三次握手三次握手的流程为什么是三次，两次行不行？TCP四次挥手四次挥手的流程？为什么是四次挥手不是三次？TCP如何保证可靠性传输TCP粘包和拆包TCP是个“流”协议，所谓流，就是没有界限的一串数据。大家可以想想河里的流水，是连成一片的，其间并没有分界线。TCP底层并不了解上层业务数据的具体含义，它会根据TCP缓冲区的实际情况进行包的划分，所以在业务上认为，一个完整">
+<meta name="keywords" content="面经">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【转】CoreOS配置Docker API TLS认证">
-<meta property="og:url" content="https://blog.elfred.top/2019/10/19/CoreOS配置Docker-API-TLS认证/index.html">
+<meta property="og:title" content="计算机网络">
+<meta property="og:url" content="https://blog.elfred.top/2021/02/04/2021/计算机网络/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="我们经常会利用Portainer来管理docker环境，也经常会用Jenkins来自动构建和部署docker，远程管理都会使用到Docker API，通常我们只是开启了没有安全保护的2375（通常）端口，这个比较危险，会导致远程劫持攻击。那么我们就需要配置TLS认证的2376（通常）端口。">
+<meta property="og:description" content="TCP/UDP什么是TCPTCP三次握手三次握手的流程为什么是三次，两次行不行？TCP四次挥手四次挥手的流程？为什么是四次挥手不是三次？TCP如何保证可靠性传输TCP粘包和拆包TCP是个“流”协议，所谓流，就是没有界限的一串数据。大家可以想想河里的流水，是连成一片的，其间并没有分界线。TCP底层并不了解上层业务数据的具体含义，它会根据TCP缓冲区的实际情况进行包的划分，所以在业务上认为，一个完整">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://oscimg.oschina.net/oscnet/cf128d18f1e5494241522354509639ac476.jpg">
-<meta property="og:image" content="https://oscimg.oschina.net/oscnet/a52727e6614faf2c2985912dd992a699ef8.jpg">
-<meta property="og:image" content="https://oscimg.oschina.net/oscnet/a42a8fc88e593b51007b357d9588cc7e37c.jpg">
-<meta property="og:updated_time" content="2019-10-27T07:58:01.320Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210212215650.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210212215514.png">
+<meta property="og:updated_time" content="2021-02-19T14:57:46.196Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【转】CoreOS配置Docker API TLS认证">
-<meta name="twitter:description" content="我们经常会利用Portainer来管理docker环境，也经常会用Jenkins来自动构建和部署docker，远程管理都会使用到Docker API，通常我们只是开启了没有安全保护的2375（通常）端口，这个比较危险，会导致远程劫持攻击。那么我们就需要配置TLS认证的2376（通常）端口。">
-<meta name="twitter:image" content="https://oscimg.oschina.net/oscnet/cf128d18f1e5494241522354509639ac476.jpg">
+<meta name="twitter:title" content="计算机网络">
+<meta name="twitter:description" content="TCP/UDP什么是TCPTCP三次握手三次握手的流程为什么是三次，两次行不行？TCP四次挥手四次挥手的流程？为什么是四次挥手不是三次？TCP如何保证可靠性传输TCP粘包和拆包TCP是个“流”协议，所谓流，就是没有界限的一串数据。大家可以想想河里的流水，是连成一片的，其间并没有分界线。TCP底层并不了解上层业务数据的具体含义，它会根据TCP缓冲区的实际情况进行包的划分，所以在业务上认为，一个完整">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210212215650.png">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -149,14 +148,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-CoreOS配置Docker-API-TLS认证" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-2021/计算机网络" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      【转】CoreOS配置Docker API TLS认证
+      计算机网络
     </h1>
   
 
@@ -167,8 +166,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2019/10/19/CoreOS配置Docker-API-TLS认证/" class="archive-article-date">
-  	<time datetime="2019-10-19T15:43:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-19</time>
+<a href="/2021/02/04/2021/计算机网络/" class="archive-article-date">
+  	<time datetime="2021-02-04T07:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-04</time>
 </a>
 
         
@@ -176,32 +175,30 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>我们经常会利用Portainer来管理docker环境，也经常会用Jenkins来自动构建和部署docker，远程管理都会使用到Docker API，通常我们只是开启了没有安全保护的2375（通常）端口，这个比较危险，会导致远程劫持攻击。那么我们就需要配置TLS认证的2376（通常）端口。</p>
-<a id="more"></a>
-
-<p>下面我们针对CoreOS系统进行配置：</p>
-<h3 id="一、利用系统自带的openssl生成相应的服务端和客户端证书"><a href="#一、利用系统自带的openssl生成相应的服务端和客户端证书" class="headerlink" title="一、利用系统自带的openssl生成相应的服务端和客户端证书"></a>一、利用系统自带的openssl生成相应的服务端和客户端证书</h3><p>我们利用脚本自动生成，这样非常便捷，脚本（auto-tls-certs.sh）如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># </span></span><br><span class="line"><span class="comment"># -------------------------------------------------------------</span></span><br><span class="line"><span class="comment"># 自动创建 Docker TLS 证书</span></span><br><span class="line"><span class="comment"># -------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以下是配置信息</span></span><br><span class="line"><span class="comment"># --[BEGIN]------------------------------</span></span><br><span class="line"></span><br><span class="line">CODE=<span class="string">"dp"</span></span><br><span class="line">IP=<span class="string">"docker服务器ip"</span></span><br><span class="line">PASSWORD=<span class="string">"证书密码"</span></span><br><span class="line">COUNTRY=<span class="string">"CN"</span></span><br><span class="line">STATE=<span class="string">"BEIJING"</span></span><br><span class="line">CITY=<span class="string">"BEIJING"</span></span><br><span class="line">ORGANIZATION=<span class="string">"公司"</span></span><br><span class="line">ORGANIZATIONAL_UNIT=<span class="string">"Dev"</span></span><br><span class="line">COMMON_NAME=<span class="string">"<span class="variable">$IP</span>"</span></span><br><span class="line">EMAIL=<span class="string">"邮箱"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># --[END]--</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Generate CA key</span></span><br><span class="line">openssl genrsa -aes256 -passout <span class="string">"pass:<span class="variable">$PASSWORD</span>"</span> -out <span class="string">"ca-key-<span class="variable">$CODE</span>.pem"</span> 4096</span><br><span class="line"><span class="comment"># Generate CA</span></span><br><span class="line">openssl req -new -x509 -days 365 -key <span class="string">"ca-key-<span class="variable">$CODE</span>.pem"</span> -sha256 -out <span class="string">"ca-<span class="variable">$CODE</span>.pem"</span> -passin <span class="string">"pass:<span class="variable">$PASSWORD</span>"</span> -subj <span class="string">"/C=<span class="variable">$COUNTRY</span>/ST=<span class="variable">$STATE</span>/L=<span class="variable">$CITY</span>/O=<span class="variable">$ORGANIZATION</span>/OU=<span class="variable">$ORGANIZATIONAL_UNIT</span>/CN=<span class="variable">$COMMON_NAME</span>/emailAddress=<span class="variable">$EMAIL</span>"</span></span><br><span class="line"><span class="comment"># Generate Server key</span></span><br><span class="line">openssl genrsa -out <span class="string">"server-key-<span class="variable">$CODE</span>.pem"</span> 4096</span><br><span class="line"></span><br><span class="line"><span class="comment"># Generate Server Certs.</span></span><br><span class="line">openssl req -subj <span class="string">"/CN=<span class="variable">$COMMON_NAME</span>"</span> -sha256 -new -key <span class="string">"server-key-<span class="variable">$CODE</span>.pem"</span> -out server.csr</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"subjectAltName = IP:<span class="variable">$IP</span>,IP:127.0.0.1"</span> &gt;&gt; extfile.cnf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"extendedKeyUsage = serverAuth"</span> &gt;&gt; extfile.cnf</span><br><span class="line"></span><br><span class="line">openssl x509 -req -days 365 -sha256 -<span class="keyword">in</span> server.csr -passin <span class="string">"pass:<span class="variable">$PASSWORD</span>"</span> -CA <span class="string">"ca-<span class="variable">$CODE</span>.pem"</span> -CAkey <span class="string">"ca-key-<span class="variable">$CODE</span>.pem"</span> -CAcreateserial -out <span class="string">"server-cert-<span class="variable">$CODE</span>.pem"</span> -extfile extfile.cnf</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Generate Client Certs.</span></span><br><span class="line">rm -f extfile.cnf</span><br><span class="line"></span><br><span class="line">openssl genrsa -out <span class="string">"key-<span class="variable">$CODE</span>.pem"</span> 4096</span><br><span class="line">openssl req -subj <span class="string">'/CN=client'</span> -new -key <span class="string">"key-<span class="variable">$CODE</span>.pem"</span> -out client.csr</span><br><span class="line"><span class="built_in">echo</span> extendedKeyUsage = clientAuth &gt;&gt; extfile.cnf</span><br><span class="line">openssl x509 -req -days 365 -sha256 -<span class="keyword">in</span> client.csr -passin <span class="string">"pass:<span class="variable">$PASSWORD</span>"</span> -CA <span class="string">"ca-<span class="variable">$CODE</span>.pem"</span> -CAkey <span class="string">"ca-key-<span class="variable">$CODE</span>.pem"</span> -CAcreateserial -out <span class="string">"cert-<span class="variable">$CODE</span>.pem"</span> -extfile extfile.cnf</span><br><span class="line"></span><br><span class="line">rm -vf client.csr server.csr</span><br><span class="line"></span><br><span class="line">chmod -v 0400 <span class="string">"ca-key-<span class="variable">$CODE</span>.pem"</span> <span class="string">"key-<span class="variable">$CODE</span>.pem"</span> <span class="string">"server-key-<span class="variable">$CODE</span>.pem"</span></span><br><span class="line">chmod -v 0444 <span class="string">"ca-<span class="variable">$CODE</span>.pem"</span> <span class="string">"server-cert-<span class="variable">$CODE</span>.pem"</span> <span class="string">"cert-<span class="variable">$CODE</span>.pem"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 打包客户端证书</span></span><br><span class="line">mkdir -p <span class="string">"tls-client-certs-<span class="variable">$CODE</span>"</span></span><br><span class="line">cp -f <span class="string">"ca-<span class="variable">$CODE</span>.pem"</span> <span class="string">"cert-<span class="variable">$CODE</span>.pem"</span> <span class="string">"key-<span class="variable">$CODE</span>.pem"</span> <span class="string">"tls-client-certs-<span class="variable">$CODE</span>/"</span></span><br><span class="line"><span class="built_in">cd</span> <span class="string">"tls-client-certs-<span class="variable">$CODE</span>"</span></span><br><span class="line">tar zcf <span class="string">"tls-client-certs-<span class="variable">$CODE</span>.tar.gz"</span> *</span><br><span class="line">mv <span class="string">"tls-client-certs-<span class="variable">$CODE</span>.tar.gz"</span> ../</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">rm -rf <span class="string">"tls-client-certs-<span class="variable">$CODE</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝服务端证书</span></span><br><span class="line">mkdir -p /etc/docker/certs.d</span><br><span class="line">cp <span class="string">"ca-<span class="variable">$CODE</span>.pem"</span> <span class="string">"server-cert-<span class="variable">$CODE</span>.pem"</span> <span class="string">"server-key-<span class="variable">$CODE</span>.pem"</span> /etc/docker/certs.d/</span><br></pre></td></tr></table></figure>
-
-<p>对脚本中的变量进行修改后运行，自动会创建好tls证书，服务器的证书在/etc/docker/certs.d/目录下:<br><img src="https://oscimg.oschina.net/oscnet/cf128d18f1e5494241522354509639ac476.jpg" alt="image"><br>客户端的证书在运行脚本的目录下，同时还自动打好了一个.tar.gz的包，很方便。<br><img src="https://oscimg.oschina.net/oscnet/a52727e6614faf2c2985912dd992a699ef8.jpg" alt="image"></p>
-<h3 id="二、配置Docker服务（官方说明）"><a href="#二、配置Docker服务（官方说明）" class="headerlink" title="二、配置Docker服务（官方说明）"></a>二、配置Docker服务（官方说明）</h3><p>注意修改证书路径。</p>
-<p>Enable the secure remote API on a new socket<br>Create a file called ++/etc/systemd/system/docker-tls-tcp.socket++ to make Docker available on a secured TCP socket on port 2376.</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=Docker Secured Socket for the API</span><br><span class="line"></span><br><span class="line"><span class="section">[Socket]</span></span><br><span class="line"><span class="attr">ListenStream</span>=<span class="number">2376</span></span><br><span class="line"><span class="attr">BindIPv6Only</span>=both</span><br><span class="line"><span class="attr">Service</span>=docker.service</span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=sockets.target</span><br></pre></td></tr></table></figure>
-
-<p>Then enable this new socket:</p>
-<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable docker-tls-tcp.<span class="built_in">socket</span></span><br><span class="line">systemctl <span class="built_in">stop</span> docker</span><br><span class="line">systemctl <span class="built_in">start</span> docker-tls-tcp.<span class="built_in">socket</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="Drop-in-configuration"><a href="#Drop-in-configuration" class="headerlink" title="Drop-in configuration"></a>Drop-in configuration</h5><p>Create ++/etc/systemd/system/docker.service.d/10-tls-verify.conf++ drop-in for systemd Docker service:</p>
-<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">[</span><span class="comment">Service</span><span class="title">]</span></span><br><span class="line"><span class="comment">Environment="DOCKER_OPTS=</span><span class="literal">-</span><span class="literal">-</span><span class="comment">tlsverify</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">tlscacert=/etc/docker/ca</span><span class="string">.</span><span class="comment">pem</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">tlscert=/etc/docker/server</span><span class="string">.</span><span class="comment">pem</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">tlskey=/etc/docker/server</span><span class="literal">-</span><span class="comment">key</span><span class="string">.</span><span class="comment">pem"</span></span><br></pre></td></tr></table></figure>
-
-<p>Reload systemd config files and restart docker service:</p>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">sudo</span> <span class="string">systemctl daemon-reload</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">systemctl restart docker.service</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="三、配置Portainer远程TLS连接"><a href="#三、配置Portainer远程TLS连接" class="headerlink" title="三、配置Portainer远程TLS连接"></a>三、配置Portainer远程TLS连接</h3><p><img src="https://oscimg.oschina.net/oscnet/a42a8fc88e593b51007b357d9588cc7e37c.jpg" alt="image"></p>
-<p>证书对应选择：</p>
-<p>ca.pem<br>cert.pem<br>key.pem<br>这样就完成了。注意如果之前开启了未认证的2375端口，请关闭并禁用，重启docker服务。</p>
-<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 停止不安全的2375端口</span></span><br><span class="line">systemctl <span class="built_in">stop</span> docker-tcp.<span class="built_in">socket</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 禁用该端口</span></span><br><span class="line">systemctl disable docker-tcp.<span class="built_in">socket</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启docker服务</span></span><br><span class="line">systemctl restart docker.service</span><br></pre></td></tr></table></figure>
-
+        <hr>
+<h2 id="TCP-UDP"><a href="#TCP-UDP" class="headerlink" title="TCP/UDP"></a>TCP/UDP</h2><h3 id="什么是TCP"><a href="#什么是TCP" class="headerlink" title="什么是TCP"></a>什么是TCP</h3><h3 id="TCP三次握手"><a href="#TCP三次握手" class="headerlink" title="TCP三次握手"></a>TCP三次握手</h3><h4 id="三次握手的流程"><a href="#三次握手的流程" class="headerlink" title="三次握手的流程"></a>三次握手的流程</h4><h4 id="为什么是三次，两次行不行？"><a href="#为什么是三次，两次行不行？" class="headerlink" title="为什么是三次，两次行不行？"></a>为什么是三次，两次行不行？</h4><h3 id="TCP四次挥手"><a href="#TCP四次挥手" class="headerlink" title="TCP四次挥手"></a>TCP四次挥手</h3><h4 id="四次挥手的流程？"><a href="#四次挥手的流程？" class="headerlink" title="四次挥手的流程？"></a>四次挥手的流程？</h4><h4 id="为什么是四次挥手不是三次？"><a href="#为什么是四次挥手不是三次？" class="headerlink" title="为什么是四次挥手不是三次？"></a>为什么是四次挥手不是三次？</h4><h3 id="TCP如何保证可靠性传输"><a href="#TCP如何保证可靠性传输" class="headerlink" title="TCP如何保证可靠性传输"></a>TCP如何保证可靠性传输</h3><h3 id="TCP粘包和拆包"><a href="#TCP粘包和拆包" class="headerlink" title="TCP粘包和拆包"></a>TCP粘包和拆包</h3><p>TCP是个“流”协议，所谓流，就是没有界限的一串数据。大家可以想想河里的流水，是连成一片的，其间并没有分界线。TCP底层并不了解上层业务数据的具体含义，它会根据TCP缓冲区的实际情况进行包的划分，所以在业务上认为，一个完整的包可能会被TCP拆分成多个包进行发送，也有可能把多个小的包封装成一个大的数据包发送，这就是所谓的TCP粘包和拆包问题。</p>
+<h4 id="TCP粘包-拆包问题说明"><a href="#TCP粘包-拆包问题说明" class="headerlink" title="TCP粘包/拆包问题说明"></a>TCP粘包/拆包问题说明</h4><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210212215650.png" alt="img"></p>
+<p>假设客户端分别发送了两个数据包D1和D2给服务端，由于服务端一次读取到的字节数是不确定的，故可能存在以下4种情况。</p>
+<ol>
+<li>服务端分两次读取到了两个独立的数据包，分别是D1和D2，没有粘包和拆包；</li>
+<li>服务端一次接收到了两个数据包，D1和D2粘合在一起，被称为TCP粘包；</li>
+<li>服务端分两次读取到了两个数据包，第一次读取到了完整的D1包和D2包的部分内容，第二次读取到了D2包的剩余内容，这被称为TCP拆包；</li>
+<li>服务端分两次读取到了两个数据包，第一次读取到了D1包的部分内容D1_1，第二次读取到了D1包的剩余内容D1_2和D2包的整包。</li>
+</ol>
+<p>如果此时服务端TCP接收滑窗非常小，而数据包D1和D2比较大，很有可能会发生第五种可能，即服务端分多次才能将D1和D2包接收完全，期间发生多次拆包。</p>
+<h4 id="TCP粘包-拆包发生的原因"><a href="#TCP粘包-拆包发生的原因" class="headerlink" title="TCP粘包/拆包发生的原因"></a>TCP粘包/拆包发生的原因</h4><ol>
+<li>应用程序write写入的字节大小大于套接口发送缓冲区大小；</li>
+<li>进行MSS大小的TCP分段；</li>
+<li>以太网帧的payload大于MTU进行IP分片。</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210212215514.png" alt="img"></p>
+<h4 id="粘包问题的解决策略"><a href="#粘包问题的解决策略" class="headerlink" title="粘包问题的解决策略"></a>粘包问题的解决策略</h4><p>由于底层的TCP无法理解上层的业务数据，所以在底层是无法保证数据包不被拆分和重组的，这个问题只能通过上层的应用协议栈设计来解决，根据业界的主流协议的解决方案，可以归纳如下：</p>
+<ol>
+<li>消息定长，例如每个报文的大小为固定长度200字节，如果不够，空位补空格；</li>
+<li>在包尾增加回车换行符进行分割，例如FTP协议；</li>
+<li>将消息分为消息头和消息体，消息头中包含表示消息总长度（或者消息体长度）的字段，通常设计思路为消息头的第一个字段使用int32来表示消息的总长度；</li>
+<li>更复杂的应用层协议。</li>
+</ol>
 
       
 
@@ -215,7 +212,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">docker</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
         		</li>
       		
 		</ul>
@@ -271,7 +268,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/2019/10/19/CoreOS配置Docker-API-TLS认证/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/2021/02/04/2021/计算机网络/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -285,18 +282,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/10/27/使用gitlab-ci和docker自动化部署vue项目/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          使用gitlab-ci和docker自动化部署vue项目
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/10/13/ORM框架对比/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">ORM框架对比</div>
+    <a href="/2021/01/30/2021/系统架构设计/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">系统架构设计</div>
       <i class="icon-circle-right"></i>
     </a>
   

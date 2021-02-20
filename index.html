@@ -146,6 +146,105 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2021/计算机网络" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/04/2021/计算机网络/">计算机网络</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/02/04/2021/计算机网络/" class="archive-article-date">
+  	<time datetime="2021-02-04T07:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-04</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h2 id="TCP-UDP"><a href="#TCP-UDP" class="headerlink" title="TCP/UDP"></a>TCP/UDP</h2><h3 id="什么是TCP"><a href="#什么是TCP" class="headerlink" title="什么是TCP"></a>什么是TCP</h3><h3 id="TCP三次握手"><a href="#TCP三次握手" class="headerlink" title="TCP三次握手"></a>TCP三次握手</h3><h4 id="三次握手的流程"><a href="#三次握手的流程" class="headerlink" title="三次握手的流程"></a>三次握手的流程</h4><h4 id="为什么是三次，两次行不行？"><a href="#为什么是三次，两次行不行？" class="headerlink" title="为什么是三次，两次行不行？"></a>为什么是三次，两次行不行？</h4><h3 id="TCP四次挥手"><a href="#TCP四次挥手" class="headerlink" title="TCP四次挥手"></a>TCP四次挥手</h3><h4 id="四次挥手的流程？"><a href="#四次挥手的流程？" class="headerlink" title="四次挥手的流程？"></a>四次挥手的流程？</h4><h4 id="为什么是四次挥手不是三次？"><a href="#为什么是四次挥手不是三次？" class="headerlink" title="为什么是四次挥手不是三次？"></a>为什么是四次挥手不是三次？</h4><h3 id="TCP如何保证可靠性传输"><a href="#TCP如何保证可靠性传输" class="headerlink" title="TCP如何保证可靠性传输"></a>TCP如何保证可靠性传输</h3><h3 id="TCP粘包和拆包"><a href="#TCP粘包和拆包" class="headerlink" title="TCP粘包和拆包"></a>TCP粘包和拆包</h3><p>TCP是个“流”协议，所谓流，就是没有界限的一串数据。大家可以想想河里的流水，是连成一片的，其间并没有分界线。TCP底层并不了解上层业务数据的具体含义，它会根据TCP缓冲区的实际情况进行包的划分，所以在业务上认为，一个完整的包可能会被TCP拆分成多个包进行发送，也有可能把多个小的包封装成一个大的数据包发送，这就是所谓的TCP粘包和拆包问题。</p>
+<h4 id="TCP粘包-拆包问题说明"><a href="#TCP粘包-拆包问题说明" class="headerlink" title="TCP粘包/拆包问题说明"></a>TCP粘包/拆包问题说明</h4><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210212215650.png" alt="img"></p>
+<p>假设客户端分别发送了两个数据包D1和D2给服务端，由于服务端一次读取到的字节数是不确定的，故可能存在以下4种情况。</p>
+<ol>
+<li>服务端分两次读取到了两个独立的数据包，分别是D1和D2，没有粘包和拆包；</li>
+<li>服务端一次接收到了两个数据包，D1和D2粘合在一起，被称为TCP粘包；</li>
+<li>服务端分两次读取到了两个数据包，第一次读取到了完整的D1包和D2包的部分内容，第二次读取到了D2包的剩余内容，这被称为TCP拆包；</li>
+<li>服务端分两次读取到了两个数据包，第一次读取到了D1包的部分内容D1_1，第二次读取到了D1包的剩余内容D1_2和D2包的整包。</li>
+</ol>
+<p>如果此时服务端TCP接收滑窗非常小，而数据包D1和D2比较大，很有可能会发生第五种可能，即服务端分多次才能将D1和D2包接收完全，期间发生多次拆包。</p>
+<h4 id="TCP粘包-拆包发生的原因"><a href="#TCP粘包-拆包发生的原因" class="headerlink" title="TCP粘包/拆包发生的原因"></a>TCP粘包/拆包发生的原因</h4><ol>
+<li>应用程序write写入的字节大小大于套接口发送缓冲区大小；</li>
+<li>进行MSS大小的TCP分段；</li>
+<li>以太网帧的payload大于MTU进行IP分片。</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210212215514.png" alt="img"></p>
+<h4 id="粘包问题的解决策略"><a href="#粘包问题的解决策略" class="headerlink" title="粘包问题的解决策略"></a>粘包问题的解决策略</h4><p>由于底层的TCP无法理解上层的业务数据，所以在底层是无法保证数据包不被拆分和重组的，这个问题只能通过上层的应用协议栈设计来解决，根据业界的主流协议的解决方案，可以归纳如下：</p>
+<ol>
+<li>消息定长，例如每个报文的大小为固定长度200字节，如果不够，空位补空格；</li>
+<li>在包尾增加回车换行符进行分割，例如FTP协议；</li>
+<li>将消息分为消息头和消息体，消息头中包含表示消息总长度（或者消息体长度）的字段，通常设计思路为消息头的第一个字段使用int32来表示消息的总长度；</li>
+<li>更复杂的应用层协议。</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/02/04/2021/计算机网络/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-2021/系统架构设计" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -169,7 +268,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<h3 id="如何设计一个高并发系统？"><a href="#如何设计一个高并发系统？" class="headerlink" title="如何设计一个高并发系统？"></a>如何设计一个高并发系统？</h3><p>可以分为以下 6 点：</p>
+<h1 id="如何设计一个高并发系统？"><a href="#如何设计一个高并发系统？" class="headerlink" title="如何设计一个高并发系统？"></a>如何设计一个高并发系统？</h1><p>可以分为以下 6 点：</p>
 <ul>
 <li>系统拆分</li>
 <li>缓存</li>
@@ -179,6 +278,40 @@
 <li>ElasticSearch</li>
 </ul>
 <p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210126145855.png" alt="high-concurrency-system-design"></p>
+<h1 id="如何设计一个高可用系统"><a href="#如何设计一个高可用系统" class="headerlink" title="如何设计一个高可用系统"></a>如何设计一个高可用系统</h1><h2 id="什么是高可用？可用性的判断标准是啥？"><a href="#什么是高可用？可用性的判断标准是啥？" class="headerlink" title="什么是高可用？可用性的判断标准是啥？"></a><a href="https://snailclimb.gitee.io/javaguide/#/docs/system-design/high-availability/如何设计一个高可用系统要考虑哪些地方?id=什么是高可用？可用性的判断标准是啥？" target="_blank" rel="noopener">什么是高可用？可用性的判断标准是啥？</a></h2><p><strong>高可用描述的是一个系统在大部分时间都是可用的，可以为我们提供服务的。高可用代表系统即使在发生硬件故障或者系统升级的时候，服务仍然是可用的。</strong></p>
+<p><strong>一般情况下，我们使用多少个 9 来评判一个系统的可用性，比如 99.9999% 就是代表该系统在所有的运行时间中只有 0.0001% 的时间是不可用的，这样的系统就是非常非常高可用的了！当然，也会有系统如果可用性不太好的话，可能连 9 都上不了。</strong></p>
+<p>除此之外，系统的可用性还可以用某功能的失败次数与总的请求次数之比来衡量，比如对网站请求 1000 次，其中有 10 次请求失败，那么可用性就是 99%。</p>
+<h2 id="哪些情况会导致系统不可用？"><a href="#哪些情况会导致系统不可用？" class="headerlink" title="哪些情况会导致系统不可用？"></a><a href="https://snailclimb.gitee.io/javaguide/#/docs/system-design/high-availability/如何设计一个高可用系统要考虑哪些地方?id=哪些情况会导致系统不可用？" target="_blank" rel="noopener">哪些情况会导致系统不可用？</a></h2><ol>
+<li>黑客攻击；</li>
+<li>硬件故障，比如服务器坏掉。</li>
+<li>并发量/用户请求量激增导致整个服务宕掉或者部分服务不可用。</li>
+<li>代码中的坏味道导致内存泄漏或者其他问题导致程序挂掉。</li>
+<li>网站架构某个重要的角色比如 Nginx 或者数据库突然不可用。</li>
+<li>自然灾害或者人为破坏。</li>
+<li>……</li>
+</ol>
+<h2 id="有哪些提高系统可用性的方法？"><a href="#有哪些提高系统可用性的方法？" class="headerlink" title="有哪些提高系统可用性的方法？"></a><a href="https://snailclimb.gitee.io/javaguide/#/docs/system-design/high-availability/如何设计一个高可用系统要考虑哪些地方?id=有哪些提高系统可用性的方法？" target="_blank" rel="noopener">有哪些提高系统可用性的方法？</a></h2><h3 id="1-注重代码质量，测试严格把关"><a href="#1-注重代码质量，测试严格把关" class="headerlink" title="1. 注重代码质量，测试严格把关"></a><a href="https://snailclimb.gitee.io/javaguide/#/docs/system-design/high-availability/如何设计一个高可用系统要考虑哪些地方?id=_1-注重代码质量，测试严格把关" target="_blank" rel="noopener">1. 注重代码质量，测试严格把关</a></h3><p>我觉得这个是最最最重要的，代码质量有问题比如比较常见的内存泄漏、循环依赖都是对系统可用性极大的损害。大家都喜欢谈限流、降级、熔断，但是我觉得从代码质量这个源头把关是首先要做好的一件很重要的事情。如何提高代码质量？比较实际可用的就是 CodeReview，不要在乎每天多花的那 1 个小时左右的时间，作用可大着呢！</p>
+<p>另外，安利这个对提高代码质量有实际效果的宝贝：</p>
+<ol>
+<li>sonarqube ：保证你写出更安全更干净的代码！（ps: 目前所在的项目基本都会用到这个插件）。</li>
+<li>Alibaba 开源的 Java 诊断工具 Arthas 也是很不错的选择。</li>
+<li>IDEA 自带的代码分析等工具进行代码扫描也是非常非常棒的。</li>
+</ol>
+<h3 id="2-使用集群，减少单点故障"><a href="#2-使用集群，减少单点故障" class="headerlink" title="2.使用集群，减少单点故障"></a><a href="https://snailclimb.gitee.io/javaguide/#/docs/system-design/high-availability/如何设计一个高可用系统要考虑哪些地方?id=_2使用集群，减少单点故障" target="_blank" rel="noopener">2.使用集群，减少单点故障</a></h3><p>先拿常用的 Redis 举个例子！我们如何保证我们的 Redis 缓存高可用呢？答案就是使用集群，避免单点故障。当我们使用一个 Redis 实例作为缓存的时候，这个 Redis 实例挂了之后，整个缓存服务可能就挂了。使用了集群之后，即使一台 Redis 实例，不到一秒就会有另外一台 Redis 实例顶上。</p>
+<h3 id="3-限流"><a href="#3-限流" class="headerlink" title="3.限流"></a><a href="https://snailclimb.gitee.io/javaguide/#/docs/system-design/high-availability/如何设计一个高可用系统要考虑哪些地方?id=_3限流" target="_blank" rel="noopener">3.限流</a></h3><p>流量控制（flow control），其原理是监控应用流量的 QPS 或并发线程数等指标，当达到指定的阈值时对流量进行控制，以避免被瞬时的流量高峰冲垮，从而保障应用的高可用性。——来自 alibaba-<a href="https://github.com/alibaba/Sentinel" target="_blank" rel="noopener">Sentinel</a> 的 wiki。</p>
+<h3 id="4-超时和重试机制设置"><a href="#4-超时和重试机制设置" class="headerlink" title="4.超时和重试机制设置"></a><a href="https://snailclimb.gitee.io/javaguide/#/docs/system-design/high-availability/如何设计一个高可用系统要考虑哪些地方?id=_4超时和重试机制设置" target="_blank" rel="noopener">4.超时和重试机制设置</a></h3><p>一旦用户请求超过某个时间的得不到响应，就抛出异常。这个是非常重要的，很多线上系统故障都是因为没有进行超时设置或者超时设置的方式不对导致的。我们在读取第三方服务的时候，尤其适合设置超时和重试机制。一般我们使用一些 RPC 框架的时候，这些框架都自带的超时重试的配置。如果不进行超时设置可能会导致请求响应速度慢，甚至导致请求堆积进而让系统无法在处理请求。重试的次数一般设为 3 次，再多次的重试没有好处，反而会加重服务器压力（部分场景使用失败重试机制会不太适合）。</p>
+<h3 id="5-熔断机制"><a href="#5-熔断机制" class="headerlink" title="5.熔断机制"></a><a href="https://snailclimb.gitee.io/javaguide/#/docs/system-design/high-availability/如何设计一个高可用系统要考虑哪些地方?id=_5熔断机制" target="_blank" rel="noopener">5.熔断机制</a></h3><p>超时和重试机制设置之外，熔断机制也是很重要的。 熔断机制说的是系统自动收集所依赖服务的资源使用情况和性能指标，当所依赖的服务恶化或者调用失败次数达到某个阈值的时候就迅速失败，让当前系统立即切换依赖其他备用服务。 比较常用的是流量控制和熔断降级框架是 Netflix 的 Hystrix 和 alibaba 的 Sentinel。</p>
+<h3 id="6-异步调用"><a href="#6-异步调用" class="headerlink" title="6.异步调用"></a><a href="https://snailclimb.gitee.io/javaguide/#/docs/system-design/high-availability/如何设计一个高可用系统要考虑哪些地方?id=_6异步调用" target="_blank" rel="noopener">6.异步调用</a></h3><p>异步调用的话我们不需要关心最后的结果，这样我们就可以用户请求完成之后就立即返回结果，具体处理我们可以后续再做，秒杀场景用这个还是蛮多的。但是，使用异步之后我们可能需要 <strong>适当修改业务流程进行配合</strong>，比如<strong>用户在提交订单之后，不能立即返回用户订单提交成功，需要在消息队列的订单消费者进程真正处理完该订单之后，甚至出库后，再通过电子邮件或短信通知用户订单成功</strong>。除了可以在程序中实现异步之外，我们常常还使用消息队列，消息队列可以通过异步处理提高系统性能（削峰、减少响应所需时间）并且可以降低系统耦合性。</p>
+<h3 id="7-使用缓存"><a href="#7-使用缓存" class="headerlink" title="7.使用缓存"></a><a href="https://snailclimb.gitee.io/javaguide/#/docs/system-design/high-availability/如何设计一个高可用系统要考虑哪些地方?id=_7使用缓存" target="_blank" rel="noopener">7.使用缓存</a></h3><p>如果我们的系统属于并发量比较高的话，如果我们单纯使用数据库的话，当大量请求直接落到数据库可能数据库就会直接挂掉。使用缓存缓存热点数据，因为缓存存储在内存中，所以速度相当地快！</p>
+<h3 id="8-其他"><a href="#8-其他" class="headerlink" title="8.其他"></a><a href="https://snailclimb.gitee.io/javaguide/#/docs/system-design/high-availability/如何设计一个高可用系统要考虑哪些地方?id=_8其他" target="_blank" rel="noopener">8.其他</a></h3><ol>
+<li><strong>核心应用和服务优先使用更好的硬件</strong></li>
+<li><strong>监控系统资源使用情况增加报警设置。</strong></li>
+<li><strong>注意备份，必要时候回滚。</strong></li>
+<li><strong>灰度发布：</strong> 将服务器集群分成若干部分，每天只发布一部分机器，观察运行稳定没有故障，第二天继续发布一部分机器，持续几天才把整个集群全部发布完毕，期间如果发现问题，只需要回滚已发布的一部分服务器即可</li>
+<li><strong>定期检查/更换硬件：</strong> 如果不是购买的云服务的话，定期还是需要对硬件进行一波检查的，对于一些需要更换或者升级的硬件，要及时更换或者升级。</li>
+<li>…..(想起来再补充！也欢迎各位欢迎补充！)</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><a href="https://snailclimb.gitee.io/javaguide/#/docs/system-design/high-availability/如何设计一个高可用系统要考虑哪些地方?id=总结" target="_blank" rel="noopener">总结</a></h2><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210213235715.png" alt="如何设计高可用系统？"></p>
 
       
 
@@ -577,6 +710,10 @@
 </ul>
 <p>间接开销主要指的是虽然切换到一个新进程后，由于各种缓存并不热，速度运行会慢一些。如果进程始终都在一个CPU上调度还好一些，如果跨CPU的话，之前热起来的TLB、L1、L2、L3因为运行的进程已经变了，所以以局部性原理cache起来的代码、数据也都没有用了，导致新进程穿透到内存的IO会变多。其实我们上面的实验并没有很好地测量到这种情况，所以实际的上下文切换开销可能比3.5us要大。</p>
 <p>想了解更详细操作过程的同学请参考《深入理解Linux内核》中的第三章和第九章。</p>
+<h3 id="线程上下文切换"><a href="#线程上下文切换" class="headerlink" title="线程上下文切换"></a>线程上下文切换</h3><p>上下文切换：</p>
+<p>多线程编程中一般线程的个数都大于 CPU 核心的个数，而一个 CPU 核心在任意时刻只能被一个线程使用，为了让这些线程都能得到有效执行，CPU 采取的策略是为每个线程分配时间片并轮转的形式。当一个线程的时间片用完的时候就会重新处于就绪状态让给其他线程使用，这个过程就属于一次上下文切换。概括来说就是：当前任务在执行完 CPU 时间片切换到另一个任务之前会先保存自己的状态，以便下次再切换回这个任务时，可以再加载这个任务的状态。<strong>任务从保存到再加载的过程就是一次上下文切换</strong>。</p>
+<p>上下文切换通常是计算密集型的。也就是说，它需要相当可观的处理器时间，在每秒几十上百次的切换中，每次切换都需要纳秒量级的时间。所以，上下文切换对系统来说意味着消耗大量的 CPU 时间，事实上，可能是操作系统中时间消耗最大的操作。</p>
+<p>Linux 相比与其他操作系统（包括其他类 Unix 系统）有很多的优点，其中有一项就是，其上下文切换和模式切换的时间消耗非常少。</p>
 <h2 id="原子性、有序性和可见性"><a href="#原子性、有序性和可见性" class="headerlink" title="原子性、有序性和可见性"></a>原子性、有序性和可见性</h2><h3 id="final关键字的可见性"><a href="#final关键字的可见性" class="headerlink" title="final关键字的可见性"></a>final关键字的可见性</h3><h2 id="悲观锁和乐观锁"><a href="#悲观锁和乐观锁" class="headerlink" title="悲观锁和乐观锁"></a>悲观锁和乐观锁</h2><h3 id="CAS有什么问题？"><a href="#CAS有什么问题？" class="headerlink" title="CAS有什么问题？"></a>CAS有什么问题？</h3><p>CAS的缺点有如ABA问题，自旋锁消耗问题、多变量共享一致性问题：</p>
 <p>1.<strong>ABA</strong>：<br>问题描述：线程t1将它的值从A变为B，再从B变为A。同时有线程t2要将值从A变为C。但CAS检查的时候会发现没有改变，但是实质上它已经发生了改变 。可能会造成数据的缺失。</p>
 <p>解决方法：CAS还是类似于乐观锁，同数据乐观锁的方式给它加一个版本号或者时间戳，如AtomicStampedReference</p>
@@ -883,91 +1020,6 @@
 
 
   
-    <article id="post-面试遇到的简单多线程编程题：线程交替打印的升级版" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/26/面试遇到的简单多线程编程题：线程交替打印的升级版/">面试遇到的简单多线程编程题：线程交替打印的升级版</a>
-    </h1>
-  
-
-        
-        
-<a href="/2020/03/26/面试遇到的简单多线程编程题：线程交替打印的升级版/" class="archive-article-date">
-  	<time datetime="2020-03-26T07:34:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-26</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近面试遇到一道简单的多线程编码题，线程交替打印的升级版，我们来研究下这道题怎么解决。  </p>
-<h3 id="题目介绍："><a href="#题目介绍：" class="headerlink" title="题目介绍："></a>题目介绍：</h3><blockquote>
-<p>线程A每次处理只能输出一个A<br>线程B每次输出只能输出一个B<br>主线程不能输出A或B<br>请尽可能不使用封装好的工具方法或类来调度线程，然后输出以下内容：<br>ABBBBABBBBABBBBABBBB….<br>加分项：增加线程B1，行为和B一样，要求B和B1负载均衡</p>
-</blockquote>
-        
-          <a class="article-more-a" href="/2020/03/26/面试遇到的简单多线程编程题：线程交替打印的升级版/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">面试题</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/26/面试遇到的简单多线程编程题：线程交替打印的升级版/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1088,10 +1140,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -1101,6 +1149,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MapStruct</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
