@@ -146,6 +146,87 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2021/算法模板" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/22/2021/算法模板/">算法模板</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/02/22/2021/算法模板/" class="archive-article-date">
+  	<time datetime="2021-02-22T14:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-22</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h3 id="滑动窗口"><a href="#滑动窗口" class="headerlink" title="滑动窗口"></a>滑动窗口</h3><h4 id="1-滑窗模板"><a href="#1-滑窗模板" class="headerlink" title="1.滑窗模板"></a>1.滑窗模板</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">findSubArray</span><span class="params">(nums)</span>:</span></span><br><span class="line">    N = len(nums) <span class="comment"># 数组/字符串长度</span></span><br><span class="line">    left, right = <span class="number">0</span>, <span class="number">0</span> <span class="comment"># 双指针，表示当前遍历的区间[left, right]，闭区间</span></span><br><span class="line">    sums = <span class="number">0</span> <span class="comment"># 用于统计 子数组/子区间 是否有效，根据题目可能会改成求和/计数</span></span><br><span class="line">    res = <span class="number">0</span> <span class="comment"># 保存最大的满足题目要求的 子数组/子串 长度</span></span><br><span class="line">    <span class="keyword">while</span> right &lt; N: <span class="comment"># 当右边的指针没有搜索到 数组/字符串 的结尾</span></span><br><span class="line">        sums += nums[right] <span class="comment"># 增加当前右边指针的数字/字符的求和/计数</span></span><br><span class="line">        <span class="keyword">while</span> 区间[left, right]不符合题意：<span class="comment"># 此时需要一直移动左指针，直至找到一个符合题意的区间</span></span><br><span class="line">            sums -= nums[left] <span class="comment"># 移动左指针前需要从counter中减少left位置字符的求和/计数</span></span><br><span class="line">            left += <span class="number">1</span> <span class="comment"># 真正的移动左指针，注意不能跟上面一行代码写反</span></span><br><span class="line">        <span class="comment"># 到 while 结束时，我们找到了一个符合题意要求的 子数组/子串</span></span><br><span class="line">        res = max(res, right - left + <span class="number">1</span>) <span class="comment"># 需要更新结果</span></span><br><span class="line">        right += <span class="number">1</span> <span class="comment"># 移动右指针，去探索新的区间</span></span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
+<p>滑动窗口中用到了左右两个指针，它们移动的思路是：以右指针作为驱动，拖着左指针向前走。右指针每次只移动一步，而左指针在内部 while 循环中每次可能移动多步。右指针是主动前移，探索未知的新区域；左指针是被迫移动，负责寻找满足题意的区间。</p>
+<p>模板的整体思想是：</p>
+<p>定义两个指针 left 和 right 分别指向区间的开头和结尾，注意是闭区间；定义 sums 用来统计该区间内的各个字符出现次数；<br>第一重 while 循环是为了判断 right 指针的位置是否超出了数组边界；当 right 每次到了新位置，需要增加 right 指针的求和/计数；<br>第二重 while 循环是让 left 指针向右移动到 [left, right] 区间符合题意的位置；当 left 每次移动到了新位置，需要减少 left 指针的求和/计数；<br>在第二重 while 循环之后，成功找到了一个符合题意的 [left, right] 区间，题目要求最大的区间长度，因此更新 res 为 max(res, 当前区间的长度) 。<br>right 指针每次向右移动一步，开始探索新的区间。<br>模板中的 sums 需要根据题目意思具体去修改，本题是求和题目因此把sums 定义成整数用于求和；如果是计数题目，就需要改成字典用于计数。当左右指针发生变化的时候，都需要更新 sums 。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/02/22/2021/算法模板/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-2021/分布式事务" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -935,153 +1016,6 @@
 
 
   
-    <article id="post-2021/2021面经" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/20/2021/2021面经/">2021面经</a>
-    </h1>
-  
-
-        
-        
-<a href="/2021/01/20/2021/2021面经/" class="archive-article-date">
-  	<time datetime="2021-01-20T08:49:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-20</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h3 id="叮咚买菜"><a href="#叮咚买菜" class="headerlink" title="叮咚买菜"></a>叮咚买菜</h3><ul>
-<li><p>hashmap的扩容过程</p>
-</li>
-<li><p>单向链表如何判断有环</p>
-<blockquote>
-<p>HashSet遍历和快慢指针</p>
-</blockquote>
-</li>
-<li><p>如何找出一个数组重复元素最多的前K个元素</p>
-<blockquote>
-<p>TopK问题，堆排序，时间复杂度nLogK</p>
-</blockquote>
-</li>
-<li><p>MySQL什么情况下会发生死锁？如何解决？</p>
-<blockquote>
-<p>举个例子：事务A按照先后顺序去更新id=1和id=2的记录，事务B同一时间按照先后顺序去更新id=2和id=1的记录，因为行锁是两阶段协议，A获得id=1的行锁不会马上释放，此时B会等待A释放id=1的行锁，而A会等待B释放id=2的行锁，这样就形成了死锁。<br><strong>如何解决：</strong></p>
-<ul>
-<li>一种策略是，直接进入等待，直到超时。这个超时时间可以通过参数innodb_lock_wait_timeout来设置。</li>
-<li>另一种策略是，发起死锁检测，发现死锁后，主动回滚死锁链条中的某一个事务，让其他事务得以继续执行。将参数innodb_deadlock_detect设置为on，表示开启这个逻辑。</li>
-</ul>
-</blockquote>
-</li>
-<li><p>ArrayList的contains方法和HashSet的contains方法的时间复杂度各是多少</p>
-<blockquote>
-<p>O(n)和O(1）</p>
-</blockquote>
-</li>
-<li><p>2个线程，A生产数据，B消费数据，有哪几种实现形式（使用LinkedList实现有哪些需要注意的，线程安全问题，如何解决：加锁）</p>
-</li>
-<li><p>一个抽奖系统，奖品1的概率是10%，奖品2的概率是20%，不中奖的概率是70%，算法如何实现？</p>
-<blockquote>
-<p>随机数和区间</p>
-</blockquote>
-</li>
-<li><p>缓存一致性如何保证？</p>
-<blockquote>
-<p>最好的解决方案是先更新数据库再删除缓存（在极端情况下也会有问题，比如说B线程更新数据的节点，缓存正好失效，此时线程A读取到了旧值，随后B操作数据库完成更新并且删除缓存之后，A再把旧值写入缓存，此时再去请求拿到的会是脏数据，这种概率非常低，基本可以忽略）</p>
-</blockquote>
-</li>
-<li><p>Dubbo IO线程池和业务线程池有什么区别？默认是哪种线程池（Fixed）</p>
-</li>
-<li><p>使用Dubbo有没有遇到什么坑？</p>
-<blockquote>
-<ul>
-<li>父子类有相同属性时值丢失：hessian序列化问题</li>
-<li>自定义异常被包装成RuntimeException</li>
-<li>Data length too large</li>
-<li>线程耗尽：Provider默认是fixed线程池，且线程数为200</li>
-</ul>
-<p><a href="https://blog.csdn.net/u013256816/article/details/102674846" target="_blank" rel="noopener"><strong>具体参考链接</strong></a></p>
-</blockquote>
-</li>
-<li><p>网关是用来做什么的？为什么要用网关？</p>
-</li>
-<li><p>乐观锁和悲观锁有什么区别？乐观锁有哪些实现方式？（版本号机制和CAS算法）</p>
-<blockquote>
-<p>版本号机制和CAS算法</p>
-</blockquote>
-</li>
-<li><p>线程池主要有哪些东西？线程池中如果没有任务，会是什么状态？</p>
-</li>
-<li><p>项目中遇到的技术难题，是如何解决的？</p>
-</li>
-<li><p>分库分表一些连表问题和条件查询是如何解决的？</p>
-<blockquote>
-<p>分两次查询，第一次把联表的id查出来，通过这些id再做一次查询</p>
-</blockquote>
-</li>
-</ul>
-        
-          <a class="article-more-a" href="/2021/01/20/2021/2021面经/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/01/20/2021/2021面经/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1202,14 +1136,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -1219,6 +1145,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MapStruct</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
               </li>
              
               <li class="article-tag-list-item">
