@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://blog.elfred.top">
   <title>算法模板 | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="滑动窗口1.滑窗模板1234567891011121314def findSubArray(nums):    N = len(nums) # 数组/字符串长度    left, right = 0, 0 # 双指针，表示当前遍历的区间[left, right]，闭区间    sums = 0 # 用于统计 子数组/子区间 是否有效，根据题目可能会改成求和/计数    res = 0 # 保存最">
+  <meta name="description" content="滑动窗口1.滑动窗口模板1234567891011121314def findSubArray(nums):    N = len(nums) # 数组/字符串长度    left, right = 0, 0 # 双指针，表示当前遍历的区间[left, right]，闭区间    sums = 0 # 用于统计 子数组/子区间 是否有效，根据题目可能会改成求和/计数    res = 0 # 保">
 <meta name="keywords" content="面经">
 <meta property="og:type" content="article">
 <meta property="og:title" content="算法模板">
 <meta property="og:url" content="https://blog.elfred.top/2021/02/22/2021/算法模板/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="滑动窗口1.滑窗模板1234567891011121314def findSubArray(nums):    N = len(nums) # 数组/字符串长度    left, right = 0, 0 # 双指针，表示当前遍历的区间[left, right]，闭区间    sums = 0 # 用于统计 子数组/子区间 是否有效，根据题目可能会改成求和/计数    res = 0 # 保存最">
+<meta property="og:description" content="滑动窗口1.滑动窗口模板1234567891011121314def findSubArray(nums):    N = len(nums) # 数组/字符串长度    left, right = 0, 0 # 双指针，表示当前遍历的区间[left, right]，闭区间    sums = 0 # 用于统计 子数组/子区间 是否有效，根据题目可能会改成求和/计数    res = 0 # 保">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-02-22T15:04:58.765Z">
+<meta property="og:updated_time" content="2021-02-22T15:08:58.740Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法模板">
-<meta name="twitter:description" content="滑动窗口1.滑窗模板1234567891011121314def findSubArray(nums):    N = len(nums) # 数组/字符串长度    left, right = 0, 0 # 双指针，表示当前遍历的区间[left, right]，闭区间    sums = 0 # 用于统计 子数组/子区间 是否有效，根据题目可能会改成求和/计数    res = 0 # 保存最">
+<meta name="twitter:description" content="滑动窗口1.滑动窗口模板1234567891011121314def findSubArray(nums):    N = len(nums) # 数组/字符串长度    left, right = 0, 0 # 双指针，表示当前遍历的区间[left, right]，闭区间    sums = 0 # 用于统计 子数组/子区间 是否有效，根据题目可能会改成求和/计数    res = 0 # 保">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -173,7 +173,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<h3 id="滑动窗口"><a href="#滑动窗口" class="headerlink" title="滑动窗口"></a>滑动窗口</h3><h4 id="1-滑窗模板"><a href="#1-滑窗模板" class="headerlink" title="1.滑窗模板"></a>1.滑窗模板</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">findSubArray</span><span class="params">(nums)</span>:</span></span><br><span class="line">    N = len(nums) <span class="comment"># 数组/字符串长度</span></span><br><span class="line">    left, right = <span class="number">0</span>, <span class="number">0</span> <span class="comment"># 双指针，表示当前遍历的区间[left, right]，闭区间</span></span><br><span class="line">    sums = <span class="number">0</span> <span class="comment"># 用于统计 子数组/子区间 是否有效，根据题目可能会改成求和/计数</span></span><br><span class="line">    res = <span class="number">0</span> <span class="comment"># 保存最大的满足题目要求的 子数组/子串 长度</span></span><br><span class="line">    <span class="keyword">while</span> right &lt; N: <span class="comment"># 当右边的指针没有搜索到 数组/字符串 的结尾</span></span><br><span class="line">        sums += nums[right] <span class="comment"># 增加当前右边指针的数字/字符的求和/计数</span></span><br><span class="line">        <span class="keyword">while</span> 区间[left, right]不符合题意：<span class="comment"># 此时需要一直移动左指针，直至找到一个符合题意的区间</span></span><br><span class="line">            sums -= nums[left] <span class="comment"># 移动左指针前需要从counter中减少left位置字符的求和/计数</span></span><br><span class="line">            left += <span class="number">1</span> <span class="comment"># 真正的移动左指针，注意不能跟上面一行代码写反</span></span><br><span class="line">        <span class="comment"># 到 while 结束时，我们找到了一个符合题意要求的 子数组/子串</span></span><br><span class="line">        res = max(res, right - left + <span class="number">1</span>) <span class="comment"># 需要更新结果</span></span><br><span class="line">        right += <span class="number">1</span> <span class="comment"># 移动右指针，去探索新的区间</span></span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<h3 id="滑动窗口"><a href="#滑动窗口" class="headerlink" title="滑动窗口"></a>滑动窗口</h3><h4 id="1-滑动窗口模板"><a href="#1-滑动窗口模板" class="headerlink" title="1.滑动窗口模板"></a>1.滑动窗口模板</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">findSubArray</span><span class="params">(nums)</span>:</span></span><br><span class="line">    N = len(nums) <span class="comment"># 数组/字符串长度</span></span><br><span class="line">    left, right = <span class="number">0</span>, <span class="number">0</span> <span class="comment"># 双指针，表示当前遍历的区间[left, right]，闭区间</span></span><br><span class="line">    sums = <span class="number">0</span> <span class="comment"># 用于统计 子数组/子区间 是否有效，根据题目可能会改成求和/计数</span></span><br><span class="line">    res = <span class="number">0</span> <span class="comment"># 保存最大的满足题目要求的 子数组/子串 长度</span></span><br><span class="line">    <span class="keyword">while</span> right &lt; N: <span class="comment"># 当右边的指针没有搜索到 数组/字符串 的结尾</span></span><br><span class="line">        sums += nums[right] <span class="comment"># 增加当前右边指针的数字/字符的求和/计数</span></span><br><span class="line">        <span class="keyword">while</span> 区间[left, right]不符合题意：<span class="comment"># 此时需要一直移动左指针，直至找到一个符合题意的区间</span></span><br><span class="line">            sums -= nums[left] <span class="comment"># 移动左指针前需要从counter中减少left位置字符的求和/计数</span></span><br><span class="line">            left += <span class="number">1</span> <span class="comment"># 真正的移动左指针，注意不能跟上面一行代码写反</span></span><br><span class="line">        <span class="comment"># 到 while 结束时，我们找到了一个符合题意要求的 子数组/子串</span></span><br><span class="line">        res = max(res, right - left + <span class="number">1</span>) <span class="comment"># 需要更新结果</span></span><br><span class="line">        right += <span class="number">1</span> <span class="comment"># 移动右指针，去探索新的区间</span></span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
 
 <p>滑动窗口中用到了左右两个指针，它们移动的思路是：以右指针作为驱动，拖着左指针向前走。右指针每次只移动一步，而左指针在内部 while 循环中每次可能移动多步。右指针是主动前移，探索未知的新区域；左指针是被迫移动，负责寻找满足题意的区间。</p>
 <p>模板的整体思想是：</p>
@@ -448,6 +448,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -457,10 +461,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MapStruct</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
