@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Elfred&#39;s Blog">
 <meta property="og:description" content="为什么用kafka不用本地队列高吞吐 消息持久化 分布式易拓展 kafka为什么这么快Kafka速度的秘诀在于，它把所有的消息都变成一个批量的文件，并且进行合理的批量压缩，减少网络IO损耗，通过mmap提高I/O速度，写入数据的时候由于单个Partion是末尾添加所以速度最优；读取数据的时候配合sendfile直接暴力输出。 具体分两个方面：  写入：  使用顺序写入 Memory Mapped">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-02-22T14:55:58.824Z">
+<meta property="og:updated_time" content="2021-02-25T14:21:07.969Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Elfred&#39;s Blog">
 <meta name="twitter:description" content="为什么用kafka不用本地队列高吞吐 消息持久化 分布式易拓展 kafka为什么这么快Kafka速度的秘诀在于，它把所有的消息都变成一个批量的文件，并且进行合理的批量压缩，减少网络IO损耗，通过mmap提高I/O速度，写入数据的时候由于单个Partion是末尾添加所以速度最优；读取数据的时候配合sendfile直接暴力输出。 具体分两个方面：  写入：  使用顺序写入 Memory Mapped">
@@ -169,7 +169,8 @@
 </ul>
 </li>
 </ol>
-<h3 id="什么是零拷贝？"><a href="#什么是零拷贝？" class="headerlink" title="什么是零拷贝？"></a>什么是零拷贝？</h3>
+<h3 id="什么是零拷贝？"><a href="#什么是零拷贝？" class="headerlink" title="什么是零拷贝？"></a>什么是零拷贝？</h3><p><a href="https://www.cnblogs.com/rickiyang/p/13265043.html" target="_blank" rel="noopener">https://www.cnblogs.com/rickiyang/p/13265043.html</a></p>
+
       
 
       
@@ -418,10 +419,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -431,6 +428,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MapStruct</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">

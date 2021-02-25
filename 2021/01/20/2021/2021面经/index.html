@@ -22,7 +22,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210125231657.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118160303.webp">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210121172804.png">
-<meta property="og:updated_time" content="2021-02-20T14:14:56.285Z">
+<meta property="og:updated_time" content="2021-02-25T15:16:52.284Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2021面经">
 <meta name="twitter:description" content="叮咚买菜 hashmap的扩容过程  单向链表如何判断有环  HashSet遍历和快慢指针   如何找出一个数组重复元素最多的前K个元素  TopK问题，堆排序，时间复杂度nLogK   MySQL什么情况下会发生死锁？如何解决？  举个例子：事务A按照先后顺序去更新id=1和id=2的记录，事务B同一时间按照先后顺序去更新id=2和id=1的记录，因为行锁是两阶段协议，A获得id=1的行锁不会">
@@ -1010,6 +1010,23 @@
 <li>工厂模式在实际中的使用</li>
 <li>手写一个策略模式</li>
 </ul>
+<h3 id="滴滴-1"><a href="#滴滴-1" class="headerlink" title="滴滴"></a>滴滴</h3><ul>
+<li>JVM调优</li>
+<li>Dubbo和SpringCloud的区别</li>
+<li>分布式事务如何处理</li>
+</ul>
+<h3 id="58同城"><a href="#58同城" class="headerlink" title="58同城"></a>58同城</h3><ul>
+<li>分库分表如果用非分表的字段去查询，怎么办（比如name字段，可以用name建索引，name和sharding-key建立kv）</li>
+<li>分库分表批量操作极端情况，如果三次操作在三个不同的库，如何保证数据一致性（在相同的本地库，生成一条prepare记录，使其成为本地事务，保证单库事务成功，单库是没有数据一致性问题，最后再一个个commit，如果一个失败，则依次回滚）</li>
+<li>ddd相关：充血模型和贫血模型的区别；ddd在项目中是如何实施的？</li>
+<li>zookeeper为什么不可用？什么时候不可用？eureka同样情况为什么是可用的？</li>
+<li>hasmap具体为什么不安全？（不安全的表现是对象丢失，例如两个线程都执行到同一个hash桶目前为空，都创建一个entry，会有一个entry被覆盖掉；不安全是因为不可见，为什么不可见？）</li>
+<li>数据库缓存一致性问题</li>
+<li>redis SDS优化点</li>
+<li>redis跳表相对于平衡树有什么区别？</li>
+<li>redis IO多路复用原理</li>
+<li>JMM工作内存对应到计算机硬件层面是什么？（高速缓存？或者内存？）</li>
+</ul>
 
       
 
@@ -1093,11 +1110,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/01/23/2021/JVM面试题/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/01/23/2021/多线程面试题/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          JVM面试题
+          多线程面试题
         
       </div>
     </a>
@@ -1289,10 +1306,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -1302,6 +1315,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MapStruct</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">

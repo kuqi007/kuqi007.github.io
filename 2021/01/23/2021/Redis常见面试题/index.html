@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="https://blog.elfred.top">
   <title>Redis常见面试题 | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Redis主从复制核心原理 salve node启动，会发送一个PSYNC命令给master node 如果是slave node初次连接到master node，会触发一次full resynchronization 全量复制。此时master回启动一个后台线程，生成RDB快照文件，同时将从客户端新收到的所有写命令缓存到内存中。RDB 文件生成完毕后， master 会将这个 RDB 发送给">
+  <meta name="description" content="Redis高可用Redis主从复制核心原理 salve node启动，会发送一个PSYNC命令给master node 如果是slave node初次连接到master node，会触发一次full resynchronization 全量复制。此时master回启动一个后台线程，生成RDB快照文件，同时将从客户端新收到的所有写命令缓存到内存中。RDB 文件生成完毕后， master 会将这个">
 <meta name="keywords" content="面经">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis常见面试题">
 <meta property="og:url" content="https://blog.elfred.top/2021/01/23/2021/Redis常见面试题/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="Redis主从复制核心原理 salve node启动，会发送一个PSYNC命令给master node 如果是slave node初次连接到master node，会触发一次full resynchronization 全量复制。此时master回启动一个后台线程，生成RDB快照文件，同时将从客户端新收到的所有写命令缓存到内存中。RDB 文件生成完毕后， master 会将这个 RDB 发送给">
+<meta property="og:description" content="Redis高可用Redis主从复制核心原理 salve node启动，会发送一个PSYNC命令给master node 如果是slave node初次连接到master node，会触发一次full resynchronization 全量复制。此时master回启动一个后台线程，生成RDB快照文件，同时将从客户端新收到的所有写命令缓存到内存中。RDB 文件生成完毕后， master 会将这个">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210119165016.png">
-<meta property="og:updated_time" content="2021-01-23T08:27:26.750Z">
+<meta property="og:updated_time" content="2021-02-25T14:21:07.945Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis常见面试题">
-<meta name="twitter:description" content="Redis主从复制核心原理 salve node启动，会发送一个PSYNC命令给master node 如果是slave node初次连接到master node，会触发一次full resynchronization 全量复制。此时master回启动一个后台线程，生成RDB快照文件，同时将从客户端新收到的所有写命令缓存到内存中。RDB 文件生成完毕后， master 会将这个 RDB 发送给">
+<meta name="twitter:description" content="Redis高可用Redis主从复制核心原理 salve node启动，会发送一个PSYNC命令给master node 如果是slave node初次连接到master node，会触发一次full resynchronization 全量复制。此时master回启动一个后台线程，生成RDB快照文件，同时将从客户端新收到的所有写命令缓存到内存中。RDB 文件生成完毕后， master 会将这个">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210119165016.png">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
@@ -175,7 +175,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<h3 id="Redis主从复制核心原理"><a href="#Redis主从复制核心原理" class="headerlink" title="Redis主从复制核心原理"></a>Redis主从复制核心原理</h3><ol>
+<h2 id="Redis高可用"><a href="#Redis高可用" class="headerlink" title="Redis高可用"></a>Redis高可用</h2><h3 id="Redis主从复制核心原理"><a href="#Redis主从复制核心原理" class="headerlink" title="Redis主从复制核心原理"></a>Redis主从复制核心原理</h3><ol>
 <li>salve node启动，会发送一个<code>PSYNC</code>命令给master node</li>
 <li>如果是slave node初次连接到master node，会触发一次<code>full resynchronization</code> 全量复制。此时master回启动一个后台线程，生成<code>RDB</code>快照文件，同时将从客户端新收到的所有写命令缓存到内存中。<code>RDB</code> 文件生成完毕后， master 会将这个 <code>RDB</code> 发送给 slave，slave 会先<strong>写入本地磁盘，然后再从本地磁盘加载到内存</strong>中，接着 master 会将内存中缓存的写命令发送到 slave，slave 也会同步这些数据。</li>
 <li>slave node如果跟master node有网络故障，断开了链接，会自动重连，连接之后master node仅会复制给salve部分缺少的数据。<br><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210119165016.png" alt="Redis-master-slave-replication"></li>
@@ -185,7 +185,7 @@
 <blockquote>
 <p> 如果根据 host+ip 定位 master node，是不靠谱的，如果 master node 重启或者数据出现了变化，那么 slave node 应该根据不同的 run id 区分。</p>
 </blockquote>
-
+<h2 id="Redis数据结构"><a href="#Redis数据结构" class="headerlink" title="Redis数据结构"></a>Redis数据结构</h2><h3 id="跳跃表"><a href="#跳跃表" class="headerlink" title="跳跃表"></a>跳跃表</h3>
       
 
       
@@ -278,8 +278,8 @@
     </a>
   
   
-    <a href="/2021/01/23/2021/多线程面试题/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">多线程面试题</div>
+    <a href="/2021/01/23/2021/JVM面试题/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JVM面试题</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -464,10 +464,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -477,6 +473,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MapStruct</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
