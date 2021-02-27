@@ -146,20 +146,106 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-2021/JVM面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-interview/Redis常见面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/23/2021/JVM面试题/">JVM面试题</a>
+      <a class="article-title" href="/2021/01/23/interview/Redis常见面试题/">Redis常见面试题</a>
     </h1>
   
 
         
         
-<a href="/2021/01/23/2021/JVM面试题/" class="archive-article-date">
+<a href="/2021/01/23/interview/Redis常见面试题/" class="archive-article-date">
+  	<time datetime="2021-01-23T08:24:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-23</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h2 id="Redis高可用"><a href="#Redis高可用" class="headerlink" title="Redis高可用"></a>Redis高可用</h2><h3 id="Redis主从复制核心原理"><a href="#Redis主从复制核心原理" class="headerlink" title="Redis主从复制核心原理"></a>Redis主从复制核心原理</h3><ol>
+<li>salve node启动，会发送一个<code>PSYNC</code>命令给master node</li>
+<li>如果是slave node初次连接到master node，会触发一次<code>full resynchronization</code> 全量复制。此时master回启动一个后台线程，生成<code>RDB</code>快照文件，同时将从客户端新收到的所有写命令缓存到内存中。<code>RDB</code> 文件生成完毕后， master 会将这个 <code>RDB</code> 发送给 slave，slave 会先<strong>写入本地磁盘，然后再从本地磁盘加载到内存</strong>中，接着 master 会将内存中缓存的写命令发送到 slave，slave 也会同步这些数据。</li>
+<li>slave node如果跟master node有网络故障，断开了链接，会自动重连，连接之后master node仅会复制给salve部分缺少的数据。<br><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210119165016.png" alt="Redis-master-slave-replication"></li>
+</ol>
+<h3 id="主从复制是如何断点续传的？"><a href="#主从复制是如何断点续传的？" class="headerlink" title="主从复制是如何断点续传的？"></a>主从复制是如何断点续传的？</h3><p>从 Redis2.8 开始，就支持主从复制的断点续传，如果主从复制过程中，网络连接断掉了，那么可以接着上次复制的地方，继续复制下去，而不是从头开始复制一份。</p>
+<p>master node会在内存中维护一个backlog，master和slave都会保存一个replica offset还有一个master run id，offset就是保存在backlog中的。如果master和slave网络连接断掉了，slave会让master从上次replica offset开始复制，如果没有找到对应的offset，那么就会执行一次<code>resynchronization</code> 。</p>
+<blockquote>
+<p> 如果根据 host+ip 定位 master node，是不靠谱的，如果 master node 重启或者数据出现了变化，那么 slave node 应该根据不同的 run id 区分。</p>
+</blockquote>
+<h2 id="Redis数据结构"><a href="#Redis数据结构" class="headerlink" title="Redis数据结构"></a>Redis数据结构</h2><h3 id="跳跃表"><a href="#跳跃表" class="headerlink" title="跳跃表"></a>跳跃表</h3>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/23/interview/Redis常见面试题/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-interview/JVM面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/23/interview/JVM面试题/">JVM面试题</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/01/23/interview/JVM面试题/" class="archive-article-date">
   	<time datetime="2021-01-23T08:23:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-23</time>
 </a>
 
@@ -236,7 +322,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/01/23/2021/JVM面试题/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/01/23/interview/JVM面试题/">展开全文 >></a>
         </p>
       
 
@@ -266,20 +352,20 @@
 
 
   
-    <article id="post-2021/多线程面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-interview/多线程面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/23/2021/多线程面试题/">多线程面试题</a>
+      <a class="article-title" href="/2021/01/23/interview/多线程面试题/">多线程面试题</a>
     </h1>
   
 
         
         
-<a href="/2021/01/23/2021/多线程面试题/" class="archive-article-date">
+<a href="/2021/01/23/interview/多线程面试题/" class="archive-article-date">
   	<time datetime="2021-01-23T08:23:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-23</time>
 </a>
 
@@ -364,7 +450,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/01/23/2021/多线程面试题/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/01/23/interview/多线程面试题/">展开全文 >></a>
         </p>
       
 
@@ -394,20 +480,20 @@
 
 
   
-    <article id="post-2021/2021面经" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-interview/2021面经" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/20/2021/2021面经/">2021面经</a>
+      <a class="article-title" href="/2021/01/20/interview/2021面经/">2021面经</a>
     </h1>
   
 
         
         
-<a href="/2021/01/20/2021/2021面经/" class="archive-article-date">
+<a href="/2021/01/20/interview/2021面经/" class="archive-article-date">
   	<time datetime="2021-01-20T08:49:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-20</time>
 </a>
 
@@ -487,7 +573,7 @@
 </li>
 </ul>
         
-          <a class="article-more-a" href="/2021/01/20/2021/2021面经/#more">more >></a>
+          <a class="article-more-a" href="/2021/01/20/interview/2021面经/#more">more >></a>
         
       
 
@@ -511,7 +597,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/01/20/2021/2021面经/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/01/20/interview/2021面经/">展开全文 >></a>
         </p>
       
 
@@ -541,20 +627,20 @@
 
 
   
-    <article id="post-2021/dubbo面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-interview/dubbo面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/18/2021/dubbo面试题/">Dubbo面试题</a>
+      <a class="article-title" href="/2021/01/18/interview/dubbo面试题/">Dubbo面试题</a>
     </h1>
   
 
         
         
-<a href="/2021/01/18/2021/dubbo面试题/" class="archive-article-date">
+<a href="/2021/01/18/interview/dubbo面试题/" class="archive-article-date">
   	<time datetime="2021-01-18T08:31:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-18</time>
 </a>
 
@@ -593,7 +679,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/01/18/2021/dubbo面试题/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/01/18/interview/dubbo面试题/">展开全文 >></a>
         </p>
       
 
@@ -847,76 +933,9 @@
 
 
   
-    <article id="post-使用gitlab-ci和docker自动化部署vue项目" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/27/使用gitlab-ci和docker自动化部署vue项目/">使用gitlab-ci和docker自动化部署vue项目</a>
-    </h1>
-  
-
-        
-        
-<a href="/2019/10/27/使用gitlab-ci和docker自动化部署vue项目/" class="archive-article-date">
-  	<time datetime="2019-10-27T07:51:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-27</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>之前用docker的时候想到gitlab可以直接提交代码触发docker编译部署，非常方便，于是试验了一个单体vue项目如何使用gitlab和docker的强大功能进行编译发布，此教程仅供参考，适用于公司或者个人测试。</p>
-        
-          <a class="article-more-a" href="/2019/10/27/使用gitlab-ci和docker自动化部署vue项目/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/27/使用gitlab-ci和docker自动化部署vue项目/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 
@@ -1038,10 +1057,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -1051,6 +1066,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MapStruct</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
               </li>
              
               <li class="article-tag-list-item">

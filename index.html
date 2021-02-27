@@ -146,20 +146,97 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-2021/领域驱动DDD" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-algorithm/算法思想掌握" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><h3 id="395-至少有K个重复字符的最长子串"><a href="#395-至少有K个重复字符的最长子串" class="headerlink" title="395. 至少有K个重复字符的最长子串"></a><a href="https://leetcode-cn.com/problems/longest-substring-with-at-least-k-repeating-characters/" target="_blank" rel="noopener">395. 至少有K个重复字符的最长子串</a></h3><p>难度中等321收藏分享切换为英文接收动态反馈</p>
+<p>给你一个字符串 <code>s</code> 和一个整数 <code>k</code> ，请你找出 <code>s</code> 中的最长子串， 要求该子串中的每一字符出现次数都不少于 <code>k</code> 。返回这一子串的长度。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">"aaabb"</span>, k = <span class="number">3</span></span><br><span class="line">输出：<span class="number">3</span></span><br><span class="line">解释：最长子串为 <span class="string">"aaa"</span> ，其中 'a' 重复了 <span class="number">3</span> 次。</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">"ababbc"</span>, k = <span class="number">2</span></span><br><span class="line">输出：<span class="number">5</span></span><br><span class="line">解释：最长子串为 <span class="string">"ababb"</span> ，其中 'a' 重复了 <span class="number">2</span> 次， 'b' 重复了 <span class="number">3</span> 次。</span><br></pre></td></tr></table></figure>
+
+<p> <strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 10^4</code></li>
+<li><code>s</code> 仅由小写英文字母组成</li>
+<li><code>1 &lt;= k &lt;= 10^5</code></li>
+</ul>
+<h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4><p>本题要求的一个最长的子字符串的长度，该子字符串中每个字符出现的次数都最少为 kk。</p>
+<p>求最长子字符串/区间的这类题一般可以用滑动窗口来做，但是本题滑动窗口的代码不好写，我改用递归。也借本题来帮助大家理解递归。</p>
+<ul>
+<li><strong>重点：我们在调用递归函数的时候，把递归函数当做普通函数（黑箱）来调用，即明白该函数的输入输出是什么，而不用管此函数内部在做什么。</strong></li>
+</ul>
+<p>下面是详细讲解。</p>
+<ol>
+<li><strong>递归最基本的是记住递归函数的含义（务必牢记函数定义）</strong>：本题的 <code>longestSubstring(s, k)</code> 函数表示的就是题意，即求一个最长的子字符串的长度，该子字符串中每个字符出现的次数都最少为 k。函数入参 s 是表示源字符串；k 是限制条件，即子字符串中每个字符最少出现的次数；函数返回结果是满足题意的最长子字符串长度。</li>
+<li><strong>递归的终止条件（能直接写出的最简单 case）</strong>：如果字符串 s 的长度少于 k，那么一定不存在满足题意的子字符串，返回 0；</li>
+<li><strong>调用递归（重点）</strong>：如果一个字符 c 在 s 中出现的次数少于 k 次，那么 s 中所有的包含 c 的子字符串都不能满足题意。所以，应该在 s 的所有不包含 c 的子字符串中继续寻找结果：把 s 按照 c 分割（分割后每个子串都不包含 c），得到很多子字符串 t；<strong>下一步要求 t作为源字符串的时候，它的最长的满足题意的子字符串长度</strong>（到现在为止，我们把大问题分割为了小问题(s → t)）。此时我们发现，恰好已经定义了函数 <code>longestSubstring(s, k)</code> 就是来解决这个问题的！所以直接把 <code>longestSubstring(s, k)</code> 函数拿来用，于是形成了递归。</li>
+<li>未进入递归时的返回结果：如果 s 中的每个字符出现的次数都大于 k 次，那么 s 就是我们要求的字符串，直接返回该字符串的长度。</li>
+</ol>
+<p>总之，通过上面的分析，我们看出了：<strong>我们不是为了递归而递归</strong>。而是因为我们把大问题拆解成了小问题，恰好有函数可以解决小问题，所以直接用这个函数。由于这个函数正好是本身，所以我们把此现象叫做递归。小问题是原因，递归是结果。而<strong>递归函数到底怎么一层层展开与终止的，不要用大脑去想</strong>，这是计算机干的事。我们只用把递归函数当做一个能解决问题的黑箱就够了，把更多的注意力放在拆解子问题、递归终止条件、递归函数的正确性上来。</p>
+<p>三种语言的代码如下，Python 是行数最少的。</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestSubstring</span><span class="params">(String s, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (s.length() &lt; k) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        HashMap&lt;Character, Integer&gt; counter = <span class="keyword">new</span> HashMap();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</span><br><span class="line">            counter.put(s.charAt(i), counter.getOrDefault(s.charAt(i), <span class="number">0</span>) + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c : counter.keySet()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (counter.get(c) &lt; k) &#123;</span><br><span class="line">                <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">for</span> (String t : s.split(String.valueOf(c))) &#123;</span><br><span class="line">                    res = Math.max(res, longestSubstring(t, k));</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> res;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s.length();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/02/27/algorithm/算法思想掌握/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-interview/领域驱动DDD" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/25/2021/领域驱动DDD/">领域驱动DDD</a>
+      <a class="article-title" href="/2021/02/25/interview/领域驱动DDD/">领域驱动DDD</a>
     </h1>
   
 
         
         
-<a href="/2021/02/25/2021/领域驱动DDD/" class="archive-article-date">
+<a href="/2021/02/25/interview/领域驱动DDD/" class="archive-article-date">
   	<time datetime="2021-02-25T15:47:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-25</time>
 </a>
 
@@ -223,7 +300,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/25/2021/领域驱动DDD/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/02/25/interview/领域驱动DDD/">展开全文 >></a>
         </p>
       
 
@@ -253,20 +330,20 @@
 
 
   
-    <article id="post-2021/你需要了解这 14 种编程面试模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-algorithm/你需要了解这 14 种编程面试模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/25/2021/你需要了解这 14 种编程面试模式/">你需要了解这14种编程面试模式</a>
+      <a class="article-title" href="/2021/02/25/algorithm/你需要了解这 14 种编程面试模式/">你需要了解这14种编程面试模式</a>
     </h1>
   
 
         
         
-<a href="/2021/02/25/2021/你需要了解这 14 种编程面试模式/" class="archive-article-date">
+<a href="/2021/02/25/algorithm/你需要了解这 14 种编程面试模式/" class="archive-article-date">
   	<time datetime="2021-02-25T01:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-25</time>
 </a>
 
@@ -313,7 +390,7 @@
 </blockquote>
 <p>我们开始吧！</p>
         
-          <a class="article-more-a" href="/2021/02/25/2021/你需要了解这 14 种编程面试模式/#more">more >></a>
+          <a class="article-more-a" href="/2021/02/25/algorithm/你需要了解这 14 种编程面试模式/#more">more >></a>
         
       
 
@@ -337,7 +414,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/25/2021/你需要了解这 14 种编程面试模式/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/02/25/algorithm/你需要了解这 14 种编程面试模式/">展开全文 >></a>
         </p>
       
 
@@ -367,20 +444,20 @@
 
 
   
-    <article id="post-2021/算法模板" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-algorithm/算法模板" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/22/2021/算法模板/">算法模板</a>
+      <a class="article-title" href="/2021/02/22/algorithm/算法模板/">算法模板</a>
     </h1>
   
 
         
         
-<a href="/2021/02/22/2021/算法模板/" class="archive-article-date">
+<a href="/2021/02/22/algorithm/算法模板/" class="archive-article-date">
   	<time datetime="2021-02-22T14:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-22</time>
 </a>
 
@@ -395,6 +472,8 @@
 <p>滑动窗口中用到了左右两个指针，它们移动的思路是：以右指针作为驱动，拖着左指针向前走。右指针每次只移动一步，而左指针在内部 while 循环中每次可能移动多步。右指针是主动前移，探索未知的新区域；左指针是被迫移动，负责寻找满足题意的区间。</p>
 <p>模板的整体思想是：</p>
 <p>定义两个指针 left 和 right 分别指向区间的开头和结尾，注意是闭区间；定义 sums 用来统计该区间内的各个字符出现次数；<br>第一重 while 循环是为了判断 right 指针的位置是否超出了数组边界；当 right 每次到了新位置，需要增加 right 指针的求和/计数；<br>第二重 while 循环是让 left 指针向右移动到 [left, right] 区间符合题意的位置；当 left 每次移动到了新位置，需要减少 left 指针的求和/计数；<br>在第二重 while 循环之后，成功找到了一个符合题意的 [left, right] 区间，题目要求最大的区间长度，因此更新 res 为 max(res, 当前区间的长度) 。<br>right 指针每次向右移动一步，开始探索新的区间。<br>模板中的 sums 需要根据题目意思具体去修改，本题是求和题目因此把sums 定义成整数用于求和；如果是计数题目，就需要改成字典用于计数。当左右指针发生变化的时候，都需要更新 sums 。</p>
+<h4 id="2-定长滑动窗口模板"><a href="#2-定长滑动窗口模板" class="headerlink" title="2.定长滑动窗口模板"></a>2.定长滑动窗口模板</h4><p>leetcode643</p>
+<p><a href="https://leetcode-cn.com/problems/maximum-average-subarray-i/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/maximum-average-subarray-i/</a></p>
 
       
 
@@ -418,7 +497,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/22/2021/算法模板/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/02/22/algorithm/算法模板/">展开全文 >></a>
         </p>
       
 
@@ -448,20 +527,20 @@
 
 
   
-    <article id="post-2021/分布式事务" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-interview/分布式事务" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/21/2021/分布式事务/">分布式事务</a>
+      <a class="article-title" href="/2021/02/21/interview/分布式事务/">分布式事务</a>
     </h1>
   
 
         
         
-<a href="/2021/02/21/2021/分布式事务/" class="archive-article-date">
+<a href="/2021/02/21/interview/分布式事务/" class="archive-article-date">
   	<time datetime="2021-02-21T15:49:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-21</time>
 </a>
 
@@ -562,7 +641,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/21/2021/分布式事务/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/02/21/interview/分布式事务/">展开全文 >></a>
         </p>
       
 
@@ -592,20 +671,20 @@
 
 
   
-    <article id="post-2021/计算机网络" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-interview/计算机网络" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/04/2021/计算机网络/">计算机网络</a>
+      <a class="article-title" href="/2021/02/04/interview/计算机网络/">计算机网络</a>
     </h1>
   
 
         
         
-<a href="/2021/02/04/2021/计算机网络/" class="archive-article-date">
+<a href="/2021/02/04/interview/计算机网络/" class="archive-article-date">
   	<time datetime="2021-02-04T07:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-04</time>
 </a>
 
@@ -661,7 +740,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/04/2021/计算机网络/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/02/04/interview/计算机网络/">展开全文 >></a>
         </p>
       
 
@@ -691,20 +770,20 @@
 
 
   
-    <article id="post-2021/系统架构设计" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-interview/系统架构设计" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/30/2021/系统架构设计/">系统架构设计</a>
+      <a class="article-title" href="/2021/01/30/interview/系统架构设计/">系统架构设计</a>
     </h1>
   
 
         
         
-<a href="/2021/01/30/2021/系统架构设计/" class="archive-article-date">
+<a href="/2021/01/30/interview/系统架构设计/" class="archive-article-date">
   	<time datetime="2021-01-30T06:09:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-30</time>
 </a>
 
@@ -781,7 +860,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/01/30/2021/系统架构设计/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/01/30/interview/系统架构设计/">展开全文 >></a>
         </p>
       
 
@@ -811,20 +890,20 @@
 
 
   
-    <article id="post-2021/计算机基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-interview/计算机基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/30/2021/计算机基础/">计算机基础</a>
+      <a class="article-title" href="/2021/01/30/interview/计算机基础/">计算机基础</a>
     </h1>
   
 
         
         
-<a href="/2021/01/30/2021/计算机基础/" class="archive-article-date">
+<a href="/2021/01/30/interview/计算机基础/" class="archive-article-date">
   	<time datetime="2021-01-30T05:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-30</time>
 </a>
 
@@ -873,93 +952,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/01/30/2021/计算机基础/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-2021/Redis常见面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/23/2021/Redis常见面试题/">Redis常见面试题</a>
-    </h1>
-  
-
-        
-        
-<a href="/2021/01/23/2021/Redis常见面试题/" class="archive-article-date">
-  	<time datetime="2021-01-23T08:24:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-23</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h2 id="Redis高可用"><a href="#Redis高可用" class="headerlink" title="Redis高可用"></a>Redis高可用</h2><h3 id="Redis主从复制核心原理"><a href="#Redis主从复制核心原理" class="headerlink" title="Redis主从复制核心原理"></a>Redis主从复制核心原理</h3><ol>
-<li>salve node启动，会发送一个<code>PSYNC</code>命令给master node</li>
-<li>如果是slave node初次连接到master node，会触发一次<code>full resynchronization</code> 全量复制。此时master回启动一个后台线程，生成<code>RDB</code>快照文件，同时将从客户端新收到的所有写命令缓存到内存中。<code>RDB</code> 文件生成完毕后， master 会将这个 <code>RDB</code> 发送给 slave，slave 会先<strong>写入本地磁盘，然后再从本地磁盘加载到内存</strong>中，接着 master 会将内存中缓存的写命令发送到 slave，slave 也会同步这些数据。</li>
-<li>slave node如果跟master node有网络故障，断开了链接，会自动重连，连接之后master node仅会复制给salve部分缺少的数据。<br><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210119165016.png" alt="Redis-master-slave-replication"></li>
-</ol>
-<h3 id="主从复制是如何断点续传的？"><a href="#主从复制是如何断点续传的？" class="headerlink" title="主从复制是如何断点续传的？"></a>主从复制是如何断点续传的？</h3><p>从 Redis2.8 开始，就支持主从复制的断点续传，如果主从复制过程中，网络连接断掉了，那么可以接着上次复制的地方，继续复制下去，而不是从头开始复制一份。</p>
-<p>master node会在内存中维护一个backlog，master和slave都会保存一个replica offset还有一个master run id，offset就是保存在backlog中的。如果master和slave网络连接断掉了，slave会让master从上次replica offset开始复制，如果没有找到对应的offset，那么就会执行一次<code>resynchronization</code> 。</p>
-<blockquote>
-<p> 如果根据 host+ip 定位 master node，是不靠谱的，如果 master node 重启或者数据出现了变化，那么 slave node 应该根据不同的 run id 区分。</p>
-</blockquote>
-<h2 id="Redis数据结构"><a href="#Redis数据结构" class="headerlink" title="Redis数据结构"></a>Redis数据结构</h2><h3 id="跳跃表"><a href="#跳跃表" class="headerlink" title="跳跃表"></a>跳跃表</h3>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/01/23/2021/Redis常见面试题/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/01/30/interview/计算机基础/">展开全文 >></a>
         </p>
       
 
@@ -991,7 +984,7 @@
   
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -1113,10 +1106,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -1126,6 +1115,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MapStruct</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
               </li>
              
               <li class="article-tag-list-item">
