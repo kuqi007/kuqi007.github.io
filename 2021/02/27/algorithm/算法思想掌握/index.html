@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Elfred&#39;s Blog">
 <meta property="og:description" content="递归395. 至少有K个重复字符的最长子串给你一个字符串 s 和一个整数 k ，请你找出 s 中的最长子串， 要求该子串中的每一字符出现次数都不少于 k 。返回这一子串的长度。 示例 1： 123输入：s = &quot;aaabb&quot;, k = 3输出：3解释：最长子串为 &quot;aaa&quot; ，其中 &apos;a&apos; 重复了 3 次。  示例 2： 123输入：s = &quot;ababbc&quot;, k = 2输出：5解释：最长子串为">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-02-27T05:15:57.938Z">
+<meta property="og:updated_time" content="2021-02-28T13:02:23.723Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法思想掌握">
 <meta name="twitter:description" content="递归395. 至少有K个重复字符的最长子串给你一个字符串 s 和一个整数 k ，请你找出 s 中的最长子串， 要求该子串中的每一字符出现次数都不少于 k 。返回这一子串的长度。 示例 1： 123输入：s = &quot;aaabb&quot;, k = 3输出：3解释：最长子串为 &quot;aaa&quot; ，其中 &apos;a&apos; 重复了 3 次。  示例 2： 123输入：s = &quot;ababbc&quot;, k = 2输出：5解释：最长子串为">
@@ -199,7 +199,6 @@
 <li>未进入递归时的返回结果：如果 s 中的每个字符出现的次数都大于 k 次，那么 s 就是我们要求的字符串，直接返回该字符串的长度。</li>
 </ol>
 <p>总之，通过上面的分析，我们看出了：<strong>我们不是为了递归而递归</strong>。而是因为我们把大问题拆解成了小问题，恰好有函数可以解决小问题，所以直接用这个函数。由于这个函数正好是本身，所以我们把此现象叫做递归。小问题是原因，递归是结果。而<strong>递归函数到底怎么一层层展开与终止的，不要用大脑去想</strong>，这是计算机干的事。我们只用把递归函数当做一个能解决问题的黑箱就够了，把更多的注意力放在拆解子问题、递归终止条件、递归函数的正确性上来。</p>
-<p>三种语言的代码如下，Python 是行数最少的。</p>
 <h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestSubstring</span><span class="params">(String s, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (s.length() &lt; k) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        HashMap&lt;Character, Integer&gt; counter = <span class="keyword">new</span> HashMap();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</span><br><span class="line">            counter.put(s.charAt(i), counter.getOrDefault(s.charAt(i), <span class="number">0</span>) + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c : counter.keySet()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (counter.get(c) &lt; k) &#123;</span><br><span class="line">                <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">for</span> (String t : s.split(String.valueOf(c))) &#123;</span><br><span class="line">                    res = Math.max(res, longestSubstring(t, k));</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> res;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s.length();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
@@ -483,11 +482,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+                <a href="javascript:void(0)" class="js-tag color3">面经</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -503,6 +502,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
@@ -511,19 +518,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">框架</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面经</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DDD</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">框架</a>
               </li>
             
             <div class="clearfix"></div>
