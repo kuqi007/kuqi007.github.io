@@ -6,24 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://blog.elfred.top">
-  <title>Dubbo面试题 | Elfred&#39;s Blog</title>
+  <title>Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="dubbo分层从大的范围来说，dubbo分为三层，business业务逻辑层由我们自己来提供接口和实现还有一些配置信息，RPC层就是真正的RPC调用的核心层，封装整个RPC的调用过程、负载均衡、集群容错、代理，remoting则是对网络传输协议和数据转换的封装。 划分到更细的层面，就是图中的10层模式，整个分层依赖由上至下，除开business业务逻辑之外，其他的几层都是SPI机制。 能说下Du">
+  <meta name="description" content="设计模式原则面向对象的设计模式有七大基本原则：  开闭原则（Open Closed Principle，OCP） 单一职责原则（Single Responsibility Principle, SRP） 里氏代换原则（Liskov Substitution Principle，LSP） 依赖倒转原则（Dependency Inversion Principle，DIP） 接口隔离原则（Interf">
 <meta name="keywords" content="前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Dubbo面试题">
-<meta property="og:url" content="https://blog.elfred.top/2021/01/18/interview/dubbo面试题/index.html">
+<meta property="og:title" content="Elfred&#39;s Blog">
+<meta property="og:url" content="https://blog.elfred.top/2021/03/01/design/设计模式简介/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="dubbo分层从大的范围来说，dubbo分为三层，business业务逻辑层由我们自己来提供接口和实现还有一些配置信息，RPC层就是真正的RPC调用的核心层，封装整个RPC的调用过程、负载均衡、集群容错、代理，remoting则是对网络传输协议和数据转换的封装。 划分到更细的层面，就是图中的10层模式，整个分层依赖由上至下，除开business业务逻辑之外，其他的几层都是SPI机制。 能说下Du">
+<meta property="og:description" content="设计模式原则面向对象的设计模式有七大基本原则：  开闭原则（Open Closed Principle，OCP） 单一职责原则（Single Responsibility Principle, SRP） 里氏代换原则（Liskov Substitution Principle，LSP） 依赖倒转原则（Dependency Inversion Principle，DIP） 接口隔离原则（Interf">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118155842.webp">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118155952.webp">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118160055.webp">
-<meta property="og:updated_time" content="2021-01-23T08:27:58.351Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210301205001.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210301205021.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210301205104.webp">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210301214900.png">
+<meta property="og:updated_time" content="2021-03-01T14:47:31.089Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Dubbo面试题">
-<meta name="twitter:description" content="dubbo分层从大的范围来说，dubbo分为三层，business业务逻辑层由我们自己来提供接口和实现还有一些配置信息，RPC层就是真正的RPC调用的核心层，封装整个RPC的调用过程、负载均衡、集群容错、代理，remoting则是对网络传输协议和数据转换的封装。 划分到更细的层面，就是图中的10层模式，整个分层依赖由上至下，除开business业务逻辑之外，其他的几层都是SPI机制。 能说下Du">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118155842.webp">
+<meta name="twitter:title" content="Elfred&#39;s Blog">
+<meta name="twitter:description" content="设计模式原则面向对象的设计模式有七大基本原则：  开闭原则（Open Closed Principle，OCP） 单一职责原则（Single Responsibility Principle, SRP） 里氏代换原则（Liskov Substitution Principle，LSP） 依赖倒转原则（Dependency Inversion Principle，DIP） 接口隔离原则（Interf">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210301205001.png">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -149,51 +150,56 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-interview/dubbo面试题" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-design/设计模式简介" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Dubbo面试题
-    </h1>
-  
-
-        
-        
-	<!-- 不蒜子统计 -->
-	<span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
-              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
-        </span>
-
-<a href="/2021/01/18/interview/dubbo面试题/" class="archive-article-date">
-  	<time datetime="2021-01-18T08:31:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-18</time>
-</a>
-
-        
-      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-<h3 id="dubbo分层"><a href="#dubbo分层" class="headerlink" title="dubbo分层"></a>dubbo分层</h3><p>从大的范围来说，dubbo分为三层，business业务逻辑层由我们自己来提供接口和实现还有一些配置信息，RPC层就是真正的RPC调用的核心层，封装整个RPC的调用过程、负载均衡、集群容错、代理，remoting则是对网络传输协议和数据转换的封装。</p>
-<p>划分到更细的层面，就是图中的10层模式，整个分层依赖由上至下，除开business业务逻辑之外，其他的几层都是SPI机制。<br><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118155842.webp" alt="图片"></p>
-<h3 id="能说下Dubbo的工作原理吗？"><a href="#能说下Dubbo的工作原理吗？" class="headerlink" title="能说下Dubbo的工作原理吗？"></a>能说下Dubbo的工作原理吗？</h3><ol>
-<li>服务启动的时候，provider和consumer根据配置信息，连接到注册中心register，分别向注册中心注册和订阅服务</li>
-<li>register根据服务订阅关系，返回provider信息到consumer，同时consumer会把provider信息缓存到本地。如果信息有变更，consumer会收到来自register的推送</li>
-<li>consumer生成代理对象，同时根据负载均衡策略，选择一台provider，同时定时向monitor记录接口的调用次数和时间信息</li>
-<li>拿到代理对象之后，consumer通过代理对象发起接口调用</li>
-<li>provider收到请求后对数据进行反序列化，然后通过代理调用具体的接口实现</li>
-</ol>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118155952.webp" alt="图片"></p>
-<h3 id="dubbo服务暴露的过程"><a href="#dubbo服务暴露的过程" class="headerlink" title="dubbo服务暴露的过程"></a>dubbo服务暴露的过程</h3><ol>
-<li>在容器启动的时候，通过ServiceConfig解析标签，创建dubbo标签解析器来解析dubbo的标签，容器创建完成之后，触发ContextRefreshEvent事件回调开始暴露服务</li>
-<li>通过ProxyFactory获取到invoker，invoker包含了需要执行的方法的对象信息和具体的URL地址</li>
-<li>再通过DubboProtocol的实现把包装后的invoker转换成exporter，然后启动服务器server，监听端口</li>
-<li>最后RegistryProtocol保存URL地址和invoker的映射关系，同时注册到服务中心</li>
-</ol>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118160055.webp" alt="图片"></p>
+        <h3 id="设计模式原则"><a href="#设计模式原则" class="headerlink" title="设计模式原则"></a>设计模式原则</h3><p>面向对象的设计模式有七大基本原则：</p>
+<ul>
+<li>开闭原则（Open Closed Principle，OCP）</li>
+<li>单一职责原则（Single Responsibility Principle, SRP）</li>
+<li>里氏代换原则（Liskov Substitution Principle，LSP）</li>
+<li>依赖倒转原则（Dependency Inversion Principle，DIP）</li>
+<li>接口隔离原则（Interface Segregation Principle，ISP）</li>
+<li>合成/聚合复用原则（Composite/Aggregate Reuse Principle，CARP）</li>
+<li>最少知识原则（Least Knowledge Principle，LKP）或者迪米特法则（Law of Demeter，LOD）</li>
+</ul>
+<p>简单理解就是：<strong>开闭原则是总纲</strong>，它指导我们要对扩展开放，对修改关闭；单一职责原则指导我们实现类要职责单一；里氏替换原则指导我们不要破坏继承体系；依赖倒置原则指导我们要面向接口编程；接口隔离原则指导我们在设计接口的时候要精简单一；迪米特法则指导我们要降低耦合。</p>
+<h3 id="工厂模式-Factory-Method-Pattern"><a href="#工厂模式-Factory-Method-Pattern" class="headerlink" title="工厂模式 Factory Method Pattern"></a>工厂模式 Factory Method Pattern</h3><p><strong>模式：工厂模式</strong></p>
+<blockquote>
+<p>工厂模式又细分为工厂方法模式和抽象工厂模式，本文主要介绍工厂方法模式。</p>
+</blockquote>
+<p><strong>模式定义</strong>：定义一个用于创建对象的接口，让子类决定实例化哪一个类。工厂方法是一个类的实例化延迟到其子类。</p>
+<p>工厂模式通用类图如下:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210301205001.png" alt="图片"></p>
+<p>我们通过一段较为通用的代码来解释如何使用工厂模式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//抽象的产品</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//定义一个具体的产品 (可以定义多个具体的产品)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductA</span> <span class="keyword">extends</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;&#125;  <span class="comment">//具体的执行逻辑</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//抽象的工厂</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Factory</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">abstract</span> Product <span class="title">createProduct</span><span class="params">(Class&lt;T&gt; c)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//具体的工厂可以生产出相应的产品</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FactoryA</span> <span class="keyword">extends</span> <span class="title">Factory</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function">Product <span class="title">createProduct</span><span class="params">(Class c)</span> </span>&#123;</span><br><span class="line">        Product product = (Product) Class.forName(c.getName()).newInstance();</span><br><span class="line">        <span class="keyword">return</span> product;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="策略模式-Strategy-Pattern"><a href="#策略模式-Strategy-Pattern" class="headerlink" title="策略模式 Strategy Pattern"></a>策略模式 Strategy Pattern</h3><p><strong>模式：策略模式</strong></p>
+<p><strong>模式定义</strong>：定义一系列算法，将每个算法都封装起来，并且它们可以互换。策略模式是一种对象行为模式。</p>
+<p>策略模式通用类图如下:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210301205021.png" alt="图片"></p>
+<p>我们通过一段比较通用的代码来解释怎么使用策略模式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一个策略接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Strategy</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">strategyImplementation</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//具体的策略实现(可以定义多个具体的策略实现)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StrategyA</span> <span class="keyword">implements</span> <span class="title">Strategy</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">strategyImplementation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"正在执行策略A"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//封装策略，屏蔽高层模块对策略、算法的直接访问，屏蔽可能存在的策略变化</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Context</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Strategy strategy = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Context</span><span class="params">(Strategy strategy)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.strategy = strategy;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doStrategy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        strategy.strategyImplementation();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="状态模式-State-Pattern"><a href="#状态模式-State-Pattern" class="headerlink" title="状态模式 State Pattern"></a>状态模式 State Pattern</h3><p><strong>模式：状态模式</strong></p>
+<p><strong>模式定义</strong>：当一个对象内在状态改变时允许其改变行为，这个对象看起来像改变了其类。</p>
+<p>状态模式的通用类图如下图所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210301205104.webp" alt="图片"></p>
+<p>对比策略模式的类型会发现和状态模式的类图很类似，但实际上有很大的区别，具体体现在concrete class上。策略模式通过Context产生唯一一个ConcreteStrategy作用于代码中，而状态模式则是通过context组织多个ConcreteState形成一个状态转换图来实现业务逻辑。接下来，我们通过一段通用代码来解释怎么使用状态模式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一个抽象的状态类</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">State</span> </span>&#123;</span><br><span class="line">    Context context;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContext</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.context = context;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">handle1</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">handle2</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//定义状态A</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteStateA</span> <span class="keyword">extends</span> <span class="title">State</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handle1</span><span class="params">()</span> </span>&#123;&#125;  <span class="comment">//本状态下必须要处理的事情</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handle2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.context.setCurrentState(Context.contreteStateB);  <span class="comment">//切换到状态B        </span></span><br><span class="line">        <span class="keyword">super</span>.context.handle2();  <span class="comment">//执行状态B的任务</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//定义状态B</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteStateB</span> <span class="keyword">extends</span> <span class="title">State</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handle2</span><span class="params">()</span> </span>&#123;&#125;  <span class="comment">//本状态下必须要处理的事情，...</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handle1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.context.setCurrentState(Context.contreteStateA);  <span class="comment">//切换到状态A</span></span><br><span class="line">        <span class="keyword">super</span>.context.handle1();  <span class="comment">//执行状态A的任务</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//定义一个上下文管理环境</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Context</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> ConcreteStateA contreteStateA = <span class="keyword">new</span> ConcreteStateA();</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> ConcreteStateB contreteStateB = <span class="keyword">new</span> ConcreteStateB();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> State CurrentState;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> State <span class="title">getCurrentState</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> CurrentState;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCurrentState</span><span class="params">(State currentState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.CurrentState = currentState;</span><br><span class="line">        <span class="keyword">this</span>.CurrentState.setContext(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handle1</span><span class="params">()</span> </span>&#123;<span class="keyword">this</span>.CurrentState.handle1();&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handle2</span><span class="params">()</span> </span>&#123;<span class="keyword">this</span>.CurrentState.handle2();&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//定义client执行</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Context context = <span class="keyword">new</span> Context();</span><br><span class="line">        context.setCurrentState(<span class="keyword">new</span> ContreteStateA());</span><br><span class="line">        context.handle1();</span><br><span class="line">        context.handle2();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="责任链模式-Chain-of-Responsibility-Pattern"><a href="#责任链模式-Chain-of-Responsibility-Pattern" class="headerlink" title="责任链模式 Chain of Responsibility Pattern"></a>责任链模式 Chain of Responsibility Pattern</h3><p><strong>模式：责任链模式</strong></p>
+<p><strong>模式定义</strong>：使多个对象都有机会处理请求，从而避免了请求的发送者和接受者之间的耦合关系。将这些对象连成一条链，并沿着这条链传递该请求，直到有对象处理它为止。</p>
+<p>责任链模式通用类图如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210301214900.png" alt="图片"></p>
+<p>我们通过一段比较通用的代码来解释如何使用责任链模式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一个抽象的handle</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Handler</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Handler nextHandler;  <span class="comment">//指向下一个处理者</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> level;  <span class="comment">//处理者能够处理的级别</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Handler</span><span class="params">(<span class="keyword">int</span> level)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.level = level;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNextHandler</span><span class="params">(Handler handler)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.nextHandler = handler;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 处理请求传递，注意final，子类不可重写</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Request request)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (level == request.getRequstLevel()) &#123;</span><br><span class="line">            <span class="keyword">this</span>.echo(request);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.nextHandler != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">this</span>.nextHandler.handleMessage(request);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">"已经到最尽头了"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 抽象方法，子类实现</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">echo</span><span class="params">(Request request)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义一个具体的handleA</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HandleRuleA</span> <span class="keyword">extends</span> <span class="title">Handler</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HandleRuleA</span><span class="params">(<span class="keyword">int</span> level)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(level);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">echo</span><span class="params">(Request request)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"我是处理者1,我正在处理A规则"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义一个具体的handleB</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HandleRuleB</span> <span class="keyword">extends</span> <span class="title">Handler</span> </span>&#123;&#125;  <span class="comment">//...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//客户端实现</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        HandleRuleA handleRuleA = <span class="keyword">new</span> HandleRuleA(<span class="number">1</span>);</span><br><span class="line">        HandleRuleB handleRuleB = <span class="keyword">new</span> HandleRuleB(<span class="number">2</span>);</span><br><span class="line">        handleRuleA.setNextHandler(handleRuleB);  <span class="comment">//这是重点，将handleA和handleB串起来</span></span><br><span class="line">        handleRuleA.echo(<span class="keyword">new</span> Request());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="https://mp.weixin.qq.com/s/9gDGQhzRAL3pj35VAinZbQ" target="_blank" rel="noopener">设计模式在外卖营销业务中的实践</a></li>
+</ul>
 
       
 
@@ -252,7 +258,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/2021/01/18/interview/dubbo面试题/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/2021/03/01/design/设计模式简介/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -266,18 +272,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/01/20/interview/2021面经/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          2021面经
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/03/26/application/面试遇到的简单多线程编程题：线程交替打印的升级版/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">面试遇到的简单多线程编程题：线程交替打印的升级版</div>
+    <a href="/2021/02/27/algorithm/算法思想掌握/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">算法思想掌握</div>
       <i class="icon-circle-right"></i>
     </a>
   

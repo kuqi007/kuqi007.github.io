@@ -16,10 +16,12 @@
 <meta property="og:site_name" content="Elfred&#39;s Blog">
 <meta property="og:description" content="递归395. 至少有K个重复字符的最长子串给你一个字符串 s 和一个整数 k ，请你找出 s 中的最长子串， 要求该子串中的每一字符出现次数都不少于 k 。返回这一子串的长度。 示例 1： 123输入：s = &quot;aaabb&quot;, k = 3输出：3解释：最长子串为 &quot;aaa&quot; ，其中 &apos;a&apos; 重复了 3 次。  示例 2： 123输入：s = &quot;ababbc&quot;, k = 2输出：5解释：最长子串为">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-02-28T13:02:23.723Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210301102603.gif">
+<meta property="og:updated_time" content="2021-03-01T14:47:57.527Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法思想掌握">
 <meta name="twitter:description" content="递归395. 至少有K个重复字符的最长子串给你一个字符串 s 和一个整数 k ，请你找出 s 中的最长子串， 要求该子串中的每一字符出现次数都不少于 k 。返回这一子串的长度。 示例 1： 123输入：s = &quot;aaabb&quot;, k = 3输出：3解释：最长子串为 &quot;aaa&quot; ，其中 &apos;a&apos; 重复了 3 次。  示例 2： 123输入：s = &quot;ababbc&quot;, k = 2输出：5解释：最长子串为">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210301102603.gif">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -201,6 +203,39 @@
 <p>总之，通过上面的分析，我们看出了：<strong>我们不是为了递归而递归</strong>。而是因为我们把大问题拆解成了小问题，恰好有函数可以解决小问题，所以直接用这个函数。由于这个函数正好是本身，所以我们把此现象叫做递归。小问题是原因，递归是结果。而<strong>递归函数到底怎么一层层展开与终止的，不要用大脑去想</strong>，这是计算机干的事。我们只用把递归函数当做一个能解决问题的黑箱就够了，把更多的注意力放在拆解子问题、递归终止条件、递归函数的正确性上来。</p>
 <h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestSubstring</span><span class="params">(String s, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (s.length() &lt; k) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        HashMap&lt;Character, Integer&gt; counter = <span class="keyword">new</span> HashMap();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</span><br><span class="line">            counter.put(s.charAt(i), counter.getOrDefault(s.charAt(i), <span class="number">0</span>) + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c : counter.keySet()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (counter.get(c) &lt; k) &#123;</span><br><span class="line">                <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">for</span> (String t : s.split(String.valueOf(c))) &#123;</span><br><span class="line">                    res = Math.max(res, longestSubstring(t, k));</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> res;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s.length();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h2 id="前缀和"><a href="#前缀和" class="headerlink" title="前缀和"></a>前缀和</h2><h3 id="303-区域和检索-数组不可变"><a href="#303-区域和检索-数组不可变" class="headerlink" title="303. 区域和检索 - 数组不可变"></a><a href="https://leetcode-cn.com/problems/range-sum-query-immutable/" target="_blank" rel="noopener">303. 区域和检索 - 数组不可变</a></h3><p>给定一个整数数组  nums，求出数组从索引 i 到 j（i ≤ j）范围内元素的总和，包含 i、j 两点。</p>
+<p>实现 NumArray 类：</p>
+<ul>
+<li>NumArray(int[] nums) 使用数组 nums 初始化对象</li>
+<li>int sumRange(int i, int j) 返回数组 nums 从索引 i 到 j（i ≤ j）范围内元素的总和，包含 i、j 两点（也就是 sum(nums[i], nums[i + 1], … , nums[j])）</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">输入：</span><br><span class="line">[<span class="string">"NumArray"</span>, <span class="string">"sumRange"</span>, <span class="string">"sumRange"</span>, <span class="string">"sumRange"</span>]</span><br><span class="line">[[[-2, 0, 3, -5, 2, -1]], [0, 2], [2, 5], [0, 5]]</span><br><span class="line">输出：</span><br><span class="line">[null, 1, -1, -3]</span><br><span class="line"></span><br><span class="line">解释：</span><br><span class="line">NumArray numArray = new NumArray([-2, 0, 3, -5, 2, -1]);</span><br><span class="line">numArray.sumRange(0, 2); // <span class="built_in">return</span> 1 ((-2) + 0 + 3)</span><br><span class="line">numArray.sumRange(2, 5); // <span class="built_in">return</span> -1 (3 + (-5) + 2 + (-1)) </span><br><span class="line">numArray.sumRange(0, 5); // <span class="built_in">return</span> -3 ((-2) + 0 + 3 + (-5) + 2 + (-1))</span><br></pre></td></tr></table></figure>
+
+<p>提示：</p>
+<ul>
+<li>0 &lt;= nums.length &lt;= 10^4</li>
+<li>-105 &lt;= nums[i] &lt;= 10^5</li>
+<li>0 &lt;= i &lt;= j &lt; nums.length</li>
+<li>最多调用 10^4 次 sumRange 方法</li>
+</ul>
+<h4 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h4><p><strong>preSum（前缀和）</strong><br>今天这个题目让我们求一个区间 [i, j] 内的和，求区间和可以用 preSum 来做。</p>
+<p>preSum 方法能快速计算指定区间段 i - j 的元素之和。它的计算方法是从左向右遍历数组，当遍历到数组的 i 位置时，preSum 表示 i 位置左边的元素之和。</p>
+<p>假设数组长度为 N，我们定义一个长度为 N+1 的 preSum 数组，<strong>preSum[i] 表示该元素左边所有元素之和（不包含 i 元素）</strong>。然后遍历一次数组，累加区间 [0, i)范围内的元素，可以得到 preSum 数组。</p>
+<p>求 <code>preSum</code> 的代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">N = len(nums)</span><br><span class="line">preSum = range(N + <span class="number">1</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(N):</span><br><span class="line">    preSum[i + <span class="number">1</span>] = preSum[i] + nums[i]</span><br><span class="line">print(preSum)</span><br></pre></td></tr></table></figure>
+
+<p>利用 preSum 数组，可以在 O(1) 的时间内快速求出 nums 任意区间 [i, j] (两端都包含) 的各元素之和。</p>
+<p><code>sum(i, j) = preSum[j + 1] - preSum[i]</code></p>
+<p>对于本题，可以在 NumArray 类的构造函数的里面，求数组每个位置的 preSum；当计算sumRange(i, j)的时候直接返回 <code>preSum[j + 1] - preSum[i]</code> 可以得到区间和。</p>
+<p>下面以数组 <code>[1, 12, -5, -6, 50, 3]</code> 为例，展示了求 preSum 的过程。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210301102603.gif" alt="303，preSum.gif"></p>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NumArray</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span>[] preSum;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NumArray</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.length;</span><br><span class="line">        preSum = <span class="keyword">new</span> <span class="keyword">int</span>[n + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            preSum[i + <span class="number">1</span>] = preSum[i] + nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">sumRange</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> preSum[j + <span class="number">1</span>] - preSum[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>时间复杂度：构造函数的时间复杂度是 O(N), sumRange 函数调用的时间复杂度是 O(1)</li>
+<li>空间复杂度：O(N)。</li>
+</ul>
 
       
 
@@ -294,6 +329,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2021/03/01/design/设计模式简介/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
   
   
     <a href="/2021/02/25/interview/领域驱动DDD/" id="article-nav-older" class="article-nav-link-wrap">
@@ -482,15 +526,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">面经</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -503,10 +551,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MapStruct</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
               </li>
              
               <li class="article-tag-list-item">
