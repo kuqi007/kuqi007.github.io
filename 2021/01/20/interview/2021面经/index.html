@@ -22,7 +22,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210125231657.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118160303.webp">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210121172804.png">
-<meta property="og:updated_time" content="2021-02-28T13:16:58.169Z">
+<meta property="og:updated_time" content="2021-03-06T06:15:01.906Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2021面经">
 <meta name="twitter:description" content="叮咚买菜 hashmap的扩容过程  单向链表如何判断有环  HashSet遍历和快慢指针   如何找出一个数组重复元素最多的前K个元素  TopK问题，堆排序，时间复杂度nLogK   MySQL什么情况下会发生死锁？如何解决？  举个例子：事务A按照先后顺序去更新id=1和id=2的记录，事务B同一时间按照先后顺序去更新id=2和id=1的记录，因为行锁是两阶段协议，A获得id=1的行锁不会">
@@ -1028,7 +1028,12 @@
 <p><strong>Zookeeper保证CP</strong></p>
 <p>当向注册中心查询服务列表时，我们可以容忍注册中心返回的是几分钟以前的注册信息，但不能接受服务直接down掉不可用。也就是说，服务注册功能对可用性的要求要高于一致性。但是zk会出现这样一种情况，当master节点因为网络故障与其他节点失去联系时，剩余节点会重新进行leader选举。问题在于，选举leader的时间太长，30 ~ 120s, 且选举期间整个zk集群都是不可用的，这就导致在选举期间注册服务瘫痪。在云部署的环境下，因网络问题使得zk集群失去master节点是较大概率会发生的事，虽然服务能够最终恢复，但是漫长的选举时间导致的注册长期不可用是不能容忍的。</p>
 <p><strong>Eureka保证AP</strong></p>
-<p>Eureka看明白了这一点，因此在设计时就优先保证可用性。Eureka各个节点都是平等的，几个节点挂掉不会影响正常节点的工作，剩余的节点依然可以提供注册和查询服务。而Eureka的客户端在向某个Eureka注册或时如果发现连接失败，则会自动切换至其它节点，只要有一台Eureka还在，就能保证注册服务可用(保证可用性)，只不过查到的信息可能不是最新的(不保证强一致性)。除此之外，Eureka还有一种自我保护机制，如果在15分钟内超过85%的节点都没有正常的心跳，那么Eureka就认为客户端与注册中心出现了网络故障，此时会出现以下几种情况：<br>\1. Eureka不再从注册列表中移除因为长时间没收到心跳而应该过期的服务<br>\2. Eureka仍然能够接受新服务的注册和查询请求，但是不会被同步到其它节点上(即保证当前节点依然可用)<br>\3. 当网络稳定时，当前实例新的注册信息会被同步到其它节点中</p>
+<p>Eureka看明白了这一点，因此在设计时就优先保证可用性。Eureka各个节点都是平等的，几个节点挂掉不会影响正常节点的工作，剩余的节点依然可以提供注册和查询服务。而Eureka的客户端在向某个Eureka注册或时如果发现连接失败，则会自动切换至其它节点，只要有一台Eureka还在，就能保证注册服务可用(保证可用性)，只不过查到的信息可能不是最新的(不保证强一致性)。除此之外，Eureka还有一种自我保护机制，如果在15分钟内超过85%的节点都没有正常的心跳，那么Eureka就认为客户端与注册中心出现了网络故障，此时会出现以下几种情况：</p>
+<ol>
+<li>Eureka不再从注册列表中移除因为长时间没收到心跳而应该过期的服务</li>
+<li>Eureka仍然能够接受新服务的注册和查询请求，但是不会被同步到其它节点上(即保证当前节点依然可用)</li>
+<li>当网络稳定时，当前实例新的注册信息会被同步到其它节点中</li>
+</ol>
 <p>因此， Eureka可以很好的应对因网络故障导致部分节点失去联系的情况，而不会像zookeeper那样使整个注册服务瘫痪。</p>
 </blockquote>
 </li>
@@ -1044,6 +1049,32 @@
 </li>
 <li><p>JMM工作内存对应到计算机硬件层面是什么？（高速缓存？或者内存？）</p>
 </li>
+<li><p>异步事件驱动的好处和坏处（坏处就是代码不直观，无法直接找到消费者；这种情况又如何优化）</p>
+</li>
+<li><p>分库分表场景：如何同时通过买家和卖家id去查询订单</p>
+</li>
+<li><p>本地事务执行成功，MQ发送失败，本地事务如何回滚（发送回调？）</p>
+</li>
+<li><p>ES和MySQL的区别，ES这么强大，为什么还需要有MySQL（MySQL为什么不能被替代）</p>
+</li>
+<li><p>可重入锁原理</p>
+</li>
+<li><p>读写锁AQS用法的区别（是否共享模式）</p>
+</li>
+<li><p>为什么要加锁（因为内存不可见），为什么内存不可见</p>
+</li>
+<li><p>CMS垃圾回收器有什么问题？为什么？怎么解决？</p>
+<blockquote>
+<p><strong>问题</strong>：CMS在重新标记（Remark）的过程中会浮动垃圾，容易产生大量空间碎片。</p>
+<p><strong>原因</strong>：CMS垃圾回收器是基于“标记-清除”算法；Remark过程标记活着的对象，从GCRoot的可达性判断对象活着，但无法标记“死亡”的对象。</p>
+<p>如果在初始阶段被标记为活着，并发运行过程中“死亡”，remark过程中无法纠正，因此变为浮动垃圾，需等待下次GC的到来。</p>
+<p><strong>如何解决</strong>：可以通过<code>-XX:+UseCMSCompactAtFullCollection</code>参数，强制JVM在FGC完成后对老年代进行压缩，执行一次空间碎片整理，但是会引发STW。为了减少STW次数，CMS还可以通过配置<code>-XX:+CMSFullGCsBeforeCompaction=n</code>参数，在执行了n次FGC后，JVM再在老年代执行空间碎片整理。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="百度（ACG互联网）"><a href="#百度（ACG互联网）" class="headerlink" title="百度（ACG互联网）"></a>百度（ACG互联网）</h3><ul>
+<li>什么是DDD？和传统开发模式的区别</li>
+<li>同一个topic只有四个分区的情况下如何提高消费吞吐，假设有同样分区数量的消费者（不考虑消费者本地多线程消费）（将原topic按照一定规则分片，转发到其他topic，再进行消费）</li>
 </ul>
 
       
@@ -1324,10 +1355,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">面经</a>
               </li>
              
@@ -1344,11 +1371,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1365,6 +1392,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DDD</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
