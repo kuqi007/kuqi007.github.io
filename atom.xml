@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.elfred.top/"/>
-  <updated>2021-03-17T16:01:58.543Z</updated>
+  <updated>2021-03-21T14:54:07.819Z</updated>
   <id>https://blog.elfred.top/</id>
   
   <author>
@@ -15,6 +15,112 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>05讲</title>
+    <link href="https://blog.elfred.top/2021/03/22/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/05%E8%AE%B2/"/>
+    <id>https://blog.elfred.top/2021/03/22/study/数据结构与算法之美/学习笔记/05讲/</id>
+    <published>2021-03-22T12:57:00.000Z</published>
+    <updated>2021-03-21T14:54:07.819Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h1 id="数组：为什么很多编程语言中数组都从0开始编号？"><a href="#数组：为什么很多编程语言中数组都从0开始编号？" class="headerlink" title="数组：为什么很多编程语言中数组都从0开始编号？"></a>数组：为什么很多编程语言中数组都从0开始编号？</h1>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;h1 id=&quot;数组：为什么很多编程语言中数组都从0开始编号？&quot;&gt;&lt;a href=&quot;#数组：为什么很多编程语言中数组都从0开始编号？&quot; class=&quot;headerlink&quot; title=&quot;数组：为什么很多编程语言中数组都从0开始编号？&quot;&gt;&lt;/a&gt;数组：为什么很多编程语言
+      
+    
+    </summary>
+    
+    
+    
+      <category term="数据结构与算法之美" scheme="https://blog.elfred.top/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/"/>
+    
+      <category term="学习笔记" scheme="https://blog.elfred.top/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>04讲</title>
+    <link href="https://blog.elfred.top/2021/03/21/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/04%E8%AE%B2/"/>
+    <id>https://blog.elfred.top/2021/03/21/study/数据结构与算法之美/学习笔记/04讲/</id>
+    <published>2021-03-21T14:50:00.000Z</published>
+    <updated>2021-03-21T14:51:30.660Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h1 id="复杂度分析（下）：浅析最好、最坏、平均、均摊时间复杂度"><a href="#复杂度分析（下）：浅析最好、最坏、平均、均摊时间复杂度" class="headerlink" title="复杂度分析（下）：浅析最好、最坏、平均、均摊时间复杂度"></a>复杂度分析（下）：浅析最好、最坏、平均、均摊时间复杂度</h1><h3 id="一、复杂度分析的4个概念"><a href="#一、复杂度分析的4个概念" class="headerlink" title="一、复杂度分析的4个概念"></a>一、复杂度分析的4个概念</h3><ol><li><strong>最好情况时间复杂度</strong>：代码在最理想情况下执行的时间复杂度。</li><li><strong>最坏情况时间复杂度</strong>：代码在最坏情况下执行的时间复杂度。</li><li><strong>平均时间复杂度</strong>：用代码在所有情况下执行的次数的加权平均值表示。</li><li><strong>均摊时间复杂度</strong>：在代码执行的所有复杂度情况中绝大部分是低级别的复杂度，个别情况是高级别复杂度且发生具有时序关系时，可以将个别高级别复杂度均摊到低级别复杂度上。基本上均摊结果就等于低级别复杂度。</li></ol><h3 id="二、为什么要引入这4个概念？"><a href="#二、为什么要引入这4个概念？" class="headerlink" title="二、为什么要引入这4个概念？"></a>二、为什么要引入这4个概念？</h3><ol><li>同一段代码在不同情况下时间复杂度会出现量级差异，为了更全面，更准确的描述代码的时间复杂度，所以引入这4个概念。</li><li>代码复杂度在不同情况下出现量级差别时才需要区别这四种复杂度。大多数情况下，是不需要区别分析它们的。</li></ol><h3 id="三、如何分析平均、均摊时间复杂度？"><a href="#三、如何分析平均、均摊时间复杂度？" class="headerlink" title="三、如何分析平均、均摊时间复杂度？"></a>三、如何分析平均、均摊时间复杂度？</h3><ol><li><strong>平均时间复杂度</strong>：代码在不同情况下复杂度出现量级差别，则用代码所有可能情况下执行次数的加权平均值表示。</li><li><strong>均摊时间复杂度</strong>：两个条件满足时使用：1）代码在绝大多数情况下是低级别复杂度，只有极少数情况是高级别复杂度；2）低级别和高级别复杂度出现具有时序规律。均摊结果一般都等于低级别复杂度。</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;h1 id=&quot;复杂度分析（下）：浅析最好、最坏、平均、均摊时间复杂度&quot;&gt;&lt;a href=&quot;#复杂度分析（下）：浅析最好、最坏、平均、均摊时间复杂度&quot; class=&quot;headerlink&quot; title=&quot;复杂度分析（下）：浅析最好、最坏、平均、均摊时间复杂度&quot;&gt;&lt;/a&gt;
+      
+    
+    </summary>
+    
+    
+    
+      <category term="数据结构与算法之美" scheme="https://blog.elfred.top/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/"/>
+    
+      <category term="学习笔记" scheme="https://blog.elfred.top/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>03讲</title>
+    <link href="https://blog.elfred.top/2021/03/21/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/03%E8%AE%B2/"/>
+    <id>https://blog.elfred.top/2021/03/21/study/数据结构与算法之美/学习笔记/03讲/</id>
+    <published>2021-03-21T14:47:11.000Z</published>
+    <updated>2021-03-21T14:47:55.494Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h1 id="复杂度分析（上）：如何分析、统计算法的执行效率和资源消耗？"><a href="#复杂度分析（上）：如何分析、统计算法的执行效率和资源消耗？" class="headerlink" title="复杂度分析（上）：如何分析、统计算法的执行效率和资源消耗？"></a>复杂度分析（上）：如何分析、统计算法的执行效率和资源消耗？</h1><h3 id="时间复杂度分析"><a href="#时间复杂度分析" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h3><h4 id="1-只关注循环执行次数最多的一段代码"><a href="#1-只关注循环执行次数最多的一段代码" class="headerlink" title="1.只关注循环执行次数最多的一段代码"></a>1.只关注循环执行次数最多的一段代码</h4><p>大 O 这种复杂度表示方法只是表示一种变化趋势。我们通常会忽略掉公式中的常量、低阶、系数，只需要记录一个最大阶的量级就可以了。所以，<strong>我们在分析一个算法、一段代码的时间复杂度的时候，也只关注循环执行次数最多的那一段代码就可以了</strong>。</p><h4 id="2-加法法则：总复杂度等于量级最大的那段代码的复杂度"><a href="#2-加法法则：总复杂度等于量级最大的那段代码的复杂度" class="headerlink" title="2.加法法则：总复杂度等于量级最大的那段代码的复杂度"></a>2.加法法则：总复杂度等于量级最大的那段代码的复杂度</h4><p><strong>时间复杂度不是代码的执行时间，而是一种随着数据规模不断增长的一种变化趋势</strong>。所以遇到常量执行时间的代码，无论这段代码执行10000次、100000次，只要是一个已知的数，跟 n 无关，照样也是常量级的执行时间。当 n 无限大的时候，就可以忽略。尽管对代码的执行时间会有很大影响，但是回到时间复杂度的概念来说，它表示的是一个算法执行效率与数据规模增长的变化趋势，所以不管常量的执行时间多大，我们都可以忽略掉。因为它本身对增长趋势并没有影响。</p><h4 id="3-乘法法则：嵌套代码的复杂度等于嵌套内外代码复杂度的乘积"><a href="#3-乘法法则：嵌套代码的复杂度等于嵌套内外代码复杂度的乘积" class="headerlink" title="3.乘法法则：嵌套代码的复杂度等于嵌套内外代码复杂度的乘积"></a>3.乘法法则：嵌套代码的复杂度等于嵌套内外代码复杂度的乘积</h4><h3 id="几种常见时间复杂度实例分析"><a href="#几种常见时间复杂度实例分析" class="headerlink" title="几种常见时间复杂度实例分析"></a>几种常见时间复杂度实例分析</h3><p>虽然代码千差万别，但是常见的复杂度量级并不多。我稍微总结了一下，这些复杂度量级几乎涵盖了你今后可以接触的所有代码的复杂度量级。</p><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210321211233.jpeg" alt="img"></p><h4 id="1-O-1"><a href="#1-O-1" class="headerlink" title="1.O(1)"></a>1.O(1)</h4><p>我稍微总结一下，只要代码的执行时间不随 n 的增大而增长，这样代码的时间复杂度我们都记作 O(1)。或者说，<strong>一般情况下，只要算法中不存在循环语句、递归语句，即使有成千上万行的代码，其时间复杂度也是Ο(1)</strong>。</p><h4 id="2-O-logn-、O-nlogn"><a href="#2-O-logn-、O-nlogn" class="headerlink" title="2.O(logn)、O(nlogn)"></a>2.O(logn)、O(nlogn)</h4><h4 id="3-O-m-n-、O-m-n"><a href="#3-O-m-n-、O-m-n" class="headerlink" title="3.O(m+n)、O(m*n)"></a>3.O(m+n)、O(m*n)</h4><h3 id="空间复杂度分析"><a href="#空间复杂度分析" class="headerlink" title="空间复杂度分析"></a>空间复杂度分析</h3><p>前面我讲过，时间复杂度的全称是<strong>渐进时间复杂度，表示算法的执行时间与数据规模之间的增长关系</strong>。类比一下，空间复杂度全称就是<strong>渐进空间复杂度</strong>（asymptotic space complexity），<strong>表示算法的存储空间与数据规模之间的增长关系</strong>。</p><p>我们常见的空间复杂度就是 O(1)、O(n)、O(n2 )，像 O(logn)、O(nlogn) 这样的对数阶复杂度平时都用不到。</p><h3 id="内容小结"><a href="#内容小结" class="headerlink" title="内容小结"></a>内容小结</h3><p>基础复杂度分析的知识到此就讲完了，我们来总结一下。</p><p>复杂度也叫渐进复杂度，包括时间复杂度和空间复杂度，用来分析算法执行效率与数据规模之间的增长关系，可以粗略地表示，越高阶复杂度的算法，执行效率越低。常见的复杂度并不多，从低阶到高阶有：O(1)、O(logn)、O(n)、O(nlogn)、O(n2 )。等你学完整个专栏之后，你就会发现几乎所有的数据结构和算法的复杂度都跑不出这几个。</p><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210321220126.jpeg" alt="img"></p><h3 id="留言区优秀总结"><a href="#留言区优秀总结" class="headerlink" title="留言区优秀总结"></a>留言区优秀总结</h3><h4 id="一、什么是复杂度分析？"><a href="#一、什么是复杂度分析？" class="headerlink" title="一、什么是复杂度分析？"></a>一、什么是复杂度分析？</h4><p>1.数据结构和算法解决是“如何让计算机更快时间、更省空间的解决问题”。<br>2.因此需从执行时间和占用空间两个维度来评估数据结构和算法的性能。<br>3.分别用时间复杂度和空间复杂度两个概念来描述性能问题，二者统称为复杂度。<br>4.复杂度描述的是算法执行时间（或占用空间）与数据规模的增长关系。</p><h4 id="二、为什么要进行复杂度分析？"><a href="#二、为什么要进行复杂度分析？" class="headerlink" title="二、为什么要进行复杂度分析？"></a>二、为什么要进行复杂度分析？</h4><p>1.和性能测试相比，复杂度分析有不依赖执行环境、成本低、效率高、易操作、指导性强的特点。<br>2.掌握复杂度分析，将能编写出性能更优的代码，有利于降低系统开发和维护成本。</p><h4 id="三、如何进行复杂度分析？"><a href="#三、如何进行复杂度分析？" class="headerlink" title="三、如何进行复杂度分析？"></a>三、如何进行复杂度分析？</h4><h5 id="1-大O表示法"><a href="#1-大O表示法" class="headerlink" title="1.大O表示法"></a>1.大O表示法</h5><p>1）来源<br>算法的执行时间与每行代码的执行次数成正比，用T(n) = O(f(n))表示，其中T(n)表示算法执行总时间，f(n)表示每行代码执行总次数，而n往往表示数据的规模。<br>2）特点<br>以时间复杂度为例，由于时间复杂度描述的是算法执行时间与数据规模的增长变化趋势，所以常量阶、低阶以及系数实际上对这种增长趋势不产决定性影响，所以在做时间复杂度分析时忽略这些项。</p><h5 id="2-复杂度分析法则"><a href="#2-复杂度分析法则" class="headerlink" title="2.复杂度分析法则"></a>2.复杂度分析法则</h5><p>1）单段代码看高频：比如循环。<br>2）多段代码取最大：比如一段代码中有单循环和多重循环，那么取多重循环的复杂度。<br>3）嵌套代码求乘积：比如递归、多重循环等<br>4）多个规模求加法：比如方法有两个参数控制两个循环的次数，那么这时就取二者复杂度相加。</p><h4 id="四、常用的复杂度级别？"><a href="#四、常用的复杂度级别？" class="headerlink" title="四、常用的复杂度级别？"></a>四、常用的复杂度级别？</h4><p>多项式阶：随着数据规模的增长，算法的执行时间和空间占用，按照多项式的比例增长。包括，<br>O(1)（常数阶）、O(logn)（对数阶）、O(n)（线性阶）、O(nlogn)（线性对数阶）、O(n^2)（平方阶）、O(n^3)（立方阶）<br>非多项式阶：随着数据规模的增长，算法的执行时间和空间占用暴增，这类算法性能极差。包括，<br>O(2^n)（指数阶）、O(n!)（阶乘阶）</p><h4 id="五、如何掌握好复杂度分析方法？"><a href="#五、如何掌握好复杂度分析方法？" class="headerlink" title="五、如何掌握好复杂度分析方法？"></a>五、如何掌握好复杂度分析方法？</h4><p>复杂度分析关键在于多练，所谓孰能生巧。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;h1 id=&quot;复杂度分析（上）：如何分析、统计算法的执行效率和资源消耗？&quot;&gt;&lt;a href=&quot;#复杂度分析（上）：如何分析、统计算法的执行效率和资源消耗？&quot; class=&quot;headerlink&quot; title=&quot;复杂度分析（上）：如何分析、统计算法的执行效率和资源消耗？
+      
+    
+    </summary>
+    
+    
+    
+      <category term="数据结构与算法之美" scheme="https://blog.elfred.top/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/"/>
+    
+      <category term="学习笔记" scheme="https://blog.elfred.top/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>面试高频算法题</title>
+    <link href="https://blog.elfred.top/2021/03/21/algorithm/%E9%9D%A2%E8%AF%95%E9%AB%98%E9%A2%91%E7%AE%97%E6%B3%95%E9%A2%98/"/>
+    <id>https://blog.elfred.top/2021/03/21/algorithm/面试高频算法题/</id>
+    <published>2021-03-21T09:35:00.000Z</published>
+    <updated>2021-03-21T12:37:05.060Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h2 id="字节跳动"><a href="#字节跳动" class="headerlink" title="字节跳动"></a>字节跳动</h2><h3 id="36进制加法"><a href="#36进制加法" class="headerlink" title="36进制加法"></a>36进制加法</h3><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210321174103.png" alt="图片"></p><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>36进制由0-9，a-z，共36个字符表示。</p><p>要求按照加法规则计算出任意两个36进制正整数的和，如 1b + 2x = 48  （解释：47+105=152），1 + a = b （解释：1+10 = 11 ） , 1z + 1 = 20 （解释：71 + 1 = 72）</p><p>要求：不允许使用先将36进制数字整体转为10进制，相加后再转回为36进制的做法</p><h4 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h4><p>跟<a href="https://leetcode-cn.com/problems/add-strings/" target="_blank" rel="noopener">LC415. 字符串相加</a>做法类似，掌握十进制的大整数加法后，本题只需要注意将<code>10</code>变成<code>36</code>，以及36进制字符与数值的转换。这里使用<code>getChar(int n)</code>和<code>getInt(char c)</code>两个辅助函数来完成36进制字符与数值的转换。</p><h4 id="参考代码"><a href="#参考代码" class="headerlink" title="参考代码"></a>参考代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Add36Strings</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">add36Strings</span><span class="params">(String num1, String num2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n1 = num1.length(), n2 = num2.length();</span><br><span class="line">        StringBuilder res = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">int</span> i = n1 - <span class="number">1</span>, j = n2 - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> carry = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &gt;= <span class="number">0</span> || j &gt;= <span class="number">0</span> || carry != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">int</span> x = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span> (i &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                x = getInt(num1.charAt(i));</span><br><span class="line">                i--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">int</span> y = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span> (j &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                y = getInt(num2.charAt(j));</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">int</span> sum = x + y + carry;</span><br><span class="line">            res.append(getChar(sum % <span class="number">36</span>));</span><br><span class="line">            carry = sum / <span class="number">36</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res.reverse().toString();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将字符转换为数字</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getInt</span><span class="params">(<span class="keyword">char</span> c)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (c &gt;= <span class="string">'0'</span> &amp;&amp; c &lt;= <span class="string">'9'</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> c - <span class="string">'0'</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> c - <span class="string">'a'</span> + <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将数字转换为字符</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">char</span> <span class="title">getChar</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (n &lt;= <span class="number">9</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> (<span class="keyword">char</span>) (n + <span class="string">'0'</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> (<span class="keyword">char</span>) (n - <span class="number">10</span> + <span class="string">'a'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Add36Strings add36Strings = <span class="keyword">new</span> Add36Strings();</span><br><span class="line">        add36Strings.add36Strings(<span class="string">"1"</span>, <span class="string">"a"</span>);</span><br><span class="line">        add36Strings.add36Strings(<span class="string">"1b"</span>, <span class="string">"2x"</span>);</span><br><span class="line">        add36Strings.add36Strings(<span class="string">"1z"</span>, <span class="string">"1"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;h2 id=&quot;字节跳动&quot;&gt;&lt;a href=&quot;#字节跳动&quot; class=&quot;headerlink&quot; title=&quot;字节跳动&quot;&gt;&lt;/a&gt;字节跳动&lt;/h2&gt;&lt;h3 id=&quot;36进制加法&quot;&gt;&lt;a href=&quot;#36进制加法&quot; class=&quot;headerlink&quot; title=&quot;
+      
+    
+    </summary>
+    
+    
+    
+      <category term="算法" scheme="https://blog.elfred.top/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>02讲</title>
