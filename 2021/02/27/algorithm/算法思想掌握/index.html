@@ -16,13 +16,16 @@
 <meta property="og:site_name" content="Elfred&#39;s Blog">
 <meta property="og:description" content="递归395. 至少有K个重复字符的最长子串给你一个字符串 s 和一个整数 k ，请你找出 s 中的最长子串， 要求该子串中的每一字符出现次数都不少于 k 。返回这一子串的长度。 示例 1： 123输入：s = &quot;aaabb&quot;, k = 3输出：3解释：最长子串为 &quot;aaa&quot; ，其中 &apos;a&apos; 重复了 3 次。  示例 2： 123输入：s = &quot;ababbc&quot;, k = 2输出：5解释：最长子串为">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210326100625.jpeg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210326100625.jpeg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210326103612.jpeg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210301102603.gif">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210306142911.gif">
-<meta property="og:updated_time" content="2021-03-06T13:40:27.289Z">
+<meta property="og:updated_time" content="2021-03-27T05:51:21.328Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法思想掌握">
 <meta name="twitter:description" content="递归395. 至少有K个重复字符的最长子串给你一个字符串 s 和一个整数 k ，请你找出 s 中的最长子串， 要求该子串中的每一字符出现次数都不少于 k 。返回这一子串的长度。 示例 1： 123输入：s = &quot;aaabb&quot;, k = 3输出：3解释：最长子串为 &quot;aaa&quot; ，其中 &apos;a&apos; 重复了 3 次。  示例 2： 123输入：s = &quot;ababbc&quot;, k = 2输出：5解释：最长子串为">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210301102603.gif">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210326100625.jpeg">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -206,6 +209,45 @@
 <p>总之，通过上面的分析，我们看出了：<strong>我们不是为了递归而递归</strong>。而是因为我们把大问题拆解成了小问题，恰好有函数可以解决小问题，所以直接用这个函数。由于这个函数正好是本身，所以我们把此现象叫做递归。小问题是原因，递归是结果。而<strong>递归函数到底怎么一层层展开与终止的，不要用大脑去想</strong>，这是计算机干的事。我们只用把递归函数当做一个能解决问题的黑箱就够了，把更多的注意力放在拆解子问题、递归终止条件、递归函数的正确性上来。</p>
 <h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestSubstring</span><span class="params">(String s, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (s.length() &lt; k) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        HashMap&lt;Character, Integer&gt; counter = <span class="keyword">new</span> HashMap();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</span><br><span class="line">            counter.put(s.charAt(i), counter.getOrDefault(s.charAt(i), <span class="number">0</span>) + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c : counter.keySet()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (counter.get(c) &lt; k) &#123;</span><br><span class="line">                <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">for</span> (String t : s.split(String.valueOf(c))) &#123;</span><br><span class="line">                    res = Math.max(res, longestSubstring(t, k));</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> res;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s.length();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h3 id="82-删除排序链表中的重复元素-II"><a href="#82-删除排序链表中的重复元素-II" class="headerlink" title="82. 删除排序链表中的重复元素 II"></a><a href="https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/" target="_blank" rel="noopener">82. 删除排序链表中的重复元素 II</a></h3><p>存在一个按升序排列的链表，给你这个链表的头节点 <code>head</code> ，请你删除链表中所有存在数字重复情况的节点，只保留原始链表中 <strong>没有重复出现</strong> 的数字。</p>
+<p>返回同样按升序排列的结果链表。</p>
+<p> <strong>示例 1：</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210326100625.jpeg" alt="img"></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：head = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line">输出：[<span class="number">1</span>,<span class="number">2</span>,<span class="number">5</span>]</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210326100625.jpeg" alt="img"></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：head = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">输出：[<span class="number">2</span>,<span class="number">3</span>]</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<ul>
+<li>链表中节点数目在范围 <code>[0, 300]</code> 内</li>
+<li><code>-100 &lt;= Node.val &lt;= 100</code></li>
+<li>题目数据保证链表已经按升序排列</li>
+</ul>
+<h4 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h4><p>题意：在一个<strong>有序</strong>链表中，如果一个节点的值出现不止一次，那么把这个节点删除掉。</p>
+<p>重点：<strong>有序链表</strong>，所以，一个节点的值出现不止一次，那么它们必相邻。</p>
+<h5 id="1-递归函数定义"><a href="#1-递归函数定义" class="headerlink" title="1. 递归函数定义"></a>1. 递归函数定义</h5><p><strong>递归最基本的是要明白递归函数的定义！</strong> 我反复强调过这一点。</p>
+<p>递归函数直接使用题目给出的函数 <code>deleteDuplicates(head)</code> ，它的含义是 删除以 <code>head</code> 作为开头的有序链表中，值出现重复的节点。</p>
+<h5 id="2-递归终止条件"><a href="#2-递归终止条件" class="headerlink" title="2. 递归终止条件"></a>2. 递归终止条件</h5><p>终止条件就是能想到的基本的、不用继续递归处理的case。</p>
+<ul>
+<li>如果 <code>head</code> 为空，那么肯定没有值出现重复的节点，直接返回 head；</li>
+<li>如果 <code>head.next</code> 为空，那么说明链表中只有一个节点，也没有值出现重复的节点，也直接返回 head。</li>
+</ul>
+<h5 id="3-递归调用"><a href="#3-递归调用" class="headerlink" title="3. 递归调用"></a>3. 递归调用</h5><p>什么时候需要递归呢？我们想一下这两种情况：</p>
+<ul>
+<li>如果 <code>head.val != head.next.val</code> ，说明头节点的值<strong>不等于</strong>下一个节点的值，所以当前的 <code>head</code> 节点必须保留；但是 head.next 节点要不要保留呢？我们还不知道，需要对 <code>head.next</code> 进行递归，即对<code>head.next</code> 作为头节点的链表，去除值重复的节点。所以 <code>head.next = deleteDuplicates(head.next)</code>.</li>
+<li>如果 <code>head.val == head.next.val</code> ，说明头节点的值<strong>等于</strong>下一个节点的值，所以当前的 <code>head</code> 节点必须删除；但是 head.next 节点要不要删除呢？我们还不知道，需要一直向后遍历寻找到与 head.val 不等的节点。与 head.val 相等的这一段链表都要删除，因此返回 <code>deleteDuplicates(move);</code></li>
+</ul>
+<h5 id="4-返回结果"><a href="#4-返回结果" class="headerlink" title="4. 返回结果"></a>4. 返回结果</h5><p>题目让我们返回删除了值重复的节点后剩余的链表，结合上面两种递归调用的情况。</p>
+<ul>
+<li>如果 <code>head.val != head.next.val</code> ，头结点需要保留，因此返回的是 <code>head</code>；</li>
+<li>如果 <code>head.val == head.next.val</code> ，头结点需要删除，需要返回的是<code>deleteDuplicates(move);</code>。</li>
+</ul>
+<p>对链表 <code>1 -&gt; 2 -&gt; 2 -&gt; 3</code> 递归的过程如下。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210326103612.jpeg" alt="82.001.jpeg"></p>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">deleteDuplicates</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 没有节点或者只有一个节点，必然没有重复元素</span></span><br><span class="line">        <span class="keyword">if</span> (head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> head;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 当前节点和下一个节点，值不同，则head的值是需要保留的，对head.next继续递归</span></span><br><span class="line">        <span class="keyword">if</span> (head.val != head.next.val) &#123;</span><br><span class="line">            head.next = deleteDuplicates(head.next);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 当前节点与下一个节点的值重复了，重复的值都不能要。</span></span><br><span class="line">            <span class="comment">// 一直往下找，找到不重复的节点。返回对不重复节点的递归结果</span></span><br><span class="line">            ListNode move = head.next;</span><br><span class="line">            <span class="keyword">while</span> (move != <span class="keyword">null</span> &amp;&amp; head.val == move.val) &#123;</span><br><span class="line">                move = move.next;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> deleteDuplicates(move);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="前缀和"><a href="#前缀和" class="headerlink" title="前缀和"></a>前缀和</h2><h3 id="303-区域和检索-数组不可变"><a href="#303-区域和检索-数组不可变" class="headerlink" title="303. 区域和检索 - 数组不可变"></a><a href="https://leetcode-cn.com/problems/range-sum-query-immutable/" target="_blank" rel="noopener">303. 区域和检索 - 数组不可变</a></h3><p>给定一个整数数组  nums，求出数组从索引 i 到 j（i ≤ j）范围内元素的总和，包含 i、j 两点。</p>
 <p>实现 NumArray 类：</p>
 <ul>
@@ -213,7 +255,7 @@
 <li>int sumRange(int i, int j) 返回数组 nums 从索引 i 到 j（i ≤ j）范围内元素的总和，包含 i、j 两点（也就是 sum(nums[i], nums[i + 1], … , nums[j])）</li>
 </ul>
 <p>示例：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">输入：</span><br><span class="line">[<span class="string">"NumArray"</span>, <span class="string">"sumRange"</span>, <span class="string">"sumRange"</span>, <span class="string">"sumRange"</span>]</span><br><span class="line">[[[-2, 0, 3, -5, 2, -1]], [0, 2], [2, 5], [0, 5]]</span><br><span class="line">输出：</span><br><span class="line">[null, 1, -1, -3]</span><br><span class="line"></span><br><span class="line">解释：</span><br><span class="line">NumArray numArray = new NumArray([-2, 0, 3, -5, 2, -1]);</span><br><span class="line">numArray.sumRange(0, 2); // <span class="built_in">return</span> 1 ((-2) + 0 + 3)</span><br><span class="line">numArray.sumRange(2, 5); // <span class="built_in">return</span> -1 (3 + (-5) + 2 + (-1)) </span><br><span class="line">numArray.sumRange(0, 5); // <span class="built_in">return</span> -3 ((-2) + 0 + 3 + (-5) + 2 + (-1))</span><br></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">输入：</span><br><span class="line">[<span class="string">"NumArray"</span>, <span class="string">"sumRange"</span>, <span class="string">"sumRange"</span>, <span class="string">"sumRange"</span>]</span><br><span class="line">[[[<span class="number">-2</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">-5</span>, <span class="number">2</span>, <span class="number">-1</span>]], [<span class="number">0</span>, <span class="number">2</span>], [<span class="number">2</span>, <span class="number">5</span>], [<span class="number">0</span>, <span class="number">5</span>]]</span><br><span class="line">输出：</span><br><span class="line">[null, <span class="number">1</span>, <span class="number">-1</span>, <span class="number">-3</span>]</span><br><span class="line"></span><br><span class="line">解释：</span><br><span class="line">NumArray numArray = new NumArray([<span class="number">-2</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">-5</span>, <span class="number">2</span>, <span class="number">-1</span>]);</span><br><span class="line">numArray.sumRange(<span class="number">0</span>, <span class="number">2</span>); <span class="comment">// return 1 ((-2) + 0 + 3)</span></span><br><span class="line">numArray.sumRange(<span class="number">2</span>, <span class="number">5</span>); <span class="comment">// return -1 (3 + (-5) + 2 + (-1)) </span></span><br><span class="line">numArray.sumRange(<span class="number">0</span>, <span class="number">5</span>); <span class="comment">// return -3 ((-2) + 0 + 3 + (-5) + 2 + (-1))</span></span><br></pre></td></tr></table></figure>
 
 <p>提示：</p>
 <ul>
@@ -222,7 +264,7 @@
 <li>0 &lt;= i &lt;= j &lt; nums.length</li>
 <li>最多调用 10^4 次 sumRange 方法</li>
 </ul>
-<h4 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h4><p><strong>preSum（前缀和）</strong><br>今天这个题目让我们求一个区间 [i, j] 内的和，求区间和可以用 preSum 来做。</p>
+<h4 id="解题思路-2"><a href="#解题思路-2" class="headerlink" title="解题思路"></a>解题思路</h4><p><strong>preSum（前缀和）</strong><br>今天这个题目让我们求一个区间 [i, j] 内的和，求区间和可以用 preSum 来做。</p>
 <p>preSum 方法能快速计算指定区间段 i - j 的元素之和。它的计算方法是从左向右遍历数组，当遍历到数组的 i 位置时，preSum 表示 i 位置左边的元素之和。</p>
 <p>假设数组长度为 N，我们定义一个长度为 N+1 的 preSum 数组，<strong>preSum[i] 表示该元素左边所有元素之和（不包含 i 元素）</strong>。然后遍历一次数组，累加区间 [0, i)范围内的元素，可以得到 preSum 数组。</p>
 <p>求 <code>preSum</code> 的代码如下：</p>
@@ -233,7 +275,7 @@
 <p>对于本题，可以在 NumArray 类的构造函数的里面，求数组每个位置的 preSum；当计算sumRange(i, j)的时候直接返回 <code>preSum[j + 1] - preSum[i]</code> 可以得到区间和。</p>
 <p>下面以数组 <code>[1, 12, -5, -6, 50, 3]</code> 为例，展示了求 preSum 的过程。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210301102603.gif" alt="303，preSum.gif"></p>
-<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NumArray</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span>[] preSum;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NumArray</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.length;</span><br><span class="line">        preSum = <span class="keyword">new</span> <span class="keyword">int</span>[n + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            preSum[i + <span class="number">1</span>] = preSum[i] + nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">sumRange</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> preSum[j + <span class="number">1</span>] - preSum[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NumArray</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span>[] preSum;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NumArray</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.length;</span><br><span class="line">        preSum = <span class="keyword">new</span> <span class="keyword">int</span>[n + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            preSum[i + <span class="number">1</span>] = preSum[i] + nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">sumRange</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> preSum[j + <span class="number">1</span>] - preSum[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>时间复杂度：构造函数的时间复杂度是 O(N), sumRange 函数调用的时间复杂度是 O(1)</li>
@@ -244,7 +286,7 @@
 <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>]</span><br><span class="line">输出: [<span class="number">2</span>,<span class="number">-1</span>,<span class="number">2</span>]</span><br><span class="line">解释: 第一个 <span class="number">1</span> 的下一个更大的数是 <span class="number">2</span>；</span><br><span class="line">数字 <span class="number">2</span> 找不到下一个更大的数； </span><br><span class="line">第二个 <span class="number">1</span> 的下一个最大的数需要循环搜索，结果也是 <span class="number">2</span>。</span><br></pre></td></tr></table></figure>
 
 <p><strong>注意:</strong> 输入数组的长度不会超过 10000。</p>
-<h3 id="解题思路-2"><a href="#解题思路-2" class="headerlink" title="解题思路"></a>解题思路</h3><p>今天题目的两个重点：</p>
+<h3 id="解题思路-3"><a href="#解题思路-3" class="headerlink" title="解题思路"></a>解题思路</h3><p>今天题目的两个重点：</p>
 <ul>
 <li>如何求下一个更大的元素</li>
 <li>如何实现循环数组</li>
@@ -270,7 +312,7 @@
 <li>一种实现方式是，把数组复制一份到数组末尾，这样虽然不是严格的循环数组，但是对于本题已经足够了，因为本题对数组最多遍历两次。</li>
 <li>另一个常见的实现方式是，使用取模运算 <em>%</em>可以把下标 <em>i</em> 映射到数组 <em>nums</em> 长度的 <em>0 - N</em> 内。</li>
 </ul>
-<h3 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h3><p>栈里面需要保存元素在数组中的下标，而不是具体的数字。因为需要根据下标修改结果数组 <code>res</code>。</p>
+<h3 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h3><p>栈里面需要保存元素在数组中的下标，而不是具体的数字。因为需要根据下标修改结果数组 <code>res</code>。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] nextGreaterElements(<span class="keyword">int</span>[] nums) &#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.length;</span><br><span class="line">        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line">        Arrays.fill(res, -<span class="number">1</span>);</span><br><span class="line">        Deque&lt;Integer&gt; stack = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span> * n; i++) &#123;</span><br><span class="line">            <span class="keyword">while</span> (!stack.isEmpty() &amp;&amp; nums[i % n] &gt; nums[stack.peek()]) &#123;</span><br><span class="line">                res[stack.pop()] = nums[i % n];</span><br><span class="line">            &#125;</span><br><span class="line">            stack.push(i % n);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -280,8 +322,8 @@
 <h2 id="寻找下一个更大的元素需要移动的步数"><a href="#寻找下一个更大的元素需要移动的步数" class="headerlink" title="寻找下一个更大的元素需要移动的步数"></a><a href="https://zhuanlan.zhihu.com/p/26465701" target="_blank" rel="noopener">寻找下一个更大的元素需要移动的步数</a></h2><p>给定一个数组，返回长度相同的数组。返回的数组的第i个位置的值应当是，对于原数组中的第i个元素，至少往右走多少步，才能遇到一个比自己大的元素（如果之后没有比自己大的元素，或者已经是最后一个元素，则在返回数组的对应位置放上-1）。</p>
 <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: [<span class="number">5</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>]</span><br><span class="line">输出: [<span class="number">-1</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">-1</span>]</span><br><span class="line">解释: <span class="number">5</span>找不到比它更大的所以是<span class="number">-1</span>，<span class="number">3</span>移动<span class="number">3</span>位找到第一个比它大的<span class="number">4</span>，以此类推</span><br></pre></td></tr></table></figure>
 
-<h3 id="解题思路-3"><a href="#解题思路-3" class="headerlink" title="解题思路"></a>解题思路</h3><p>我们维护这样一个单调递减的stack，stack内部存的是原数组的每个index。每当我们遇到一个比当前栈顶所对应的数（就是nums[stack.peek()]）大的数的时候，我们就遇到了一个“大数“。这个”大数“比它之前多少个数大我们不知道，但是至少比当前栈顶所对应的数大。我们弹出栈内所有对应数比这个数小的栈内元素，并更新它们在返回数组中对应位置的值。因为这个栈本身的单调性，当我们栈顶元素所对应的数比这个元素大的时候，我们可以保证，栈内所有元素都比这个元素大。对于每一个元素，当它出栈的时候，说明它遇到了自己的next greater element，我们也就要更新return数组中的对应位置的值。如果一个元素一直不曾出栈，那么说明不存在next greater element，我们也就不用更新return数组了。</p>
-<h3 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] nextExceed(<span class="keyword">int</span>[] nums) &#123;</span><br><span class="line">     <span class="keyword">int</span> n = nums.length;</span><br><span class="line">     <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line">     <span class="comment">// 填充-1</span></span><br><span class="line">     Arrays.fill(res, -<span class="number">1</span>);</span><br><span class="line">     Deque&lt;Integer&gt; stack = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">         <span class="comment">// 如果栈不为空并且当前元素大于栈顶元素</span></span><br><span class="line">         <span class="comment">// 弹出栈中比当前小的元素，并更新它们在返回数组中对应位置的值（移动的步数）</span></span><br><span class="line">         <span class="comment">// 栈里面需要保存元素在数组中的下标，而不是具体的数字。因为需要根据下标修改结果数组</span></span><br><span class="line">         <span class="keyword">while</span> (!stack.isEmpty() &amp;&amp; nums[i] &gt; nums[stack.peek()]) &#123;          </span><br><span class="line">             res[stack.peek()] = i - stack.peek();</span><br><span class="line">             stack.pop();</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="comment">// 下标入栈</span></span><br><span class="line">         stack.push(i);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> res;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="解题思路-4"><a href="#解题思路-4" class="headerlink" title="解题思路"></a>解题思路</h3><p>我们维护这样一个单调递减的stack，stack内部存的是原数组的每个index。每当我们遇到一个比当前栈顶所对应的数（就是nums[stack.peek()]）大的数的时候，我们就遇到了一个“大数“。这个”大数“比它之前多少个数大我们不知道，但是至少比当前栈顶所对应的数大。我们弹出栈内所有对应数比这个数小的栈内元素，并更新它们在返回数组中对应位置的值。因为这个栈本身的单调性，当我们栈顶元素所对应的数比这个元素大的时候，我们可以保证，栈内所有元素都比这个元素大。对于每一个元素，当它出栈的时候，说明它遇到了自己的next greater element，我们也就要更新return数组中的对应位置的值。如果一个元素一直不曾出栈，那么说明不存在next greater element，我们也就不用更新return数组了。</p>
+<h3 id="代码-4"><a href="#代码-4" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] nextExceed(<span class="keyword">int</span>[] nums) &#123;</span><br><span class="line">     <span class="keyword">int</span> n = nums.length;</span><br><span class="line">     <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line">     <span class="comment">// 填充-1</span></span><br><span class="line">     Arrays.fill(res, -<span class="number">1</span>);</span><br><span class="line">     Deque&lt;Integer&gt; stack = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">         <span class="comment">// 如果栈不为空并且当前元素大于栈顶元素</span></span><br><span class="line">         <span class="comment">// 弹出栈中比当前小的元素，并更新它们在返回数组中对应位置的值（移动的步数）</span></span><br><span class="line">         <span class="comment">// 栈里面需要保存元素在数组中的下标，而不是具体的数字。因为需要根据下标修改结果数组</span></span><br><span class="line">         <span class="keyword">while</span> (!stack.isEmpty() &amp;&amp; nums[i] &gt; nums[stack.peek()]) &#123;          </span><br><span class="line">             res[stack.peek()] = i - stack.peek();</span><br><span class="line">             stack.pop();</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="comment">// 下标入栈</span></span><br><span class="line">         stack.push(i);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> res;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -573,7 +615,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -581,7 +623,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -597,19 +643,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">面试题</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -625,11 +667,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
             
             <div class="clearfix"></div>
