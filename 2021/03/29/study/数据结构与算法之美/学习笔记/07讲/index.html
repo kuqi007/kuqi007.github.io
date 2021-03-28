@@ -6,12 +6,12 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://blog.elfred.top">
-  <title>07 | 链表（下）：如何轻松写出正确的链表代码？ | Elfred&#39;s Blog</title>
+  <title>07讲 | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="07 | 链表（下）：如何轻松写出正确的链表代码？几个写链表代码的技巧技巧一：理解指针或引用的含义实际上，对于指针或引用的理解，你只需要记住下面这句话就可以了： 将某个变量赋值给指针，实际上就是将这个变量的地址赋值给指针，或者反过来说，指针中存储了这个变量的内存地址，指向了这个变量，通过指针就能找到这个变量。 在编写链表代码的时候，我们经常会有这样的代码：p-&amp;gt;next=q。这行代码是说，">
 <meta name="keywords" content="数据结构与算法之美,学习笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="07 | 链表（下）：如何轻松写出正确的链表代码？">
+<meta property="og:title" content="07讲">
 <meta property="og:url" content="https://blog.elfred.top/2021/03/29/study/数据结构与算法之美/学习笔记/07讲/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
 <meta property="og:description" content="07 | 链表（下）：如何轻松写出正确的链表代码？几个写链表代码的技巧技巧一：理解指针或引用的含义实际上，对于指针或引用的理解，你只需要记住下面这句话就可以了： 将某个变量赋值给指针，实际上就是将这个变量的地址赋值给指针，或者反过来说，指针中存储了这个变量的内存地址，指向了这个变量，通过指针就能找到这个变量。 在编写链表代码的时候，我们经常会有这样的代码：p-&amp;gt;next=q。这行代码是说，">
@@ -19,9 +19,9 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210329002827.jpeg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210329003540.jpeg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210329004753.jpeg">
-<meta property="og:updated_time" content="2021-03-28T16:56:52.687Z">
+<meta property="og:updated_time" content="2021-03-28T17:01:40.662Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="07 | 链表（下）：如何轻松写出正确的链表代码？">
+<meta name="twitter:title" content="07讲">
 <meta name="twitter:description" content="07 | 链表（下）：如何轻松写出正确的链表代码？几个写链表代码的技巧技巧一：理解指针或引用的含义实际上，对于指针或引用的理解，你只需要记住下面这句话就可以了： 将某个变量赋值给指针，实际上就是将这个变量的地址赋值给指针，或者反过来说，指针中存储了这个变量的内存地址，指向了这个变量，通过指针就能找到这个变量。 在编写链表代码的时候，我们经常会有这样的代码：p-&amp;gt;next=q。这行代码是说，">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210329002827.jpeg">
   
@@ -156,7 +156,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      07 | 链表（下）：如何轻松写出正确的链表代码？
+      07讲
     </h1>
   
 
@@ -225,11 +225,16 @@
 <p>看图写代码，是不是就简单多啦？而且，当我们写完代码之后，也可以举几个例子，画在纸上，照着代码走一遍，很容易就能发现代码中的 Bug。</p>
 <h3 id="技巧六：多写多练，没有捷径"><a href="#技巧六：多写多练，没有捷径" class="headerlink" title="技巧六：多写多练，没有捷径"></a>技巧六：多写多练，没有捷径</h3><p>我精选了 5 个常见的链表操作。你只要把这几个操作都能写熟练，不熟就多写几遍，我保证你之后再也不会害怕写链表代码。</p>
 <ul>
-<li><h4 id="206-反转链表"><a href="#206-反转链表" class="headerlink" title="206. 反转链表"></a><a href="https://leetcode-cn.com/problems/reverse-linked-list/" target="_blank" rel="noopener">206. 反转链表</a></h4></li>
-<li><h4 id="141-环形链表"><a href="#141-环形链表" class="headerlink" title="141. 环形链表"></a><a href="https://leetcode-cn.com/problems/linked-list-cycle/" target="_blank" rel="noopener">141. 环形链表</a></h4></li>
-<li><h4 id="21-合并两个有序链表"><a href="#21-合并两个有序链表" class="headerlink" title="21. 合并两个有序链表"></a><a href="https://leetcode-cn.com/problems/merge-two-sorted-lists/" target="_blank" rel="noopener">21. 合并两个有序链表</a></h4></li>
-<li><h4 id="19-删除链表的倒数第-N-个结点"><a href="#19-删除链表的倒数第-N-个结点" class="headerlink" title="19. 删除链表的倒数第 N 个结点"></a><a href="https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/" target="_blank" rel="noopener">19. 删除链表的倒数第 N 个结点</a></h4></li>
-<li><h4 id="876-链表的中间结点"><a href="#876-链表的中间结点" class="headerlink" title="876. 链表的中间结点"></a><a href="https://leetcode-cn.com/problems/middle-of-the-linked-list/" target="_blank" rel="noopener">876. 链表的中间结点</a></h4></li>
+<li><p><a href="https://leetcode-cn.com/problems/reverse-linked-list/" target="_blank" rel="noopener">206. 反转链表</a></p>
+</li>
+<li><p><a href="https://leetcode-cn.com/problems/linked-list-cycle/" target="_blank" rel="noopener">141. 环形链表</a></p>
+</li>
+<li><p><a href="https://leetcode-cn.com/problems/merge-two-sorted-lists/" target="_blank" rel="noopener">21. 合并两个有序链表</a></p>
+</li>
+<li><p><a href="https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/" target="_blank" rel="noopener">19. 删除链表的倒数第 N 个结点</a></p>
+</li>
+<li><p><a href="https://leetcode-cn.com/problems/middle-of-the-linked-list/" target="_blank" rel="noopener">876. 链表的中间结点</a></p>
+</li>
 </ul>
 <h2 id="课后思考"><a href="#课后思考" class="headerlink" title="课后思考"></a>课后思考</h2><p>今天我们讲到用哨兵来简化编码实现，你是否还能够想到其他场景，利用哨兵可以大大地简化编码难度？</p>
 <blockquote>
@@ -327,7 +332,7 @@
   
   
     <a href="/2021/03/27/study/数据结构与算法之美/学习笔记/06讲/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">06 | 链表（上）：如何实现LRU缓存淘汰算法?</div>
+      <div class="article-nav-title">06讲</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -564,11 +569,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
             
             <div class="clearfix"></div>
