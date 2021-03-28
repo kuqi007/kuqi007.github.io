@@ -6,15 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://blog.elfred.top">
-  <title>06讲 | Elfred&#39;s Blog</title>
+  <title>06 | 链表（上）：如何实现LRU缓存淘汰算法? | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="链表（上）：如何实现LRU缓存淘汰算法？链表的概念链表和数组的区别我们先从底层的存储结构上来看一看。 为了直观地对比，我画了一张图。从图中我们看到，数组需要一块连续的内存空间来存储，对内存的要求比较高。如果我们申请一个 100MB 大小的数组，当内存中没有连续的、足够大的存储空间时，即便内存的剩余总可用空间大于 100MB，仍然会申请失败。 而链表恰恰相反，它并不需要一块连续的内存空间，它通过“">
+  <meta name="description" content="06 | 链表（上）：如何实现LRU缓存淘汰算法?链表的概念链表和数组的区别我们先从底层的存储结构上来看一看。 为了直观地对比，我画了一张图。从图中我们看到，数组需要一块连续的内存空间来存储，对内存的要求比较高。如果我们申请一个 100MB 大小的数组，当内存中没有连续的、足够大的存储空间时，即便内存的剩余总可用空间大于 100MB，仍然会申请失败。 而链表恰恰相反，它并不需要一块连续的内存空间">
 <meta name="keywords" content="数据结构与算法之美,学习笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="06讲">
+<meta property="og:title" content="06 | 链表（上）：如何实现LRU缓存淘汰算法?">
 <meta property="og:url" content="https://blog.elfred.top/2021/03/27/study/数据结构与算法之美/学习笔记/06讲/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="链表（上）：如何实现LRU缓存淘汰算法？链表的概念链表和数组的区别我们先从底层的存储结构上来看一看。 为了直观地对比，我画了一张图。从图中我们看到，数组需要一块连续的内存空间来存储，对内存的要求比较高。如果我们申请一个 100MB 大小的数组，当内存中没有连续的、足够大的存储空间时，即便内存的剩余总可用空间大于 100MB，仍然会申请失败。 而链表恰恰相反，它并不需要一块连续的内存空间，它通过“">
+<meta property="og:description" content="06 | 链表（上）：如何实现LRU缓存淘汰算法?链表的概念链表和数组的区别我们先从底层的存储结构上来看一看。 为了直观地对比，我画了一张图。从图中我们看到，数组需要一块连续的内存空间来存储，对内存的要求比较高。如果我们申请一个 100MB 大小的数组，当内存中没有连续的、足够大的存储空间时，即便内存的剩余总可用空间大于 100MB，仍然会申请失败。 而链表恰恰相反，它并不需要一块连续的内存空间">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210327143549.jpeg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210327144616.jpeg">
@@ -23,10 +23,10 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210327145700.jpeg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210327154453.jpeg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210327154545.jpeg">
-<meta property="og:updated_time" content="2021-03-27T08:08:37.393Z">
+<meta property="og:updated_time" content="2021-03-28T16:56:45.238Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="06讲">
-<meta name="twitter:description" content="链表（上）：如何实现LRU缓存淘汰算法？链表的概念链表和数组的区别我们先从底层的存储结构上来看一看。 为了直观地对比，我画了一张图。从图中我们看到，数组需要一块连续的内存空间来存储，对内存的要求比较高。如果我们申请一个 100MB 大小的数组，当内存中没有连续的、足够大的存储空间时，即便内存的剩余总可用空间大于 100MB，仍然会申请失败。 而链表恰恰相反，它并不需要一块连续的内存空间，它通过“">
+<meta name="twitter:title" content="06 | 链表（上）：如何实现LRU缓存淘汰算法?">
+<meta name="twitter:description" content="06 | 链表（上）：如何实现LRU缓存淘汰算法?链表的概念链表和数组的区别我们先从底层的存储结构上来看一看。 为了直观地对比，我画了一张图。从图中我们看到，数组需要一块连续的内存空间来存储，对内存的要求比较高。如果我们申请一个 100MB 大小的数组，当内存中没有连续的、足够大的存储空间时，即便内存的剩余总可用空间大于 100MB，仍然会申请失败。 而链表恰恰相反，它并不需要一块连续的内存空间">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210327143549.jpeg">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
@@ -160,7 +160,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      06讲
+      06 | 链表（上）：如何实现LRU缓存淘汰算法?
     </h1>
   
 
@@ -181,7 +181,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<h1 id="链表（上）：如何实现LRU缓存淘汰算法？"><a href="#链表（上）：如何实现LRU缓存淘汰算法？" class="headerlink" title="链表（上）：如何实现LRU缓存淘汰算法？"></a>链表（上）：如何实现LRU缓存淘汰算法？</h1><h2 id="链表的概念"><a href="#链表的概念" class="headerlink" title="链表的概念"></a>链表的概念</h2><h3 id="链表和数组的区别"><a href="#链表和数组的区别" class="headerlink" title="链表和数组的区别"></a>链表和数组的区别</h3><p>我们先从<strong>底层的存储结构</strong>上来看一看。</p>
+<h1 id="06-链表（上）：如何实现LRU缓存淘汰算法"><a href="#06-链表（上）：如何实现LRU缓存淘汰算法" class="headerlink" title="06 | 链表（上）：如何实现LRU缓存淘汰算法?"></a>06 | 链表（上）：如何实现LRU缓存淘汰算法?</h1><h2 id="链表的概念"><a href="#链表的概念" class="headerlink" title="链表的概念"></a>链表的概念</h2><h3 id="链表和数组的区别"><a href="#链表和数组的区别" class="headerlink" title="链表和数组的区别"></a>链表和数组的区别</h3><p>我们先从<strong>底层的存储结构</strong>上来看一看。</p>
 <p>为了直观地对比，我画了一张图。从图中我们看到，数组需要一块<strong>连续的内存空间</strong>来存储，对内存的要求比较高。如果我们申请一个 100MB 大小的数组，当内存中没有连续的、足够大的存储空间时，即便内存的剩余总可用空间大于 100MB，仍然会申请失败。</p>
 <p>而链表恰恰相反，它并不需要一块连续的内存空间，它通过“指针”将一组<strong>零散的内存块</strong>串联起来使用，所以如果我们申请的是 100MB 大小的链表，根本不会有问题。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210327143549.jpeg" alt="img"></p>
@@ -332,6 +332,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2021/03/29/study/数据结构与算法之美/学习笔记/07讲/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          07 | 链表（下）：如何轻松写出正确的链表代码？
+        
+      </div>
+    </a>
   
   
     <a href="/2021/03/25/study/数据结构与算法之美/学习笔记/05讲/" id="article-nav-older" class="article-nav-link-wrap">
@@ -520,19 +529,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面经</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面经</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -545,6 +550,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MapStruct</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -572,11 +581,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
               </li>
             
             <div class="clearfix"></div>
