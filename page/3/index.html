@@ -146,6 +146,133 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-study/数据结构与算法之美/每周打卡/Week1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/08/study/数据结构与算法之美/每周打卡/Week1/">第一周</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/03/08/study/数据结构与算法之美/每周打卡/Week1/" class="archive-article-date">
+  	<time datetime="2021-03-08T05:59:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-08</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>数据结构与算法之美每周打卡 2021.03.08-2021.03.14</p>
+<h3 id="面试题-01-03-URL化"><a href="#面试题-01-03-URL化" class="headerlink" title="面试题 01.03. URL化"></a><a href="https://leetcode-cn.com/problems/string-to-url-lcci/" target="_blank" rel="noopener">面试题 01.03. URL化</a></h3><p>URL化。编写一种方法，将字符串中的空格全部替换为<code>%20</code>。假定该字符串尾部有足够的空间存放新增字符，并且知道字符串的“真实”长度。（注：用<code>Java</code>实现的话，请使用字符数组实现，以便直接在数组上操作。）</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：<span class="string">"Mr John Smith    "</span>, <span class="number">13</span></span><br><span class="line">输出：<span class="string">"Mr%20John%20Smith"</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：<span class="string">"               "</span>, <span class="number">5</span></span><br><span class="line">输出：<span class="string">"%20%20%20%20%20"</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>提示：</strong></p>
+<ul>
+<li>字符串长度在 [0, 500000] 范围内。</li>
+</ul>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">replaceSpaces</span><span class="params">(String S, <span class="keyword">int</span> length)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">char</span>[] chs = S.toCharArray();</span><br><span class="line">        <span class="keyword">int</span> i = length - <span class="number">1</span>, j = S.length() - <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// 从右往前走，把左边的的字符串拷贝到右边</span></span><br><span class="line">        <span class="keyword">while</span> (i &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (chs[i] == <span class="string">' '</span>) &#123;</span><br><span class="line">                chs[j--] = <span class="string">'0'</span>;</span><br><span class="line">                chs[j--] = <span class="string">'2'</span>;</span><br><span class="line">                chs[j--] = <span class="string">'%'</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                chs[j--] = chs[i];</span><br><span class="line">            &#125;</span><br><span class="line">            i--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 最后取拷贝完之后的字符串，也就是j+1开始，字符串长度减去j+1</span></span><br><span class="line">        <span class="keyword">return</span> String.valueOf(chs, j + <span class="number">1</span>, S.length() - j - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1528-重新排列字符串"><a href="#1528-重新排列字符串" class="headerlink" title="1528. 重新排列字符串"></a><a href="https://leetcode-cn.com/problems/shuffle-string/" target="_blank" rel="noopener">1528. 重新排列字符串</a></h3><p>给你一个字符串 <code>s</code> 和一个 <strong>长度相同</strong> 的整数数组 <code>indices</code> 。</p>
+<p>请你重新排列字符串 <code>s</code> ，其中第 <code>i</code> 个字符需要移动到 <code>indices[i]</code> 指示的位置。</p>
+<p>返回重新排列后的字符串。</p>
+<p><strong>示例 1：</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210322161725.jpeg" alt="img"></p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">"codeleet"</span>, indices = [<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">3</span>]</span><br><span class="line">输出：<span class="string">"leetcode"</span></span><br><span class="line">解释：如图所示，<span class="string">"codeleet"</span> 重新排列后变为 <span class="string">"leetcode"</span> 。</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">"abc"</span>, indices = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">输出：<span class="string">"abc"</span></span><br><span class="line">解释：重新排列后，每个字符都还留在原来的位置上。</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 3：</strong></p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">"aiohn"</span>, indices = [<span class="number">3</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">0</span>]</span><br><span class="line">输出：<span class="string">"nihao"</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 4：</strong></p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">"aaiougrt"</span>, indices = [<span class="number">4</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">5</span>]</span><br><span class="line">输出：<span class="string">"arigatou"</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 5：</strong></p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">"art"</span>, indices = [<span class="number">1</span>,<span class="number">0</span>,<span class="number">2</span>]</span><br><span class="line">输出：<span class="string">"rat"</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>s.length == indices.length == n</code></li>
+<li><code>1 &lt;= n &lt;= 100</code></li>
+<li><code>s</code> 仅包含小写英文字母。</li>
+<li><code>0 &lt;= indices[i] &lt; n</code></li>
+<li><code>indices</code> 的所有的值都是唯一的（也就是说，<code>indices</code> 是整数 <code>0</code> 到 <code>n - 1</code> 形成的一组排列）。</li>
+</ul>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">restoreString</span><span class="params">(String s, <span class="keyword">int</span>[] indices)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">char</span>[] res = <span class="keyword">new</span> <span class="keyword">char</span>[s.length()];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</span><br><span class="line">            res[indices[i]] = s.charAt(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> String.valueOf(res);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">每周打卡</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/08/study/数据结构与算法之美/每周打卡/Week1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-design/设计模式简介" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -899,98 +1026,6 @@
 
 
   
-    <article id="post-interview/计算机基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/30/interview/计算机基础/">计算机基础</a>
-    </h1>
-  
-
-        
-        
-<a href="/2021/01/30/interview/计算机基础/" class="archive-article-date">
-  	<time datetime="2021-01-30T05:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-30</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h3 id="介绍下Linux（Unix）操作系统的五种IO模型"><a href="#介绍下Linux（Unix）操作系统的五种IO模型" class="headerlink" title="介绍下Linux（Unix）操作系统的五种IO模型"></a>介绍下Linux（Unix）操作系统的五种IO模型</h3><p>在Linux(UNIX)操作系统中，共有五种IO模型，分别是：<strong>阻塞IO模型</strong>、<strong>非阻塞IO模型</strong>、<strong>IO复用模型</strong>、<strong>信号驱动IO模型</strong>以及<strong>异步IO模型</strong>。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210126103811.jpeg" alt="图片"></p>
-<p>我们说阻塞IO模型、非阻塞IO模型、IO复用模型和信号驱动IO模型都是同步的IO模型。原因是因为，无论以上那种模型，真正的数据拷贝过程，都是同步进行的。</p>
-<p><strong>同步和异步：</strong></p>
-<p>从操作系统角度来说，<strong>网络IO的数据拷贝主要分为两个阶段，一是数据准备阶段，二是数据从内核拷贝到用户中。</strong></p>
-<p>同步IO指的是数据从内核拷贝到用户时。发起该请求的线程会自己来拷贝数据（表现为线程阻塞拷贝）。</p>
-<p>PS：一旦涉及到网络 IO必定会发生数据拷贝的阻塞（此阻塞非彼阻塞，这里的阻塞形容的是拷贝数据相对于CPU的速度来说是非常耗时的，看起来像线程阻塞了一样。我们常说的阻塞是线程挂起并让出CPU），只不过阻塞发生在其他的地方（自己来拷贝就是同步的，别人帮我拷贝就是异步的），因为IO必定会用到CPU，即使是零拷贝。</p>
-<p><strong>阻塞和非阻塞：</strong></p>
-<p>阻塞和非阻塞主要描述的是网络IO数据拷贝的第一个阶段。</p>
-<p>阻塞指的是线程一直等待数据准备好，期间什么都不干，但是会让出CPU，这样其他线程可以执行（CPU的利用率比较高），数据准备好之后自己来拷贝数据。</p>
-<p>非阻塞指的是在第一阶段，发起网络IO请求的时候会立即返回去干别的事情，但是会不断地进行询问数据是否准备好，这种方式称之为轮询。由于CPU要处理更多的系统调用（每次询问都是系统调用），这种模型的CPU利用率低。</p>
-<h3 id="NIO是如何实现同步非阻塞的呢？"><a href="#NIO是如何实现同步非阻塞的呢？" class="headerlink" title="NIO是如何实现同步非阻塞的呢？"></a>NIO是如何实现同步非阻塞的呢？</h3><p>Java的NIO实现采用了同步非阻塞IO和IO多路复用，其核心组件是Selector。Selector会不断的主动的询问Channel是否有事件发生，有事件发生，会进行事件处理。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//java nio</span></span><br><span class="line"><span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</span><br><span class="line">  ......</span><br><span class="line">  selector.select(<span class="number">1</span>); <span class="comment">//不阻塞</span></span><br><span class="line">  Set&lt;SelectionKey&gt; selectionKeySet= selector.selectedKeys();</span><br><span class="line">  ......</span><br><span class="line">  <span class="comment">//处理selectionKeySet中事件,线程没有阻塞</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//java socket处理连接，线程会阻塞</span></span><br><span class="line"><span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</span><br><span class="line">  ......</span><br><span class="line">  Socket socket = serverSocket.accept(); <span class="comment">//阻塞</span></span><br><span class="line">  InputStream in = socket.getInputStream(); </span><br><span class="line">  ......</span><br><span class="line">  <span class="comment">//处理in中内容</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Netty采用的是NIO其对Java的NIO进行了改进，其内部也封装了Selector和Channel，采用串行并发来提高效率。</p>
-<p>Java的NIO采用的是Reactor线程模型中的单Reactor单线程模型（前台和服务员是一个人，全程为顾客服务，可以服务多个人），Netty的NIO采用的是主从Reactor模型，是多Reactor多线程模型。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/01/30/interview/计算机基础/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -1111,19 +1146,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">面经</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1136,6 +1167,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MapStruct</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1155,6 +1190,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
              
@@ -1163,11 +1202,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
               </li>
             
             <div class="clearfix"></div>

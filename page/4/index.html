@@ -146,6 +146,98 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-interview/计算机基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/30/interview/计算机基础/">计算机基础</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/01/30/interview/计算机基础/" class="archive-article-date">
+  	<time datetime="2021-01-30T05:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-30</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h3 id="介绍下Linux（Unix）操作系统的五种IO模型"><a href="#介绍下Linux（Unix）操作系统的五种IO模型" class="headerlink" title="介绍下Linux（Unix）操作系统的五种IO模型"></a>介绍下Linux（Unix）操作系统的五种IO模型</h3><p>在Linux(UNIX)操作系统中，共有五种IO模型，分别是：<strong>阻塞IO模型</strong>、<strong>非阻塞IO模型</strong>、<strong>IO复用模型</strong>、<strong>信号驱动IO模型</strong>以及<strong>异步IO模型</strong>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210126103811.jpeg" alt="图片"></p>
+<p>我们说阻塞IO模型、非阻塞IO模型、IO复用模型和信号驱动IO模型都是同步的IO模型。原因是因为，无论以上那种模型，真正的数据拷贝过程，都是同步进行的。</p>
+<p><strong>同步和异步：</strong></p>
+<p>从操作系统角度来说，<strong>网络IO的数据拷贝主要分为两个阶段，一是数据准备阶段，二是数据从内核拷贝到用户中。</strong></p>
+<p>同步IO指的是数据从内核拷贝到用户时。发起该请求的线程会自己来拷贝数据（表现为线程阻塞拷贝）。</p>
+<p>PS：一旦涉及到网络 IO必定会发生数据拷贝的阻塞（此阻塞非彼阻塞，这里的阻塞形容的是拷贝数据相对于CPU的速度来说是非常耗时的，看起来像线程阻塞了一样。我们常说的阻塞是线程挂起并让出CPU），只不过阻塞发生在其他的地方（自己来拷贝就是同步的，别人帮我拷贝就是异步的），因为IO必定会用到CPU，即使是零拷贝。</p>
+<p><strong>阻塞和非阻塞：</strong></p>
+<p>阻塞和非阻塞主要描述的是网络IO数据拷贝的第一个阶段。</p>
+<p>阻塞指的是线程一直等待数据准备好，期间什么都不干，但是会让出CPU，这样其他线程可以执行（CPU的利用率比较高），数据准备好之后自己来拷贝数据。</p>
+<p>非阻塞指的是在第一阶段，发起网络IO请求的时候会立即返回去干别的事情，但是会不断地进行询问数据是否准备好，这种方式称之为轮询。由于CPU要处理更多的系统调用（每次询问都是系统调用），这种模型的CPU利用率低。</p>
+<h3 id="NIO是如何实现同步非阻塞的呢？"><a href="#NIO是如何实现同步非阻塞的呢？" class="headerlink" title="NIO是如何实现同步非阻塞的呢？"></a>NIO是如何实现同步非阻塞的呢？</h3><p>Java的NIO实现采用了同步非阻塞IO和IO多路复用，其核心组件是Selector。Selector会不断的主动的询问Channel是否有事件发生，有事件发生，会进行事件处理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//java nio</span></span><br><span class="line"><span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</span><br><span class="line">  ......</span><br><span class="line">  selector.select(<span class="number">1</span>); <span class="comment">//不阻塞</span></span><br><span class="line">  Set&lt;SelectionKey&gt; selectionKeySet= selector.selectedKeys();</span><br><span class="line">  ......</span><br><span class="line">  <span class="comment">//处理selectionKeySet中事件,线程没有阻塞</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//java socket处理连接，线程会阻塞</span></span><br><span class="line"><span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</span><br><span class="line">  ......</span><br><span class="line">  Socket socket = serverSocket.accept(); <span class="comment">//阻塞</span></span><br><span class="line">  InputStream in = socket.getInputStream(); </span><br><span class="line">  ......</span><br><span class="line">  <span class="comment">//处理in中内容</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Netty采用的是NIO其对Java的NIO进行了改进，其内部也封装了Selector和Channel，采用串行并发来提高效率。</p>
+<p>Java的NIO采用的是Reactor线程模型中的单Reactor单线程模型（前台和服务员是一个人，全程为顾客服务，可以服务多个人），Netty的NIO采用的是主从Reactor模型，是多Reactor多线程模型。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/30/interview/计算机基础/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-interview/Redis常见面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -897,78 +989,6 @@
 
 
   
-    <article id="post-application/SpringBoot打包时复制指定配置文件到指定目录，并剔除jar包内所有配置文件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/02/24/application/SpringBoot打包时复制指定配置文件到指定目录，并剔除jar包内所有配置文件/">SpringBoot打包时复制指定配置文件到指定目录，并剔除jar包内所有配置文件</a>
-    </h1>
-  
-
-        
-        
-<a href="/2020/02/24/application/SpringBoot打包时复制指定配置文件到指定目录，并剔除jar包内所有配置文件/" class="archive-article-date">
-  	<time datetime="2020-02-24T03:04:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-24</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近遇到一个需求，把SpringBoot项目的配置文件放到Jar包外面，Jar包内不包含多余配置文件，Jar包运行时指定外部配置文件启动。我的配置文件放在src/main/resources/config下，打包时拷贝到Jar包同级config目录下（SpringBoot默认支持读取Jar包同级config文件夹中的配置），具体解决方案如下：</p>
-<ul>
-<li><p>使用maven-jar-plugin插件移除配置文件将其不打包进jar包中</p>
-</li>
-<li><p>使用maven-resources-plugin插件将需要复制的文件复制到指定路径（例：将配置文件提取到指定路径）</p>
-<p>Maven配置如下：</p>
-        
-          <a class="article-more-a" href="/2020/02/24/application/SpringBoot打包时复制指定配置文件到指定目录，并剔除jar包内所有配置文件/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/02/24/application/SpringBoot打包时复制指定配置文件到指定目录，并剔除jar包内所有配置文件/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
@@ -1089,19 +1109,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">面经</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1114,6 +1130,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MapStruct</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1133,6 +1153,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
              
@@ -1141,11 +1165,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
               </li>
             
             <div class="clearfix"></div>
