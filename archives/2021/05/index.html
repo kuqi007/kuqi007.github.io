@@ -6,20 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://blog.elfred.top">
-  <title>Elfred&#39;s Blog</title>
+  <title>Archives: 2021/5 | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、设计模式: 策略模式demo了解redis: 跳表了解 ,哨兵-集群了解, 雪崩.击穿了解, key过期了解限流 思路可以说出来kafka 顺序消费 了解. 防止重复提交不了解先更新数据库后更新缓存策略了解算法: 给定数组, 和一个target,返回数组中和是target的下标. 做出 分布式事务:了解不多消息队列: 局部有序了解. aqs不了解redis 缓存过期和替换方式了解部分lru 了">
+  <meta name="description" content="好记性不如烂笔头">
 <meta name="keywords" content="前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Elfred&#39;s Blog">
-<meta property="og:url" content="https://blog.elfred.top/草稿箱/参考面经/滴滴面经.html">
+<meta property="og:url" content="https://blog.elfred.top/archives/2021/05/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="一、设计模式: 策略模式demo了解redis: 跳表了解 ,哨兵-集群了解, 雪崩.击穿了解, key过期了解限流 思路可以说出来kafka 顺序消费 了解. 防止重复提交不了解先更新数据库后更新缓存策略了解算法: 给定数组, 和一个target,返回数组中和是target的下标. 做出 分布式事务:了解不多消息队列: 局部有序了解. aqs不了解redis 缓存过期和替换方式了解部分lru 了">
+<meta property="og:description" content="好记性不如烂笔头">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-04-26T00:22:11.679Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Elfred&#39;s Blog">
-<meta name="twitter:description" content="一、设计模式: 策略模式demo了解redis: 跳表了解 ,哨兵-集群了解, 雪崩.击穿了解, key过期了解限流 思路可以说出来kafka 顺序消费 了解. 防止重复提交不了解先更新数据库后更新缓存策略了解算法: 给定数组, 和一个target,返回数组中和是target的下标. 做出 分布式事务:了解不多消息队列: 局部有序了解. aqs不了解redis 缓存过期和替换方式了解部分lru 了">
+<meta name="twitter:description" content="好记性不如烂笔头">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -145,175 +144,66 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="page-" class="article article-type-page " itemscope itemprop="blogPost">
-  <div class="article-inner">
+            
+  
+  
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="一、"><a href="#一、" class="headerlink" title="一、"></a>一、</h3><p>设计模式: 策略模式demo了解<br>redis: 跳表了解 ,哨兵-集群了解, 雪崩.击穿了解, key过期了解<br>限流 思路可以说出来<br>kafka 顺序消费 了解. 防止重复提交不了解<br>先更新数据库后更新缓存策略了解<br>算法: 给定数组, 和一个target,返回数组中和是target的下标. 做出</p>
-<p>分布式事务:了解不多<br>消息队列: 局部有序了解. aqs不了解<br>redis 缓存过期和替换方式了解部分<br>lru 了解简单实现<br>令牌桶限流了解,其他不了解<br>序列化有一定了解<br>脑裂不太了解<br>字符串相加做出. 但是有可以优化的地方</p>
-<h3 id="二、"><a href="#二、" class="headerlink" title="二、"></a>二、</h3><p>设计题：<br>1.设计redis客户端和集群如何交互，取出key对应的value，没设计出来；<br>2.不了解zookeeper的使用场景；</p>
-<p>基础知识：<br>1.不了解生产者消费者模型；<br>2.不了解如何通过基础结构定义队列；<br>3.不了解循环队列；<br>4.在实际写代码过程中，不了解读写锁；</p>
-<p>代码能力：<br>1.没能写出阻塞队列；<br>2.没能写出二分查找；</p>
-<p>问了之前做过的项目，工单审批系统，对流程引擎flowable 以及所做的项目相关了解比较细致，诸如流程引擎所提供的功能，如何和其他系统交互。kafka如何实现幂等答出，如何实现kafka消息的顺序消费答出，mysql日志及作用，mvcc相关基本能回答出来，mysql索引，事务隔离级别，聚簇索引等概念能回答上来，redis淘汰策略和redis持久化答出。问了两道算法题，刷过题，简单的能够快速回答出来，较难的未答出最优解。</p>
-<h3 id="三、"><a href="#三、" class="headerlink" title="三、"></a>三、</h3><p>基础技术：<br>网络知识掌握一般，Tcp4次挥手和timewait状态有了解，但是细节说的都不太对<br>Mysql在订单重构过程中有使用到分表，但是如果分表如果保证数据均匀没有解决思路，分表如何扩容回答方法也不太好<br>Redis 有简单使用，hash rehash详细过程说不出来。<br>Kafa掌握可以，ISR了解，如何保证发送不丢消息，如何解决消费重复等都能回答出来。<br>Nginx简单了解，Nginx如何处理Http请求回答不出来。<br>Netty源码没有讲出什么东西，基本都是从网上一些介绍。<br>代码题40分钟写完大整数加法，<br>动/静态代理回答一般<br>工作经验还行，聊了做过的一个项目，商品中心，对业务的了解还可以，但是没有聊出来太深的技术点。<br>问了一下对spring cloud 和dubbo的了解，回答的比较笼统，涉及到具体的问题，如断路器，Eureka和ZooKeeper的区别，能回答出大概，不是很详细。<br>mysql相关一般的基础知识还可以，聚簇索引，B+树，索引类型还可以，更深一些如为什么innodb使用B+树，mvcc相关不了解；分表时有哪些全局id生成策略，了解不多<br>redis 了解一般，淘汰策略回答不全，redis了解哪些集群方案说出了哨兵和redis cluster。<br>java 语言相关问了sycronized的使用能够答出；动/静态代理回答一般，不够详细<br>算法题一道，未给出最优解；</p>
-<h3 id="四、"><a href="#四、" class="headerlink" title="四、"></a>四、</h3><ol>
-<li>主要负责支付系统,对支付系统的数据一致性,对账,重复支付等问题都有实际解决经验.</li>
-<li>spring boot组件的开发,没有相关经验,不是很了解.</li>
-<li>Redis的使用场景比较熟悉,自己多个场景使用到.</li>
-<li>数据库分库分表了解. 原理不太清楚,分库分表框架的实现原理答不上来.</li>
-<li>分布式链路追踪不了解</li>
-<li>限流框架了解令牌桶的实现.</li>
-<li>threadlocal原理能答出来.</li>
-<li>Javac编译原理答不出来.</li>
-</ol>
-<h3 id="五、橙心优选"><a href="#五、橙心优选" class="headerlink" title="五、橙心优选"></a>五、橙心优选</h3><p>总体：<br>基础不达标，无高并发项目经验。淘汰。</p>
-<p>基础：<br>java：有jvm调优经验，对虚拟机有一定了解。<br>mysql：创建索引需要考虑哪些因素，大概答出4、5条。索引、锁、wal等实现有简单了解，深入问答得不好<br>redis：常用数据结构熟悉</p>
-<p>项目：<br>主要讲了HDP项目，总体比较熟悉，技术细节也比较了解。<br>但是对于为什么要做这个系统没有给出合理解释。且高并发、分布式方面考虑较少。</p>
-<p>设计滴滴订单表，基本字段、索引有考虑。分库分表无实操经验，没有给出合理方案。</p>
-<p>算法编程：<br>0-n找缺失数字，有序时想到二分。无序时想到快排思想，主体框架写出，最后有几个小bug。<br>总体编程尚可。</p>
-<p>基础：</p>
-<ol>
-<li>基础一般，常用排序算法时间复杂度记不清了</li>
-<li>redis、mysql、kafka等都有使用经验，redis使用相对较熟。原理简单了解，深入问答得都不太好</li>
-</ol>
-<p>项目：<br>讲了增值外发和一个任务调度平台，比较熟悉，实现细节也基本了解。不过技术选型考虑不全，很多东西自己做的，为什么不用开源的或者公司已经有的，没有给出合理答案。</p>
-<p>让设计一个滴滴订单表，有分库分表、索引考虑。多维度查询没有给出合理方案。</p>
-<p>算法编程：<br>0-n找缺失数字，想到求和。有序时经提示想到二分。无序时想到先排序，快排的思路大致说出，时间复杂度答错。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
+    
       
       
-      
-
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2021" class="archive-year">2021</a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	
+<a href="/2021/05/01/study/数据结构与算法之美/每周打卡/Week8/" class="archive-article-date">
+  	<time datetime="2021-05-01T07:06:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-01</time>
+</a>
 
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/草稿箱/参考面经/滴滴面经.html" alt="微信分享二维码">
-    </div>
-</div>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2021/05/01/study/数据结构与算法之美/每周打卡/Week8/">第八周</a>
+    </h1>
+  
 
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">每周打卡</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
   
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
+  
+    </div></section>
+  
 
     
-    <section id="comments" class="comments">
-      <style>
-        .comments{margin:30px;padding:10px;background:#fff}
-        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
-      </style>
-    <div id="valine_comment"></div>
-<!--载入js，在</body>之前插入即可-->
-<!--Leancloud 操作库:-->
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!--Valine 的核心代码库-->
-<script src='//github.com/DesertsP/Valine/releases/download/v1.2.0/Valine.min.js'></script>
-<!--<script src='//leafjame.github.io/js/src/Valine.min.js'></script>-->
-<!--<script src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>-->
-<!--<script src="//deserts.io/assets/js/Valine.min.js"></script>-->
-<script>
-    const notify = 'true' === true;
-    const verify = 'false' === true;
-    window.onload = function () {
-        new Valine({
-            // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
-            av: AV,
-            el: '#valine_comment',
-            emoticon_url: 'https://cloud.panjunwen.com/alu/',
-            emoticon_list: [ '不出所料.png', '不说话.png', '不高兴.png', '中刀.png', '中指.png', '中枪.png', '亲亲.png', '便便.png', '内伤.png', '击掌.png', '口水.png', '吐.png', '吐舌.png', '吐血倒地.png', '呲牙.png', '咽气.png', '哭泣.png', '喜极而泣.png', '喷水.png', '喷血.png', '坐等.png', '害羞.png', '小眼睛.png', '尴尬.png', '得意.png', '惊喜.png', '想一想.png', '愤怒.png', '扇耳光.png', '投降.png', '抠鼻.png', '抽烟.png', '无奈.png', '无所谓.png', '无语.png', '暗地观察.png', '期待.png', '欢呼.png', '汗.png', '深思.png', '狂汗.png', '献花.png', '献黄瓜.png', '皱眉.png', '看不见.png', '看热闹.png', '瞅你.png', '肿包.png', '脸红.png', '蜡烛.png', '装大款.png', '观察.png', '赞一个.png', '邪恶.png', '锁眉.png', '长草.png', '阴暗.png', '高兴.png', '黑线.png', '鼓掌.png'],
-            app_id: 'cFVh8rsB8HaQ1uHQrIPjvDyF-gzGzoHsz',
-            app_key: '1ecASbr0qOJEtToVdq8wyeQF',
-            placeholder: '有话要说？'
-        });
-    }
-</script>
-
-    </section>
-    
-
-  
-
-  
-
-  
-
-  
-
-  
 
 
           </div>
@@ -360,7 +250,7 @@
 		mathjax: false,
 		isHome: false,
 		isPost: false,
-		isArchive: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
@@ -437,6 +327,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -449,23 +351,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">面试题</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -485,11 +375,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
             
             <div class="clearfix"></div>

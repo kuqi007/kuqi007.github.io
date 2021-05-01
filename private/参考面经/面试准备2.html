@@ -8,18 +8,25 @@
   <link rel="dns-prefetch" href="https://blog.elfred.top">
   <title>Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="如何保证分布式系统的高可用？限流降级熔断">
+  <meta name="description" content="基础进程和线程 进程是操作系统资源分配的最小单位，线程是CPU任务调度的最小单位。一个进程可以包含多个线程，所以进程和线程都是一个时间段的描述，是CPU工作时间段的描述，不过是颗粒大小不同。 不同进程间数据很难共享，同一进程下不同线程间数据很易共享。 每个进程都有独立的代码和数据空间，进程要比线程消耗更多的计算机资源。线程可以看做轻量级的进程，同一类线程共享代码和数据空间，每个线程都有自己独立的运">
 <meta name="keywords" content="前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Elfred&#39;s Blog">
-<meta property="og:url" content="https://blog.elfred.top/草稿箱/分布式.html">
+<meta property="og:url" content="https://blog.elfred.top/private/参考面经/面试准备2.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="如何保证分布式系统的高可用？限流降级熔断">
+<meta property="og:description" content="基础进程和线程 进程是操作系统资源分配的最小单位，线程是CPU任务调度的最小单位。一个进程可以包含多个线程，所以进程和线程都是一个时间段的描述，是CPU工作时间段的描述，不过是颗粒大小不同。 不同进程间数据很难共享，同一进程下不同线程间数据很易共享。 每个进程都有独立的代码和数据空间，进程要比线程消耗更多的计算机资源。线程可以看做轻量级的进程，同一类线程共享代码和数据空间，每个线程都有自己独立的运">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-02-19T14:57:46.202Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210428232448.jpeg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210428232535.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210428232856.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210428233856.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210428234149.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210428234906.png">
+<meta property="og:updated_time" content="2021-04-29T00:57:54.431Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Elfred&#39;s Blog">
-<meta name="twitter:description" content="如何保证分布式系统的高可用？限流降级熔断">
+<meta name="twitter:description" content="基础进程和线程 进程是操作系统资源分配的最小单位，线程是CPU任务调度的最小单位。一个进程可以包含多个线程，所以进程和线程都是一个时间段的描述，是CPU工作时间段的描述，不过是颗粒大小不同。 不同进程间数据很难共享，同一进程下不同线程间数据很易共享。 每个进程都有独立的代码和数据空间，进程要比线程消耗更多的计算机资源。线程可以看做轻量级的进程，同一类线程共享代码和数据空间，每个线程都有自己独立的运">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210428232448.jpeg">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -150,7 +157,44 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="如何保证分布式系统的高可用？"><a href="#如何保证分布式系统的高可用？" class="headerlink" title="如何保证分布式系统的高可用？"></a>如何保证分布式系统的高可用？</h2><h3 id="限流"><a href="#限流" class="headerlink" title="限流"></a>限流</h3><h3 id="降级"><a href="#降级" class="headerlink" title="降级"></a>降级</h3><h3 id="熔断"><a href="#熔断" class="headerlink" title="熔断"></a>熔断</h3>
+        <h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><h3 id="进程和线程"><a href="#进程和线程" class="headerlink" title="进程和线程"></a>进程和线程</h3><ol>
+<li>进程是操作系统资源分配的最小单位，线程是CPU任务调度的最小单位。一个进程可以包含多个线程，所以进程和线程都是一个时间段的描述，是CPU工作时间段的描述，不过是颗粒大小不同。</li>
+<li>不同进程间数据很难共享，同一进程下不同线程间数据很易共享。</li>
+<li>每个进程都有独立的代码和数据空间，进程要比线程消耗更多的计算机资源。线程可以看做轻量级的进程，同一类线程共享代码和数据空间，每个线程都有自己独立的运行栈和程序计数器，线程之间切换的开销小。</li>
+<li>进程间不会相互影响，一个线程挂掉将导致整个进程挂掉。</li>
+<li>系统在运行的时候会为每个进程分配不同的内存空间；而对线程而言，除了CPU外，系统不会为线程分配内存（线程所使用的资源来自其所属进程的资源），线程组之间只能共享资源。</li>
+</ol>
+<h3 id="网络分层"><a href="#网络分层" class="headerlink" title="网络分层"></a>网络分层</h3><p>OSI模型</p>
+<p>英语速记：All People Seem To Need Data Processing</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210428232448.jpeg" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210428232535.png" alt="img"></p>
+<h3 id="TCP-IP协议栈"><a href="#TCP-IP协议栈" class="headerlink" title="TCP/IP协议栈"></a>TCP/IP协议栈</h3><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210428232856.png" alt="image-20210428232856337"></p>
+<h3 id="HTTPS-SSL"><a href="#HTTPS-SSL" class="headerlink" title="HTTPS/SSL"></a>HTTPS/SSL</h3><p><a href="https://mp.weixin.qq.com/s/Zr_tIlhAjH7v8I-L5FC31g" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/Zr_tIlhAjH7v8I-L5FC31g</a></p>
+<h3 id="多线程间的资源共享"><a href="#多线程间的资源共享" class="headerlink" title="多线程间的资源共享"></a>多线程间的资源共享</h3><p>【同一进程间的线程共享的资源有】</p>
+<p>a. 堆  由于堆是在进程空间中开辟出来的，所以它是理所当然地被共享的；因此new出来的都是共享的（16位平台上分全局堆和局部堆，局部堆是独享的）</p>
+<p>b. 全局变量 它是与具体某一函数无关的，所以也与特定线程无关；因此也是共享的</p>
+<p>c. 静态变量 虽然对于局部变量来说，它在代码中是“放”在某一函数中的，但是其存放位置和全局变量一样，存于堆中开辟的.bss和.data段，是共享的</p>
+<p>d. 文件等公用资源  这个是共享的，使用这些公共资源的线程必须同步。Win32 提供了几种同步资源的方式，包括信号、临界区、事件和互斥体。<br><a href="https://cloud.tencent.com/developer/article/1768025" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1768025</a></p>
+<h3 id="JVM内存模型"><a href="#JVM内存模型" class="headerlink" title="JVM内存模型"></a>JVM内存模型</h3><ol>
+<li>程序计数器（线程私有）：指向当前线程正在执行的字节码指令</li>
+<li>虚拟机栈（线程私有）：虚拟机栈描述的是Java方法执行的线程内存模型：每个方法执行的时候，Java虚拟机都会同步创建一个栈帧用于存储局部变量、操作数栈、动态连接、方法出口等信息。</li>
+<li>本地方法栈（线程私有）：调用本地native的内存模型</li>
+<li>堆（线程共享）：Java对象存储的地方<br>（1）Java堆是虚拟机管理的内存中最大的一块<br>（2）Java堆是所有线程共享的区域<br>（3）在虚拟机启动时创建<br>（4）此内存区域的唯一目的就是存放对象实例，几乎所有对象实例都在这里分配内存。存放new生成的对象和数组<br>（5）Java堆是垃圾收集器管理的内存区域，因此很多时候称为“GC堆”</li>
+<li>方法区（线程共享）：用于存储已被虚拟机加载的类信息、常量、静态变量、即时编译后的代码等数据<br><strong>运行时常量池：</strong><br>A、是方法区的一部分<br>B、存放编译期生成的各种字面量和符号引用<br>C、Class文件中除了存有类的版本、字段、方法、接口等描述信息，还有一项是常量池，存有这个类的 编译期生成的各种字面量和符号引用，这部分内容将在类加载后，存放到方法区的运行时常量池中。</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210428233856.png" alt="图片"></p>
+<h3 id="JVM-JRE-JDK关系和区别"><a href="#JVM-JRE-JDK关系和区别" class="headerlink" title="JVM/JRE/JDK关系和区别"></a>JVM/JRE/JDK关系和区别</h3><p>JDK（Java Development Kit）是针对Java开发员的产品，是整个Java的核心，包括了Java运行环境JRE、Java工具和Java基础类库。<br>Java Runtime Environment（JRE）是运行JAVA程序所必须的环境的集合，包含JVM标准实现及Java核心类库。<br>JVM是Java Virtual Machine（Java虚拟机）的缩写，是整个java实现跨平台的最核心的部分，能够运行以Java语言写作的软件程序。</p>
+<p>JVM<br>Java Virtual Machine是Java虚拟机，Java程序需要运行在虚拟机上，不同的平台有自己的虚拟机，因此Java语言可以实现跨平台。</p>
+<p>JRE<br>Java Runtime Environment包括Java虚拟机和Java程序所需的核心类库等。核心类库主要是java.lang包：包含了运行Java程序必不可少的系统类，如基本数据类型、基本数学函数、字符串处理、线程、异常处理类等，系统缺省加载这个包</p>
+<p>如果想要运行一个开发好的Java程序，计算机中只需要安装JRE即可。</p>
+<p>JDK<br>Java Development Kit是提供给Java开发人员使用的，其中包含了Java的开发工具，也包括了JRE。所以安装了JDK，就无需再单独安装JRE了。其中的开发工具：编译工具(javac.exe)，打包工具(jar.exe)等</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210428234149.png" alt="JVM&amp;JRE&amp;JDK关系图"></p>
+<h3 id="MySQL隔离级别"><a href="#MySQL隔离级别" class="headerlink" title="MySQL隔离级别"></a>MySQL隔离级别</h3><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210428234906.png" alt="image-20210428234906791"></p>
+<p><a href="https://www.cnblogs.com/fengzheng/p/12557762.html" target="_blank" rel="noopener">https://www.cnblogs.com/fengzheng/p/12557762.html</a></p>
+<h2 id="算法题"><a href="#算法题" class="headerlink" title="算法题"></a>算法题</h2><p>含加减运算符的表达式的解析和计算</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">calc</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> num = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">char</span> preSign = <span class="string">'+'</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</span><br><span class="line">            <span class="keyword">char</span> c = s.charAt(i);</span><br><span class="line">            <span class="keyword">if</span> (Character.isDigit(c)) &#123;</span><br><span class="line">                num = num * <span class="number">10</span> + c - <span class="string">'0'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (c == <span class="string">'+'</span> || c == <span class="string">'-'</span> || i == s.length() - <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (preSign == <span class="string">'+'</span>) &#123;</span><br><span class="line">                    res += num;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (preSign == <span class="string">'-'</span>) &#123;</span><br><span class="line">                    res -= num;</span><br><span class="line">                &#125;</span><br><span class="line">                preSign = c;</span><br><span class="line">                num = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
       
 
       
@@ -208,7 +252,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/草稿箱/分布式.html" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/private/参考面经/面试准备2.html" alt="微信分享二维码">
     </div>
 </div>
 
@@ -407,6 +451,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -419,23 +475,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">面试题</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -455,11 +499,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
             
             <div class="clearfix"></div>

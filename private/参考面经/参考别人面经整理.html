@@ -8,22 +8,18 @@
   <link rel="dns-prefetch" href="https://blog.elfred.top">
   <title>Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="设计题滴滴订单表设计简单版： 订单表：订单编号，司机编号，乘客编号，下单时间，接驾时间，到达时间，支付时间，订单类型，订单状态，乘客预估金额，乘客实际金额，支付渠道；司机预估收入，实际收入。 订单轨迹存在NoSQL存储比如Hive中 订单售后表： 优惠表： 进阶版： 收款单表： 支付记录表： 最终版（订单拆分）： 乘客订单表： 乘客订单编号，司机订单编号，乘客编号，司机编号，下单时间，接驾时间，到">
+  <meta name="description" content="2019年末投了几个简历，20年初收到了杭州阿里和北京美团的面邀 接下来的面经将合并两场面试的问题，如果有都问到的会在问题后面标记（double） # 多线程死锁的条件，如何打破 JMM 如何创建线程池，队列都有哪些？拒绝策略都有哪些？任务过多时都是如何处理的（double） 线程生命周期 synchronized原理（double） jdk对synchronized做了哪些优化 Reentran">
 <meta name="keywords" content="前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Elfred&#39;s Blog">
-<meta property="og:url" content="https://blog.elfred.top/草稿箱/参考面经/橙心优选面试准备.html">
+<meta property="og:url" content="https://blog.elfred.top/private/参考面经/参考别人面经整理.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="设计题滴滴订单表设计简单版： 订单表：订单编号，司机编号，乘客编号，下单时间，接驾时间，到达时间，支付时间，订单类型，订单状态，乘客预估金额，乘客实际金额，支付渠道；司机预估收入，实际收入。 订单轨迹存在NoSQL存储比如Hive中 订单售后表： 优惠表： 进阶版： 收款单表： 支付记录表： 最终版（订单拆分）： 乘客订单表： 乘客订单编号，司机订单编号，乘客编号，司机编号，下单时间，接驾时间，到">
+<meta property="og:description" content="2019年末投了几个简历，20年初收到了杭州阿里和北京美团的面邀 接下来的面经将合并两场面试的问题，如果有都问到的会在问题后面标记（double） # 多线程死锁的条件，如何打破 JMM 如何创建线程池，队列都有哪些？拒绝策略都有哪些？任务过多时都是如何处理的（double） 线程生命周期 synchronized原理（double） jdk对synchronized做了哪些优化 Reentran">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427160203.webp">
-<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a7ad31e2c9a049ba9a704c58a3a6ef57~tplv-k3u1fbpfcp-zoom-1.image">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210426082349.png">
-<meta property="og:updated_time" content="2021-04-27T13:56:21.983Z">
+<meta property="og:updated_time" content="2021-01-08T14:37:27.412Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Elfred&#39;s Blog">
-<meta name="twitter:description" content="设计题滴滴订单表设计简单版： 订单表：订单编号，司机编号，乘客编号，下单时间，接驾时间，到达时间，支付时间，订单类型，订单状态，乘客预估金额，乘客实际金额，支付渠道；司机预估收入，实际收入。 订单轨迹存在NoSQL存储比如Hive中 订单售后表： 优惠表： 进阶版： 收款单表： 支付记录表： 最终版（订单拆分）： 乘客订单表： 乘客订单编号，司机订单编号，乘客编号，司机编号，下单时间，接驾时间，到">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427160203.webp">
+<meta name="twitter:description" content="2019年末投了几个简历，20年初收到了杭州阿里和北京美团的面邀 接下来的面经将合并两场面试的问题，如果有都问到的会在问题后面标记（double） # 多线程死锁的条件，如何打破 JMM 如何创建线程池，队列都有哪些？拒绝策略都有哪些？任务过多时都是如何处理的（double） 线程生命周期 synchronized原理（double） jdk对synchronized做了哪些优化 Reentran">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -154,95 +150,67 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="设计题"><a href="#设计题" class="headerlink" title="设计题"></a>设计题</h2><h3 id="滴滴订单表设计"><a href="#滴滴订单表设计" class="headerlink" title="滴滴订单表设计"></a>滴滴订单表设计</h3><p><strong>简单版：</strong></p>
-<p>订单表：订单编号，司机编号，乘客编号，下单时间，接驾时间，到达时间，支付时间，订单类型，订单状态，乘客预估金额，乘客实际金额，支付渠道；司机预估收入，实际收入。</p>
-<p>订单轨迹存在NoSQL存储比如Hive中</p>
-<p>订单售后表：</p>
-<p>优惠表：</p>
-<h4 id><a href="#" class="headerlink" title></a></h4><p><strong>进阶版：</strong></p>
-<p>收款单表：</p>
-<p>支付记录表：</p>
-<p><strong>最终版（订单拆分）：</strong></p>
-<p>乘客订单表： 乘客订单编号，司机订单编号，乘客编号，司机编号，下单时间，接驾时间，到达时间，支付时间，订单类型，订单状态，预估金额，实际金额，支付渠道；售后编号，使用优惠记录编号。</p>
-<p>司机订单表： 司机订单编号，乘客订单编号，乘客编号，司机编号，抢单时间，接驾时间，到达时间，支付时间，订单类型，订单状态，预估收入，实际收入</p>
-<p>订单修改记录表：订单编号，修改类型（目的地，路线，状态流转），修改人，修改前值，修改后值</p>
-<p>订单轨迹存在NoSQL存储比如Hive中</p>
-<ol>
-<li>收款单表</li>
-<li>支付记录表</li>
-<li>订单售后表</li>
-<li>优惠记录表</li>
-</ol>
-<h4 id="表设计"><a href="#表设计" class="headerlink" title="表设计"></a>表设计</h4><h4 id="分库分表话如何设计"><a href="#分库分表话如何设计" class="headerlink" title="分库分表话如何设计"></a>分库分表话如何设计</h4><p>一张订单表的话可以以乘客id为分片key</p>
-<h4 id="多维度查询问题，非分片key如何查询"><a href="#多维度查询问题，非分片key如何查询" class="headerlink" title="多维度查询问题，非分片key如何查询"></a>多维度查询问题，非分片key如何查询</h4><p>多维度查询的话一种是司机订单做宽表，同步到离线（实时）数仓，再基于其他如es提供查询服务；</p>
-<p>还有一种是做一个mapping表，做司机和订单编号的映射。</p>
-<p>如果是两张订单表，那就没这个问题。直接以各自订单编号分就可以了</p>
-<h4 id="分布式id如何生成？"><a href="#分布式id如何生成？" class="headerlink" title="分布式id如何生成？"></a>分布式id如何生成？</h4><p><a href="https://mp.weixin.qq.com/s?__biz=MzAxNTM4NzAyNg==&mid=2247483785&idx=1&sn=8b828a8ae1701b810fe3969be536cb14&chksm=9b859174acf21862f0b95e0502a1a441c496a5488f5466b2e147d7bb9de072bde37c4db25d7a&token=113284294&lang=zh_CN#rd" target="_blank" rel="noopener">参考9种id生成方案</a></p>
-<ol>
-<li><p>基于数据库自增ID：需要一个单独的MySQL实例用来生成ID；<br><strong>优点：</strong></p>
-<ul>
-<li>实现简单，ID单调自增，数值类型查询速度快</li>
-</ul>
-<p><strong>缺点：</strong></p>
-<ul>
-<li>DB单点存在宕机风险，无法扛住高并发场景</li>
-</ul>
-</li>
-<li><p>上面的方案可以使用主从模式集群，害怕一个主节点挂掉没法用，那就做双主模式集群，设置<code>起始值</code>和<code>自增步长</code>。</p>
-<p><strong>优点：</strong></p>
-<ul>
-<li>解决DB单点问题</li>
-</ul>
-<p><strong>缺点：</strong></p>
-<ul>
-<li>不利于后续扩容，而且实际上单个数据库自身压力还是大，依旧无法满足高并发场景。</li>
-</ul>
-</li>
-<li><p>基于数据库的号段模式。号段模式可以理解为从数据库批量的获取自增ID，每次从数据库取出一个号段范围，例如 (1,1000] 代表1000个ID，具体的业务服务将本号段，生成1~1000的自增ID并加载到内存。</p>
-<blockquote>
-<p>update id_generator set max_id = #{max_id+step}, version = version + 1 where version = # {version} and biz_type = XXX</p>
-</blockquote>
-</li>
-<li><p><code>redis</code>自增 <code>incr</code><br>用<code>redis</code>实现需要注意一点，要考虑到redis持久化的问题。<code>redis</code>有两种持久化方式<code>RDB</code>和<code>AOF</code></p>
-<ul>
-<li><code>RDB</code>会定时打一个快照进行持久化，假如连续自增但<code>redis</code>没及时持久化，而这会Redis挂掉了，重启Redis后会出现ID重复的情况。</li>
-<li><code>AOF</code>会对每条写命令进行持久化，即使<code>Redis</code>挂掉了也不会出现ID重复的情况，但由于incr命令的特殊性，会导致<code>Redis</code>重启恢复的数据时间过长。</li>
-</ul>
-</li>
-<li><p>SNOWFLAKE（雪花算法）是默认使用的主键生成方案，生成一个64bit的长整型（Long）数据。<br><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427160203.webp" alt="图片"></p>
-<blockquote>
-<p>sharding-jdbc 中雪花算法生成的主键主要由 4部分组成，1bit符号位、41bit时间戳位、10bit工作进程位以及 12bit 序列号位。</p>
-</blockquote>
-</li>
-</ol>
-<h2 id="Java基础"><a href="#Java基础" class="headerlink" title="Java基础"></a>Java基础</h2><h3 id="Java线程池调度原理，参数如何配置"><a href="#Java线程池调度原理，参数如何配置" class="headerlink" title="Java线程池调度原理，参数如何配置"></a>Java线程池调度原理，参数如何配置</h3><h3 id="CountDownLatch和Synchronized有什么区别？分别适用什么场景"><a href="#CountDownLatch和Synchronized有什么区别？分别适用什么场景" class="headerlink" title="CountDownLatch和Synchronized有什么区别？分别适用什么场景"></a>CountDownLatch和Synchronized有什么区别？分别适用什么场景</h3><h3 id="SpringMVC和SpringBoot有什么区别？如何实现所有接口的登录和权限校验？"><a href="#SpringMVC和SpringBoot有什么区别？如何实现所有接口的登录和权限校验？" class="headerlink" title="SpringMVC和SpringBoot有什么区别？如何实现所有接口的登录和权限校验？"></a>SpringMVC和SpringBoot有什么区别？如何实现所有接口的登录和权限校验？</h3><h3 id="SpringBean生命周期，SpringBoot启动流程"><a href="#SpringBean生命周期，SpringBoot启动流程" class="headerlink" title="SpringBean生命周期，SpringBoot启动流程"></a>SpringBean生命周期，SpringBoot启动流程</h3><p>生命周期：<br><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a7ad31e2c9a049ba9a704c58a3a6ef57~tplv-k3u1fbpfcp-zoom-1.image" alt="img"></p>
-<p>SpringBooot启动流程：</p>
-<h2 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h2><h3 id="MySQL索引经验，建表需要考虑哪些因素？"><a href="#MySQL索引经验，建表需要考虑哪些因素？" class="headerlink" title="MySQL索引经验，建表需要考虑哪些因素？"></a>MySQL索引经验，建表需要考虑哪些因素？</h3><p><strong>建立索引的原则：</strong></p>
-<ol>
-<li>为经常需要排序、分组和联合操作的字段建立索引</li>
-<li>为常作为查询条件的字段建立索引</li>
-<li>限制索引的数目</li>
-<li>尽量使用数据量少的索引</li>
-<li>尽量使用前缀来索引</li>
-<li>删除不再使用或者很少使用的索引</li>
-<li>最左前缀匹配原则，非常重要的原则。</li>
-<li>=和in可以乱序。</li>
-<li>尽量选择区分度高的列作为索引。</li>
-<li>索引列不能参与计算，保持列“干净”。</li>
-<li>尽量的扩展索引，不要新建索引。 </li>
-<li>当单个索引字段查询数据很多，区分度都不是很大时，则需要考虑建立联合索引来提高查询效率</li>
-</ol>
-<p>建表时考虑字段定长、主键自增、索引、版本号等；联合索引最左匹配</p>
-<h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><h3 id="Redis-String和Hash如何选型"><a href="#Redis-String和Hash如何选型" class="headerlink" title="Redis String和Hash如何选型"></a>Redis String和Hash如何选型</h3><p>hash的粒度比较细</p>
-<h3 id="zset如何实现的？如何设计一个有序集合"><a href="#zset如何实现的？如何设计一个有序集合" class="headerlink" title="zset如何实现的？如何设计一个有序集合"></a>zset如何实现的？如何设计一个有序集合</h3><p>跳表，</p>
-<h2 id="编程算法"><a href="#编程算法" class="headerlink" title="编程算法"></a>编程算法</h2><h3 id="0-N找缺失数字"><a href="#0-N找缺失数字" class="headerlink" title="0-N找缺失数字"></a>0-N找缺失数字</h3><h3 id="常用排序复杂度？哪些是稳定的？"><a href="#常用排序复杂度？哪些是稳定的？" class="headerlink" title="常用排序复杂度？哪些是稳定的？"></a>常用排序复杂度？哪些是稳定的？</h3><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210426082349.png" alt="时间复杂度"></p>
-<h2 id="如何记忆时间复杂度呢？"><a href="#如何记忆时间复杂度呢？" class="headerlink" title="如何记忆时间复杂度呢？"></a>如何记忆时间复杂度呢？</h2><ol>
-<li>平方阶 (O(n2)) 插入、选择、冒泡</li>
-<li>线性对数阶 (O(nlog2n)) 快速、归并、堆</li>
-<li>特殊的希尔 O(n^(1.3—2))</li>
-<li>牛皮的线性 基数、桶、箱、计数</li>
-</ol>
-<h3 id="快排的中心思想？"><a href="#快排的中心思想？" class="headerlink" title="快排的中心思想？"></a>快排的中心思想？</h3><p>分而治之</p>
+        <p>2019年末投了几个简历，20年初收到了杭州阿里和北京美团的面邀</p>
+<p>接下来的面经将合并两场面试的问题，如果有都问到的会在问题后面标记（double）</p>
+<h2 id="多线程"><a href="#多线程" class="headerlink" title="# 多线程"></a><a href="http://shiyujun.cn/posts/我的首次大厂面经-阿里和美团.html#多线程" target="_blank" rel="noopener">#</a> 多线程</h2><p>死锁的条件，如何打破</p>
+<p>JMM</p>
+<p>如何创建线程池，队列都有哪些？拒绝策略都有哪些？任务过多时都是如何处理的（double）</p>
+<p>线程生命周期</p>
+<p>synchronized原理（double）</p>
+<p>jdk对synchronized做了哪些优化</p>
+<p>ReentrantLock</p>
+<p>CAS、ABA问题（double）</p>
+<h2 id="集合"><a href="#集合" class="headerlink" title="# 集合"></a><a href="http://shiyujun.cn/posts/我的首次大厂面经-阿里和美团.html#集合" target="_blank" rel="noopener">#</a> 集合</h2><p>ArrayList和LinkedList</p>
+<p>什么是fail—fast？</p>
+<p>HashMap的put、扩容原理，1.7和1.8的数据结构（double）</p>
+<h2 id="网络"><a href="#网络" class="headerlink" title="# 网络"></a><a href="http://shiyujun.cn/posts/我的首次大厂面经-阿里和美团.html#网络" target="_blank" rel="noopener">#</a> 网络</h2><p>TCP粘包，为什么出现，如何解决？</p>
+<p>TCP如何实现消息可靠性、滑动窗口</p>
+<p>TCP三次握手四次挥手</p>
+<p>DNS</p>
+<p>https原理、可以被攻击么？（double）</p>
+<h2 id="数据库事务"><a href="#数据库事务" class="headerlink" title="# 数据库事务"></a><a href="http://shiyujun.cn/posts/我的首次大厂面经-阿里和美团.html#数据库事务" target="_blank" rel="noopener">#</a> 数据库事务</h2><p>事务的隔离级别、mysql和oracle默认是什么，都解决了什么问题（double）</p>
+<p>事务的特性（double）</p>
+<p>快照读和当前读</p>
+<p>乐观锁、悲观锁、间隙锁、行锁、表锁的使用场景</p>
+<p>B+树、聚簇索引和非聚簇索引（double）</p>
+<p>mvcc（double）</p>
+<p>redolog、undolog、binlog</p>
+<p>一个表没有索引的结构类型</p>
+<p>索引失效的场景</p>
+<p>mysql都有哪些组件</p>
+<h2 id="中间件"><a href="#中间件" class="headerlink" title="# 中间件"></a><a href="http://shiyujun.cn/posts/我的首次大厂面经-阿里和美团.html#中间件" target="_blank" rel="noopener">#</a> 中间件</h2><p>RabbitMQ和kafka的架构（double）</p>
+<p>如何保证消息的顺序性</p>
+<p>为什么使用这个中间件（double）</p>
+<p>Redis数据类型，底层数据结构（double）</p>
+<p>缓存淘汰算法</p>
+<p>缓存穿透、缓存击穿</p>
+<p>缓存数据库双写（double）</p>
+<h2 id="Spring"><a href="#Spring" class="headerlink" title="# Spring"></a><a href="http://shiyujun.cn/posts/我的首次大厂面经-阿里和美团.html#spring" target="_blank" rel="noopener">#</a> Spring</h2><p>IOC和AOP的理解及原理（double）</p>
+<p>Bean的生命周期（double）</p>
+<p>自动注入方式有哪些，两个注解的区别</p>
+<p>Spring MVC流程</p>
+<h2 id="微服务"><a href="#微服务" class="headerlink" title="# 微服务"></a><a href="http://shiyujun.cn/posts/我的首次大厂面经-阿里和美团.html#微服务" target="_blank" rel="noopener">#</a> 微服务</h2><p>分布式事务怎么做的（double）</p>
+<p>CAP、BASE理论</p>
+<p>如何实现一个RPC框架</p>
+<p>服务熔断如何做的</p>
+<p>令牌桶、漏桶算法</p>
+<p>分布式id如何生成（double）</p>
+<h2 id="JVM"><a href="#JVM" class="headerlink" title="# JVM"></a><a href="http://shiyujun.cn/posts/我的首次大厂面经-阿里和美团.html#jvm" target="_blank" rel="noopener">#</a> JVM</h2><p>各个区域的内容（double）</p>
+<p>常见OOM（double）</p>
+<p>垃圾收集器、算法</p>
+<p>类加载机制（double）</p>
+<p>内存分配并发问题</p>
+<p>新生代默认多少次晋升老年代</p>
+<p>反射</p>
+<h2 id="算法"><a href="#算法" class="headerlink" title="# 算法"></a><a href="http://shiyujun.cn/posts/我的首次大厂面经-阿里和美团.html#算法" target="_blank" rel="noopener">#</a> 算法</h2><p>都是一个力扣简单级一个中等级，只不过美团上现场白纸写，阿里是伯乐系统在线做</p>
+<h2 id="项目"><a href="#项目" class="headerlink" title="# 项目"></a><a href="http://shiyujun.cn/posts/我的首次大厂面经-阿里和美团.html#项目" target="_blank" rel="noopener">#</a> 项目</h2><p>项目中出现各种场景的解决方案</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="# 总结"></a><a href="http://shiyujun.cn/posts/我的首次大厂面经-阿里和美团.html#总结" target="_blank" rel="noopener">#</a> 总结</h2><p>大厂的面试官都很nice，遇到你不会的问题会去引导</p>
+<p>简历上写的东西都会被问到</p>
+<p>基础很重要，一定要重视</p>
+<p>没有问docker和k8s猜测可能是大厂职责划分比较详细，拧螺丝不需要😂</p>
+<p>算法一定要提前捋好思路，跟面试官沟通完再写代码，尤其是白纸上，一不容易就容易涂涂画画</p>
+<p>自己学历和经验都还不足，继续努力</p>
+<p>总的面试体验超好，给几位面试官点赞😄</p>
 
       
 
@@ -301,7 +269,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/草稿箱/参考面经/橙心优选面试准备.html" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/private/参考面经/参考别人面经整理.html" alt="微信分享二维码">
     </div>
 </div>
 
@@ -500,6 +468,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -512,23 +492,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">面试题</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -548,11 +516,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
             
             <div class="clearfix"></div>

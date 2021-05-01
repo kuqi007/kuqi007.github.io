@@ -22,7 +22,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210125231657.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118160303.webp">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210121172804.png">
-<meta property="og:updated_time" content="2021-04-27T15:23:28.243Z">
+<meta property="og:updated_time" content="2021-05-01T13:22:34.482Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2021面经">
 <meta name="twitter:description" content="叮咚买菜 hashmap的扩容过程  单向链表如何判断有环  HashSet遍历和快慢指针   如何找出一个数组重复元素最多的前K个元素  TopK问题，堆排序，时间复杂度nLogK   MySQL什么情况下会发生死锁？如何解决？  举个例子：事务A按照先后顺序去更新id=1和id=2的记录，事务B同一时间按照先后顺序去更新id=2和id=1的记录，因为行锁是两阶段协议，A获得id=1的行锁不会">
@@ -1125,6 +1125,20 @@
 </li>
 <li><p>https</p>
 </li>
+<li><p>堆排序是否稳定，以及原理</p>
+<blockquote>
+<p>不稳定</p>
+</blockquote>
+</li>
+<li><p>积分转账到一个第三方服务如何设计</p>
+<blockquote>
+<p>分为转出-转账中-转账成功三步：</p>
+<p>转出：本地扣减，插入本地消息表，包含本地事务id，支付账户、接收人、积分数量、状态等</p>
+<p>转账中：轮询本地消息表，调用第三方RPC（如果失败，一直重试，有个重试上限）</p>
+<p>转账成功：调用成功之后，更新本地消息表状态为成功</p>
+<p>关键点：幂等和重试，如果重试一定次数后，回滚扣减的积分，将本地事务表状态设置为失败</p>
+</blockquote>
+</li>
 </ul>
 
       
@@ -1209,11 +1223,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/01/23/interview/多线程面试题/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/01/23/interview/JVM面试题/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          多线程面试题
+          JVM面试题
         
       </div>
     </a>
@@ -1413,6 +1427,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -1425,23 +1451,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">面试题</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1461,11 +1475,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
             
             <div class="clearfix"></div>

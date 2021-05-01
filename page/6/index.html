@@ -146,21 +146,21 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-application/Jhipster" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-application/常用设计模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/04/application/Jhipster/">Jhipster学习笔记</a>
+      <a class="article-title" href="/2019/10/06/application/常用设计模式/">常用设计模式</a>
     </h1>
   
 
         
         
-<a href="/2019/10/04/application/Jhipster/" class="archive-article-date">
-  	<time datetime="2019-10-04T12:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-04</time>
+<a href="/2019/10/06/application/常用设计模式/" class="archive-article-date">
+  	<time datetime="2019-10-06T07:16:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-06</time>
 </a>
 
         
@@ -168,13 +168,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="项目生成"><a href="#项目生成" class="headerlink" title="项目生成"></a>项目生成</h4><h5 id="1-使用Jhipster生成一个纯前端项目"><a href="#1-使用Jhipster生成一个纯前端项目" class="headerlink" title="1. 使用Jhipster生成一个纯前端项目"></a>1. 使用Jhipster生成一个纯前端项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将JH-Vuejs 模块符号链接至当前项目的依赖中 (ps:用管理员权限cmd运行)，这一步很重要，如果不这样做后面生成的代码都是NG框架</span></span><br><span class="line">npm link generator-jhipster-vuejs</span><br><span class="line"></span><br><span class="line"><span class="comment">#bash</span></span><br><span class="line">jhipster --skip-server --blueprints vuejs --db mysql --auth jwt</span><br><span class="line"><span class="comment">#或者</span></span><br><span class="line">jhipster --skip-server --blueprints vuejs -d --db mysql --auth jwt</span><br><span class="line"></span><br><span class="line"><span class="comment">#前端项目生成实体命令，必须加--db（???）</span></span><br><span class="line">jhipster entity article --db mysql</span><br></pre></td></tr></table></figure>
-
-<h5 id="2-使用Jhipster生成一个纯后端项目"><a href="#2-使用Jhipster生成一个纯后端项目" class="headerlink" title="2. 使用Jhipster生成一个纯后端项目"></a>2. 使用Jhipster生成一个纯后端项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jhipster --skip-client</span><br></pre></td></tr></table></figure>
-
-<h5 id="3-使用Jhipster生成一个非前后端分离项目"><a href="#3-使用Jhipster生成一个非前后端分离项目" class="headerlink" title="3. 使用Jhipster生成一个非前后端分离项目"></a>3. 使用Jhipster生成一个非前后端分离项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#使用vue作为前端框架生成一个前后端不分离的项目</span></span><br><span class="line">jhipster --blueprint vuejs</span><br></pre></td></tr></table></figure>
-
-<h5 id="4-常用命令"><a href="#4-常用命令" class="headerlink" title="4. 常用命令"></a>4. 常用命令</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#导出jdl文件</span></span><br><span class="line">jhipster <span class="built_in">export</span>-jdl &lt;FILE_NAME&gt;</span><br></pre></td></tr></table></figure>
+        <hr>
+<h3 id="简单工厂"><a href="#简单工厂" class="headerlink" title="简单工厂"></a>简单工厂</h3><h3 id="工厂模式（Factory-Method）"><a href="#工厂模式（Factory-Method）" class="headerlink" title="工厂模式（Factory Method）"></a>工厂模式（Factory Method）</h3><h3 id="单例（Singleton）"><a href="#单例（Singleton）" class="headerlink" title="单例（Singleton）"></a>单例（Singleton）</h3><h3 id="适配器（Adapter）"><a href="#适配器（Adapter）" class="headerlink" title="适配器（Adapter）"></a>适配器（Adapter）</h3><h3 id="包装器（Decorator装饰模式）"><a href="#包装器（Decorator装饰模式）" class="headerlink" title="包装器（Decorator装饰模式）"></a>包装器（Decorator装饰模式）</h3><h3 id="代理（Proxy）"><a href="#代理（Proxy）" class="headerlink" title="代理（Proxy）"></a>代理（Proxy）</h3><h3 id="观察者（Observer）"><a href="#观察者（Observer）" class="headerlink" title="观察者（Observer）"></a>观察者（Observer）</h3><h3 id="策略（Strategy）"><a href="#策略（Strategy）" class="headerlink" title="策略（Strategy）"></a>策略（Strategy）</h3><h3 id="模板方法（Template-Method）"><a href="#模板方法（Template-Method）" class="headerlink" title="模板方法（Template Method）"></a>模板方法（Template Method）</h3>
       
 
       
@@ -182,33 +177,11 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Jhipster</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Jhipster//" class="article-tag-list-link color4">Jhipster</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/04/application/Jhipster/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/10/06/application/常用设计模式/">展开全文 >></a>
         </p>
       
 
@@ -309,6 +282,98 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/10/04/application/为什么要用Spring/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-application/Jhipster" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/04/application/Jhipster/">Jhipster学习笔记</a>
+    </h1>
+  
+
+        
+        
+<a href="/2019/10/04/application/Jhipster/" class="archive-article-date">
+  	<time datetime="2019-10-04T12:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-04</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="项目生成"><a href="#项目生成" class="headerlink" title="项目生成"></a>项目生成</h4><h5 id="1-使用Jhipster生成一个纯前端项目"><a href="#1-使用Jhipster生成一个纯前端项目" class="headerlink" title="1. 使用Jhipster生成一个纯前端项目"></a>1. 使用Jhipster生成一个纯前端项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将JH-Vuejs 模块符号链接至当前项目的依赖中 (ps:用管理员权限cmd运行)，这一步很重要，如果不这样做后面生成的代码都是NG框架</span></span><br><span class="line">npm link generator-jhipster-vuejs</span><br><span class="line"></span><br><span class="line"><span class="comment">#bash</span></span><br><span class="line">jhipster --skip-server --blueprints vuejs --db mysql --auth jwt</span><br><span class="line"><span class="comment">#或者</span></span><br><span class="line">jhipster --skip-server --blueprints vuejs -d --db mysql --auth jwt</span><br><span class="line"></span><br><span class="line"><span class="comment">#前端项目生成实体命令，必须加--db（???）</span></span><br><span class="line">jhipster entity article --db mysql</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-使用Jhipster生成一个纯后端项目"><a href="#2-使用Jhipster生成一个纯后端项目" class="headerlink" title="2. 使用Jhipster生成一个纯后端项目"></a>2. 使用Jhipster生成一个纯后端项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jhipster --skip-client</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-使用Jhipster生成一个非前后端分离项目"><a href="#3-使用Jhipster生成一个非前后端分离项目" class="headerlink" title="3. 使用Jhipster生成一个非前后端分离项目"></a>3. 使用Jhipster生成一个非前后端分离项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#使用vue作为前端框架生成一个前后端不分离的项目</span></span><br><span class="line">jhipster --blueprint vuejs</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-常用命令"><a href="#4-常用命令" class="headerlink" title="4. 常用命令"></a>4. 常用命令</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#导出jdl文件</span></span><br><span class="line">jhipster <span class="built_in">export</span>-jdl &lt;FILE_NAME&gt;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Jhipster</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Jhipster//" class="article-tag-list-link color4">Jhipster</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/04/application/Jhipster/">展开全文 >></a>
         </p>
       
 
@@ -543,6 +608,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -555,23 +632,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">面试题</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -591,11 +656,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
             
             <div class="clearfix"></div>

@@ -8,18 +8,21 @@
   <link rel="dns-prefetch" href="https://blog.elfred.top">
   <title>Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="2019年末投了几个简历，20年初收到了杭州阿里和北京美团的面邀 接下来的面经将合并两场面试的问题，如果有都问到的会在问题后面标记（double） # 多线程死锁的条件，如何打破 JMM 如何创建线程池，队列都有哪些？拒绝策略都有哪些？任务过多时都是如何处理的（double） 线程生命周期 synchronized原理（double） jdk对synchronized做了哪些优化 Reentran">
+  <meta name="description" content="排序专栏所谓排序，就是使一串记录，按照其中的某个或某些关键字的大小，递增或递减的排列起来的操作。排序算法，就是如何使得记录按照要求排列的方法。是《数据结构与算法》中最基本的算法之一。  我们常说的十大排序算法为：冒泡、选择、插入、希尔、归并、快速、堆、计数、桶、基数  #基本分类我们常根据是否可以在线性时间内比较对其分类：  #时间复杂度： #如何记忆时间复杂度呢？ 平方阶 (O(n2)) 插入、">
 <meta name="keywords" content="前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Elfred&#39;s Blog">
-<meta property="og:url" content="https://blog.elfred.top/草稿箱/参考面经/参考别人面经整理.html">
+<meta property="og:url" content="https://blog.elfred.top/private/算法基础.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="2019年末投了几个简历，20年初收到了杭州阿里和北京美团的面邀 接下来的面经将合并两场面试的问题，如果有都问到的会在问题后面标记（double） # 多线程死锁的条件，如何打破 JMM 如何创建线程池，队列都有哪些？拒绝策略都有哪些？任务过多时都是如何处理的（double） 线程生命周期 synchronized原理（double） jdk对synchronized做了哪些优化 Reentran">
+<meta property="og:description" content="排序专栏所谓排序，就是使一串记录，按照其中的某个或某些关键字的大小，递增或递减的排列起来的操作。排序算法，就是如何使得记录按照要求排列的方法。是《数据结构与算法》中最基本的算法之一。  我们常说的十大排序算法为：冒泡、选择、插入、希尔、归并、快速、堆、计数、桶、基数  #基本分类我们常根据是否可以在线性时间内比较对其分类：  #时间复杂度： #如何记忆时间复杂度呢？ 平方阶 (O(n2)) 插入、">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-01-08T14:37:27.412Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210127110453.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210127133645.png">
+<meta property="og:updated_time" content="2021-04-26T00:28:58.575Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Elfred&#39;s Blog">
-<meta name="twitter:description" content="2019年末投了几个简历，20年初收到了杭州阿里和北京美团的面邀 接下来的面经将合并两场面试的问题，如果有都问到的会在问题后面标记（double） # 多线程死锁的条件，如何打破 JMM 如何创建线程池，队列都有哪些？拒绝策略都有哪些？任务过多时都是如何处理的（double） 线程生命周期 synchronized原理（double） jdk对synchronized做了哪些优化 Reentran">
+<meta name="twitter:description" content="排序专栏所谓排序，就是使一串记录，按照其中的某个或某些关键字的大小，递增或递减的排列起来的操作。排序算法，就是如何使得记录按照要求排列的方法。是《数据结构与算法》中最基本的算法之一。  我们常说的十大排序算法为：冒泡、选择、插入、希尔、归并、快速、堆、计数、桶、基数  #基本分类我们常根据是否可以在线性时间内比较对其分类：  #时间复杂度： #如何记忆时间复杂度呢？ 平方阶 (O(n2)) 插入、">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210127110453.png">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -150,67 +153,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>2019年末投了几个简历，20年初收到了杭州阿里和北京美团的面邀</p>
-<p>接下来的面经将合并两场面试的问题，如果有都问到的会在问题后面标记（double）</p>
-<h2 id="多线程"><a href="#多线程" class="headerlink" title="# 多线程"></a><a href="http://shiyujun.cn/posts/我的首次大厂面经-阿里和美团.html#多线程" target="_blank" rel="noopener">#</a> 多线程</h2><p>死锁的条件，如何打破</p>
-<p>JMM</p>
-<p>如何创建线程池，队列都有哪些？拒绝策略都有哪些？任务过多时都是如何处理的（double）</p>
-<p>线程生命周期</p>
-<p>synchronized原理（double）</p>
-<p>jdk对synchronized做了哪些优化</p>
-<p>ReentrantLock</p>
-<p>CAS、ABA问题（double）</p>
-<h2 id="集合"><a href="#集合" class="headerlink" title="# 集合"></a><a href="http://shiyujun.cn/posts/我的首次大厂面经-阿里和美团.html#集合" target="_blank" rel="noopener">#</a> 集合</h2><p>ArrayList和LinkedList</p>
-<p>什么是fail—fast？</p>
-<p>HashMap的put、扩容原理，1.7和1.8的数据结构（double）</p>
-<h2 id="网络"><a href="#网络" class="headerlink" title="# 网络"></a><a href="http://shiyujun.cn/posts/我的首次大厂面经-阿里和美团.html#网络" target="_blank" rel="noopener">#</a> 网络</h2><p>TCP粘包，为什么出现，如何解决？</p>
-<p>TCP如何实现消息可靠性、滑动窗口</p>
-<p>TCP三次握手四次挥手</p>
-<p>DNS</p>
-<p>https原理、可以被攻击么？（double）</p>
-<h2 id="数据库事务"><a href="#数据库事务" class="headerlink" title="# 数据库事务"></a><a href="http://shiyujun.cn/posts/我的首次大厂面经-阿里和美团.html#数据库事务" target="_blank" rel="noopener">#</a> 数据库事务</h2><p>事务的隔离级别、mysql和oracle默认是什么，都解决了什么问题（double）</p>
-<p>事务的特性（double）</p>
-<p>快照读和当前读</p>
-<p>乐观锁、悲观锁、间隙锁、行锁、表锁的使用场景</p>
-<p>B+树、聚簇索引和非聚簇索引（double）</p>
-<p>mvcc（double）</p>
-<p>redolog、undolog、binlog</p>
-<p>一个表没有索引的结构类型</p>
-<p>索引失效的场景</p>
-<p>mysql都有哪些组件</p>
-<h2 id="中间件"><a href="#中间件" class="headerlink" title="# 中间件"></a><a href="http://shiyujun.cn/posts/我的首次大厂面经-阿里和美团.html#中间件" target="_blank" rel="noopener">#</a> 中间件</h2><p>RabbitMQ和kafka的架构（double）</p>
-<p>如何保证消息的顺序性</p>
-<p>为什么使用这个中间件（double）</p>
-<p>Redis数据类型，底层数据结构（double）</p>
-<p>缓存淘汰算法</p>
-<p>缓存穿透、缓存击穿</p>
-<p>缓存数据库双写（double）</p>
-<h2 id="Spring"><a href="#Spring" class="headerlink" title="# Spring"></a><a href="http://shiyujun.cn/posts/我的首次大厂面经-阿里和美团.html#spring" target="_blank" rel="noopener">#</a> Spring</h2><p>IOC和AOP的理解及原理（double）</p>
-<p>Bean的生命周期（double）</p>
-<p>自动注入方式有哪些，两个注解的区别</p>
-<p>Spring MVC流程</p>
-<h2 id="微服务"><a href="#微服务" class="headerlink" title="# 微服务"></a><a href="http://shiyujun.cn/posts/我的首次大厂面经-阿里和美团.html#微服务" target="_blank" rel="noopener">#</a> 微服务</h2><p>分布式事务怎么做的（double）</p>
-<p>CAP、BASE理论</p>
-<p>如何实现一个RPC框架</p>
-<p>服务熔断如何做的</p>
-<p>令牌桶、漏桶算法</p>
-<p>分布式id如何生成（double）</p>
-<h2 id="JVM"><a href="#JVM" class="headerlink" title="# JVM"></a><a href="http://shiyujun.cn/posts/我的首次大厂面经-阿里和美团.html#jvm" target="_blank" rel="noopener">#</a> JVM</h2><p>各个区域的内容（double）</p>
-<p>常见OOM（double）</p>
-<p>垃圾收集器、算法</p>
-<p>类加载机制（double）</p>
-<p>内存分配并发问题</p>
-<p>新生代默认多少次晋升老年代</p>
-<p>反射</p>
-<h2 id="算法"><a href="#算法" class="headerlink" title="# 算法"></a><a href="http://shiyujun.cn/posts/我的首次大厂面经-阿里和美团.html#算法" target="_blank" rel="noopener">#</a> 算法</h2><p>都是一个力扣简单级一个中等级，只不过美团上现场白纸写，阿里是伯乐系统在线做</p>
-<h2 id="项目"><a href="#项目" class="headerlink" title="# 项目"></a><a href="http://shiyujun.cn/posts/我的首次大厂面经-阿里和美团.html#项目" target="_blank" rel="noopener">#</a> 项目</h2><p>项目中出现各种场景的解决方案</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="# 总结"></a><a href="http://shiyujun.cn/posts/我的首次大厂面经-阿里和美团.html#总结" target="_blank" rel="noopener">#</a> 总结</h2><p>大厂的面试官都很nice，遇到你不会的问题会去引导</p>
-<p>简历上写的东西都会被问到</p>
-<p>基础很重要，一定要重视</p>
-<p>没有问docker和k8s猜测可能是大厂职责划分比较详细，拧螺丝不需要😂</p>
-<p>算法一定要提前捋好思路，跟面试官沟通完再写代码，尤其是白纸上，一不容易就容易涂涂画画</p>
-<p>自己学历和经验都还不足，继续努力</p>
-<p>总的面试体验超好，给几位面试官点赞😄</p>
+        <h1 id="排序专栏"><a href="#排序专栏" class="headerlink" title="排序专栏"></a>排序专栏</h1><p>所谓排序，就是使一串记录，按照其中的某个或某些关键字的大小，递增或递减的排列起来的操作。排序算法，就是如何使得记录按照要求排列的方法。是《数据结构与算法》中最基本的算法之一。</p>
+<blockquote>
+<p>我们常说的十大排序算法为：冒泡、选择、插入、希尔、归并、快速、堆、计数、桶、基数</p>
+</blockquote>
+<h2 id="基本分类"><a href="#基本分类" class="headerlink" title="#基本分类"></a><a href="https://www.geekxh.com/2.0.排序系列/0.hello.html#基本分类" target="_blank" rel="noopener">#</a>基本分类</h2><p>我们常根据是否可以在线性时间内比较对其分类：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210127110453.png" alt="总体分类"></p>
+<h2 id="时间复杂度："><a href="#时间复杂度：" class="headerlink" title="#时间复杂度："></a><a href="https://www.geekxh.com/2.0.排序系列/0.hello.html#时间复杂度：" target="_blank" rel="noopener">#</a>时间复杂度：</h2><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210127133645.png" alt="时间复杂度"></p>
+<h2 id="如何记忆时间复杂度呢？"><a href="#如何记忆时间复杂度呢？" class="headerlink" title="#如何记忆时间复杂度呢？"></a><a href="https://www.geekxh.com/2.0.排序系列/0.hello.html#如何记忆时间复杂度呢？" target="_blank" rel="noopener">#</a>如何记忆时间复杂度呢？</h2><ol>
+<li>平方阶 (O(n2)) 插入、选择、冒泡</li>
+<li>线性对数阶 (O(nlog2n)) 快速、归并、堆</li>
+<li>特殊的希尔 O(n^(1.3—2))</li>
+<li>牛皮的线性 基数、桶、箱、计数</li>
+</ol>
+<h2 id="啥是稳定："><a href="#啥是稳定：" class="headerlink" title="#啥是稳定："></a><a href="https://www.geekxh.com/2.0.排序系列/0.hello.html#啥是稳定：" target="_blank" rel="noopener">#</a>啥是稳定：</h2><p>稳定：如果 a 原本在 b 前面，而 a=b，排序之后 a 仍然在 b 的前面。<br>不稳定：如果 a 原本在 b 的前面，而 a=b，排序之后 a 可能会出现在 b 的后面。</p>
+<h2 id="哪些稳定："><a href="#哪些稳定：" class="headerlink" title="#哪些稳定："></a><a href="https://www.geekxh.com/2.0.排序系列/0.hello.html#哪些稳定：" target="_blank" rel="noopener">#</a>哪些稳定：</h2><p>稳定：冒泡、插入、归并和基数。 不稳定：选择、快速、希尔、堆。</p>
 
       
 
@@ -269,7 +226,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/草稿箱/参考面经/参考别人面经整理.html" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/private/算法基础.html" alt="微信分享二维码">
     </div>
 </div>
 
@@ -468,6 +425,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -480,23 +449,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">面试题</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -516,11 +473,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
             
             <div class="clearfix"></div>

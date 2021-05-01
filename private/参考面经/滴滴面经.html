@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://blog.elfred.top">
   <title>Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="面试结果：基础知识较扎实，对Nginx、ES没用过，T5 面试基准：T5 1.Map有哪些实现？哪些是线程安全的？HashTable、ConcurrentHashMap都是现程安全的，它们的实现方式有什么区别：—-可以；    1、HashMap、TreeMap、LinkedHashMap    2、 HashTable、ConcurrentHashMap都是现程安全的        Hashta">
+  <meta name="description" content="一、设计模式: 策略模式demo了解redis: 跳表了解 ,哨兵-集群了解, 雪崩.击穿了解, key过期了解限流 思路可以说出来kafka 顺序消费 了解. 防止重复提交不了解先更新数据库后更新缓存策略了解算法: 给定数组, 和一个target,返回数组中和是target的下标. 做出 分布式事务:了解不多消息队列: 局部有序了解. aqs不了解redis 缓存过期和替换方式了解部分lru 了">
 <meta name="keywords" content="前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Elfred&#39;s Blog">
-<meta property="og:url" content="https://blog.elfred.top/草稿箱/参考面经/京东面经.html">
+<meta property="og:url" content="https://blog.elfred.top/private/参考面经/滴滴面经.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="面试结果：基础知识较扎实，对Nginx、ES没用过，T5 面试基准：T5 1.Map有哪些实现？哪些是线程安全的？HashTable、ConcurrentHashMap都是现程安全的，它们的实现方式有什么区别：—-可以；    1、HashMap、TreeMap、LinkedHashMap    2、 HashTable、ConcurrentHashMap都是现程安全的        Hashta">
+<meta property="og:description" content="一、设计模式: 策略模式demo了解redis: 跳表了解 ,哨兵-集群了解, 雪崩.击穿了解, key过期了解限流 思路可以说出来kafka 顺序消费 了解. 防止重复提交不了解先更新数据库后更新缓存策略了解算法: 给定数组, 和一个target,返回数组中和是target的下标. 做出 分布式事务:了解不多消息队列: 局部有序了解. aqs不了解redis 缓存过期和替换方式了解部分lru 了">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-03-04T13:37:44.310Z">
+<meta property="og:updated_time" content="2021-04-26T00:22:11.679Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Elfred&#39;s Blog">
-<meta name="twitter:description" content="面试结果：基础知识较扎实，对Nginx、ES没用过，T5 面试基准：T5 1.Map有哪些实现？哪些是线程安全的？HashTable、ConcurrentHashMap都是现程安全的，它们的实现方式有什么区别：—-可以；    1、HashMap、TreeMap、LinkedHashMap    2、 HashTable、ConcurrentHashMap都是现程安全的        Hashta">
+<meta name="twitter:description" content="一、设计模式: 策略模式demo了解redis: 跳表了解 ,哨兵-集群了解, 雪崩.击穿了解, key过期了解限流 思路可以说出来kafka 顺序消费 了解. 防止重复提交不了解先更新数据库后更新缓存策略了解算法: 给定数组, 和一个target,返回数组中和是target的下标. 做出 分布式事务:了解不多消息队列: 局部有序了解. aqs不了解redis 缓存过期和替换方式了解部分lru 了">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -150,67 +150,36 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>面试结果：基础知识较扎实，对Nginx、ES没用过，T5</p>
-<p>面试基准：T5</p>
-<p>1.Map有哪些实现？哪些是线程安全的？HashTable、ConcurrentHashMap都是现程安全的，它们的实现方式有什么区别：—-可以；<br>    1、HashMap、TreeMap、LinkedHashMap<br>    2、 HashTable、ConcurrentHashMap都是现程安全的<br>        Hashtable的synchronized是针对整张Hash表的，即每次锁住整张表让线程独占，<br>        ConcurrentHashMap 允许多个修改操作并发进行，其关键在于使用了锁分离技术。<br>2.HashMap 1.7或1.8的数据结构，默认初始容量是多少，在什么情况下扩容。<br>1.8后增加了红黑树，默认什么情况下会将链表转为红黑树？<br>红黑树是一种什么样的树，在这里用它有什么优点？<br>HashMap操作时间复杂度，最好情况、最坏情况：—-红黑树的原理未讲述清楚；<br>    jdk1.7 初始化容量是16  负载因子为0.75 当hashmap中元素个数超过16<em>0.75=12的时候，就把数组的大小扩展为2</em>16=32，<br>    jdk1.8  初始化容量是16  负载因子为0.75  采用数组+链表+红黑树实现，<br>    hash table的长度也就是HashMap的capacity(不是size)大于于64 且链表长度超过阈值（8）时，将链表转换为红黑树</p>
-<p>【红黑树】</p>
-<ol>
-<li>节点是红色或者黑色</li>
-<li>根节点是黑色</li>
-<li>每个叶子的节点都是黑色的空节点（NULL）</li>
-<li>每个红色节点的两个子节点都是黑色的。</li>
-<li>从任意节点到其每个叶子的所有路径都包含相同的黑色节点。</li>
+        <h3 id="一、"><a href="#一、" class="headerlink" title="一、"></a>一、</h3><p>设计模式: 策略模式demo了解<br>redis: 跳表了解 ,哨兵-集群了解, 雪崩.击穿了解, key过期了解<br>限流 思路可以说出来<br>kafka 顺序消费 了解. 防止重复提交不了解<br>先更新数据库后更新缓存策略了解<br>算法: 给定数组, 和一个target,返回数组中和是target的下标. 做出</p>
+<p>分布式事务:了解不多<br>消息队列: 局部有序了解. aqs不了解<br>redis 缓存过期和替换方式了解部分<br>lru 了解简单实现<br>令牌桶限流了解,其他不了解<br>序列化有一定了解<br>脑裂不太了解<br>字符串相加做出. 但是有可以优化的地方</p>
+<h3 id="二、"><a href="#二、" class="headerlink" title="二、"></a>二、</h3><p>设计题：<br>1.设计redis客户端和集群如何交互，取出key对应的value，没设计出来；<br>2.不了解zookeeper的使用场景；</p>
+<p>基础知识：<br>1.不了解生产者消费者模型；<br>2.不了解如何通过基础结构定义队列；<br>3.不了解循环队列；<br>4.在实际写代码过程中，不了解读写锁；</p>
+<p>代码能力：<br>1.没能写出阻塞队列；<br>2.没能写出二分查找；</p>
+<p>问了之前做过的项目，工单审批系统，对流程引擎flowable 以及所做的项目相关了解比较细致，诸如流程引擎所提供的功能，如何和其他系统交互。kafka如何实现幂等答出，如何实现kafka消息的顺序消费答出，mysql日志及作用，mvcc相关基本能回答出来，mysql索引，事务隔离级别，聚簇索引等概念能回答上来，redis淘汰策略和redis持久化答出。问了两道算法题，刷过题，简单的能够快速回答出来，较难的未答出最优解。</p>
+<h3 id="三、"><a href="#三、" class="headerlink" title="三、"></a>三、</h3><p>基础技术：<br>网络知识掌握一般，Tcp4次挥手和timewait状态有了解，但是细节说的都不太对<br>Mysql在订单重构过程中有使用到分表，但是如果分表如果保证数据均匀没有解决思路，分表如何扩容回答方法也不太好<br>Redis 有简单使用，hash rehash详细过程说不出来。<br>Kafa掌握可以，ISR了解，如何保证发送不丢消息，如何解决消费重复等都能回答出来。<br>Nginx简单了解，Nginx如何处理Http请求回答不出来。<br>Netty源码没有讲出什么东西，基本都是从网上一些介绍。<br>代码题40分钟写完大整数加法，<br>动/静态代理回答一般<br>工作经验还行，聊了做过的一个项目，商品中心，对业务的了解还可以，但是没有聊出来太深的技术点。<br>问了一下对spring cloud 和dubbo的了解，回答的比较笼统，涉及到具体的问题，如断路器，Eureka和ZooKeeper的区别，能回答出大概，不是很详细。<br>mysql相关一般的基础知识还可以，聚簇索引，B+树，索引类型还可以，更深一些如为什么innodb使用B+树，mvcc相关不了解；分表时有哪些全局id生成策略，了解不多<br>redis 了解一般，淘汰策略回答不全，redis了解哪些集群方案说出了哨兵和redis cluster。<br>java 语言相关问了sycronized的使用能够答出；动/静态代理回答一般，不够详细<br>算法题一道，未给出最优解；</p>
+<h3 id="四、"><a href="#四、" class="headerlink" title="四、"></a>四、</h3><ol>
+<li>主要负责支付系统,对支付系统的数据一致性,对账,重复支付等问题都有实际解决经验.</li>
+<li>spring boot组件的开发,没有相关经验,不是很了解.</li>
+<li>Redis的使用场景比较熟悉,自己多个场景使用到.</li>
+<li>数据库分库分表了解. 原理不太清楚,分库分表框架的实现原理答不上来.</li>
+<li>分布式链路追踪不了解</li>
+<li>限流框架了解令牌桶的实现.</li>
+<li>threadlocal原理能答出来.</li>
+<li>Javac编译原理答不出来.</li>
 </ol>
-<p>3.ArrayList在遍历中删除会出现问题吗？说出几种正确的遍历删除方式：<br>一种是普通的 for 循环，一种是增强的 foreach 循环，还有一种是使用迭代器循环<br>—-只讲出一种 Iterator遍历方式，询问for循环方式删除回答错误；</p>
-<p>4.HashMap、TreeMap、LinkedHashMap的使用场景：—-回答模糊；<br>    1.HashMap中k的值没有顺序，常用来做统计。<br>    2.LinkedHashMap吧。它内部有一个链表，保持Key插入的顺序。迭代的时候，也是按照插入顺序迭代，而且迭代比HashMap快。<br>    3.TreeMap的顺序是Key的自然顺序（如整数从小到大），也可以指定比较函数。但不是插入的顺序。<br>    4.Hashtable与 HashMap类似,它继承自Dictionary类、<br>    不同的是:它不允许记录的键或者值为空;它支持线程的同步、即任一时刻只有一个线程能写Hashtable,<br>    因此也导致了 Hashtable在写入时会比较慢。</p>
-<p>5.泛型的上限限定，下线限定，无界通配符的使用场景：—-使用不多，未作答；<br>【上限】设置泛型对象的上限使用extends,表示参数类型只能是该类型或该类型的子类：<br>    声明对象：类名<? extends 类> 对象名
-    定义类：类名<泛型标签 extends 类>{}
-【下限】设置泛型对象的下限使用super,表示参数类型只能是该类型或该类型的父类：
-    声明对象：类名<? super 类> 对象名称
-    定义类：类名<泛型标签 extends类>{}
-1、通配符
-（1）通配符：?，未知类型。不明确类型时，可以用?来表示，意味着什么类型都可以传入
-（2）运行时，参数中的泛型<>只要有一个类型具备了，里面就都是统一类型
-2、<t>与<?>的区别<br>（1）<t>：如果有指定<t>，就意味着<t>能代表一个具体类型，并能被操作（<t>可以被接收）<br>（2）&lt;?&gt;：仅在不明确类型，且不对返回值类型进行操作时，用?来表示。调用的是Object中的方法 – 用得较多</t></t></t></t></t></泛型标签></泛型标签></p>
-<p>【相关文章】<br>    <a href="https://blog.csdn.net/ruyu00/article/details/82380649" target="_blank" rel="noopener">https://blog.csdn.net/ruyu00/article/details/82380649</a></p>
-<p>6.做到线程安全的手段：—-讲出两种，synchronized与lock锁<br>    1、synchronized锁（偏向锁，轻量级锁，重量级锁）<br>    2、volatile锁，只能保证线程之间的可见性，但不能保证数据的原子性<br>    3、jdk1.5并发包中提供的Atomic原子类<br>    4、Lock锁</p>
-<p>7.volatile的实现机制：—- 回答不清楚</p>
-<p>8.各种序列化技术的比较：—-回答hession与protostuff，能答出protostuff的性能最快.<br>    hession    支持    跨语言,序列化后体积小,速度较快<br>    protostuff    支持    跨语言,序列化后体积小,速度快,但是需要Schema,可以动态生成<br>    jackson    支持    跨语言,序列化后体积小,速度较快,且具有不确定性<br>    fastjson    支持    跨语言支持较困难,序列化后体积小,速度较快,只支持java,c#<br>    kryo    支持    跨语言支持较困难,序列化后体积小,速度较快<br>    fst    不支持    跨语言支持较困难,序列化后体积小,速度较快，兼容jdk<br>    jdk    不支持    序列化后体积很大,速度快|<br>     序列化综合性能比较好的是protostuff和kryo<br>    jdk的序列化速度比较快,就是序列体积较大.<br>    所以当我们的需要开发一套rpc服务时,可以采用kryo来序列化对象,提高传输效率<br>       <a href="https://blog.csdn.net/qq_19734597/article/details/81456216" target="_blank" rel="noopener">https://blog.csdn.net/qq_19734597/article/details/81456216</a></p>
-<p>9.ConcurrentHashMap的实现？<br>jdk1.7(Segment分段锁，这种方式最大支持多少线程同时写入)<br>或者jdk1.8(CAS自旋锁，能写一下自旋锁的实现吗)？：—8分，自旋锁未答清</p>
-<p>10.Executor，Executors，ExecutorService的区别：—可以<br>    1.ExecutorService 接口继承了Executor 接口，是Executor 的子接口。<br>　　2.Executor接口中定义了execute()方法，用来接收一个Runnable接口的对象，<br>　　  　　 而ExecutorService接口中定义的submit()方法可以接收Runnable和Callable接口对象。<br>　　3.Executor接口中execute()方法不返回任何结果，而ExecutorService接口中submit()方法可以通过一个 Future 对象返回运算结果。<br>　　4.Executor和ExecutorService除了允许客户端提交一个任务，ExecutorService 还提供用来控制线程池的方法。<br>　　   　　比如：调用 shutDown() 方法终止线程池。<br>　　5.Executors 类提供工厂方法用来创建不同类型的线程池。比如:<br>　　 　Executors.newSingleThreadExecutor() 创建一个只有一个线程的线程池，<br>　　　 Executors.newFixedThreadPool(int numOfThreads)来创建固定线程数的线程池，<br>　　   Executors.newCachedThreadPool()创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。<br>　　   Executors.newScheduledThreadPool(int corePoolSize) 创建一个线程池，它可安排在给定延迟后运行命令或者定期地执行。</p>
-<p>11.类加载器的加载层级：—可以<br>【引导类加载器】（bootstrap class loader）<br>    用来加载java的核心库（JAVA_HOME/jre/lib/rt.jar,或sun.boot.class.path路径下的内容），是用原生代码来实现的（C实现的），并不继承自java.lang.ClassLoader。<br>    加载扩展类和应用程序类加载器，并指定它们的父类加载器。<br>【扩展类加载器】（extensions class loader）<br>    用来加载java的扩展库（JAVA_HOME/jre/lib/ext/*.jar,或java.ext.dirs路径下的内容）java虚拟机的实现会提供一个扩展库目录。该类加载器在此目录里面查找并加载java类。<br>    有sun.miscLauncher$ExtClassLoader实现，继承自java.lang.ClassLoader<br>【应用程序类加载器】（application class loader）<br>    它根据java应用的类路径（classpath，java.class.path路径）来加载指定路径的类，一般来说，java应用的类都是由它来完成加载的<br>由sun.misc.Launcher$AppClassLoader实现，继承自java.lang.ClassLoader<br>【自定义类加载器】<br>    开发人员可以通过继承java.lang.ClassLoader类的方式实现自己的类加载器，以满足一些特殊的需求。<br>说明：在java中由于类的加载采用的是双亲委托机制，上面几种类加载器是父子关系，其中引导类加载器为基础。</p>
-<p>12.对Stream分组和分区：—-现场解决问题，两个list操作，只答出嵌套循环方式</p>
-<p>13.是否自定义过注解？简单说一下如何实现：—没有写过注解</p>
-<p>14.垃圾回收算法：—能打个7分</p>
-<p>15.OOM异常产生及如何追踪定位：—可以</p>
-<p>16.描述Spring Bean的生命周期：<br>    1、Spring启动，查找并加载需要被Spring管理的bean，进行Bean的实例化<br>    2、Bean实例化后对将Bean的引入和值注入到Bean的属性中<br>    3、如果Bean实现了BeanNameAware接口的话，Spring将Bean的Id传递给setBeanName()方法<br>    4、如果Bean实现了BeanFactoryAware接口的话，Spring将调用setBeanFactory()方法，将BeanFactory容器实例传入<br>    5、如果Bean实现了ApplicationContextAware接口的话，Spring将调用Bean的setApplicationContext()方法，将bean所在应用上下文引用传入进来<br>    6、如果Bean实现了BeanPostProcessor接口，Spring就将调用他们的postProcessBeforeInitialization()方法。<br>    7、如果Bean 实现了InitializingBean接口，Spring将调用他们的afterPropertiesSet()方法。类似的，如果bean使用init-method声明了初始化方法，该方法也会被调用<br>    8、如果Bean 实现了BeanPostProcessor接口，Spring就将调用他们的postProcessAfterInitialization()方法。<br>    9、此时，Bean已经准备就绪，可以被应用程序使用了。他们将一直驻留在应用上下文中，直到应用上下文被销毁。<br>    10、如果bean实现了DisposableBean接口，Spring将调用它的destory()接口方法，同样，如果bean使用了destory-method 声明销毁方法，该方法也会被调用。</p>
-<p>17.@Component、@Controller、@Service、@Repository区别：—-可以<br>    1、@controller 控制器（注入服务）用于标注控制层，相当于struts中的action层<br>    2、@service 服务（注入dao）用于标注服务层，主要用来进行业务的逻辑处理<br>    3、@repository（实现dao访问）用于标注数据访问层，也可以说用于标注数据访问组件，即DAO组件.<br>    4、@component （把普通pojo实例化到spring容器中，相当于配置文件中的 <bean id class>）<br>        泛指各种组件，就是说当我们的类不属于各种归类的时候（不属于@Controller、@Services等的时候），我们就可以使用@Component来标注这个类。</bean></p>
-<p>18.Spring解决循环依赖的思路：—-讲不清楚<br>     循环依赖也就是循环引用，指两个或多个对象互相持有对方的引用。<br>     通俗地说，假设在Spring中有3个Service Bean，分别为ServiceA、ServiceB和ServiceC，<br>     如果ServiceA引用了ServiceB，ServiceB引用了ServiceC，<br>     而ServiceC又引用了ServiceA，最终形成可一个环，这样就出现了循环依赖。<br>对Spring来说循环依赖，有以下几种：<br>    1、Prototype类型Bean的循环依赖<br>    2、构造器循环依赖<br>    3、setter循环依赖<br>Spring的循环依赖解决思路基本描述完成。可以看到，整体的处理方式还是很巧妙的。主要流程总结如下：<br>    1、创建Bean过程中，将beanName放入singletonsCurrentlyInCreation正在创建池中，并创建对应的ObjectFactory放入对象工厂缓存池。<br>    2、解析Bean依赖过程中，如果发现存在了循环依赖，则直接引用ObjectFactory所创建的提前暴露的Bean。<br>    3、Bean的创建结束后，将其从singletonsCurrentlyInCreation中移除，并删除对应的ObjectFactory。</p>
-<p>19.singleton scope中依赖了一个prototype scope的问题：—-答错</p>
-<p>20.AOP / Spring AOP/AspectJ 区别与联系。为什么JDK动态代理不能基于继承？：—-未答出JDK动态代理不能基于继承原因</p>
-<p>21.指定bean实例化顺序【非依赖关系】：—答错</p>
-<p>22.常用的设计模式有哪些：—说出三种，单例，工厂，代理，估计用的不多<br>    单例、工厂、门面、构建者</p>
-<p>23.redis支持哪些数据类型；redis常见的性能问题都有哪些，如何解决；—–性能问题未答清</p>
-<p>24.Redis常见雪崩问题和缓存击穿问题及解决方案：—-回答可以</p>
-<p>25.redis最适合哪些场景；如何写分布式锁：—可以</p>
-<p>26.redis持久化、集群模型：—可以，集群用的哨兵模式</p>
-<p>27.redis的优化–想要一次添加多条数据：—答错</p>
-<p>28.MySQL索引类型、存储结构、聚簇索引和二级索引的区别，索引失效的情况：—回答唯一索引与主键索引，其余模糊</p>
-<p>29.MySQL进行SQL优化的方式，explain查看哪些关键字段：—可以</p>
-<p>30.主从同步机制：—模糊</p>
-<p>31.如何做读写分离，分库分表后全局id怎么设计：—-可以</p>
-<p>32.B+树与B-树的区别；B+树有什么缺点：—缺点未答出，区别讲的可以</p>
-<p>33.dubbo都支持什么协议，推荐哪种；Dubbo里有哪几种节点角色；Dubbo是如何注册发现服务的；—-可以</p>
-<p>34.Dubbo有哪几种容错方案，默认是哪种；听说过CAP理论吗；：—-可以</p>
-<p>35.听说过哪些MQ，MQ的适用场景，如何处理消费过程中的重复消息？消息积压了该如何处理？—未处理过消息挤压</p>
-<p>36.幂等性：—可以</p>
-<p>37.nginx 如何做动静分离，如何做反向代理：—-未做过</p>
-<p>38.https的请求过程：—可以</p>
-<p>39.Netty与普通NIO的比较；粘包/拆包—-比较讲的比较模糊，粘包/拆包 可以</p>
-<p>40.基于Zookeeper的分布式锁；：—-模糊</p>
-<p>41.分布式事务有哪些类型，如何使用；二段式和三段式的区别：—-可以</p>
-<p>42.ES的使用、查询过程、倒排索引等：—-未用过</p>
-<p>43.设计一个商品秒杀系统，叙述越详细越好：——答出限流、缓存，库存，但是如何做到不超卖答错</p>
+<h3 id="五、橙心优选"><a href="#五、橙心优选" class="headerlink" title="五、橙心优选"></a>五、橙心优选</h3><p>总体：<br>基础不达标，无高并发项目经验。淘汰。</p>
+<p>基础：<br>java：有jvm调优经验，对虚拟机有一定了解。<br>mysql：创建索引需要考虑哪些因素，大概答出4、5条。索引、锁、wal等实现有简单了解，深入问答得不好<br>redis：常用数据结构熟悉</p>
+<p>项目：<br>主要讲了HDP项目，总体比较熟悉，技术细节也比较了解。<br>但是对于为什么要做这个系统没有给出合理解释。且高并发、分布式方面考虑较少。</p>
+<p>设计滴滴订单表，基本字段、索引有考虑。分库分表无实操经验，没有给出合理方案。</p>
+<p>算法编程：<br>0-n找缺失数字，有序时想到二分。无序时想到快排思想，主体框架写出，最后有几个小bug。<br>总体编程尚可。</p>
+<p>基础：</p>
+<ol>
+<li>基础一般，常用排序算法时间复杂度记不清了</li>
+<li>redis、mysql、kafka等都有使用经验，redis使用相对较熟。原理简单了解，深入问答得都不太好</li>
+</ol>
+<p>项目：<br>讲了增值外发和一个任务调度平台，比较熟悉，实现细节也基本了解。不过技术选型考虑不全，很多东西自己做的，为什么不用开源的或者公司已经有的，没有给出合理答案。</p>
+<p>让设计一个滴滴订单表，有分库分表、索引考虑。多维度查询没有给出合理方案。</p>
+<p>算法编程：<br>0-n找缺失数字，想到求和。有序时经提示想到二分。无序时想到先排序，快排的思路大致说出，时间复杂度答错。</p>
 
       
 
@@ -269,7 +238,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/草稿箱/参考面经/京东面经.html" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/private/参考面经/滴滴面经.html" alt="微信分享二维码">
     </div>
 </div>
 
@@ -468,6 +437,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -480,23 +461,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">面试题</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -516,11 +485,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
             
             <div class="clearfix"></div>
