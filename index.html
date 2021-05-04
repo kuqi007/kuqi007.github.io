@@ -146,6 +146,151 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-study/数据结构与算法之美/学习笔记/12讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/04/study/数据结构与算法之美/学习笔记/12讲/">12讲</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/05/04/study/数据结构与算法之美/学习笔记/12讲/" class="archive-article-date">
+  	<time datetime="2021-05-04T09:20:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-04</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h1 id="12-排序（下）：如何用快排思想在O-n-内查找第K大元素？"><a href="#12-排序（下）：如何用快排思想在O-n-内查找第K大元素？" class="headerlink" title="12 | 排序（下）：如何用快排思想在O(n)内查找第K大元素？"></a>12 | 排序（下）：如何用快排思想在O(n)内查找第K大元素？</h1><h2 id="归并排序的原理"><a href="#归并排序的原理" class="headerlink" title="归并排序的原理"></a>归并排序的原理</h2><p>归并排序的核心思想还是蛮简单的。如果要排序一个数组，我们先把数组从中间分成前后两部分，然后对前后两部分分别排序，再将排好序的两部分合并在一起，这样整个数组就都有序了。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210504154821.jpeg" alt="img"></p>
+<p>归并排序使用的就是分治思想。分治，顾名思义，就是分而治之，将一个大问题分解成小的子问题来解决。小的子问题解决了，大问题也就解决了。</p>
+<p>从我刚才的描述，你有没有感觉到，分治思想跟我们前面讲的递归思想很像。是的，分治算法一般都是用递归来实现的。<strong>分治是一种解决问题的处理思想，递归是一种编程技巧</strong>，这两者并不冲突。分治算法的思想我后面会有专门的一节来讲，现在不展开讨论，我们今天的重点还是排序算法。</p>
+<p>前面我通过举例让你对归并有了一个感性的认识，又告诉你，归并排序用的是分治思想，可以用递归来实现。我们现在就来看看<strong>如何用递归代码来实现归并排序</strong>。</p>
+<p>我在第10 节讲的递归代码的编写技巧你还记得吗？写递归代码的技巧就是，分析得出递推公式，然后找到终止条件，最后将递推公式翻译成递归代码。所以，要想写出归并排序的代码，我们先写出归并排序的递推公式。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">递推公式：</span><br><span class="line">merge<span class="constructor">_sort(<span class="params">p</span>…<span class="params">r</span>)</span> = merge(merge<span class="constructor">_sort(<span class="params">p</span>…<span class="params">q</span>)</span>, merge<span class="constructor">_sort(<span class="params">q</span>+1…<span class="params">r</span>)</span>)</span><br><span class="line"></span><br><span class="line">终止条件：</span><br><span class="line">p &gt;= r 不用再继续分解</span><br></pre></td></tr></table></figure>
+
+<p>我来解释一下这个递推公式。</p>
+<p>merge_sort(p…r) 表示，给下标从 p 到 r 之间的数组排序。我们将这个排序问题转化为了两个子问题，merge_sort(p…q) 和 merge_sort(q+1…r)，其中下标 q 等于 p 和 r 的中间位置，也就是 (p+r)/2。当下标从 p 到 q 和从 q+1 到 r 这两个子数组都排好序之后，我们再将两个有序的子数组合并在一起，这样下标从 p 到 r 之间的数据就也排好序了。</p>
+<p>有了递推公式，转化成代码就简单多了。为了阅读方便，我这里只给出伪代码，你可以翻译成你熟悉的编程语言。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 归并排序算法, A是数组，n表示数组大小</span></span><br><span class="line">merge_sort(A, n) &#123;</span><br><span class="line">  merge_sort_c(A, <span class="number">0</span>, n<span class="number">-1</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 递归调用函数</span></span><br><span class="line">merge_sort_c(A, p, r) &#123;</span><br><span class="line">  <span class="comment">// 递归终止条件</span></span><br><span class="line">  <span class="keyword">if</span> p &gt;= r  then <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 取p到r之间的中间位置q</span></span><br><span class="line">  q = (p+r) / <span class="number">2</span></span><br><span class="line">  <span class="comment">// 分治递归</span></span><br><span class="line">  merge_sort_c(A, p, q)</span><br><span class="line">  merge_sort_c(A, q+<span class="number">1</span>, r)</span><br><span class="line">  <span class="comment">// 将A[p...q]和A[q+1...r]合并为A[p...r]</span></span><br><span class="line">  merge(A[p...r], A[p...q], A[q+<span class="number">1.</span>..r])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你可能已经发现了，merge(A[p…r], A[p…q], A[q+1…r]) 这个函数的作用就是，将已经有序的 A[p…q]和 A[q+1….r]合并成一个有序的数组，并且放入 A[p….r]。那这个过程具体该如何做呢？</p>
+<p>如图所示，我们申请一个临时数组 tmp，大小与 A[p…r]相同。我们用两个游标 i 和 j，分别指向 A[p…q]和 A[q+1…r]的第一个元素。比较这两个元素 A[i]和 A[j]，如果 A[i]&lt;=A[j]，我们就把 A[i]放入到临时数组 tmp，并且 i 后移一位，否则将 A[j]放入到数组 tmp，j 后移一位。</p>
+<p>继续上述比较过程，直到其中一个子数组中的所有数据都放入临时数组中，再把另一个数组中的数据依次加入到临时数组的末尾，这个时候，临时数组中存储的就是两个子数组合并之后的结果了。最后再把临时数组 tmp 中的数据拷贝到原数组 A[p…r]中。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210504155216.jpeg" alt="img"></p>
+<p>我们把 merge() 函数写成伪代码，就是下面这样：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">merge(A[p...r], A[p...q], A[q+<span class="number">1.</span>..r]) &#123;</span><br><span class="line">  <span class="keyword">var</span> i := p，j := q+<span class="number">1</span>，k := <span class="number">0</span> <span class="comment">// 初始化变量i, j, k</span></span><br><span class="line">  <span class="keyword">var</span> tmp := <span class="built_in">new</span> array[<span class="number">0.</span>..r-p] <span class="comment">// 申请一个大小跟A[p...r]一样的临时数组</span></span><br><span class="line">  while i&lt;=q AND j&lt;=r do &#123;</span><br><span class="line">    <span class="keyword">if</span> A[i] &lt;= A[j] &#123;</span><br><span class="line">      tmp[k++] = A[i++] <span class="comment">// i++等于i:=i+1</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      tmp[k++] = A[j++]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 判断哪个子数组中有剩余的数据</span></span><br><span class="line">  <span class="keyword">var</span> start := i，end := q</span><br><span class="line">  <span class="keyword">if</span> j&lt;=r then start := j, end:=r</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 将剩余的数据拷贝到临时数组tmp</span></span><br><span class="line">  while start &lt;= end do &#123;</span><br><span class="line">    tmp[k++] = A[start++]</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 将tmp中的数组拷贝回A[p...r]</span></span><br><span class="line">  <span class="keyword">for</span> i:=<span class="number">0</span> to r-p do &#123;</span><br><span class="line">    A[p+i] = tmp[i]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="快速排序的原理"><a href="#快速排序的原理" class="headerlink" title="快速排序的原理"></a>快速排序的原理</h2><p>快排的思想是这样的：如果要排序数组中下标从 p 到 r 之间的一组数据，我们选择 p 到 r 之间的任意一个数据作为 pivot（分区点）。</p>
+<p>我们遍历 p 到 r 之间的数据，将小于 pivot 的放到左边，将大于 pivot 的放到右边，将 pivot 放到中间。经过这一步骤之后，数组 p 到 r 之间的数据就被分成了三个部分，前面 p 到 q-1 之间都是小于 pivot 的，中间是 pivot，后面的 q+1 到 r 之间是大于 pivot 的。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427195633.jpeg" alt="img"></p>
+<p>根据分治、递归的处理思想，我们可以用递归排序下标从 p 到 q-1 之间的数据和下标从 q+1 到 r 之间的数据，直到区间缩小为 1，就说明所有的数据都有序了。</p>
+<p>如果我们用递推公式来将上面的过程写出来的话，就是这样：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">递推公式：</span><br><span class="line">quick<span class="constructor">_sort(<span class="params">p</span>…<span class="params">r</span>)</span> = quick<span class="constructor">_sort(<span class="params">p</span>…<span class="params">q</span>-1)</span> + quick<span class="constructor">_sort(<span class="params">q</span>+1… <span class="params">r</span>)</span></span><br><span class="line"></span><br><span class="line">终止条件：</span><br><span class="line">p &gt;= r</span><br></pre></td></tr></table></figure>
+
+<p>我将递推公式转化成递归代码。跟归并排序一样，我还是用伪代码来实现，你可以翻译成你熟悉的任何语言。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 快速排序，A是数组，n表示数组的大小</span></span><br><span class="line">quick_sort(A, n) &#123;</span><br><span class="line">  quick_sort_c(A, <span class="number">0</span>, n<span class="number">-1</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 快速排序递归函数，p,r为下标</span></span><br><span class="line">quick_sort_c(A, p, r) &#123;</span><br><span class="line">  <span class="keyword">if</span> p &gt;= r then <span class="keyword">return</span></span><br><span class="line">  </span><br><span class="line">  q = partition(A, p, r) <span class="comment">// 获取分区点</span></span><br><span class="line">  quick_sort_c(A, p, q<span class="number">-1</span>)</span><br><span class="line">  quick_sort_c(A, q+<span class="number">1</span>, r)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>归并排序中有一个 merge() 合并函数，我们这里有一个 partition() 分区函数。partition() 分区函数实际上我们前面已经讲过了，就是随机选择一个元素作为 pivot（一般情况下，可以选择 p 到 r 区间的最后一个元素），然后对 A[p…r]分区，函数返回 pivot 的下标。</p>
+<p>如果我们不考虑空间消耗的话，partition() 分区函数可以写得非常简单。我们申请两个临时数组 X 和 Y，遍历 A[p…r]，将小于 pivot 的元素都拷贝到临时数组 X，将大于 pivot 的元素都拷贝到临时数组 Y，最后再将数组 X 和数组 Y 中数据顺序拷贝到 A[p….r]。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427200346.jpeg" alt="img"></p>
+<p>但是，如果按照这种思路实现的话，partition() 函数就需要很多额外的内存空间，所以快排就不是原地排序算法了。如果我们希望快排是原地排序算法，那它的空间复杂度得是 O(1)，那 partition() 分区函数就不能占用太多额外的内存空间，我们就需要在 A[p…r]的原地完成分区操作。</p>
+<p>原地分区函数的实现思路非常巧妙，我写成了伪代码，我们一起来看一下。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">partition(A, p, r) &#123;</span><br><span class="line">  pivot := A[r]</span><br><span class="line">  i := p</span><br><span class="line">  <span class="keyword">for</span> j := p to r<span class="number">-1</span> do &#123;</span><br><span class="line">    <span class="keyword">if</span> A[j] &lt; pivot &#123;</span><br><span class="line">      swap A[i] with A[j]</span><br><span class="line">      i := i+<span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  swap A[i] with A[r]</span><br><span class="line">  <span class="keyword">return</span> i</span><br></pre></td></tr></table></figure>
+
+<p>这里的处理有点类似选择排序。我们通过游标 i 把 A[p…r-1]分成两部分。A[p…i-1]的元素都是小于 pivot 的，我们暂且叫它“已处理区间”，A[i…r-1]是“未处理区间”。我们每次都从未处理的区间 A[i…r-1]中取一个元素 A[j]，与 pivot 对比，如果小于 pivot，则将其加入到已处理区间的尾部，也就是 A[i]的位置。</p>
+<p>数组的插入操作还记得吗？在数组某个位置插入元素，需要搬移数据，非常耗时。当时我们也讲了一种处理技巧，就是交换，在 O(1) 的时间复杂度内完成插入操作。这里我们也借助这个思想，只需要将 A[i]与 A[j]交换，就可以在 O(1) 时间复杂度内将 A[j]放到下标为 i 的位置。</p>
+<p>文字不如图直观，所以我画了一张图来展示分区的整个过程。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427201802.jpeg" alt="img"></p>
+<p>因为分区的过程涉及交换操作，如果数组中有两个相同的元素，比如序列 6，8，7，6，3，5，9，4，在经过第一次分区操作之后，两个 6 的相对先后顺序就会改变。所以，快速排序并不是一个稳定的排序算法。</p>
+<p>到此，快速排序的原理你应该也掌握了。现在，我再来看另外一个问题：快排和归并用的都是分治思想，递推公式和递归代码也非常相似，那它们的区别在哪里呢？</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427201947.jpeg" alt="img"></p>
+<p>可以发现，归并排序的处理过程是<strong>由下到上</strong>的，先处理子问题，然后再合并。而快排正好相反，它的处理过程是<strong>由上到下的</strong>，先分区，然后再处理子问题。归并排序虽然是稳定的、时间复杂度为 O(nlogn) 的排序算法，但是它是非原地排序算法。我们前面讲过，归并之所以是非原地排序算法，主要原因是合并函数无法在原地执行。快速排序通过设计巧妙的原地分区函数，可以实现原地排序，解决了归并排序占用太多内存的问题。</p>
+<h2 id="解答开篇"><a href="#解答开篇" class="headerlink" title="解答开篇"></a>解答开篇</h2><p>快排核心思想就是分治和分区，我们可以利用分区的思想，来解答开篇的问题：O(n) 时间复杂度内求无序数组中的第 K 大元素。比如，4， 2， 5， 12， 3 这样一组数据，第 3 大元素就是 4。</p>
+<p>我们选择数组区间 A[0…n-1]的最后一个元素 A[n-1]作为 pivot，对数组 A[0…n-1]原地分区，这样数组就分成了三部分，A[0…p-1]、A[p]、A[p+1…n-1]。</p>
+<p>如果 p+1=K，那 A[p]就是要求解的元素；如果 K&gt;p+1, 说明第 K 大元素出现在 A[p+1…n-1]区间，我们再按照上面的思路递归地在 A[p+1…n-1]这个区间内查找。同理，如果 K&lt;p+1，那我们就在 A[0…p-1]区间查找。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210504155824.jpeg" alt="img"></p>
+<p>我们再来看，为什么上述解决思路的时间复杂度是 O(n)？</p>
+<p>第一次分区查找，我们需要对大小为 n 的数组执行分区操作，需要遍历 n 个元素。第二次分区查找，我们只需要对大小为 n/2 的数组执行分区操作，需要遍历 n/2 个元素。依次类推，分区遍历元素的个数分别为、n/2、n/4、n/8、n/16.……直到区间缩小为 1。</p>
+<p>如果我们把每次分区遍历的元素个数加起来，就是：n+n/2+n/4+n/8+…+1。这是一个等比数列求和，最后的和等于 2n-1。所以，上述解决思路的时间复杂度就为 O(n)。</p>
+<h2 id="内容小结"><a href="#内容小结" class="headerlink" title="内容小结"></a>内容小结</h2><p>归并排序和快速排序是两种稍微复杂的排序算法，它们用的都是分治的思想，代码都通过递归来实现，过程非常相似。理解归并排序的重点是理解递推公式和 merge() 合并函数。同理，理解快排的重点也是理解递推公式，还有 partition() 分区函数。</p>
+<p>归并排序算法是一种在任何情况下时间复杂度都比较稳定的排序算法，这也使它存在致命的缺点，即归并排序不是原地排序算法，空间复杂度比较高，是 O(n)。正因为此，它也没有快排应用广泛。</p>
+<p>快速排序算法虽然最坏情况下的时间复杂度是 O(n2)，但是平均情况下时间复杂度都是 O(nlogn)。不仅如此，快速排序算法时间复杂度退化到 O(n2) 的概率非常小，我们可以通过合理地选择 pivot 来避免这种情况。</p>
+<h2 id="课后思考"><a href="#课后思考" class="headerlink" title="课后思考"></a>课后思考</h2><p>现在你有 10 个接口访问日志文件，每个日志文件大小约 300MB，每个文件里的日志都是按照时间戳从小到大排序的。你希望将这 10 个较小的日志文件，合并为 1 个日志文件，合并之后的日志仍然按照时间戳从小到大排列。如果处理上述排序任务的机器内存只有 1GB，你有什么好的解决思路，能“快速”地将这 10 个日志文件合并吗？</p>
+<blockquote>
+<p>归并思路： </p>
+<p>1.每个文件从最小值记录开始维护一个游标，标志当前文件遍历的记录位置。 </p>
+<p>2.维护一个10空间大小的小顶堆，将每个文件的游标记录压入，顶端的就是最小值。 </p>
+<p>3.将堆顶数据取出，写入新的文件。 </p>
+<p>4.将取出的记录对应的文件游标向前拨动，取出对应的记录（就是下一个记录），压入小顶堆。没有记录说明改文件遍历完毕。 </p>
+<p>5.重复操作3。 （这里的小顶堆作用就是快速取出最小的那个值，考虑到堆结构的代码实现难度，这个地方用简单的有序列表，新的数据有序插入，取出最小的也很ok，10条记录随便搞，慢不到哪里，优化也快不到哪里，简单就好） </p>
+<p>这个简单思路占用空间很小，就是10条数据的小顶堆。但题目给出的是，1G内存，有很大的优化空间，优化点在磁盘IO，优化方式就是批量读文件，批量写文件。 1.批量读，每个文件读取50M到内存，总计500M。上面的游标就对应到内存游标，只是游标到底之后，需要读取对应文件下一个50M数据 2.批量写，上面的写文件，优化为写内存，给予500M的内存空间，写满后再一次刷入新的文件。</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/04/study/数据结构与算法之美/学习笔记/12讲/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-study/数据结构与算法之美/每周打卡/Week8" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -720,111 +865,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/04/24/study/数据结构与算法之美/学习笔记/10讲/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-study/数据结构与算法之美/学习笔记/12讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/04/24/study/数据结构与算法之美/学习笔记/12讲/">10讲</a>
-    </h1>
-  
-
-        
-        
-<a href="/2021/04/24/study/数据结构与算法之美/学习笔记/12讲/" class="archive-article-date">
-  	<time datetime="2021-04-24T11:20:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-24</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h1 id="12-排序（下）：如何用快排思想在O-n-内查找第K大元素？"><a href="#12-排序（下）：如何用快排思想在O-n-内查找第K大元素？" class="headerlink" title="12 | 排序（下）：如何用快排思想在O(n)内查找第K大元素？"></a>12 | 排序（下）：如何用快排思想在O(n)内查找第K大元素？</h1><h2 id="快速排序的原理"><a href="#快速排序的原理" class="headerlink" title="快速排序的原理"></a>快速排序的原理</h2><p>快排的思想是这样的：如果要排序数组中下标从 p 到 r 之间的一组数据，我们选择 p 到 r 之间的任意一个数据作为 pivot（分区点）。</p>
-<p>我们遍历 p 到 r 之间的数据，将小于 pivot 的放到左边，将大于 pivot 的放到右边，将 pivot 放到中间。经过这一步骤之后，数组 p 到 r 之间的数据就被分成了三个部分，前面 p 到 q-1 之间都是小于 pivot 的，中间是 pivot，后面的 q+1 到 r 之间是大于 pivot 的。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427195633.jpeg" alt="img"></p>
-<p>根据分治、递归的处理思想，我们可以用递归排序下标从 p 到 q-1 之间的数据和下标从 q+1 到 r 之间的数据，直到区间缩小为 1，就说明所有的数据都有序了。</p>
-<p>如果我们用递推公式来将上面的过程写出来的话，就是这样：</p>
-<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">递推公式：</span><br><span class="line">quick<span class="constructor">_sort(<span class="params">p</span>…<span class="params">r</span>)</span> = quick<span class="constructor">_sort(<span class="params">p</span>…<span class="params">q</span>-1)</span> + quick<span class="constructor">_sort(<span class="params">q</span>+1… <span class="params">r</span>)</span></span><br><span class="line"></span><br><span class="line">终止条件：</span><br><span class="line">p &gt;= r</span><br></pre></td></tr></table></figure>
-
-<p>我将递推公式转化成递归代码。跟归并排序一样，我还是用伪代码来实现，你可以翻译成你熟悉的任何语言。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 快速排序，A是数组，n表示数组的大小</span></span><br><span class="line">quick_sort(A, n) &#123;</span><br><span class="line">  quick_sort_c(A, <span class="number">0</span>, n<span class="number">-1</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 快速排序递归函数，p,r为下标</span></span><br><span class="line">quick_sort_c(A, p, r) &#123;</span><br><span class="line">  <span class="keyword">if</span> p &gt;= r then <span class="keyword">return</span></span><br><span class="line">  </span><br><span class="line">  q = partition(A, p, r) <span class="comment">// 获取分区点</span></span><br><span class="line">  quick_sort_c(A, p, q<span class="number">-1</span>)</span><br><span class="line">  quick_sort_c(A, q+<span class="number">1</span>, r)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>归并排序中有一个 merge() 合并函数，我们这里有一个 partition() 分区函数。partition() 分区函数实际上我们前面已经讲过了，就是随机选择一个元素作为 pivot（一般情况下，可以选择 p 到 r 区间的最后一个元素），然后对 A[p…r]分区，函数返回 pivot 的下标。</p>
-<p>如果我们不考虑空间消耗的话，partition() 分区函数可以写得非常简单。我们申请两个临时数组 X 和 Y，遍历 A[p…r]，将小于 pivot 的元素都拷贝到临时数组 X，将大于 pivot 的元素都拷贝到临时数组 Y，最后再将数组 X 和数组 Y 中数据顺序拷贝到 A[p….r]。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427200346.jpeg" alt="img"></p>
-<p>但是，如果按照这种思路实现的话，partition() 函数就需要很多额外的内存空间，所以快排就不是原地排序算法了。如果我们希望快排是原地排序算法，那它的空间复杂度得是 O(1)，那 partition() 分区函数就不能占用太多额外的内存空间，我们就需要在 A[p…r]的原地完成分区操作。</p>
-<p>原地分区函数的实现思路非常巧妙，我写成了伪代码，我们一起来看一下。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">partition(A, p, r) &#123;</span><br><span class="line">  pivot := A[r]</span><br><span class="line">  i := p</span><br><span class="line">  <span class="keyword">for</span> j := p to r<span class="number">-1</span> do &#123;</span><br><span class="line">    <span class="keyword">if</span> A[j] &lt; pivot &#123;</span><br><span class="line">      swap A[i] with A[j]</span><br><span class="line">      i := i+<span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  swap A[i] with A[r]</span><br><span class="line">  <span class="keyword">return</span> i</span><br></pre></td></tr></table></figure>
-
-<p>这里的处理有点类似选择排序。我们通过游标 i 把 A[p…r-1]分成两部分。A[p…i-1]的元素都是小于 pivot 的，我们暂且叫它“已处理区间”，A[i…r-1]是“未处理区间”。我们每次都从未处理的区间 A[i…r-1]中取一个元素 A[j]，与 pivot 对比，如果小于 pivot，则将其加入到已处理区间的尾部，也就是 A[i]的位置。</p>
-<p>数组的插入操作还记得吗？在数组某个位置插入元素，需要搬移数据，非常耗时。当时我们也讲了一种处理技巧，就是交换，在 O(1) 的时间复杂度内完成插入操作。这里我们也借助这个思想，只需要将 A[i]与 A[j]交换，就可以在 O(1) 时间复杂度内将 A[j]放到下标为 i 的位置。</p>
-<p>文字不如图直观，所以我画了一张图来展示分区的整个过程。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427201802.jpeg" alt="img"></p>
-<p>因为分区的过程涉及交换操作，如果数组中有两个相同的元素，比如序列 6，8，7，6，3，5，9，4，在经过第一次分区操作之后，两个 6 的相对先后顺序就会改变。所以，快速排序并不是一个稳定的排序算法。</p>
-<p>到此，快速排序的原理你应该也掌握了。现在，我再来看另外一个问题：快排和归并用的都是分治思想，递推公式和递归代码也非常相似，那它们的区别在哪里呢？</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427201947.jpeg" alt="img"></p>
-<p>可以发现，归并排序的处理过程是<strong>由下到上</strong>的，先处理子问题，然后再合并。而快排正好相反，它的处理过程是<strong>由上到下的</strong>，先分区，然后再处理子问题。归并排序虽然是稳定的、时间复杂度为 O(nlogn) 的排序算法，但是它是非原地排序算法。我们前面讲过，归并之所以是非原地排序算法，主要原因是合并函数无法在原地执行。快速排序通过设计巧妙的原地分区函数，可以实现原地排序，解决了归并排序占用太多内存的问题。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/04/24/study/数据结构与算法之美/学习笔记/12讲/">展开全文 >></a>
         </p>
       
 
@@ -1498,15 +1538,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面经</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color3">面经</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1535,6 +1571,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">面试题</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
