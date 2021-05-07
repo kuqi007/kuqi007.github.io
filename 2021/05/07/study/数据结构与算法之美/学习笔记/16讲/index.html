@@ -17,7 +17,7 @@
 <meta property="og:description" content="16 | 二分查找（下）：如何快速定位IP对应的省份地址？变体一：查找第一个值等于给定值的元素比如下面这样一个有序数组，其中，a[5]，a[6]，a[7]的值都等于 8，是重复的数据。我们希望查找第一个等于 8 的数据，也就是下标是 5 的元素。  如果我们用上一节课讲的二分查找的代码实现，首先拿 8 与区间的中间值 a[4]比较，8 比 6 大，于是在下标 5 到 9 之间继续查找。下标 5">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210507081300.jpeg">
-<meta property="og:updated_time" content="2021-05-07T00:57:49.603Z">
+<meta property="og:updated_time" content="2021-05-07T13:49:26.617Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="15讲">
 <meta name="twitter:description" content="16 | 二分查找（下）：如何快速定位IP对应的省份地址？变体一：查找第一个值等于给定值的元素比如下面这样一个有序数组，其中，a[5]，a[6]，a[7]的值都等于 8，是重复的数据。我们希望查找第一个等于 8 的数据，也就是下标是 5 的元素。  如果我们用上一节课讲的二分查找的代码实现，首先拿 8 与区间的中间值 a[4]比较，8 比 6 大，于是在下标 5 到 9 之间继续查找。下标 5">
@@ -216,6 +216,28 @@
 <p>变体的二分查找算法写起来非常烧脑，很容易因为细节处理不好而产生 Bug，这些容易出错的细节有：<strong>终止条件、区间上下界更新方法、返回值选择</strong>。所以今天的内容你最好能用自己实现一遍，对锻炼编码能力、逻辑思维、写出 Bug free 代码，会很有帮助。</p>
 <h2 id="课后思考"><a href="#课后思考" class="headerlink" title="课后思考"></a>课后思考</h2><p>我们今天讲的都是非常规的二分查找问题，今天的思考题也是一个非常规的二分查找问题。如果有序数组是一个循环有序数组，比如 4，5，6，1，2，3。针对这种情况，如何实现一个求“值等于给定值”的二分查找算法呢？</p>
 <blockquote>
+<p>有三种方法查找循环有序数组</p>
+<p> 一、</p>
+<ol>
+<li><p>找到分界下标，分成两个有序数组</p>
+</li>
+<li><p>判断目标值在哪个有序数据范围内，做二分查找</p>
+<p>二、</p>
+</li>
+<li><p>找到最大值的下标 x;</p>
+</li>
+<li><p>所有元素下标 +x 偏移，超过数组范围值的取模;</p>
+</li>
+<li><p>利用偏移后的下标做二分查找；</p>
+</li>
+<li><p>如果找到目标下标，再作 -x 偏移，就是目标值实际下标。</p>
+<p>两种情况最高时耗都在查找分界点上，所以时间复杂度是 O(N）。</p>
+<p>复杂度有点高，能否优化呢？</p>
+<p>三、<br>我们发现循环数组存在一个性质：以数组中间点为分区，会将数组分成一个有序数组和一个循环有序数组。</p>
+<p>如果首元素小于 mid，说明前半部分是有序的，后半部分是循环有序数组；<br>如果首元素大于 mid，说明后半部分是有序的，前半部分是循环有序的数组；<br>如果目标元素在有序数组范围中，使用二分查找；<br>如果目标元素在循环有序数组中，设定数组边界后，使用以上方法继续查找。</p>
+<p>时间复杂度为 O(logN)。</p>
+</li>
+</ol>
 </blockquote>
 
       
@@ -491,23 +513,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">面经</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JPA</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MapStruct</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -515,7 +525,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -527,15 +545,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color4">JPA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">MapStruct</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">框架</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -544,6 +562,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
