@@ -17,10 +17,7 @@
 <meta property="og:description" content="数据库优化：索引失效的场景： like 以%开头，索引无效；当like前缀没有%，后缀有%时，索引有效。 or语句前后没有同时使用索引。当or左右查询字段只有一个是索引，该索引失效，只有当or左右查询字段均为索引时，才会生效。 组合索引，不是使用第一列索引，索引失效。 数据类型出现隐式转化。如varchar不加单引号的话可能会自动转换为int型，使索引无效，产生全表扫描。 在索引列上使用 IS N">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427162633.jpeg">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427174501.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427174505.webp">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427174512.jpeg">
-<meta property="og:updated_time" content="2021-04-27T13:38:45.633Z">
+<meta property="og:updated_time" content="2021-05-09T12:56:43.443Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL常见面试题">
 <meta name="twitter:description" content="数据库优化：索引失效的场景： like 以%开头，索引无效；当like前缀没有%，后缀有%时，索引有效。 or语句前后没有同时使用索引。当or左右查询字段只有一个是索引，该索引失效，只有当or左右查询字段均为索引时，才会生效。 组合索引，不是使用第一列索引，索引失效。 数据类型出现隐式转化。如varchar不加单引号的话可能会自动转换为int型，使索引无效，产生全表扫描。 在索引列上使用 IS N">
@@ -237,21 +234,17 @@
 <p>关于B+树<br><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427162633.jpeg" alt="img"><br>B+ 树的特点:</p>
 <p>（1）所有关键字都出现在叶子结点的链表中(稠密索引)，且链表中的关键字恰好是有序的;</p>
 <p>（2）不可能在非叶子结点命中;</p>
-<p>（3）非叶子结点相当于是叶子结点的索引(稀疏索引)，叶子结点相当于是存储(关键字)数据的数据层;<br>2. 如果我们定义了主键(PRIMARY KEY)，那么InnoDB会选择主键作为聚集索引、如果没有显式定义主键，则InnoDB会选择第一个不包含有NULL值的唯一索引作为主键索引、如果也没有这样的唯一索引，则InnoDB会选择内置6字节长的ROWID作为隐含的聚集索引(ROWID随着行记录的写入而主键递增，这个ROWID不像ORACLE的ROWID那样可引用，是隐含的)。</p>
-<ol start="3">
-<li><p>数据记录本身被存于主索引（一颗B+Tree）的叶子节点上。这就要求同一个叶子节点内（大小为一个内存页或磁盘页）的各条数据记录按主键顺序存放，因此每当有一条新的记录插入时，MySQL会根据其主键将其插入适当的节点和位置，如果页面达到装载因子（InnoDB默认为15/16），则开辟一个新的页（节点）</p>
-</li>
-<li><p>如果表使用自增主键，那么每次插入新的记录，记录就会顺序添加到当前索引节点的后续位置，当一页写满，就会自动开辟一个新的页</p>
-</li>
-<li><p>如果使用非自增主键（如果身份证号或学号等），由于每次插入主键的值近似于随机，因此每次新纪录都要被插到现有索引页得中间某个位置，此时MySQL不得不为了将新记录插到合适位置而移动数据，甚至目标页面可能已经被回写到磁盘上而从缓存中清掉，此时又要从磁盘上读回来，这增加了很多开销，同时频繁的移动、分页操作造成了大量的碎片，得到了不够紧凑的索引结构，后续不得不通过OPTIMIZE TABLE来重建表并优化填充页面。</p>
-</li>
+<p>（3）非叶子结点相当于是叶子结点的索引(稀疏索引)，叶子结点相当于是存储(关键字)数据的数据层;</p>
+<ol start="2">
+<li>如果我们定义了主键(PRIMARY KEY)，那么InnoDB会选择主键作为聚集索引、如果没有显式定义主键，则InnoDB会选择第一个不包含有NULL值的唯一索引作为主键索引、如果也没有这样的唯一索引，则InnoDB会选择内置6字节长的ROWID作为隐含的聚集索引(ROWID随着行记录的写入而主键递增，这个ROWID不像ORACLE的ROWID那样可引用，是隐含的)。</li>
+<li>数据记录本身被存于主索引（一颗B+Tree）的叶子节点上。这就要求同一个叶子节点内（大小为一个内存页或磁盘页）的各条数据记录按主键顺序存放，因此每当有一条新的记录插入时，MySQL会根据其主键将其插入适当的节点和位置，如果页面达到装载因子（InnoDB默认为15/16），则开辟一个新的页（节点）</li>
+<li>如果表使用自增主键，那么每次插入新的记录，记录就会顺序添加到当前索引节点的后续位置，当一页写满，就会自动开辟一个新的页</li>
+<li>如果使用非自增主键（如果身份证号或学号等），由于每次插入主键的值近似于随机，因此每次新纪录都要被插到现有索引页得中间某个位置，此时MySQL不得不为了将新记录插到合适位置而移动数据，甚至目标页面可能已经被回写到磁盘上而从缓存中清掉，此时又要从磁盘上读回来，这增加了很多开销，同时频繁的移动、分页操作造成了大量的碎片，得到了不够紧凑的索引结构，后续不得不通过OPTIMIZE TABLE来重建表并优化填充页面。</li>
 </ol>
 <p>综上总结，如果InnoDB表的数据写入顺序能和B+树索引的叶子节点顺序一致的话，这时候存取效率是最高的，也就是下面这几种情况的存取效率最高：</p>
 <ol>
-<li><p>使用自增列(INT/BIGINT类型)做主键，这时候写入顺序是自增的，和B+数叶子节点分裂顺序一致；</p>
-</li>
-<li><p>该表不指定自增列做主键，同时也没有可以被选为主键的唯一索引(上面的条件)，这时候InnoDB会选择内置的ROWID作为主键，写入顺序和ROWID增长顺序一致；<br>除此以外，如果一个InnoDB表又没有显示主键，又有可以被选择为主键的唯一索引，但该唯一索引可能不是递增关系时(例如字符串、UUID、多字段联合唯一索引的情况)，该表的存取效率就会比较差。</p>
-</li>
+<li>使用自增列(INT/BIGINT类型)做主键，这时候写入顺序是自增的，和B+数叶子节点分裂顺序一致；</li>
+<li>该表不指定自增列做主键，同时也没有可以被选为主键的唯一索引(上面的条件)，这时候InnoDB会选择内置的ROWID作为主键，写入顺序和ROWID增长顺序一致；<br>除此以外，如果一个InnoDB表又没有显示主键，又有可以被选择为主键的唯一索引，但该唯一索引可能不是递增关系时(例如字符串、UUID、多字段联合唯一索引的情况)，该表的存取效率就会比较差。</li>
 </ol>
 <h3 id="MySql为什么使用B-Tree作为索引而不是其他二叉查找树（比如红黑树等）？"><a href="#MySql为什么使用B-Tree作为索引而不是其他二叉查找树（比如红黑树等）？" class="headerlink" title="MySql为什么使用B-Tree作为索引而不是其他二叉查找树（比如红黑树等）？"></a>MySql为什么使用B-Tree作为索引而不是其他二叉查找树（比如红黑树等）？</h3><p><a href="https://www.cnblogs.com/aspirant/p/9214485.html" target="_blank" rel="noopener">https://www.cnblogs.com/aspirant/p/9214485.html</a><br>平衡二叉树不适合作为索引。那么什么才适合作为索引——B树。</p>
 <p>平衡二叉树没能充分利用磁盘预读功能，而B树是为了充分利用磁盘预读功能来而创建的一种数据结构，也就是说B树就是为了作为索引才被发明出来的的。</p>
@@ -305,12 +298,15 @@
 </ul>
 </li>
 </ul>
-<p>悲观锁：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427174501.png" alt="img"></p>
-<p>乐观锁：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427174505.webp" alt="img"></p>
+<p>悲观锁：缺点性能低</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> eb_sku <span class="keyword">where</span> sku_id = <span class="number">1001</span> <span class="keyword">for</span> <span class="keyword">update</span>;</span><br><span class="line"><span class="keyword">update</span> eb_sku <span class="keyword">set</span> stock = <span class="number">100</span>- $&#123;quantity&#125; <span class="keyword">where</span> sku_id = <span class="number">10001</span></span><br></pre></td></tr></table></figure>
+
+
 </li>
 </ul>
+<p>  乐观锁：</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> eb_sku <span class="keyword">set</span> stock = <span class="number">100</span>-$&#123;quantity&#125;, <span class="keyword">version</span> = $&#123;<span class="keyword">version</span>&#125;+<span class="number">1</span> <span class="keyword">where</span> sku_id = $&#123;sku_id&#125; <span class="keyword">and</span> <span class="keyword">version</span>=$&#123;<span class="keyword">version</span>&#125; <span class="keyword">and</span> stock &gt; $&#123;quantity&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="其他知识点"><a href="#其他知识点" class="headerlink" title="其他知识点"></a>其他知识点</h2><h3 id="Mysql中utf-8和utf8mb4的区别与使用场景"><a href="#Mysql中utf-8和utf8mb4的区别与使用场景" class="headerlink" title="Mysql中utf-8和utf8mb4的区别与使用场景"></a>Mysql中utf-8和utf8mb4的区别与使用场景</h3><p>MySQL中的<strong>utf8</strong>编码只支持最大3字节每字符，<strong>utf8mb4</strong>才是 真正意义上的“UTF-8”，utf8mb4支持4字节每字符，支持存储emoji，而utf8不支持。</p>
 <h3 id="MySql-Innodb引擎和MyIASM引擎的区别"><a href="#MySql-Innodb引擎和MyIASM引擎的区别" class="headerlink" title="MySql Innodb引擎和MyIASM引擎的区别"></a>MySql Innodb引擎和MyIASM引擎的区别</h3><h4 id="Innodb引擎"><a href="#Innodb引擎" class="headerlink" title="Innodb引擎"></a>Innodb引擎</h4><ul>
 <li>Innodb引擎提供了对数据库ACID事务的支持，并且实现了SQL标准的四种隔离级别。</li>
@@ -324,7 +320,6 @@
 <li>由于锁的粒度更小，写操作不会锁定全表，所以在并发较高时，使用Innodb引擎会提升效率。</li>
 </ul>
 <h4 id="MyIASM引擎"><a href="#MyIASM引擎" class="headerlink" title="MyIASM引擎"></a>MyIASM引擎</h4><ul>
-<li><del>MyIASM是MySQL默认的引擎</del></li>
 <li>但是它没有提供对数据库事务的支持，也不支持行级锁和外键，</li>
 <li>因此当INSERT(插入)或UPDATE(更新)数据时即写操作需要锁定整个表，效率便会低一些。</li>
 <li>MyIASM中存储了表的行数，于是SELECT COUNT(*) FROM TABLE时只需要直接读取已经保存好的值而不需要进行全表扫描。</li>
@@ -341,7 +336,45 @@
 <li>MyIASM管理非事务表，提供高速存储和检索以及全文搜索能力，如果再应用中执行大量select操作，应该选择MyIASM</li>
 <li>InnoDB用于事务处理，具有ACID事务支持等特性，如果在应用中执行大量insert和update操作，应该选择InnoDB</li>
 </ol>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427174512.jpeg" alt="img"></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>MyIASM</th>
+<th>InnoDB</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>事务支持</td>
+<td>不支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>锁的粒度</td>
+<td>Table</td>
+<td>Row</td>
+</tr>
+<tr>
+<td>存储容量</td>
+<td>没有上限</td>
+<td>64TB</td>
+</tr>
+<tr>
+<td><strong>哈希索引</strong></td>
+<td><strong>不支持</strong></td>
+<td><strong>支持</strong></td>
+</tr>
+<tr>
+<td><strong>全文索引</strong></td>
+<td><strong>支持</strong></td>
+<td><strong>不支持</strong></td>
+</tr>
+<tr>
+<td><strong>外键</strong></td>
+<td><strong>不支持</strong></td>
+<td><strong>支持</strong></td>
+</tr>
+</tbody></table>
 
       
 
@@ -669,15 +702,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MySQL实战45讲</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">

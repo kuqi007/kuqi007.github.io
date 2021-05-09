@@ -146,6 +146,98 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-interview/计算机基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/30/interview/计算机基础/">计算机基础</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/01/30/interview/计算机基础/" class="archive-article-date">
+  	<time datetime="2021-01-30T05:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-30</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h3 id="介绍下Linux（Unix）操作系统的五种IO模型"><a href="#介绍下Linux（Unix）操作系统的五种IO模型" class="headerlink" title="介绍下Linux（Unix）操作系统的五种IO模型"></a>介绍下Linux（Unix）操作系统的五种IO模型</h3><p>在Linux(UNIX)操作系统中，共有五种IO模型，分别是：<strong>阻塞IO模型</strong>、<strong>非阻塞IO模型</strong>、<strong>IO复用模型</strong>、<strong>信号驱动IO模型</strong>以及<strong>异步IO模型</strong>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210126103811.jpeg" alt="图片"></p>
+<p>我们说阻塞IO模型、非阻塞IO模型、IO复用模型和信号驱动IO模型都是同步的IO模型。原因是因为，无论以上那种模型，真正的数据拷贝过程，都是同步进行的。</p>
+<p><strong>同步和异步：</strong></p>
+<p>从操作系统角度来说，<strong>网络IO的数据拷贝主要分为两个阶段，一是数据准备阶段，二是数据从内核拷贝到用户中。</strong></p>
+<p>同步IO指的是数据从内核拷贝到用户时。发起该请求的线程会自己来拷贝数据（表现为线程阻塞拷贝）。</p>
+<p>PS：一旦涉及到网络 IO必定会发生数据拷贝的阻塞（此阻塞非彼阻塞，这里的阻塞形容的是拷贝数据相对于CPU的速度来说是非常耗时的，看起来像线程阻塞了一样。我们常说的阻塞是线程挂起并让出CPU），只不过阻塞发生在其他的地方（自己来拷贝就是同步的，别人帮我拷贝就是异步的），因为IO必定会用到CPU，即使是零拷贝。</p>
+<p><strong>阻塞和非阻塞：</strong></p>
+<p>阻塞和非阻塞主要描述的是网络IO数据拷贝的第一个阶段。</p>
+<p>阻塞指的是线程一直等待数据准备好，期间什么都不干，但是会让出CPU，这样其他线程可以执行（CPU的利用率比较高），数据准备好之后自己来拷贝数据。</p>
+<p>非阻塞指的是在第一阶段，发起网络IO请求的时候会立即返回去干别的事情，但是会不断地进行询问数据是否准备好，这种方式称之为轮询。由于CPU要处理更多的系统调用（每次询问都是系统调用），这种模型的CPU利用率低。</p>
+<h3 id="NIO是如何实现同步非阻塞的呢？"><a href="#NIO是如何实现同步非阻塞的呢？" class="headerlink" title="NIO是如何实现同步非阻塞的呢？"></a>NIO是如何实现同步非阻塞的呢？</h3><p>Java的NIO实现采用了同步非阻塞IO和IO多路复用，其核心组件是Selector。Selector会不断的主动的询问Channel是否有事件发生，有事件发生，会进行事件处理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//java nio</span></span><br><span class="line"><span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</span><br><span class="line">  ......</span><br><span class="line">  selector.select(<span class="number">1</span>); <span class="comment">//不阻塞</span></span><br><span class="line">  Set&lt;SelectionKey&gt; selectionKeySet= selector.selectedKeys();</span><br><span class="line">  ......</span><br><span class="line">  <span class="comment">//处理selectionKeySet中事件,线程没有阻塞</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//java socket处理连接，线程会阻塞</span></span><br><span class="line"><span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</span><br><span class="line">  ......</span><br><span class="line">  Socket socket = serverSocket.accept(); <span class="comment">//阻塞</span></span><br><span class="line">  InputStream in = socket.getInputStream(); </span><br><span class="line">  ......</span><br><span class="line">  <span class="comment">//处理in中内容</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Netty采用的是NIO其对Java的NIO进行了改进，其内部也封装了Selector和Channel，采用串行并发来提高效率。</p>
+<p>Java的NIO采用的是Reactor线程模型中的单Reactor单线程模型（前台和服务员是一个人，全程为顾客服务，可以服务多个人），Netty的NIO采用的是主从Reactor模型，是多Reactor多线程模型。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/30/interview/计算机基础/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-interview/Redis常见面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -202,12 +294,51 @@
 <p>字典结构内部包含 <strong>两个 hashtable</strong>，通常情况下只有一个 <code>hashtable</code> 有值，但是在字典扩容缩容时，需要分配新的 <code>hashtable</code>，然后进行 <strong>渐进式搬迁</strong> <em>(rehash)</em>，这时候两个 <code>hashtable</code> 分别存储旧的和新的 <code>hashtable</code>，待搬迁结束后，旧的将被删除，新的 <code>hashtable</code> 取而代之。</p>
 <h4 id="扩缩容的条件"><a href="#扩缩容的条件" class="headerlink" title="扩缩容的条件"></a>扩缩容的条件</h4><p>正常情况下，当 hash 表中 <strong>元素的个数等于第一维数组的长度时</strong>，就会开始扩容，扩容的新数组是 <strong>原数组大小的 2 倍</strong>。不过如果 Redis 正在做 <code>bgsave(持久化命令)</code>，为了减少内存也得过多分离，Redis 尽量不去扩容，但是如果 hash 表非常满了，<strong>达到了第一维数组长度的 5 倍了</strong>，这个时候就会 <strong>强制扩容</strong>。</p>
 <p>当 hash 表因为元素逐渐被删除变得越来越稀疏时，Redis 会对 hash 表进行缩容来减少 hash 表的第一维数组空间占用。所用的条件是 <strong>元素个数低于数组长度的 10%</strong>，缩容不会考虑 Redis 是否在做 <code>bgsave</code>。</p>
-<h3 id="跳跃表"><a href="#跳跃表" class="headerlink" title="跳跃表"></a>跳跃表</h3><h2 id="Redis高可用"><a href="#Redis高可用" class="headerlink" title="Redis高可用"></a>Redis高可用</h2><h3 id="Redis主从复制核心原理"><a href="#Redis主从复制核心原理" class="headerlink" title="Redis主从复制核心原理"></a>Redis主从复制核心原理</h3><ol>
+<h3 id="跳跃表"><a href="#跳跃表" class="headerlink" title="跳跃表"></a>跳跃表</h3><h2 id="Redis高可用"><a href="#Redis高可用" class="headerlink" title="Redis高可用"></a>Redis高可用</h2><h3 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h3><h4 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h4><p><strong>Redis 快照</strong> 是最简单的 Redis 持久性模式。当满足特定条件时，它将生成数据集的时间点快照，例如，如果先前的快照是在 2 分钟前创建的，并且现在已经至少有 <code>100</code> 次新写入，则将创建一个新的快照。此条件可以由用户配置 Redis 实例来控制，也可以在运行时修改而无需重新启动服务器。快照作为包含整个数据集的单个 <code>.rdb</code> 文件生成。</p>
+<h4 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h4><p><strong>快照不是很持久</strong>。如果运行 Redis 的计算机停止运行，电源线出现故障或者您 <code>kill -9</code> 的实例意外发生，则写入 Redis 的最新数据将丢失。尽管这对于某些应用程序可能不是什么大问题，但有些使用案例具有充分的耐用性，在这些情况下，快照并不是可行的选择。</p>
+<p><strong>AOF(Append Only File - 仅追加文件)</strong> 它的工作方式非常简单：每次执行 <strong>修改内存</strong> 中数据集的写操作时，都会 <strong>记录</strong> 该操作。假设 AOF 日志记录了自 Redis 实例创建以来 <strong>所有的修改性指令序列</strong>，那么就可以通过对一个空的 Redis 实例 <strong>顺序执行所有的指令</strong>，也就是 <strong>「重放」</strong>，来恢复 Redis 当前实例的内存数据结构的状态。</p>
+<h4 id="Redis-4-0-的混合持久化"><a href="#Redis-4-0-的混合持久化" class="headerlink" title="Redis 4.0 的混合持久化"></a>Redis 4.0 的混合持久化</h4><p>重启 Redis 时，我们很少使用 <code>rdb</code> 来恢复内存状态，因为会丢失大量数据。我们通常使用 AOF 日志重放，但是重放 AOF 日志性能相对 <code>rdb</code> 来说要慢很多，这样在 Redis 实例很大的情况下，启动需要花费很长的时间。</p>
+<p><strong>Redis 4.0</strong> 为了解决这个问题，带来了一个新的持久化选项——<strong>混合持久化</strong>。将 <code>rdb</code> 文件的内容和增量的 AOF 日志文件存在一起。这里的 AOF 日志不再是全量的日志，而是 <strong>自持久化开始到持久化结束</strong> 的这段时间发生的增量 AOF 日志，通常这部分 AOF 日志很小：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210509211524.webp" alt="图片"></p>
+<p>于是在 Redis 重启的时候，可以先加载 <code>rdb</code> 的内容，然后再重放增量 AOF 日志就可以完全替代之前的 AOF 全量文件重放，重启效率因此大幅得到提升。</p>
+<h4 id="RDB-和-AOF-各自有什么优缺点？"><a href="#RDB-和-AOF-各自有什么优缺点？" class="headerlink" title="RDB 和 AOF 各自有什么优缺点？"></a>RDB 和 AOF 各自有什么优缺点？</h4><h5 id="RDB-优点"><a href="#RDB-优点" class="headerlink" title="RDB | 优点"></a>RDB | 优点</h5><ol>
+<li>只有一个文件 <code>dump.rdb</code>，<strong>方便持久化</strong>。</li>
+<li><strong>容灾性好</strong>，一个文件可以保存到安全的磁盘。</li>
+<li><strong>性能最大化</strong>，<code>fork</code> 子进程来完成写操作，让主进程继续处理命令，所以使 IO 最大化。使用单独子进程来进行持久化，主进程不会进行任何 IO 操作，保证了 Redis 的高性能</li>
+<li>相对于数据集大时，比 AOF 的 <strong>启动效率</strong> 更高。</li>
+</ol>
+<h5 id="RDB-缺点"><a href="#RDB-缺点" class="headerlink" title="RDB | 缺点"></a>RDB | 缺点</h5><ol>
+<li><strong>数据安全性低</strong>。RDB 是间隔一段时间进行持久化，如果持久化之间 Redis 发生故障，会发生数据丢失。所以这种方式更适合数据要求不严谨的时候；</li>
+</ol>
+<h5 id="AOF-优点"><a href="#AOF-优点" class="headerlink" title="AOF | 优点"></a>AOF | 优点</h5><ol>
+<li><strong>数据安全</strong>，aof 持久化可以配置 <code>appendfsync</code> 属性，有 <code>always</code>，每进行一次命令操作就记录到 aof 文件中一次。</li>
+<li>通过 append 模式写文件，即使中途服务器宕机，可以通过 redis-check-aof 工具解决数据一致性问题。</li>
+<li>AOF 机制的 rewrite 模式。AOF 文件没被 rewrite 之前（文件过大时会对命令 进行合并重写），可以删除其中的某些命令（比如误操作的 flushall）</li>
+</ol>
+<h5 id="AOF-缺点"><a href="#AOF-缺点" class="headerlink" title="AOF | 缺点"></a>AOF | 缺点</h5><ol>
+<li>AOF 文件比 RDB <strong>文件大</strong>，且 <strong>恢复速度慢</strong>。</li>
+<li><strong>数据集大</strong> 的时候，比 rdb <strong>启动效率低</strong>。</li>
+</ol>
+<h4 id="两种方式如何选择？"><a href="#两种方式如何选择？" class="headerlink" title="两种方式如何选择？"></a>两种方式如何选择？</h4><ul>
+<li>一般来说， 如果想达到足以媲美 PostgreSQL 的 <strong>数据安全性</strong>，你应该 <strong>同时使用两种持久化功能</strong>。在这种情况下，当 Redis 重启的时候会优先载入 AOF 文件来恢复原始的数据，因为在通常情况下 AOF 文件保存的数据集要比 RDB 文件保存的数据集要完整。</li>
+<li>如果你非常关心你的数据， 但仍然 <strong>可以承受数分钟以内的数据丢失</strong>，那么你可以 <strong>只使用 RDB 持久化</strong>。</li>
+<li>有很多用户都只使用 AOF 持久化，但并不推荐这种方式，因为定时生成 RDB 快照（snapshot）非常便于进行数据库备份， 并且 RDB 恢复数据集的速度也要比 AOF 恢复的速度要快，除此之外，使用 RDB 还可以避免 AOF 程序的 bug。</li>
+<li>如果你只希望你的数据在服务器运行的时候存在，你也可以不使用任何持久化方式。</li>
+</ul>
+<h4 id="Redis-的数据恢复"><a href="#Redis-的数据恢复" class="headerlink" title="Redis 的数据恢复"></a>Redis 的数据恢复</h4><p><strong>Redis</strong> 的数据恢复有着如下的优先级：</p>
+<ol>
+<li>如果只配置 AOF ，重启时加载 AOF 文件恢复数据；</li>
+<li>如果同时配置了 RDB 和 AOF ，启动只加载 AOF 文件恢复数据；</li>
+<li>如果只配置 RDB，启动将加载 dump 文件恢复数据。</li>
+</ol>
+<p>拷贝 <strong>AOF</strong> 文件到 Redis 的数据目录，启动 redis-server AOF 的数据恢复过程：Redis 虚拟一个客户端，读取 AOF 文件恢复 Redis 命令和参数，然后执行命令从而恢复数据，这些过程主要在 <code>loadAppendOnlyFile()</code> 中实现。</p>
+<p>拷贝 <strong>RDB</strong> 文件到 Redis 的数据目录，启动 redis-server 即可，因为 RDB 文件和重启前保存的是真实数据而不是命令状态和参数。</p>
+<h3 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h3><h4 id="Redis主从复制核心原理"><a href="#Redis主从复制核心原理" class="headerlink" title="Redis主从复制核心原理"></a>Redis主从复制核心原理</h4><ol>
 <li>salve node启动，会发送一个<code>PSYNC</code>命令给master node</li>
 <li>如果是slave node初次连接到master node，会触发一次<code>full resynchronization</code> 全量复制。此时master回启动一个后台线程，生成<code>RDB</code>快照文件，同时将从客户端新收到的所有写命令缓存到内存中。<code>RDB</code> 文件生成完毕后， master 会将这个 <code>RDB</code> 发送给 slave，slave 会先<strong>写入本地磁盘，然后再从本地磁盘加载到内存</strong>中，接着 master 会将内存中缓存的写命令发送到 slave，slave 也会同步这些数据。</li>
 <li>slave node如果跟master node有网络故障，断开了链接，会自动重连，连接之后master node仅会复制给salve部分缺少的数据。<br><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210119165016.png" alt="Redis-master-slave-replication"></li>
 </ol>
-<h3 id="主从复制是如何断点续传的？"><a href="#主从复制是如何断点续传的？" class="headerlink" title="主从复制是如何断点续传的？"></a>主从复制是如何断点续传的？</h3><p>从 Redis2.8 开始，就支持主从复制的断点续传，如果主从复制过程中，网络连接断掉了，那么可以接着上次复制的地方，继续复制下去，而不是从头开始复制一份。</p>
+<h4 id="主从复制是如何断点续传的？"><a href="#主从复制是如何断点续传的？" class="headerlink" title="主从复制是如何断点续传的？"></a>主从复制是如何断点续传的？</h4><p>从 Redis2.8 开始，就支持主从复制的断点续传，如果主从复制过程中，网络连接断掉了，那么可以接着上次复制的地方，继续复制下去，而不是从头开始复制一份。</p>
 <p>master node会在内存中维护一个backlog，master和slave都会保存一个replica offset还有一个master run id，offset就是保存在backlog中的。如果master和slave网络连接断掉了，slave会让master从上次replica offset开始复制，如果没有找到对应的offset，那么就会执行一次<code>resynchronization</code> 。</p>
 <blockquote>
 <p> 如果根据 host+ip 定位 master node，是不靠谱的，如果 master node 重启或者数据出现了变化，那么 slave node 应该根据不同的 run id 区分。</p>
@@ -239,6 +370,126 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/01/23/interview/Redis常见面试题/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-interview/JVM面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/23/interview/JVM面试题/">JVM面试题</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/01/23/interview/JVM面试题/" class="archive-article-date">
+  	<time datetime="2021-01-23T08:23:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-23</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><h3 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h3><h4 id="CMS"><a href="#CMS" class="headerlink" title="CMS"></a>CMS</h4><p><strong>CMS回收器</strong>（Concurrent Mark Sweep Collector）是回收停顿时间比较短，目前比较常用的垃圾回收器。它通过初始标记（Initial Mark）、并发标记（Concurrent Mark）、重新标记（Remark)、并发清除（Concurrent Sweep）四个步骤完成垃圾回收工作。第1、3步的初始标记和重新标记阶段依然会引发STW。2、4步可以和应用程序并发执行。CMS采用“标记 - 清除算法”，因此产生大量的空间碎片。可以通过<code>-XX:+UseCMSCompactAtFullCollection</code>参数，强制JVM在FGC完成后对老年代进行压缩，执行一次空间碎片整理，但是会引发STW。为了减少STW次数，CMS还可以通过配置<code>-XX:+CMSFullGCsBeforeCompaction=n</code>参数，在执行了n次FGC后，JVM再在老年代执行空间碎片整理。</p>
+<h4 id="G1"><a href="#G1" class="headerlink" title="G1"></a>G1</h4><p>G1（Garbage-First Garbage Collector）垃圾回收器。</p>
+<h3 id="GC触发条件"><a href="#GC触发条件" class="headerlink" title="GC触发条件"></a>GC触发条件</h3><h4 id="MinorGC触发条件"><a href="#MinorGC触发条件" class="headerlink" title="MinorGC触发条件"></a>MinorGC触发条件</h4><p>当Eden区满时触发MinorGC</p>
+<h4 id="FullGC触发条件"><a href="#FullGC触发条件" class="headerlink" title="FullGC触发条件"></a>FullGC触发条件</h4><ol>
+<li>调用System.gc时，系统建议执行FullGC，但是不必然执行</li>
+<li>老年代空间不足</li>
+<li>方法区空间不足（jdk8之前）</li>
+<li>通过MinorGC后进入老年代的平均大小大于老年代的可用内存</li>
+<li>由Eden区、FromSpace向ToSpace区复制时，对象大小大于ToSpace可用内存，则把该对象转存到老年代，且老年代的可用内存小于该对象大小</li>
+</ol>
+<h2 id="JVM调优"><a href="#JVM调优" class="headerlink" title="JVM调优"></a>JVM调优</h2><h3 id="JVM优化的思路"><a href="#JVM优化的思路" class="headerlink" title="JVM优化的思路"></a>JVM优化的思路</h3><p>1、一般来说，当survivor区不够大或者占用量达到50%，就会把一些对象放到老年区。通过设置合理的eden区，survivor区及使用率，可以将年轻对象保存在年轻代，从而避免full GC，使用<code>-Xmn</code>设置年轻代的大小</p>
+<p>2、对于占用内存比较多的大对象，一般会选择在老年代分配内存。如果在年轻代给大对象分配内存，年轻代内存不够了，就要在eden区移动大量对象到老年代，然后这些移动的对象可能很快消亡，因此导致full GC。通过设置参数：<code>-XX:PetenureSizeThreshold=1000000</code>，单位为B，标明对象大小超过1M时，在老年代(tenured)分配内存空间。</p>
+<p>3、一般情况下，年轻对象放在eden区，当第一次GC后，如果对象还存活，放到survivor区，此后，每GC一次，年龄增加1，当对象的年龄达到阈值，就被放到tenured老年区。这个阈值可以同构<code>-XX:MaxTenuringThreshold</code>设置。如果想让对象留在年轻代，可以设置比较大的阈值。</p>
+<p>4、设置最小堆和最大堆：<code>-Xmx</code>和<code>-Xms</code>稳定的堆大小堆垃圾回收是有利的，获得一个稳定的堆大小的方法是设置-Xms和-Xmx的值一样，即最大堆和最小堆一样，如果这样子设置，系统在运行时堆大小理论上是恒定的，稳定的堆空间可以减少GC次数，因此，很多服务端都会将这两个参数设置为一样的数值。稳定的堆大小虽然减少GC次数，但是增加每次GC的时间，因为每次GC要把堆的大小维持在一个区间内。</p>
+<p>5、一个不稳定的堆并非毫无用处。在系统不需要使用大内存的时候，压缩堆空间，使得GC每次应对一个较小的堆空间，加快单次GC次数。基于这种考虑，JVM提供两个参数，用于压缩和扩展堆空间。<br>（1）<code>-XX:MinHeapFreeRatio</code> 参数用于设置堆空间的最小空闲比率。默认值是40，当堆空间的空闲内存比率小于40，JVM便会扩展堆空间<br>（2）<code>-XX:MaxHeapFreeRatio</code> 参数用于设置堆空间的最大空闲比率。默认值是70， 当堆空间的空闲内存比率大于70，JVM便会压缩堆空间。<br>（3）当-Xmx和-Xmx相等时，上面两个参数无效</p>
+<p>6、通过增大吞吐量提高系统性能，可以通过设置并行垃圾回收收集器。<br>（1）<code>-XX:+UseParallelGC</code>:年轻代使用并行垃圾回收收集器。这是一个关注吞吐量的收集器，可以尽可能的减少垃圾回收时间。<br>（2）<code>-XX:+UseParallelOldGC</code>:设置老年代使用并行垃圾回收收集器。</p>
+<p>7、尝试使用大的内存分页：使用大的内存分页增加CPU的内存寻址能力，从而系统的性能。<code>-XX:+LargePageSizeInBytes</code> 设置内存页的大小</p>
+<p>8、使用非占用的垃圾收集器。<code>-XX:+UseConcMarkSweepGC</code>老年代使用CMS收集器降低停顿。</p>
+<p>9、<code>-XXSurvivorRatio=3</code>，表示年轻代中的分配比率：survivor:eden = 2:3</p>
+<p>10、JVM性能调优的工具：<br>（1）jps（Java Process Status）：输出JVM中运行的进程状态信息(现在一般使用jconsole)<br>（2）jstack：查看java进程内线程的堆栈信息。<br>（3）jmap：用于生成堆转存快照<br>（4）jhat：用于分析jmap生成的堆转存快照（一般不推荐使用，而是使用Ecplise Memory Analyzer）<br>（3）jstat是JVM统计监测工具。可以用来显示垃圾回收信息、类加载信息、新生代统计信息等。<br>（4）VisualVM：故障处理工具</p>
+<h3 id="生产环境JVM调优具体步骤"><a href="#生产环境JVM调优具体步骤" class="headerlink" title="生产环境JVM调优具体步骤"></a>生产环境JVM调优具体步骤</h3><h5 id="1-监控GC的状态"><a href="#1-监控GC的状态" class="headerlink" title="1.监控GC的状态"></a>1.监控GC的状态</h5><p>使用各种JVM工具，查看当前日志，分析当前JVM参数设置，并且分析当前堆内存快照和gc日志，根据实际的各区域内存划分和GC执行时间，觉得是否进行优化。举一个例子，系统崩溃前的一些现象：每次垃圾回收的时间越来越长，由之前的10ms延长到50ms左右，FullGC的时间也由之前的0.5s延长到4、5s，FullGC的次数越来越多，最频繁时隔不到1分钟就进行一次FullGC，老年代的内存越来越大并且每次FGC后老年代没有内存释放，之后系统会无法响应新的数据，逐渐到达OutMemoryError的临界值，这个时候就需要分析JVM内存快照dump。</p>
+<h5 id="2-生成堆的dump文件"><a href="#2-生成堆的dump文件" class="headerlink" title="2.生成堆的dump文件"></a>2.生成堆的dump文件</h5><p>通过JMX的MBean生成当前的Heap信息，大小为一个3G（整个堆得大小）的hprof文件，如果没有启动JMX可以通过Java的jmap命令来生成改文件。</p>
+<h5 id="3-分析dump文件"><a href="#3-分析dump文件" class="headerlink" title="3.分析dump文件"></a>3.分析dump文件</h5><p>打开这个3G的堆信息文件，显然一般的Windows系统没有这么大的内存，必须借助高配置的Linux，几种工具打开该文件：Visual VM、IBM HeadpAnalyzer、JDK自带的Hprof工具、Mat（Eclipse专门的静态内存分析工具）推荐使用。Tips：文件太大，建议使用Eclipse专门的静态内存工具Mat打开分析。</p>
+<h5 id="4-分析结果，判断是否需要优化"><a href="#4-分析结果，判断是否需要优化" class="headerlink" title="4.分析结果，判断是否需要优化"></a>4.分析结果，判断是否需要优化</h5><p>如果各项参数设置合理，系统没有超时日志出现，GC频率不高，GC耗时不高，那么没有必要进行GC优化，如果GC时间超过1-3s，或者频繁GC，则必须优化。注意： 如果满足下面的指标，<strong>则一般不需要进行 GC 优化：</strong></p>
+<blockquote>
+<ul>
+<li>MinorGC 执行时间不到50ms；</li>
+<li>Minor GC 执行不频繁，约10秒一次；</li>
+<li>Full GC 执行时间不到1s；</li>
+<li>Full GC 执行频率不算频繁，不低于10分钟1次。</li>
+</ul>
+</blockquote>
+<h5 id="5-调整GC类型和内存分配"><a href="#5-调整GC类型和内存分配" class="headerlink" title="5.调整GC类型和内存分配"></a>5.调整GC类型和内存分配</h5><p>如果内存分配 过大或过小，或者采用的GC收集器比较慢，则应该优先调整这些参数，并且先找1台或几台机器进行beta，然后比较优化过的机器和没有优化的机器的性能对比，并有针对性的做出最后选择。</p>
+<h5 id="6-不断的分析和调整"><a href="#6-不断的分析和调整" class="headerlink" title="6.不断的分析和调整"></a>6.不断的分析和调整</h5><p>通过不断的试验和试错，分析并找出最合适的参数，如果找到了最合适的参数，则将这些参数应用到所有服务器。</p>
+<p>一般遇到问题就是打出当时的线程信息生成dump然后查异常代码。</p>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MjM5NzMyMjAwMA==&mid=2651485913&idx=1&sn=c40e03e94a7eb1f62baaa09173afc860&chksm=bd251aa68a5293b00dd0228451e19eef1e98684e5d596bbed2d647b8530e02eac2042580870e&scene=21#wechat_redirect" target="_blank" rel="noopener">附：JVM 性能调优监控工具 jps、jstack、jmap、jhat、jstat、hprof 使用详解</a></p>
+<h2 id="对象已经死亡？"><a href="#对象已经死亡？" class="headerlink" title="对象已经死亡？"></a>对象已经死亡？</h2><h3 id="如何判断一个类是无用的类"><a href="#如何判断一个类是无用的类" class="headerlink" title="如何判断一个类是无用的类"></a>如何判断一个类是无用的类</h3><p>方法区主要回收的是无用的类，那么如何判断一个类是无用的类的呢？</p>
+<p>判定一个常量是否是“废弃常量”比较简单，而要判定一个类是否是“无用的类”的条件则相对苛刻许多。类需要同时满足下面 3 个条件才能算是 <strong>“无用的类”</strong> ：</p>
+<ul>
+<li>该类所有的实例都已经被回收，也就是 Java 堆中不存在该类的任何实例。</li>
+<li>加载该类的 <code>ClassLoader</code> 已经被回收。</li>
+<li>该类对应的 <code>java.lang.Class</code> 对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。</li>
+</ul>
+<p>虚拟机可以对满足上述 3 个条件的无用类进行回收，这里说的仅仅是“可以”，而并不是和对象一样不使用了就会必然被回收。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/23/interview/JVM面试题/">展开全文 >></a>
         </p>
       
 
@@ -367,126 +618,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/01/23/interview/多线程面试题/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-interview/JVM面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/23/interview/JVM面试题/">JVM面试题</a>
-    </h1>
-  
-
-        
-        
-<a href="/2021/01/23/interview/JVM面试题/" class="archive-article-date">
-  	<time datetime="2021-01-23T08:23:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-23</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><h3 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h3><h4 id="CMS"><a href="#CMS" class="headerlink" title="CMS"></a>CMS</h4><p><strong>CMS回收器</strong>（Concurrent Mark Sweep Collector）是回收停顿时间比较短，目前比较常用的垃圾回收器。它通过初始标记（Initial Mark）、并发标记（Concurrent Mark）、重新标记（Remark)、并发清除（Concurrent Sweep）四个步骤完成垃圾回收工作。第1、3步的初始标记和重新标记阶段依然会引发STW。2、4步可以和应用程序并发执行。CMS采用“标记 - 清除算法”，因此产生大量的空间碎片。可以通过<code>-XX:+UseCMSCompactAtFullCollection</code>参数，强制JVM在FGC完成后对老年代进行压缩，执行一次空间碎片整理，但是会引发STW。为了减少STW次数，CMS还可以通过配置<code>-XX:+CMSFullGCsBeforeCompaction=n</code>参数，在执行了n次FGC后，JVM再在老年代执行空间碎片整理。</p>
-<h4 id="G1"><a href="#G1" class="headerlink" title="G1"></a>G1</h4><p>G1（Garbage-First Garbage Collector）垃圾回收器。</p>
-<h3 id="GC触发条件"><a href="#GC触发条件" class="headerlink" title="GC触发条件"></a>GC触发条件</h3><h4 id="MinorGC触发条件"><a href="#MinorGC触发条件" class="headerlink" title="MinorGC触发条件"></a>MinorGC触发条件</h4><p>当Eden区满时触发MinorGC</p>
-<h4 id="FullGC触发条件"><a href="#FullGC触发条件" class="headerlink" title="FullGC触发条件"></a>FullGC触发条件</h4><ol>
-<li>调用System.gc时，系统建议执行FullGC，但是不必然执行</li>
-<li>老年代空间不足</li>
-<li>方法区空间不足（jdk8之前）</li>
-<li>通过MinorGC后进入老年代的平均大小大于老年代的可用内存</li>
-<li>由Eden区、FromSpace向ToSpace区复制时，对象大小大于ToSpace可用内存，则把该对象转存到老年代，且老年代的可用内存小于该对象大小</li>
-</ol>
-<h2 id="JVM调优"><a href="#JVM调优" class="headerlink" title="JVM调优"></a>JVM调优</h2><h3 id="JVM优化的思路"><a href="#JVM优化的思路" class="headerlink" title="JVM优化的思路"></a>JVM优化的思路</h3><p>1、一般来说，当survivor区不够大或者占用量达到50%，就会把一些对象放到老年区。通过设置合理的eden区，survivor区及使用率，可以将年轻对象保存在年轻代，从而避免full GC，使用<code>-Xmn</code>设置年轻代的大小</p>
-<p>2、对于占用内存比较多的大对象，一般会选择在老年代分配内存。如果在年轻代给大对象分配内存，年轻代内存不够了，就要在eden区移动大量对象到老年代，然后这些移动的对象可能很快消亡，因此导致full GC。通过设置参数：<code>-XX:PetenureSizeThreshold=1000000</code>，单位为B，标明对象大小超过1M时，在老年代(tenured)分配内存空间。</p>
-<p>3、一般情况下，年轻对象放在eden区，当第一次GC后，如果对象还存活，放到survivor区，此后，每GC一次，年龄增加1，当对象的年龄达到阈值，就被放到tenured老年区。这个阈值可以同构<code>-XX:MaxTenuringThreshold</code>设置。如果想让对象留在年轻代，可以设置比较大的阈值。</p>
-<p>4、设置最小堆和最大堆：<code>-Xmx</code>和<code>-Xms</code>稳定的堆大小堆垃圾回收是有利的，获得一个稳定的堆大小的方法是设置-Xms和-Xmx的值一样，即最大堆和最小堆一样，如果这样子设置，系统在运行时堆大小理论上是恒定的，稳定的堆空间可以减少GC次数，因此，很多服务端都会将这两个参数设置为一样的数值。稳定的堆大小虽然减少GC次数，但是增加每次GC的时间，因为每次GC要把堆的大小维持在一个区间内。</p>
-<p>5、一个不稳定的堆并非毫无用处。在系统不需要使用大内存的时候，压缩堆空间，使得GC每次应对一个较小的堆空间，加快单次GC次数。基于这种考虑，JVM提供两个参数，用于压缩和扩展堆空间。<br>（1）<code>-XX:MinHeapFreeRatio</code> 参数用于设置堆空间的最小空闲比率。默认值是40，当堆空间的空闲内存比率小于40，JVM便会扩展堆空间<br>（2）<code>-XX:MaxHeapFreeRatio</code> 参数用于设置堆空间的最大空闲比率。默认值是70， 当堆空间的空闲内存比率大于70，JVM便会压缩堆空间。<br>（3）当-Xmx和-Xmx相等时，上面两个参数无效</p>
-<p>6、通过增大吞吐量提高系统性能，可以通过设置并行垃圾回收收集器。<br>（1）<code>-XX:+UseParallelGC</code>:年轻代使用并行垃圾回收收集器。这是一个关注吞吐量的收集器，可以尽可能的减少垃圾回收时间。<br>（2）<code>-XX:+UseParallelOldGC</code>:设置老年代使用并行垃圾回收收集器。</p>
-<p>7、尝试使用大的内存分页：使用大的内存分页增加CPU的内存寻址能力，从而系统的性能。<code>-XX:+LargePageSizeInBytes</code> 设置内存页的大小</p>
-<p>8、使用非占用的垃圾收集器。<code>-XX:+UseConcMarkSweepGC</code>老年代使用CMS收集器降低停顿。</p>
-<p>9、<code>-XXSurvivorRatio=3</code>，表示年轻代中的分配比率：survivor:eden = 2:3</p>
-<p>10、JVM性能调优的工具：<br>（1）jps（Java Process Status）：输出JVM中运行的进程状态信息(现在一般使用jconsole)<br>（2）jstack：查看java进程内线程的堆栈信息。<br>（3）jmap：用于生成堆转存快照<br>（4）jhat：用于分析jmap生成的堆转存快照（一般不推荐使用，而是使用Ecplise Memory Analyzer）<br>（3）jstat是JVM统计监测工具。可以用来显示垃圾回收信息、类加载信息、新生代统计信息等。<br>（4）VisualVM：故障处理工具</p>
-<h3 id="生产环境JVM调优具体步骤"><a href="#生产环境JVM调优具体步骤" class="headerlink" title="生产环境JVM调优具体步骤"></a>生产环境JVM调优具体步骤</h3><h5 id="1-监控GC的状态"><a href="#1-监控GC的状态" class="headerlink" title="1.监控GC的状态"></a>1.监控GC的状态</h5><p>使用各种JVM工具，查看当前日志，分析当前JVM参数设置，并且分析当前堆内存快照和gc日志，根据实际的各区域内存划分和GC执行时间，觉得是否进行优化。举一个例子，系统崩溃前的一些现象：每次垃圾回收的时间越来越长，由之前的10ms延长到50ms左右，FullGC的时间也由之前的0.5s延长到4、5s，FullGC的次数越来越多，最频繁时隔不到1分钟就进行一次FullGC，老年代的内存越来越大并且每次FGC后老年代没有内存释放，之后系统会无法响应新的数据，逐渐到达OutMemoryError的临界值，这个时候就需要分析JVM内存快照dump。</p>
-<h5 id="2-生成堆的dump文件"><a href="#2-生成堆的dump文件" class="headerlink" title="2.生成堆的dump文件"></a>2.生成堆的dump文件</h5><p>通过JMX的MBean生成当前的Heap信息，大小为一个3G（整个堆得大小）的hprof文件，如果没有启动JMX可以通过Java的jmap命令来生成改文件。</p>
-<h5 id="3-分析dump文件"><a href="#3-分析dump文件" class="headerlink" title="3.分析dump文件"></a>3.分析dump文件</h5><p>打开这个3G的堆信息文件，显然一般的Windows系统没有这么大的内存，必须借助高配置的Linux，几种工具打开该文件：Visual VM、IBM HeadpAnalyzer、JDK自带的Hprof工具、Mat（Eclipse专门的静态内存分析工具）推荐使用。Tips：文件太大，建议使用Eclipse专门的静态内存工具Mat打开分析。</p>
-<h5 id="4-分析结果，判断是否需要优化"><a href="#4-分析结果，判断是否需要优化" class="headerlink" title="4.分析结果，判断是否需要优化"></a>4.分析结果，判断是否需要优化</h5><p>如果各项参数设置合理，系统没有超时日志出现，GC频率不高，GC耗时不高，那么没有必要进行GC优化，如果GC时间超过1-3s，或者频繁GC，则必须优化。注意： 如果满足下面的指标，<strong>则一般不需要进行 GC 优化：</strong></p>
-<blockquote>
-<ul>
-<li>MinorGC 执行时间不到50ms；</li>
-<li>Minor GC 执行不频繁，约10秒一次；</li>
-<li>Full GC 执行时间不到1s；</li>
-<li>Full GC 执行频率不算频繁，不低于10分钟1次。</li>
-</ul>
-</blockquote>
-<h5 id="5-调整GC类型和内存分配"><a href="#5-调整GC类型和内存分配" class="headerlink" title="5.调整GC类型和内存分配"></a>5.调整GC类型和内存分配</h5><p>如果内存分配 过大或过小，或者采用的GC收集器比较慢，则应该优先调整这些参数，并且先找1台或几台机器进行beta，然后比较优化过的机器和没有优化的机器的性能对比，并有针对性的做出最后选择。</p>
-<h5 id="6-不断的分析和调整"><a href="#6-不断的分析和调整" class="headerlink" title="6.不断的分析和调整"></a>6.不断的分析和调整</h5><p>通过不断的试验和试错，分析并找出最合适的参数，如果找到了最合适的参数，则将这些参数应用到所有服务器。</p>
-<p>一般遇到问题就是打出当时的线程信息生成dump然后查异常代码。</p>
-<p><a href="https://mp.weixin.qq.com/s?__biz=MjM5NzMyMjAwMA==&mid=2651485913&idx=1&sn=c40e03e94a7eb1f62baaa09173afc860&chksm=bd251aa68a5293b00dd0228451e19eef1e98684e5d596bbed2d647b8530e02eac2042580870e&scene=21#wechat_redirect" target="_blank" rel="noopener">附：JVM 性能调优监控工具 jps、jstack、jmap、jhat、jstat、hprof 使用详解</a></p>
-<h2 id="对象已经死亡？"><a href="#对象已经死亡？" class="headerlink" title="对象已经死亡？"></a>对象已经死亡？</h2><h3 id="如何判断一个类是无用的类"><a href="#如何判断一个类是无用的类" class="headerlink" title="如何判断一个类是无用的类"></a>如何判断一个类是无用的类</h3><p>方法区主要回收的是无用的类，那么如何判断一个类是无用的类的呢？</p>
-<p>判定一个常量是否是“废弃常量”比较简单，而要判定一个类是否是“无用的类”的条件则相对苛刻许多。类需要同时满足下面 3 个条件才能算是 <strong>“无用的类”</strong> ：</p>
-<ul>
-<li>该类所有的实例都已经被回收，也就是 Java 堆中不存在该类的任何实例。</li>
-<li>加载该类的 <code>ClassLoader</code> 已经被回收。</li>
-<li>该类对应的 <code>java.lang.Class</code> 对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。</li>
-</ul>
-<p>虚拟机可以对满足上述 3 个条件的无用类进行回收，这里说的仅仅是“可以”，而并不是和对象一样不使用了就会必然被回收。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/01/23/interview/JVM面试题/">展开全文 >></a>
         </p>
       
 
@@ -897,78 +1028,6 @@
 
 
   
-    <article id="post-application/SpringBoot打包时复制指定配置文件到指定目录，并剔除jar包内所有配置文件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/02/24/application/SpringBoot打包时复制指定配置文件到指定目录，并剔除jar包内所有配置文件/">SpringBoot打包时复制指定配置文件到指定目录，并剔除jar包内所有配置文件</a>
-    </h1>
-  
-
-        
-        
-<a href="/2020/02/24/application/SpringBoot打包时复制指定配置文件到指定目录，并剔除jar包内所有配置文件/" class="archive-article-date">
-  	<time datetime="2020-02-24T03:04:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-24</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近遇到一个需求，把SpringBoot项目的配置文件放到Jar包外面，Jar包内不包含多余配置文件，Jar包运行时指定外部配置文件启动。我的配置文件放在src/main/resources/config下，打包时拷贝到Jar包同级config目录下（SpringBoot默认支持读取Jar包同级config文件夹中的配置），具体解决方案如下：</p>
-<ul>
-<li><p>使用maven-jar-plugin插件移除配置文件将其不打包进jar包中</p>
-</li>
-<li><p>使用maven-resources-plugin插件将需要复制的文件复制到指定路径（例：将配置文件提取到指定路径）</p>
-<p>Maven配置如下：</p>
-        
-          <a class="article-more-a" href="/2020/02/24/application/SpringBoot打包时复制指定配置文件到指定目录，并剔除jar包内所有配置文件/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/02/24/application/SpringBoot打包时复制指定配置文件到指定目录，并剔除jar包内所有配置文件/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
@@ -1133,15 +1192,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MySQL实战45讲</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
