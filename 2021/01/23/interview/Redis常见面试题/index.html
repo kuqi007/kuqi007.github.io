@@ -8,21 +8,21 @@
   <link rel="dns-prefetch" href="https://blog.elfred.top">
   <title>Redis常见面试题 | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Redis线程模型Redis单线程的理解，Redis 为什么早期版本选择单线程？官方解释因为 Redis 是基于内存的操作，CPU 不是 Redis 的瓶颈，Redis 的瓶颈最有可能是 机器内存的大小 或者 网络带宽。既然单线程容易实现，而且 CPU 不会成为瓶颈，那就顺理成章地采用单线程的方案了。 简单总结一下 使用单线程模型能带来更好的 可维护性，方便开发和调试； 使用单线程模型也能 并发">
+  <meta name="description" content="Redis线程模型Redis单线程的理解，Redis 为什么早期版本选择单线程？官方解释因为 Redis 是基于内存的操作，CPU 不是 Redis 的瓶颈，Redis 的瓶颈最有可能是 机器内存的大小 或者 网络带宽。既然单线程容易实现，而且 CPU 不会成为瓶颈，那就顺理成章地采用单线程的方案了。  首先，我们需要明白，多线程解决的问题。当一个线程处理的任务是I/O密集型的，而I/O传输数据">
 <meta name="keywords" content="面经">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis常见面试题">
 <meta property="og:url" content="https://blog.elfred.top/2021/01/23/interview/Redis常见面试题/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="Redis线程模型Redis单线程的理解，Redis 为什么早期版本选择单线程？官方解释因为 Redis 是基于内存的操作，CPU 不是 Redis 的瓶颈，Redis 的瓶颈最有可能是 机器内存的大小 或者 网络带宽。既然单线程容易实现，而且 CPU 不会成为瓶颈，那就顺理成章地采用单线程的方案了。 简单总结一下 使用单线程模型能带来更好的 可维护性，方便开发和调试； 使用单线程模型也能 并发">
+<meta property="og:description" content="Redis线程模型Redis单线程的理解，Redis 为什么早期版本选择单线程？官方解释因为 Redis 是基于内存的操作，CPU 不是 Redis 的瓶颈，Redis 的瓶颈最有可能是 机器内存的大小 或者 网络带宽。既然单线程容易实现，而且 CPU 不会成为瓶颈，那就顺理成章地采用单线程的方案了。  首先，我们需要明白，多线程解决的问题。当一个线程处理的任务是I/O密集型的，而I/O传输数据">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210228212624.webp">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210509211524.webp">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210119165016.png">
-<meta property="og:updated_time" content="2021-05-09T13:42:47.185Z">
+<meta property="og:updated_time" content="2021-05-10T14:37:45.938Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis常见面试题">
-<meta name="twitter:description" content="Redis线程模型Redis单线程的理解，Redis 为什么早期版本选择单线程？官方解释因为 Redis 是基于内存的操作，CPU 不是 Redis 的瓶颈，Redis 的瓶颈最有可能是 机器内存的大小 或者 网络带宽。既然单线程容易实现，而且 CPU 不会成为瓶颈，那就顺理成章地采用单线程的方案了。 简单总结一下 使用单线程模型能带来更好的 可维护性，方便开发和调试； 使用单线程模型也能 并发">
+<meta name="twitter:description" content="Redis线程模型Redis单线程的理解，Redis 为什么早期版本选择单线程？官方解释因为 Redis 是基于内存的操作，CPU 不是 Redis 的瓶颈，Redis 的瓶颈最有可能是 机器内存的大小 或者 网络带宽。既然单线程容易实现，而且 CPU 不会成为瓶颈，那就顺理成章地采用单线程的方案了。  首先，我们需要明白，多线程解决的问题。当一个线程处理的任务是I/O密集型的，而I/O传输数据">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210228212624.webp">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
@@ -178,9 +178,14 @@
       
         <hr>
 <h2 id="Redis线程模型"><a href="#Redis线程模型" class="headerlink" title="Redis线程模型"></a>Redis线程模型</h2><h3 id="Redis单线程的理解，Redis-为什么早期版本选择单线程？"><a href="#Redis单线程的理解，Redis-为什么早期版本选择单线程？" class="headerlink" title="Redis单线程的理解，Redis 为什么早期版本选择单线程？"></a>Redis单线程的理解，Redis 为什么早期版本选择单线程？</h3><h4 id="官方解释"><a href="#官方解释" class="headerlink" title="官方解释"></a>官方解释</h4><p>因为 Redis 是基于内存的操作，<strong>CPU 不是 Redis 的瓶颈</strong>，Redis 的瓶颈最有可能是 <strong>机器内存的大小</strong> 或者 <strong>网络带宽</strong>。既然单线程容易实现，而且 CPU 不会成为瓶颈，那就顺理成章地采用单线程的方案了。</p>
+<blockquote>
+<p>首先，我们需要明白，多线程解决的问题。当一个线程处理的任务是I/O密集型的，而I/O传输数据很慢，因此线程总是处于等待数据传输，从而造成CPU资源的浪费。这时我们可以开辟多个线程，当一个线程在等待I/O传输时，调度其他线程进行任务处理。<br>然而，redis所有的数据都存储在内存中，此时并不需要I/O操作。而多线程调度还会造成额外的开销且实现复杂。<br>最终，选用单线程即可。</p>
+</blockquote>
+<p>一种解释：</p>
+<p>因为Redis是基于内存的操作，CPU不是Redis的瓶颈，Redis的瓶颈最有可能是机器内存的大小或者网络带宽。既然单线程容易实现，而且CPU不会成为瓶颈，那就顺理成章地采用单线程的方案了。</p>
 <h4 id="简单总结一下"><a href="#简单总结一下" class="headerlink" title="简单总结一下"></a>简单总结一下</h4><ol>
 <li>使用单线程模型能带来更好的 <strong>可维护性</strong>，方便开发和调试；</li>
-<li>使用单线程模型也能 <strong>并发</strong> 的处理客户端的请求；<em>(I/O 多路复用机制)</em></li>
+<li>使用单线程模型也能 <strong>并发</strong> 的处理客户端的请求(I/O 多路复用机制epoll)；</li>
 <li>Redis 服务中运行的绝大多数操作的 <strong>性能瓶颈都不是 CPU</strong>；</li>
 </ol>
 <h3 id="Redis为什么这么快？"><a href="#Redis为什么这么快？" class="headerlink" title="Redis为什么这么快？"></a>Redis为什么这么快？</h3><p>简单总结：</p>
@@ -541,11 +546,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">面经</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -561,15 +570,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -578,6 +579,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">面试题</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
