@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://blog.elfred.top">
   <title> 2021面经第二波 | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="涂鸦智能 redis为什么这么快 redis为什么是单线程 3000万数据的表，如何进行优化 分库分表、多维度查询  滴滴 24. 两两交换链表中的节点 堆外内存  类加载机制  双亲委派机制，如何打破  不同的类加载器加载的类是不是同一个类  https://cloud.tencent.com/developer/news/627029 不同类加载器加载的类在 JVM 看来是两个不同的类，因为">
+  <meta name="description" content="涂鸦智能 redis为什么这么快 redis为什么是单线程 3000万数据的表，如何进行优化 分库分表、多维度查询  滴滴 24. 两两交换链表中的节点  堆外内存  类加载机制  双亲委派机制，如何打破  不同的类加载器加载的类是不是同一个类  https://cloud.tencent.com/developer/news/627029 不同类加载器加载的类在 JVM 看来是两个不同的类，因">
 <meta name="keywords" content="面经">
 <meta property="og:type" content="article">
 <meta property="og:title" content=" 2021面经第二波">
 <meta property="og:url" content="https://blog.elfred.top/2021/05/09/interview/2021面经第二波/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="涂鸦智能 redis为什么这么快 redis为什么是单线程 3000万数据的表，如何进行优化 分库分表、多维度查询  滴滴 24. 两两交换链表中的节点 堆外内存  类加载机制  双亲委派机制，如何打破  不同的类加载器加载的类是不是同一个类  https://cloud.tencent.com/developer/news/627029 不同类加载器加载的类在 JVM 看来是两个不同的类，因为">
+<meta property="og:description" content="涂鸦智能 redis为什么这么快 redis为什么是单线程 3000万数据的表，如何进行优化 分库分表、多维度查询  滴滴 24. 两两交换链表中的节点  堆外内存  类加载机制  双亲委派机制，如何打破  不同的类加载器加载的类是不是同一个类  https://cloud.tencent.com/developer/news/627029 不同类加载器加载的类在 JVM 看来是两个不同的类，因">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-05-12T23:45:11.891Z">
+<meta property="og:updated_time" content="2021-05-15T13:35:18.926Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content=" 2021面经第二波">
-<meta name="twitter:description" content="涂鸦智能 redis为什么这么快 redis为什么是单线程 3000万数据的表，如何进行优化 分库分表、多维度查询  滴滴 24. 两两交换链表中的节点 堆外内存  类加载机制  双亲委派机制，如何打破  不同的类加载器加载的类是不是同一个类  https://cloud.tencent.com/developer/news/627029 不同类加载器加载的类在 JVM 看来是两个不同的类，因为">
+<meta name="twitter:description" content="涂鸦智能 redis为什么这么快 redis为什么是单线程 3000万数据的表，如何进行优化 分库分表、多维度查询  滴滴 24. 两两交换链表中的节点  堆外内存  类加载机制  双亲委派机制，如何打破  不同的类加载器加载的类是不是同一个类  https://cloud.tencent.com/developer/news/627029 不同类加载器加载的类在 JVM 看来是两个不同的类，因">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -180,7 +180,8 @@
 <li>分库分表、多维度查询</li>
 </ul>
 <h3 id="滴滴"><a href="#滴滴" class="headerlink" title="滴滴"></a>滴滴</h3><ul>
-<li><h4 id="24-两两交换链表中的节点"><a href="#24-两两交换链表中的节点" class="headerlink" title="24. 两两交换链表中的节点"></a><a href="https://leetcode-cn.com/problems/swap-nodes-in-pairs/" target="_blank" rel="noopener">24. 两两交换链表中的节点</a></h4></li>
+<li><p><a href="https://leetcode-cn.com/problems/swap-nodes-in-pairs/" target="_blank" rel="noopener">24. 两两交换链表中的节点</a></p>
+</li>
 <li><p>堆外内存</p>
 </li>
 <li><p>类加载机制</p>
@@ -197,7 +198,9 @@
 </li>
 <li><p>synchronized和ReentrantLock的区别（是否是重入锁）</p>
 </li>
-<li><p>synchronized锁升级</p>
+<li><p>ReentrantLock非公平锁和公平锁如何做到的</p>
+</li>
+<li><p>synchronized锁升级原理</p>
 </li>
 <li><p>redis分布式锁如何使用</p>
 </li>
@@ -298,6 +301,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2021/05/15/study/数据结构与算法之美/学习笔记/23讲/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          23讲
+        
+      </div>
+    </a>
   
   
     <a href="/2021/05/09/study/数据结构与算法之美/学习笔记/17讲/" id="article-nav-older" class="article-nav-link-wrap">
@@ -486,15 +498,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">面经</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -514,15 +522,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">面试题</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
