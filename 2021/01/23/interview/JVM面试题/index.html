@@ -8,18 +8,20 @@
   <link rel="dns-prefetch" href="https://blog.elfred.top">
   <title>JVM面试题 | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="垃圾回收垃圾回收器CMSCMS回收器（Concurrent Mark Sweep Collector）是回收停顿时间比较短，目前比较常用的垃圾回收器。它通过初始标记（Initial Mark）、并发标记（Concurrent Mark）、重新标记（Remark)、并发清除（Concurrent Sweep）四个步骤完成垃圾回收工作。第1、3步的初始标记和重新标记阶段依然会引发STW。2、4步可以">
+  <meta name="description" content="类加载过程过程：加载、验证、准备、解析、初始化  类加载过程分为三个阶段：Load、Link和Init，即加载、链接、初始化  第一步，Load阶段读取类文件产生二进制流，并转化为特定的数据结构，初步校验cafe babe魔法数、常量池、文件长度、是否有父类等，然后创建对应的java.lang.Class实例 第二步，Link阶段包括验证、准备、解析三个步骤。验证是更详细的校验，比如final是">
 <meta name="keywords" content="面经">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM面试题">
 <meta property="og:url" content="https://blog.elfred.top/2021/01/23/interview/JVM面试题/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="垃圾回收垃圾回收器CMSCMS回收器（Concurrent Mark Sweep Collector）是回收停顿时间比较短，目前比较常用的垃圾回收器。它通过初始标记（Initial Mark）、并发标记（Concurrent Mark）、重新标记（Remark)、并发清除（Concurrent Sweep）四个步骤完成垃圾回收工作。第1、3步的初始标记和重新标记阶段依然会引发STW。2、4步可以">
+<meta property="og:description" content="类加载过程过程：加载、验证、准备、解析、初始化  类加载过程分为三个阶段：Load、Link和Init，即加载、链接、初始化  第一步，Load阶段读取类文件产生二进制流，并转化为特定的数据结构，初步校验cafe babe魔法数、常量池、文件长度、是否有父类等，然后创建对应的java.lang.Class实例 第二步，Link阶段包括验证、准备、解析三个步骤。验证是更详细的校验，比如final是">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-03-06T06:15:01.914Z">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEly1gobnnbem87j30eq0cogmj.jpg">
+<meta property="og:updated_time" content="2021-05-18T23:48:55.684Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM面试题">
-<meta name="twitter:description" content="垃圾回收垃圾回收器CMSCMS回收器（Concurrent Mark Sweep Collector）是回收停顿时间比较短，目前比较常用的垃圾回收器。它通过初始标记（Initial Mark）、并发标记（Concurrent Mark）、重新标记（Remark)、并发清除（Concurrent Sweep）四个步骤完成垃圾回收工作。第1、3步的初始标记和重新标记阶段依然会引发STW。2、4步可以">
+<meta name="twitter:description" content="类加载过程过程：加载、验证、准备、解析、初始化  类加载过程分为三个阶段：Load、Link和Init，即加载、链接、初始化  第一步，Load阶段读取类文件产生二进制流，并转化为特定的数据结构，初步校验cafe babe魔法数、常量池、文件长度、是否有父类等，然后创建对应的java.lang.Class实例 第二步，Link阶段包括验证、准备、解析三个步骤。验证是更详细的校验，比如final是">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/008eGmZEly1gobnnbem87j30eq0cogmj.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -173,6 +175,14 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
+<h2 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h2><p><strong>过程：加载、验证、准备、解析、初始化</strong></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gobnnbem87j30eq0cogmj.jpg" alt="img"></p>
+<p>类加载过程分为三个阶段：Load、Link和Init，即<strong>加载</strong>、<strong>链接</strong>、<strong>初始化</strong></p>
+<ol>
+<li>第一步，Load阶段读取类文件产生二进制流，并转化为特定的数据结构，初步校验cafe babe魔法数、常量池、文件长度、是否有父类等，然后创建对应的java.lang.Class实例</li>
+<li>第二步，Link阶段包括<strong>验证</strong>、<strong>准备</strong>、<strong>解析</strong>三个步骤。验证是更详细的校验，比如final是否合规、类型是否正确、静态变量是否合理等；准备阶段是为静态变量分配内存，并设定默认值，解析类和方法确保类与类之间的相互引用正确性，完成内存结构布局。</li>
+<li>第三步，Init阶段执行雷构造器&lt;clint&gt;方法，如果赋值运算是通过其他类的静态方法来完成的，那么会马上解析另外一个类，在虚拟机栈中执行完毕后通过返回值进行赋值。</li>
+</ol>
 <h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><h3 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h3><h4 id="CMS"><a href="#CMS" class="headerlink" title="CMS"></a>CMS</h4><p><strong>CMS回收器</strong>（Concurrent Mark Sweep Collector）是回收停顿时间比较短，目前比较常用的垃圾回收器。它通过初始标记（Initial Mark）、并发标记（Concurrent Mark）、重新标记（Remark)、并发清除（Concurrent Sweep）四个步骤完成垃圾回收工作。第1、3步的初始标记和重新标记阶段依然会引发STW。2、4步可以和应用程序并发执行。CMS采用“标记 - 清除算法”，因此产生大量的空间碎片。可以通过<code>-XX:+UseCMSCompactAtFullCollection</code>参数，强制JVM在FGC完成后对老年代进行压缩，执行一次空间碎片整理，但是会引发STW。为了减少STW次数，CMS还可以通过配置<code>-XX:+CMSFullGCsBeforeCompaction=n</code>参数，在执行了n次FGC后，JVM再在老年代执行空间碎片整理。</p>
 <h4 id="G1"><a href="#G1" class="headerlink" title="G1"></a>G1</h4><p>G1（Garbage-First Garbage Collector）垃圾回收器。</p>
 <h3 id="GC触发条件"><a href="#GC触发条件" class="headerlink" title="GC触发条件"></a>GC触发条件</h3><h4 id="MinorGC触发条件"><a href="#MinorGC触发条件" class="headerlink" title="MinorGC触发条件"></a>MinorGC触发条件</h4><p>当Eden区满时触发MinorGC</p>
@@ -504,6 +514,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -516,15 +530,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -533,6 +539,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">面试题</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
