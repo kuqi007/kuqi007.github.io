@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210529221549.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210529215119.webp">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210529210252.webp">
-<meta property="og:updated_time" content="2021-05-29T15:11:40.555Z">
+<meta property="og:updated_time" content="2021-05-29T15:18:51.810Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kafka面试题">
 <meta name="twitter:description" content="kafka入门整体架构图 topictopic可以简单认为是一个队列，每个队列做不同的事情，队列之间相对隔离；每个队列都有不同的名字，这样我们就知道往哪个队列丢数据，也知道从哪个队列拿数据了。我们可以有多个生产者往同一个队列(topic)丢数据，多个消费者往同一个队列(topic)拿数据 partition为了提高每个队列（topic）的吞吐量，kafka会把topic进行分区(Partitio">
@@ -227,21 +227,17 @@
 <p>消息持久化</p>
 <p>分布式易拓展</p>
 <h3 id="kafka为什么这么快"><a href="#kafka为什么这么快" class="headerlink" title="kafka为什么这么快"></a>kafka为什么这么快</h3><p>Kafka速度的秘诀在于，它把所有的消息都变成一个批量的文件，并且进行合理的批量压缩，减少网络IO损耗，通过mmap提高I/O速度，写入数据的时候由于单个Partion是末尾添加所以速度最优；读取数据的时候配合sendfile直接暴力输出。</p>
-<p>具体分两个方面：</p>
-<ol>
-<li><p>写入：</p>
+<p>具体分写入和读取两个方面：</p>
+<p><strong>写入</strong>：</p>
 <ul>
 <li>使用顺序写入</li>
 <li>Memory Mapped Files</li>
 </ul>
-</li>
-<li><p>读取：</p>
+<p><strong>读取</strong>：</p>
 <ul>
 <li>基于sendfile实现Zero Copy</li>
 <li>批量压缩</li>
 </ul>
-</li>
-</ol>
 <h3 id="什么是零拷贝？"><a href="#什么是零拷贝？" class="headerlink" title="什么是零拷贝？"></a>什么是零拷贝？</h3><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210529210252.webp" alt="图片"></p>
 <p><a href="https://www.cnblogs.com/rickiyang/p/13265043.html" target="_blank" rel="noopener">https://www.cnblogs.com/rickiyang/p/13265043.html</a></p>
 
@@ -522,11 +518,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -542,10 +538,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
               </li>
              
@@ -555,6 +547,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">面试题</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
