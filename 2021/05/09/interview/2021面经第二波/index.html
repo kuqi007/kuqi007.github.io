@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Elfred&#39;s Blog">
 <meta property="og:description" content="涂鸦智能 redis为什么这么快 redis为什么是单线程 3000万数据的表，如何进行优化 分库分表、多维度查询  滴滴 24. 两两交换链表中的节点  堆外内存  类加载机制  双亲委派机制，如何打破  不同的类加载器加载的类是不是同一个类  https://cloud.tencent.com/developer/news/627029 不同类加载器加载的类在 JVM 看来是两个不同的类，因">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-05-16T16:01:26.411Z">
+<meta property="og:updated_time" content="2021-05-29T13:48:38.209Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content=" 2021面经第二波">
 <meta name="twitter:description" content="涂鸦智能 redis为什么这么快 redis为什么是单线程 3000万数据的表，如何进行优化 分库分表、多维度查询  滴滴 24. 两两交换链表中的节点  堆外内存  类加载机制  双亲委派机制，如何打破  不同的类加载器加载的类是不是同一个类  https://cloud.tencent.com/developer/news/627029 不同类加载器加载的类在 JVM 看来是两个不同的类，因">
@@ -230,6 +230,34 @@
 <li>redis集群、高可用、持久化</li>
 <li>本地事务表如果TPS太高，如何优化</li>
 </ul>
+<h3 id="酷家乐"><a href="#酷家乐" class="headerlink" title="酷家乐"></a>酷家乐</h3><ul>
+<li>最长回文子串</li>
+<li>带<code>+ - * /（）</code>的基本计算器</li>
+<li>binlog存储形式（row和statement）</li>
+<li>mvcc具体是如何解决幻读的？</li>
+<li>类加载过程</li>
+</ul>
+<h3 id="哈罗单车"><a href="#哈罗单车" class="headerlink" title="哈罗单车"></a>哈罗单车</h3><ul>
+<li>两个不同版本的类，如果我都想去加载？如何去做（自定义两个类加载器去加载）</li>
+<li></li>
+</ul>
+<h3 id="网易"><a href="#网易" class="headerlink" title="网易"></a>网易</h3><ul>
+<li><p>cms和G1垃圾回收器的区别？为什么G1适合大内存，G1如何做到低停顿的？</p>
+</li>
+<li><p>读写锁的实现细节</p>
+</li>
+<li><p>volatile保证了什么？如何保证的</p>
+</li>
+<li><p>SQL注入是啥，以及它的原理，如何避免</p>
+</li>
+<li><p>MySQL如何解决幻读？</p>
+</li>
+<li><p>kafka消息投递语义精准一次性（Exactly-once）是如何保证的？</p>
+<blockquote>
+<p> 这个特性是怎么实现的呢？在底层，它和TCP的工作原理有点像，每一批发送到Kafka的消息都将包含一个序列号，broker将使用这个序列号来删除重复的发送。和只能在瞬态内存中的连接中保证不重复的TCP不同，这个序列号被持久化到副本日志，所以，即使分区的leader挂了，其他的broker接管了leader，新leader仍可以判断重新发送的是否重复了。这种机制的开销非常低：每批消息只有几个额外的字段。</p>
+</blockquote>
+</li>
+</ul>
 
       
 
@@ -313,11 +341,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/05/15/study/数据结构与算法之美/学习笔记/24讲/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/05/15/study/数据结构与算法之美/学习笔记/23讲/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          24讲
+          23讲
         
       </div>
     </a>
@@ -517,7 +545,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -533,6 +561,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
               </li>
              
@@ -545,11 +577,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">框架</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -558,10 +594,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
