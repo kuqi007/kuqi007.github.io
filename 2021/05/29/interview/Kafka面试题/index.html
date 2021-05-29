@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210529221549.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210529215119.webp">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210529210252.webp">
-<meta property="og:updated_time" content="2021-05-29T15:18:51.810Z">
+<meta property="og:updated_time" content="2021-05-29T15:21:47.267Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kafka面试题">
 <meta name="twitter:description" content="kafka入门整体架构图 topictopic可以简单认为是一个队列，每个队列做不同的事情，队列之间相对隔离；每个队列都有不同的名字，这样我们就知道往哪个队列丢数据，也知道从哪个队列拿数据了。我们可以有多个生产者往同一个队列(topic)丢数据，多个消费者往同一个队列(topic)拿数据 partition为了提高每个队列（topic）的吞吐量，kafka会把topic进行分区(Partitio">
@@ -187,7 +187,7 @@
 <p>一个topic会分为多个partition，实际上partition会<strong>分布</strong>在不同的broker中，举个例子：</p>
 <p>生产者往一个topic里面丢数据，实际上数据会在partition中，partition会分布在不同的<strong>broker</strong>（服务器）上。</p>
 <p>由此得知：<strong>Kafka是天然分布式的</strong>。</p>
-<h3 id><a href="#" class="headerlink" title></a></h3><h3 id="消费者和消费者组"><a href="#消费者和消费者组" class="headerlink" title="消费者和消费者组"></a>消费者和消费者组</h3><p>既然数据是保存在partition中的，那么消费者实际上也是从partition中取数据。</p>
+<h3 id="消费者和消费者组"><a href="#消费者和消费者组" class="headerlink" title="消费者和消费者组"></a>消费者和消费者组</h3><p>既然数据是保存在partition中的，那么消费者实际上也是从partition中取数据。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210529221224.jpeg" alt="图片"></p>
 <p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210529221549.png" alt="img"></p>
 <p>使用 Consumer high level API 时，同一 Topic 的一条消息只能被同一个 Consumer Group 内的一个 Consumer 消费，但多个 Consumer Group 可同时消费这一消息。</p>
@@ -514,15 +514,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">面经</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color1">kafka</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -550,19 +558,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">kafka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">框架</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -571,6 +567,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
