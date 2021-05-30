@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Elfred&#39;s Blog">
 <meta property="og:description" content="涂鸦智能 redis为什么这么快 redis为什么是单线程 3000万数据的表，如何进行优化 分库分表、多维度查询  滴滴 24. 两两交换链表中的节点  堆外内存  类加载机制  双亲委派机制，如何打破  不同的类加载器加载的类是不是同一个类  https://cloud.tencent.com/developer/news/627029 不同类加载器加载的类在 JVM 看来是两个不同的类，因">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-05-29T13:48:38.209Z">
+<meta property="og:updated_time" content="2021-05-30T09:42:29.851Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content=" 2021面经第二波">
 <meta name="twitter:description" content="涂鸦智能 redis为什么这么快 redis为什么是单线程 3000万数据的表，如何进行优化 分库分表、多维度查询  滴滴 24. 两两交换链表中的节点  堆外内存  类加载机制  双亲委派机制，如何打破  不同的类加载器加载的类是不是同一个类  https://cloud.tencent.com/developer/news/627029 不同类加载器加载的类在 JVM 看来是两个不同的类，因">
@@ -238,23 +238,43 @@
 <li>类加载过程</li>
 </ul>
 <h3 id="哈罗单车"><a href="#哈罗单车" class="headerlink" title="哈罗单车"></a>哈罗单车</h3><ul>
-<li>两个不同版本的类，如果我都想去加载？如何去做（自定义两个类加载器去加载）</li>
-<li></li>
+<li><p>两个不同版本的类，如果我都想去加载？如何去做（自定义两个类加载器去加载）</p>
+</li>
+<li><p>MySQL为什么不用平衡树？</p>
+<blockquote>
+<p>因为数据是存储在磁盘上的，进行查询操作的时，需要先将数据加载到内存中（磁盘IO操作）。而数据并不能一次性全部加载到内存中，只能逐一加载每个磁盘页（对应树的一个节点），并且磁盘IO操作很慢，平衡二叉树由于深度过大而造成磁盘IO读写过于频繁，进而导致效率低下。为了减少磁盘的IO次数，就需要降低树的深度，那么就引出了B树和B+树：每个节点存储多个元素，采用多叉树结构。所以使用B+树而不是平衡二叉树。</p>
+<p>B树的每个节点可以存储多个关键字，它将节点大小设置为磁盘页的大小，充分利用了磁盘预读的功能。每次读取磁盘页时就会读取一整个节点。也正因每个节点存储着非常多个关键字，树的深度就会非常的小。进而要执行的磁盘读取操作次数就会非常少，更多的是在内存中对读取进来的数据进行查找。</p>
+<p>总结：平衡树没能充分利用磁盘预读（局部性原理）功能，而B+树每个节点是一个磁盘页，每个节点包含多个key，每次加载能把一页数据全部加载到内存，提高了缓存命中率。</p>
+</blockquote>
+</li>
+<li><p>MySQL为什么使用B+树索引而不是B树索引？</p>
+<blockquote>
+<ol>
+<li>B+树叶子节点使用双向链表连接，范围查询非常方便；而B树必须用中序遍历的方法按序扫库，效率低下</li>
+<li>B+树非叶子节点不保存数据，同样的磁盘页大小容纳的关键字更多，一次性读入内存的关键字也就越多，相对来说说IO次数就降低了</li>
+<li>B+树查询效率更稳定：因为B+树非叶子节点不保存数据，所以任何关键字的查找必须走一条从根结点到叶子结点的路。所有关键字查询的路径长度相同，导致每一个数据的查询效率相当。</li>
+</ol>
+</blockquote>
+</li>
 </ul>
 <h3 id="网易"><a href="#网易" class="headerlink" title="网易"></a>网易</h3><ul>
 <li><p>cms和G1垃圾回收器的区别？为什么G1适合大内存，G1如何做到低停顿的？</p>
 </li>
 <li><p>读写锁的实现细节</p>
 </li>
-<li><p>volatile保证了什么？如何保证的</p>
+<li><p>volatile保证了什么？如何保证的？内存屏障的指令有哪些？</p>
 </li>
-<li><p>SQL注入是啥，以及它的原理，如何避免</p>
+<li><p>SQL注入是啥，以及它的原理，如何避免？</p>
 </li>
-<li><p>MySQL如何解决幻读？</p>
+<li><p>MySQL如何解决幻读？（除了MVCC之外还能如何解决？）</p>
 </li>
 <li><p>kafka消息投递语义精准一次性（Exactly-once）是如何保证的？</p>
 <blockquote>
-<p> 这个特性是怎么实现的呢？在底层，它和TCP的工作原理有点像，每一批发送到Kafka的消息都将包含一个序列号，broker将使用这个序列号来删除重复的发送。和只能在瞬态内存中的连接中保证不重复的TCP不同，这个序列号被持久化到副本日志，所以，即使分区的leader挂了，其他的broker接管了leader，新leader仍可以判断重新发送的是否重复了。这种机制的开销非常低：每批消息只有几个额外的字段。</p>
+<p> 这个特性是怎么实现的呢？在底层，它和TCP的工作原理有点像，每一批发送到Kafka的消息都将包含一个序列号，broker将使用这个序列号来删除重复的发送。和只能在瞬态内存中的连接中保证不重复的TCP不同，这个序列号被持久化到副本日志，所以，即使分区的leader挂了，其他的broker接管了leader，新leader仍可以判断重新发送的是否重复了。这种机制的开销非常低：每批消息只有几个额外的字段：</p>
+<ul>
+<li>PID，在Producer初始化时分配，作为每个Producer会话的唯一标识；</li>
+<li>序列号（sequence number），Producer发送的每条消息（更准确地说是每一个消息批次，即ProducerBatch）都会带有此序列号，从0开始单调递增。Broker根据它来判断写入的消息是否可接受。</li>
+</ul>
 </blockquote>
 </li>
 </ul>
@@ -341,11 +361,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/05/15/study/数据结构与算法之美/学习笔记/24讲/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/05/15/study/数据结构与算法之美/学习笔记/23讲/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          24讲
+          23讲
         
       </div>
     </a>
@@ -537,23 +557,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">面经</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">kafka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -569,7 +577,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -578,6 +594,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">面试题</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
               <li class="article-tag-list-item">
