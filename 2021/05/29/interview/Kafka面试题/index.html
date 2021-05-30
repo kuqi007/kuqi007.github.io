@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210529221549.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210529215119.webp">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210529210252.webp">
-<meta property="og:updated_time" content="2021-05-30T13:14:18.936Z">
+<meta property="og:updated_time" content="2021-05-30T13:23:48.685Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kafka面试题">
 <meta name="twitter:description" content="kafka入门整体架构图 topictopic可以简单认为是一个队列，每个队列做不同的事情，队列之间相对隔离；每个队列都有不同的名字，这样我们就知道往哪个队列丢数据，也知道从哪个队列拿数据了。我们可以有多个生产者往同一个队列(topic)丢数据，多个消费者从同一个队列(topic)拿数据 partition为了提高每个队列（topic）的吞吐量，kafka会把topic进行分区(Partitio">
@@ -192,8 +192,11 @@
 <p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210529221549.png" alt="img"></p>
 <p>使用 Consumer high level API 时，同一 Topic 的一条消息只能被同一个 Consumer Group 内的一个 Consumer 消费，但多个 Consumer Group 可同时消费这一消息。</p>
 <p>这是 Kafka 用来实现一个 Topic 消息的广播（发给所有的 Consumer）和单播（发给某一个 Consumer）的手段。一个 Topic 可以对应多个 Consumer Group。如果需要实现广播，只要每个 Consumer 有一个独立的 Group 就可以了。要实现单播只要所有的 Consumer 在同一个 Group 里。用 Consumer Group 还可以将 Consumer 进行自由的分组而不需要多次发送消息到不同的 Topic。</p>
-<p>多个消费者组成一个消费者组，每个消费者组相互独立。<strong>同一个消费者组中的不同消费者不能同时消费同一个分区的数据</strong>。但不同的消费者组可以消费相同的分区的数据。</p>
+<p>多个消费者组成一个消费者组，每个消费者组之间相互独立。<strong>同一个消费者组中的不同消费者不能同时消费同一个分区的数据</strong>。但不同的消费者组可以消费相同的分区的数据（广播消费）。</p>
 <p>每个消费者组唯一对应一个topic，一个topic下面可能有多个消费者组，这样就实现了广播消费。</p>
+<blockquote>
+<p>注意：如果消费者不指定消费者组，那么将会使用默认的消费者组。</p>
+</blockquote>
 <p>关于消费者数量，要注意几点：</p>
 <ul>
 <li>如果消费者组中的某个消费者挂了，那么其中一个消费者可能就要消费两个partition了</li>
@@ -515,7 +518,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面经</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -535,7 +546,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面经</a>
+                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">面试题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -543,19 +558,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">面试题</a>
               </li>
              
               <li class="article-tag-list-item">
