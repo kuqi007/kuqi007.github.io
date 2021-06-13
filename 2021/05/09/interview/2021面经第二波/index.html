@@ -20,7 +20,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210610232744.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210610233254.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210610233318.png">
-<meta property="og:updated_time" content="2021-06-10T16:32:59.608Z">
+<meta property="og:updated_time" content="2021-06-13T13:19:24.472Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content=" 2021面经第二波">
 <meta name="twitter:description" content="涂鸦智能 redis为什么这么快 redis为什么是单线程 3000万数据的表，如何进行优化 分库分表、多维度查询  滴滴 24. 两两交换链表中的节点  堆外内存  类加载机制  双亲委派机制，如何打破  不同的类加载器加载的类是不是同一个类  https://cloud.tencent.com/developer/news/627029 不同类加载器加载的类在 JVM 看来是两个不同的类，因">
@@ -265,7 +265,7 @@
 <h3 id="网易"><a href="#网易" class="headerlink" title="网易"></a>网易</h3><ul>
 <li><p>cms和G1垃圾回收器的区别？为什么G1适合大内存，G1如何做到可预测的低停顿的？</p>
 <blockquote>
-<p>G1收集器之所以能建立可预测的停顿时间模型，是因为它将Region作为单词回收的最小单元，即每次收集到的内存空间都是Region大小的整数倍，这样可以有计划地避免在整个Java堆中进行全区域的垃圾收集。更具体的处理思路是让G1收集器去跟踪各个Region里面的垃圾堆积的“价值”大小，价值即回收所获得的空间大小以及回收所需时间的经验值，然后在后台维护一个优先级列表，每次根据用户设定允许的收集停顿时间（使用参数 - XX:MaxGCPauseMills指定，默认值是200毫秒），优先处理回收价值收益最大的那些Region，这也就是“Garbage First”名称的由来。这种使用Region划分内存空间，以及具有优先级的区域回收方式，保证了G1收集器在有限的时间内获取尽可能高的收集效率。</p>
+<p>G1收集器之所以能建立可预测的停顿时间模型，是因为它将Region作为单次回收的最小单元，即每次收集到的内存空间都是Region大小的整数倍，这样可以有计划地避免在整个Java堆中进行全区域的垃圾收集。更具体的处理思路是让G1收集器去跟踪各个Region里面的垃圾堆积的“价值”大小，价值即回收所获得的空间大小以及回收所需时间的经验值，然后在后台维护一个优先级列表，每次根据用户设定允许的收集停顿时间（使用参数 - XX:MaxGCPauseMills指定，默认值是200毫秒），优先处理回收价值收益最大的那些Region，这也就是“Garbage First”名称的由来。这种使用Region划分内存空间，以及具有优先级的区域回收方式，保证了G1收集器在有限的时间内获取尽可能高的收集效率。</p>
 </blockquote>
 </li>
 <li><p>读写锁的实现细节</p>
@@ -301,7 +301,7 @@
 <h3 id="阿里"><a href="#阿里" class="headerlink" title="阿里"></a>阿里</h3><ul>
 <li><p>布隆过滤器如何降低误判率</p>
 <blockquote>
-<p>增加hash次数</p>
+<p>增加hash函数个数或者增大位数组容量</p>
 </blockquote>
 </li>
 <li><p>jdk8为什么要取消方法区，设立元空间</p>
@@ -349,7 +349,9 @@
 </blockquote>
 </li>
 </ul>
-<h3 id="阿里（商家）"><a href="#阿里（商家）" class="headerlink" title="阿里（商家）"></a>阿里（商家）</h3><p>- </p>
+<h3 id="阿里（商家）"><a href="#阿里（商家）" class="headerlink" title="阿里（商家）"></a>阿里（商家）</h3><ul>
+<li>本地缓存一般适用于什么场景？如何保证缓存一致性</li>
+</ul>
 
       
 
@@ -433,11 +435,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/05/15/study/数据结构与算法之美/学习笔记/23讲/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/05/15/study/数据结构与算法之美/学习笔记/24讲/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          23讲
+          24讲
         
       </div>
     </a>
@@ -629,11 +631,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">面经</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -649,7 +655,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -661,23 +671,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">框架</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -686,6 +684,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
