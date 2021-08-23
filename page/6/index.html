@@ -689,6 +689,134 @@
 
 
   
+    <article id="post-interview/多线程面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/23/interview/多线程面试题/">多线程面试题</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/01/23/interview/多线程面试题/" class="archive-article-date">
+  	<time datetime="2021-01-23T08:23:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-23</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><h3 id="进程和线程的区别？"><a href="#进程和线程的区别？" class="headerlink" title="进程和线程的区别？"></a>进程和线程的区别？</h3><h3 id="进程上下文切换开销都有哪些？"><a href="#进程上下文切换开销都有哪些？" class="headerlink" title="进程上下文切换开销都有哪些？"></a>进程上下文切换开销都有哪些？</h3><p>那么上下文切换的时候，CPU的开销都具体有哪些呢？开销分成两种，一种是直接开销、一种是间接开销。</p>
+<p>直接开销就是在切换时，cpu必须做的事情，包括：</p>
+<ul>
+<li><p>1、切换页表全局目录</p>
+</li>
+<li><p>2、切换内核态堆栈</p>
+</li>
+<li><p>3、切换硬件上下文（进程恢复前，必须装入寄存器的数据统称为硬件上下文）</p>
+</li>
+<li><ul>
+<li>ip(instruction pointer)：指向当前执行指令的下一条指令</li>
+<li>bp(base pointer): 用于存放执行中的函数对应的栈帧的栈底地址</li>
+<li>sp(stack poinger): 用于存放执行中的函数对应的栈帧的栈顶地址</li>
+<li>cr3:页目录基址寄存器，保存页目录表的物理地址</li>
+<li>……</li>
+</ul>
+</li>
+<li><p>4、刷新TLB</p>
+</li>
+<li><p>5、系统调度器的代码执行</p>
+</li>
+</ul>
+<p>间接开销主要指的是虽然切换到一个新进程后，由于各种缓存并不热，速度运行会慢一些。如果进程始终都在一个CPU上调度还好一些，如果跨CPU的话，之前热起来的TLB、L1、L2、L3因为运行的进程已经变了，所以以局部性原理cache起来的代码、数据也都没有用了，导致新进程穿透到内存的IO会变多。其实我们上面的实验并没有很好地测量到这种情况，所以实际的上下文切换开销可能比3.5us要大。</p>
+<p>想了解更详细操作过程的同学请参考《深入理解Linux内核》中的第三章和第九章。</p>
+<h3 id="线程上下文切换"><a href="#线程上下文切换" class="headerlink" title="线程上下文切换"></a>线程上下文切换</h3><p>上下文切换：</p>
+<p>多线程编程中一般线程的个数都大于 CPU 核心的个数，而一个 CPU 核心在任意时刻只能被一个线程使用，为了让这些线程都能得到有效执行，CPU 采取的策略是为每个线程分配时间片并轮转的形式。当一个线程的时间片用完的时候就会重新处于就绪状态让给其他线程使用，这个过程就属于一次上下文切换。概括来说就是：当前任务在执行完 CPU 时间片切换到另一个任务之前会先保存自己的状态，以便下次再切换回这个任务时，可以再加载这个任务的状态。<strong>任务从保存到再加载的过程就是一次上下文切换</strong>。</p>
+<p>上下文切换通常是计算密集型的。也就是说，它需要相当可观的处理器时间，在每秒几十上百次的切换中，每次切换都需要纳秒量级的时间。所以，上下文切换对系统来说意味着消耗大量的 CPU 时间，事实上，可能是操作系统中时间消耗最大的操作。</p>
+<p>Linux 相比与其他操作系统（包括其他类 Unix 系统）有很多的优点，其中有一项就是，其上下文切换和模式切换的时间消耗非常少。</p>
+<h2 id="原子性、有序性和可见性"><a href="#原子性、有序性和可见性" class="headerlink" title="原子性、有序性和可见性"></a>原子性、有序性和可见性</h2><h3 id="final关键字的可见性"><a href="#final关键字的可见性" class="headerlink" title="final关键字的可见性"></a>final关键字的可见性</h3><h2 id="悲观锁和乐观锁"><a href="#悲观锁和乐观锁" class="headerlink" title="悲观锁和乐观锁"></a>悲观锁和乐观锁</h2><h3 id="CAS有什么问题？"><a href="#CAS有什么问题？" class="headerlink" title="CAS有什么问题？"></a>CAS有什么问题？</h3><p>CAS的缺点有如ABA问题，自旋锁消耗问题、多变量共享一致性问题：</p>
+<p>1.<strong>ABA</strong>：<br>问题描述：线程t1将它的值从A变为B，再从B变为A。同时有线程t2要将值从A变为C。但CAS检查的时候会发现没有改变，但是实质上它已经发生了改变 。可能会造成数据的缺失。</p>
+<p>解决方法：CAS还是类似于乐观锁，同数据乐观锁的方式给它加一个版本号或者时间戳，如AtomicStampedReference</p>
+<p>2.<strong>自旋消耗资源</strong>：<br>问题描述：多个线程争夺同一个资源时，如果自旋一直不成功，将会一直占用CPU。</p>
+<p>解决方法：破坏掉for死循环，当超过一定时间或者一定次数时，return退出。</p>
+<p>JDK8新增的LongAddr和ConcurrentHashMap类似的方法。当多个线程竞争时，将粒度变小，将一个变量拆分为多个变量，达到多个线程访问多个资源的效果，最后再调用sum把它合起来。虽然base和cells都是volatile修饰的，但感觉这个sum操作没有加锁，可能sum的结果不是那么精确。</p>
+<p>3.<strong>多变量共享一致性问题</strong>：<br>解决方法： CAS操作是针对一个变量的，如果对多个变量操作，解决方案如下</p>
+<p>1) 可以加锁来解决<br>2) 封装成对象类解决</p>
+<h2 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a>Java内存模型</h2><h3 id="happens-before简介"><a href="#happens-before简介" class="headerlink" title="happens-before简介"></a>happens-before简介</h3><p>在JMM中，如果一个操作执行的结果需要对另一个操作可见，那么这两个操作之间必须要存在happens-before关系。这里提到的两个操作既可以是在一个线程里，也可以是在不同的线程里。</p>
+<p>与程序员密切相关的happens-before规则如下：</p>
+<ul>
+<li>程序顺序规则：一个线程中的每个操作，happens-before于该线程中的任意后续操作。</li>
+<li>监视器锁规则：对一个锁的解锁，happens-before于随后对这个锁的加锁。</li>
+<li>volatile变量规则：对一个volatile域的写，happens-before于任意后续对这个volatile域的读。</li>
+<li>传递性：如果A happens-before B，且B happens-before C，那么A happens-before C。</li>
+</ul>
+<blockquote>
+<p><strong>注意：</strong>两个操作之间具有happens-before关系，并不意味着前一个操作必须要在后一个操作之前执行！happens-before仅仅要求前一个操作（执行的结果）对后一个操作可见，且前一个操作按顺序排在第二个操作之前（the first is visible to and ordered before the second）。</p>
+</blockquote>
+<h3 id="单线程、多线程在单核CPU、多核CPU中的影响"><a href="#单线程、多线程在单核CPU、多核CPU中的影响" class="headerlink" title="单线程、多线程在单核CPU、多核CPU中的影响"></a>单线程、多线程在单核CPU、多核CPU中的影响</h3><p>我们分别来分析下单线程、多线程在单核CPU、多核CPU中的影响。</p>
+<p><strong>单线程。</strong>cpu核心的缓存只被一个线程访问。缓存独占，不会出现访问冲突等问题。</p>
+<p><strong>单核CPU，多线程。</strong>进程中的多个线程会同时访问进程中的共享数据，CPU将某块内存加载到缓存后，不同线程在访问相同的物理地址的时候，都会映射到相同的缓存位置，这样即使发生线程的切换，缓存仍然不会失效。但由于任何时刻只能有一个线程在执行，因此不会出现缓存访问冲突。</p>
+<p><strong>多核CPU，多线程。</strong>每个核都至少有一个L1 缓存。多个线程访问进程中的某个共享内存，且这多个线程分别在不同的核心上执行，则每个核心都会在各自的caehe中保留一份共享内存的缓冲。由于多核是可以并行的，可能会出现多个线程同时写各自的缓存的情况，而各自的cache之间的数据就有可能不同。</p>
+<p>在CPU和主存之间增加缓存，在多线程场景下就可能存在<strong>缓存一致性问题</strong>，也就是说，在多核CPU中，每个核的自己的缓存中，关于同一个数据的缓存内容可能不一致。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/23/interview/多线程面试题/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-interview/JVM面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -809,134 +937,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/01/23/interview/JVM面试题/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-interview/多线程面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/23/interview/多线程面试题/">多线程面试题</a>
-    </h1>
-  
-
-        
-        
-<a href="/2021/01/23/interview/多线程面试题/" class="archive-article-date">
-  	<time datetime="2021-01-23T08:23:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-23</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><h3 id="进程和线程的区别？"><a href="#进程和线程的区别？" class="headerlink" title="进程和线程的区别？"></a>进程和线程的区别？</h3><h3 id="进程上下文切换开销都有哪些？"><a href="#进程上下文切换开销都有哪些？" class="headerlink" title="进程上下文切换开销都有哪些？"></a>进程上下文切换开销都有哪些？</h3><p>那么上下文切换的时候，CPU的开销都具体有哪些呢？开销分成两种，一种是直接开销、一种是间接开销。</p>
-<p>直接开销就是在切换时，cpu必须做的事情，包括：</p>
-<ul>
-<li><p>1、切换页表全局目录</p>
-</li>
-<li><p>2、切换内核态堆栈</p>
-</li>
-<li><p>3、切换硬件上下文（进程恢复前，必须装入寄存器的数据统称为硬件上下文）</p>
-</li>
-<li><ul>
-<li>ip(instruction pointer)：指向当前执行指令的下一条指令</li>
-<li>bp(base pointer): 用于存放执行中的函数对应的栈帧的栈底地址</li>
-<li>sp(stack poinger): 用于存放执行中的函数对应的栈帧的栈顶地址</li>
-<li>cr3:页目录基址寄存器，保存页目录表的物理地址</li>
-<li>……</li>
-</ul>
-</li>
-<li><p>4、刷新TLB</p>
-</li>
-<li><p>5、系统调度器的代码执行</p>
-</li>
-</ul>
-<p>间接开销主要指的是虽然切换到一个新进程后，由于各种缓存并不热，速度运行会慢一些。如果进程始终都在一个CPU上调度还好一些，如果跨CPU的话，之前热起来的TLB、L1、L2、L3因为运行的进程已经变了，所以以局部性原理cache起来的代码、数据也都没有用了，导致新进程穿透到内存的IO会变多。其实我们上面的实验并没有很好地测量到这种情况，所以实际的上下文切换开销可能比3.5us要大。</p>
-<p>想了解更详细操作过程的同学请参考《深入理解Linux内核》中的第三章和第九章。</p>
-<h3 id="线程上下文切换"><a href="#线程上下文切换" class="headerlink" title="线程上下文切换"></a>线程上下文切换</h3><p>上下文切换：</p>
-<p>多线程编程中一般线程的个数都大于 CPU 核心的个数，而一个 CPU 核心在任意时刻只能被一个线程使用，为了让这些线程都能得到有效执行，CPU 采取的策略是为每个线程分配时间片并轮转的形式。当一个线程的时间片用完的时候就会重新处于就绪状态让给其他线程使用，这个过程就属于一次上下文切换。概括来说就是：当前任务在执行完 CPU 时间片切换到另一个任务之前会先保存自己的状态，以便下次再切换回这个任务时，可以再加载这个任务的状态。<strong>任务从保存到再加载的过程就是一次上下文切换</strong>。</p>
-<p>上下文切换通常是计算密集型的。也就是说，它需要相当可观的处理器时间，在每秒几十上百次的切换中，每次切换都需要纳秒量级的时间。所以，上下文切换对系统来说意味着消耗大量的 CPU 时间，事实上，可能是操作系统中时间消耗最大的操作。</p>
-<p>Linux 相比与其他操作系统（包括其他类 Unix 系统）有很多的优点，其中有一项就是，其上下文切换和模式切换的时间消耗非常少。</p>
-<h2 id="原子性、有序性和可见性"><a href="#原子性、有序性和可见性" class="headerlink" title="原子性、有序性和可见性"></a>原子性、有序性和可见性</h2><h3 id="final关键字的可见性"><a href="#final关键字的可见性" class="headerlink" title="final关键字的可见性"></a>final关键字的可见性</h3><h2 id="悲观锁和乐观锁"><a href="#悲观锁和乐观锁" class="headerlink" title="悲观锁和乐观锁"></a>悲观锁和乐观锁</h2><h3 id="CAS有什么问题？"><a href="#CAS有什么问题？" class="headerlink" title="CAS有什么问题？"></a>CAS有什么问题？</h3><p>CAS的缺点有如ABA问题，自旋锁消耗问题、多变量共享一致性问题：</p>
-<p>1.<strong>ABA</strong>：<br>问题描述：线程t1将它的值从A变为B，再从B变为A。同时有线程t2要将值从A变为C。但CAS检查的时候会发现没有改变，但是实质上它已经发生了改变 。可能会造成数据的缺失。</p>
-<p>解决方法：CAS还是类似于乐观锁，同数据乐观锁的方式给它加一个版本号或者时间戳，如AtomicStampedReference</p>
-<p>2.<strong>自旋消耗资源</strong>：<br>问题描述：多个线程争夺同一个资源时，如果自旋一直不成功，将会一直占用CPU。</p>
-<p>解决方法：破坏掉for死循环，当超过一定时间或者一定次数时，return退出。</p>
-<p>JDK8新增的LongAddr和ConcurrentHashMap类似的方法。当多个线程竞争时，将粒度变小，将一个变量拆分为多个变量，达到多个线程访问多个资源的效果，最后再调用sum把它合起来。虽然base和cells都是volatile修饰的，但感觉这个sum操作没有加锁，可能sum的结果不是那么精确。</p>
-<p>3.<strong>多变量共享一致性问题</strong>：<br>解决方法： CAS操作是针对一个变量的，如果对多个变量操作，解决方案如下</p>
-<p>1) 可以加锁来解决<br>2) 封装成对象类解决</p>
-<h2 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a>Java内存模型</h2><h3 id="happens-before简介"><a href="#happens-before简介" class="headerlink" title="happens-before简介"></a>happens-before简介</h3><p>在JMM中，如果一个操作执行的结果需要对另一个操作可见，那么这两个操作之间必须要存在happens-before关系。这里提到的两个操作既可以是在一个线程里，也可以是在不同的线程里。</p>
-<p>与程序员密切相关的happens-before规则如下：</p>
-<ul>
-<li>程序顺序规则：一个线程中的每个操作，happens-before于该线程中的任意后续操作。</li>
-<li>监视器锁规则：对一个锁的解锁，happens-before于随后对这个锁的加锁。</li>
-<li>volatile变量规则：对一个volatile域的写，happens-before于任意后续对这个volatile域的读。</li>
-<li>传递性：如果A happens-before B，且B happens-before C，那么A happens-before C。</li>
-</ul>
-<blockquote>
-<p><strong>注意：</strong>两个操作之间具有happens-before关系，并不意味着前一个操作必须要在后一个操作之前执行！happens-before仅仅要求前一个操作（执行的结果）对后一个操作可见，且前一个操作按顺序排在第二个操作之前（the first is visible to and ordered before the second）。</p>
-</blockquote>
-<h3 id="单线程、多线程在单核CPU、多核CPU中的影响"><a href="#单线程、多线程在单核CPU、多核CPU中的影响" class="headerlink" title="单线程、多线程在单核CPU、多核CPU中的影响"></a>单线程、多线程在单核CPU、多核CPU中的影响</h3><p>我们分别来分析下单线程、多线程在单核CPU、多核CPU中的影响。</p>
-<p><strong>单线程。</strong>cpu核心的缓存只被一个线程访问。缓存独占，不会出现访问冲突等问题。</p>
-<p><strong>单核CPU，多线程。</strong>进程中的多个线程会同时访问进程中的共享数据，CPU将某块内存加载到缓存后，不同线程在访问相同的物理地址的时候，都会映射到相同的缓存位置，这样即使发生线程的切换，缓存仍然不会失效。但由于任何时刻只能有一个线程在执行，因此不会出现缓存访问冲突。</p>
-<p><strong>多核CPU，多线程。</strong>每个核都至少有一个L1 缓存。多个线程访问进程中的某个共享内存，且这多个线程分别在不同的核心上执行，则每个核心都会在各自的caehe中保留一份共享内存的缓冲。由于多核是可以并行的，可能会出现多个线程同时写各自的缓存的情况，而各自的cache之间的数据就有可能不同。</p>
-<p>在CPU和主存之间增加缓存，在多线程场景下就可能存在<strong>缓存一致性问题</strong>，也就是说，在多核CPU中，每个核的自己的缓存中，关于同一个数据的缓存内容可能不一致。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/01/23/interview/多线程面试题/">展开全文 >></a>
         </p>
       
 
@@ -1262,7 +1262,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1278,10 +1278,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
               </li>
              
@@ -1291,6 +1287,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">面试题</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1306,15 +1306,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MySQL实战45讲</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
