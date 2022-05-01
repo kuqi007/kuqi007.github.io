@@ -146,6 +146,190 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-interview/Java基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/19/interview/Java基础/">Java基础</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/05/19/interview/Java基础/" class="archive-article-date">
+  	<time datetime="2021-05-19T00:23:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-19</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h2 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h2><h3 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h3><h3 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h3><h4 id="集合大小如何计算"><a href="#集合大小如何计算" class="headerlink" title="集合大小如何计算"></a>集合大小如何计算</h4><p><strong>1.7</strong></p>
+<p>JDK7版本经过三次计算，发现每次统计时哈希都有结构性的变化，就会给每个Segment加锁；而当自己统计完之后，才会把锁释放掉。</p>
+<p><strong>1.8</strong></p>
+<p>借助baseCount和countCells属性</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/19/interview/Java基础/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-study/数据结构与算法之美/学习笔记/24讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/15/study/数据结构与算法之美/学习笔记/24讲/">24讲</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/05/15/study/数据结构与算法之美/学习笔记/24讲/" class="archive-article-date">
+  	<time datetime="2021-05-15T14:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-15</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h1 id="24-二叉树基础（下）：有了如此高效的散列表，为什么还需要二叉树？"><a href="#24-二叉树基础（下）：有了如此高效的散列表，为什么还需要二叉树？" class="headerlink" title="24 | 二叉树基础（下）：有了如此高效的散列表，为什么还需要二叉树？"></a>24 | 二叉树基础（下）：有了如此高效的散列表，为什么还需要二叉树？</h1><h2 id="二叉查找树（Binary-Search-Tree）"><a href="#二叉查找树（Binary-Search-Tree）" class="headerlink" title="二叉查找树（Binary Search Tree）"></a>二叉查找树（Binary Search Tree）</h2><p>二叉查找树是二叉树中最常用的一种类型，也叫二叉搜索树。顾名思义，二叉查找树是为了实现快速查找而生的。不过，它不仅仅支持快速查找一个数据，还支持快速插入、删除一个数据。它是怎么做到这些的呢？</p>
+<p>这些都依赖于二叉查找树的特殊结构<strong>。二叉查找树要求，在树中的任意一个节点，其左子树中的每个节点的值，都要小于这个节点的值，而右子树节点的值都大于这个节点的值。</strong> 我画了几个二叉查找树的例子，你一看应该就清楚了。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210516134604.jpeg" alt="img"></p>
+<p>前面我们讲到，二叉查找树支持快速查找、插入、删除操作，现在我们就依次来看下，这三个操作是如何实现的。</p>
+<h3 id="1-二叉查找树的查找操作"><a href="#1-二叉查找树的查找操作" class="headerlink" title="1. 二叉查找树的查找操作"></a>1. 二叉查找树的查找操作</h3><p>首先，我们看如何在二叉查找树中查找一个节点。我们先取根节点，如果它等于我们要查找的数据，那就返回。如果要查找的数据比根节点的值小，那就在左子树中递归查找；如果要查找的数据比根节点的值大，那就在右子树中递归查找。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210516134630.jpeg" alt="img"></p>
+<p>这里我把查找的代码实现了一下，贴在下面了，结合代码，理解起来会更加容易。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BinarySearchTree</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> Node tree;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Node <span class="title">find</span><span class="params">(<span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">    Node p = tree;</span><br><span class="line">    <span class="keyword">while</span> (p != <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (data &lt; p.data) p = p.left;</span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">if</span> (data &gt; p.data) p = p.right;</span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">return</span> p;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> data;</span><br><span class="line">    <span class="keyword">private</span> Node left;</span><br><span class="line">    <span class="keyword">private</span> Node right;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(<span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.data = data;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-二叉查找树的插入操作"><a href="#2-二叉查找树的插入操作" class="headerlink" title="2. 二叉查找树的插入操作"></a>2. 二叉查找树的插入操作</h3><p>二叉查找树的插入过程有点类似查找操作。新插入的数据一般都是在叶子节点上，所以我们只需要从根节点开始，依次比较要插入的数据和节点的大小关系。</p>
+<p>如果要插入的数据比节点的数据大，并且节点的右子树为空，就将新数据直接插到右子节点的位置；如果不为空，就再递归遍历右子树，查找插入位置。同理，如果要插入的数据比节点数值小，并且节点的左子树为空，就将新数据插入到左子节点的位置；如果不为空，就再递归遍历左子树，查找插入位置。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210516134908.jpeg" alt="img"></p>
+<p>同样，插入的代码我也实现了一下，贴在下面，你可以看看。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (tree == <span class="keyword">null</span>) &#123;</span><br><span class="line">    tree = <span class="keyword">new</span> Node(data);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  Node p = tree;</span><br><span class="line">  <span class="keyword">while</span> (p != <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (data &gt; p.data) &#123;</span><br><span class="line">      <span class="keyword">if</span> (p.right == <span class="keyword">null</span>) &#123;</span><br><span class="line">        p.right = <span class="keyword">new</span> Node(data);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      p = p.right;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// data &lt; p.data</span></span><br><span class="line">      <span class="keyword">if</span> (p.left == <span class="keyword">null</span>) &#123;</span><br><span class="line">        p.left = <span class="keyword">new</span> Node(data);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      p = p.left;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-二叉查找树的删除操作"><a href="#3-二叉查找树的删除操作" class="headerlink" title="3. 二叉查找树的删除操作"></a>3. 二叉查找树的删除操作</h3><p>二叉查找树的查找、插入操作都比较简单易懂，但是它的删除操作就比较复杂了 。针对要删除节点的子节点个数的不同，我们需要分三种情况来处理。</p>
+<p>第一种情况是，如果要删除的节点没有子节点，我们只需要直接将父节点中，指向要删除节点的指针置为 null。比如图中的删除节点 55。</p>
+<p>第二种情况是，如果要删除的节点只有一个子节点（只有左子节点或者右子节点），我们只需要更新父节点中，指向要删除节点的指针，让它指向要删除节点的子节点就可以了。比如图中的删除节点 13。</p>
+<p>第三种情况是，如果要删除的节点有两个子节点，这就比较复杂了。我们需要找到这个节点的右子树中的最小节点，把它替换到要删除的节点上。然后再删除掉这个最小节点，因为最小节点肯定没有左子节点（如果有左子结点，那就不是最小节点了），所以，我们可以应用上面两条规则来删除这个最小节点。比如图中的删除节点 18。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210516135051.jpeg" alt="img"></p>
+<p>老规矩，我还是把删除的代码贴在这里。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">(<span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">  Node p = tree; <span class="comment">// p指向要删除的节点，初始化指向根节点</span></span><br><span class="line">  Node pp = <span class="keyword">null</span>; <span class="comment">// pp记录的是p的父节点</span></span><br><span class="line">  <span class="keyword">while</span> (p != <span class="keyword">null</span> &amp;&amp; p.data != data) &#123;</span><br><span class="line">    pp = p;</span><br><span class="line">    <span class="keyword">if</span> (data &gt; p.data) p = p.right;</span><br><span class="line">    <span class="keyword">else</span> p = p.left;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (p == <span class="keyword">null</span>) <span class="keyword">return</span>; <span class="comment">// 没有找到</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 要删除的节点有两个子节点</span></span><br><span class="line">  <span class="keyword">if</span> (p.left != <span class="keyword">null</span> &amp;&amp; p.right != <span class="keyword">null</span>) &#123; <span class="comment">// 查找右子树中最小节点</span></span><br><span class="line">    Node minP = p.right;</span><br><span class="line">    Node minPP = p; <span class="comment">// minPP表示minP的父节点</span></span><br><span class="line">    <span class="keyword">while</span> (minP.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">      minPP = minP;</span><br><span class="line">      minP = minP.left;</span><br><span class="line">    &#125;</span><br><span class="line">    p.data = minP.data; <span class="comment">// 将minP的数据替换到p中</span></span><br><span class="line">    p = minP; <span class="comment">// 下面就变成了删除minP了</span></span><br><span class="line">    pp = minPP;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 删除节点是叶子节点或者仅有一个子节点</span></span><br><span class="line">  Node child; <span class="comment">// p的子节点</span></span><br><span class="line">  <span class="keyword">if</span> (p.left != <span class="keyword">null</span>) child = p.left;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (p.right != <span class="keyword">null</span>) child = p.right;</span><br><span class="line">  <span class="keyword">else</span> child = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (pp == <span class="keyword">null</span>) tree = child; <span class="comment">// 删除的是根节点</span></span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (pp.left == p) pp.left = child;</span><br><span class="line">  <span class="keyword">else</span> pp.right = child;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实际上，关于二叉查找树的删除操作，还有个非常简单、取巧的方法，就是单纯将要删除的节点标记为“已删除”，但是并不真正从树中将这个节点去掉。这样原本删除的节点还需要存储在内存中，比较浪费内存空间，但是删除操作就变得简单了很多。而且，这种处理方法也并没有增加插入、查找操作代码实现的难度。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/15/study/数据结构与算法之美/学习笔记/24讲/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-study/数据结构与算法之美/学习笔记/23讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -286,21 +470,21 @@
 
 
   
-    <article id="post-study/数据结构与算法之美/学习笔记/24讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-interview/2021面经第二波" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/15/study/数据结构与算法之美/学习笔记/24讲/">24讲</a>
+      <a class="article-title" href="/2021/05/09/interview/2021面经第二波/"> 2021面经第二波</a>
     </h1>
   
 
         
         
-<a href="/2021/05/15/study/数据结构与算法之美/学习笔记/24讲/" class="archive-article-date">
-  	<time datetime="2021-05-15T14:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-15</time>
+<a href="/2021/05/09/interview/2021面经第二波/" class="archive-article-date">
+  	<time datetime="2021-05-09T12:21:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-09</time>
 </a>
 
         
@@ -309,30 +493,180 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<h1 id="24-二叉树基础（下）：有了如此高效的散列表，为什么还需要二叉树？"><a href="#24-二叉树基础（下）：有了如此高效的散列表，为什么还需要二叉树？" class="headerlink" title="24 | 二叉树基础（下）：有了如此高效的散列表，为什么还需要二叉树？"></a>24 | 二叉树基础（下）：有了如此高效的散列表，为什么还需要二叉树？</h1><h2 id="二叉查找树（Binary-Search-Tree）"><a href="#二叉查找树（Binary-Search-Tree）" class="headerlink" title="二叉查找树（Binary Search Tree）"></a>二叉查找树（Binary Search Tree）</h2><p>二叉查找树是二叉树中最常用的一种类型，也叫二叉搜索树。顾名思义，二叉查找树是为了实现快速查找而生的。不过，它不仅仅支持快速查找一个数据，还支持快速插入、删除一个数据。它是怎么做到这些的呢？</p>
-<p>这些都依赖于二叉查找树的特殊结构<strong>。二叉查找树要求，在树中的任意一个节点，其左子树中的每个节点的值，都要小于这个节点的值，而右子树节点的值都大于这个节点的值。</strong> 我画了几个二叉查找树的例子，你一看应该就清楚了。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210516134604.jpeg" alt="img"></p>
-<p>前面我们讲到，二叉查找树支持快速查找、插入、删除操作，现在我们就依次来看下，这三个操作是如何实现的。</p>
-<h3 id="1-二叉查找树的查找操作"><a href="#1-二叉查找树的查找操作" class="headerlink" title="1. 二叉查找树的查找操作"></a>1. 二叉查找树的查找操作</h3><p>首先，我们看如何在二叉查找树中查找一个节点。我们先取根节点，如果它等于我们要查找的数据，那就返回。如果要查找的数据比根节点的值小，那就在左子树中递归查找；如果要查找的数据比根节点的值大，那就在右子树中递归查找。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210516134630.jpeg" alt="img"></p>
-<p>这里我把查找的代码实现了一下，贴在下面了，结合代码，理解起来会更加容易。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BinarySearchTree</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> Node tree;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Node <span class="title">find</span><span class="params">(<span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">    Node p = tree;</span><br><span class="line">    <span class="keyword">while</span> (p != <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (data &lt; p.data) p = p.left;</span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">if</span> (data &gt; p.data) p = p.right;</span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">return</span> p;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> data;</span><br><span class="line">    <span class="keyword">private</span> Node left;</span><br><span class="line">    <span class="keyword">private</span> Node right;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(<span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.data = data;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-二叉查找树的插入操作"><a href="#2-二叉查找树的插入操作" class="headerlink" title="2. 二叉查找树的插入操作"></a>2. 二叉查找树的插入操作</h3><p>二叉查找树的插入过程有点类似查找操作。新插入的数据一般都是在叶子节点上，所以我们只需要从根节点开始，依次比较要插入的数据和节点的大小关系。</p>
-<p>如果要插入的数据比节点的数据大，并且节点的右子树为空，就将新数据直接插到右子节点的位置；如果不为空，就再递归遍历右子树，查找插入位置。同理，如果要插入的数据比节点数值小，并且节点的左子树为空，就将新数据插入到左子节点的位置；如果不为空，就再递归遍历左子树，查找插入位置。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210516134908.jpeg" alt="img"></p>
-<p>同样，插入的代码我也实现了一下，贴在下面，你可以看看。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (tree == <span class="keyword">null</span>) &#123;</span><br><span class="line">    tree = <span class="keyword">new</span> Node(data);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  Node p = tree;</span><br><span class="line">  <span class="keyword">while</span> (p != <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (data &gt; p.data) &#123;</span><br><span class="line">      <span class="keyword">if</span> (p.right == <span class="keyword">null</span>) &#123;</span><br><span class="line">        p.right = <span class="keyword">new</span> Node(data);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      p = p.right;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// data &lt; p.data</span></span><br><span class="line">      <span class="keyword">if</span> (p.left == <span class="keyword">null</span>) &#123;</span><br><span class="line">        p.left = <span class="keyword">new</span> Node(data);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      p = p.left;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-二叉查找树的删除操作"><a href="#3-二叉查找树的删除操作" class="headerlink" title="3. 二叉查找树的删除操作"></a>3. 二叉查找树的删除操作</h3><p>二叉查找树的查找、插入操作都比较简单易懂，但是它的删除操作就比较复杂了 。针对要删除节点的子节点个数的不同，我们需要分三种情况来处理。</p>
-<p>第一种情况是，如果要删除的节点没有子节点，我们只需要直接将父节点中，指向要删除节点的指针置为 null。比如图中的删除节点 55。</p>
-<p>第二种情况是，如果要删除的节点只有一个子节点（只有左子节点或者右子节点），我们只需要更新父节点中，指向要删除节点的指针，让它指向要删除节点的子节点就可以了。比如图中的删除节点 13。</p>
-<p>第三种情况是，如果要删除的节点有两个子节点，这就比较复杂了。我们需要找到这个节点的右子树中的最小节点，把它替换到要删除的节点上。然后再删除掉这个最小节点，因为最小节点肯定没有左子节点（如果有左子结点，那就不是最小节点了），所以，我们可以应用上面两条规则来删除这个最小节点。比如图中的删除节点 18。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210516135051.jpeg" alt="img"></p>
-<p>老规矩，我还是把删除的代码贴在这里。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">(<span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">  Node p = tree; <span class="comment">// p指向要删除的节点，初始化指向根节点</span></span><br><span class="line">  Node pp = <span class="keyword">null</span>; <span class="comment">// pp记录的是p的父节点</span></span><br><span class="line">  <span class="keyword">while</span> (p != <span class="keyword">null</span> &amp;&amp; p.data != data) &#123;</span><br><span class="line">    pp = p;</span><br><span class="line">    <span class="keyword">if</span> (data &gt; p.data) p = p.right;</span><br><span class="line">    <span class="keyword">else</span> p = p.left;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (p == <span class="keyword">null</span>) <span class="keyword">return</span>; <span class="comment">// 没有找到</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 要删除的节点有两个子节点</span></span><br><span class="line">  <span class="keyword">if</span> (p.left != <span class="keyword">null</span> &amp;&amp; p.right != <span class="keyword">null</span>) &#123; <span class="comment">// 查找右子树中最小节点</span></span><br><span class="line">    Node minP = p.right;</span><br><span class="line">    Node minPP = p; <span class="comment">// minPP表示minP的父节点</span></span><br><span class="line">    <span class="keyword">while</span> (minP.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">      minPP = minP;</span><br><span class="line">      minP = minP.left;</span><br><span class="line">    &#125;</span><br><span class="line">    p.data = minP.data; <span class="comment">// 将minP的数据替换到p中</span></span><br><span class="line">    p = minP; <span class="comment">// 下面就变成了删除minP了</span></span><br><span class="line">    pp = minPP;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 删除节点是叶子节点或者仅有一个子节点</span></span><br><span class="line">  Node child; <span class="comment">// p的子节点</span></span><br><span class="line">  <span class="keyword">if</span> (p.left != <span class="keyword">null</span>) child = p.left;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (p.right != <span class="keyword">null</span>) child = p.right;</span><br><span class="line">  <span class="keyword">else</span> child = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (pp == <span class="keyword">null</span>) tree = child; <span class="comment">// 删除的是根节点</span></span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (pp.left == p) pp.left = child;</span><br><span class="line">  <span class="keyword">else</span> pp.right = child;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>实际上，关于二叉查找树的删除操作，还有个非常简单、取巧的方法，就是单纯将要删除的节点标记为“已删除”，但是并不真正从树中将这个节点去掉。这样原本删除的节点还需要存储在内存中，比较浪费内存空间，但是删除操作就变得简单了很多。而且，这种处理方法也并没有增加插入、查找操作代码实现的难度。</p>
+<h3 id="涂鸦智能"><a href="#涂鸦智能" class="headerlink" title="涂鸦智能"></a>涂鸦智能</h3><ul>
+<li>redis为什么这么快</li>
+<li>redis为什么是单线程</li>
+<li>3000万数据的表，如何进行优化</li>
+<li>分库分表、多维度查询</li>
+</ul>
+<h3 id="滴滴"><a href="#滴滴" class="headerlink" title="滴滴"></a>滴滴</h3><ul>
+<li><p><a href="https://leetcode-cn.com/problems/swap-nodes-in-pairs/" target="_blank" rel="noopener">24. 两两交换链表中的节点</a></p>
+</li>
+<li><p>堆外内存</p>
+</li>
+<li><p>类加载机制</p>
+</li>
+<li><p>双亲委派机制，如何打破</p>
+</li>
+<li><p>不同的类加载器加载的类是不是同一个类</p>
+<blockquote>
+<p><a href="https://cloud.tencent.com/developer/news/627029" target="_blank" rel="noopener">https://cloud.tencent.com/developer/news/627029</a></p>
+<p>不同类加载器加载的类在 JVM 看来是两个不同的类，因为在 JVM 中一个类的唯一标识是类加载器+类名。通过这种方式我们就能够同时加载 C 的两个不同版本的类，即使它类名是一样的。注意，这里类加载器指的是类加载器的实例，并不是一定要定义两个不同类加载器</p>
+</blockquote>
+</li>
+<li><p>线程池原理以及使用场景</p>
+</li>
+<li><p>synchronized和ReentrantLock的区别（是否是重入锁）</p>
+</li>
+<li><p>ReentrantLock非公平锁和公平锁如何做到的</p>
+</li>
+<li><p>synchronized锁升级原理</p>
+</li>
+<li><p>redis分布式锁如何使用</p>
+</li>
+<li><p>业务没执行完，分布式锁过期释放，如何解决</p>
+</li>
+<li><p>springcloud和dubbo的区别</p>
+</li>
+<li><p>rpc协议和http协议的区别</p>
+</li>
+<li><p>https的原理</p>
+</li>
+<li><p>序列化方式有哪几种，dubbo默认是哪种</p>
+</li>
+<li><p>mysql查询优化</p>
+</li>
+<li><p>mysql为什么用b+树</p>
+</li>
+</ul>
+<h3 id="快手"><a href="#快手" class="headerlink" title="快手"></a>快手</h3><ul>
+<li><a href="https://leetcode-cn.com/problems/merge-k-sorted-lists/" target="_blank" rel="noopener">23. 合并K个升序链表</a></li>
+<li>HashMap在jdk1.7扩容过程</li>
+<li>HashMap什么情况下会链表成环</li>
+<li>HashMap为什么线程不安全</li>
+<li>反射原理以及使用场景</li>
+<li>创建对象的几种形式</li>
+<li>聚合根、实体在业务中的应用</li>
+<li>redis集群、高可用、持久化</li>
+<li>本地事务表如果TPS太高，如何优化</li>
+</ul>
+<h3 id="酷家乐"><a href="#酷家乐" class="headerlink" title="酷家乐"></a>酷家乐</h3><ul>
+<li>最长回文子串</li>
+<li>带<code>+ - * /（）</code>的基本计算器</li>
+<li>binlog存储形式（row和statement）</li>
+<li>mvcc具体是如何解决幻读的？</li>
+<li>类加载过程</li>
+</ul>
+<h3 id="哈罗单车"><a href="#哈罗单车" class="headerlink" title="哈罗单车"></a>哈罗单车</h3><ul>
+<li><p>两个不同版本的类，如果我都想去加载？如何去做（自定义两个类加载器去加载）</p>
+</li>
+<li><p>MySQL为什么不用平衡树？</p>
+<blockquote>
+<p>因为数据是存储在磁盘上的，进行查询操作的时，需要先将数据加载到内存中（磁盘IO操作）。而数据并不能一次性全部加载到内存中，只能逐一加载每个磁盘页（对应树的一个节点），并且磁盘IO操作很慢，平衡二叉树由于深度过大而造成磁盘IO读写过于频繁，进而导致效率低下。为了减少磁盘的IO次数，就需要降低树的深度，那么就引出了B树和B+树：每个节点存储多个元素，采用多叉树结构。所以使用B+树而不是平衡二叉树。</p>
+<p>B树的每个节点可以存储多个关键字，它将节点大小设置为磁盘页的大小，充分利用了磁盘预读的功能。每次读取磁盘页时就会读取一整个节点。也正因每个节点存储着非常多个关键字，树的深度就会非常的小。进而要执行的磁盘读取操作次数就会非常少，更多的是在内存中对读取进来的数据进行查找。</p>
+<p>总结：平衡树没能充分利用磁盘预读（局部性原理）功能，而B+树每个节点是一个磁盘页，每个节点包含多个key，每次加载能把一页数据全部加载到内存，提高了缓存命中率。</p>
+</blockquote>
+</li>
+<li><p>MySQL为什么使用B+树索引而不是B树索引？</p>
+<blockquote>
+<ol>
+<li>B+树叶子节点使用双向链表连接，范围查询非常方便；而B树必须用中序遍历的方法按序扫库，效率低下</li>
+<li>B+树非叶子节点不保存数据，同样的磁盘页大小容纳的关键字更多，一次性读入内存的关键字也就越多，相对来说说IO次数就降低了</li>
+<li>B+树查询效率更稳定：因为B+树非叶子节点不保存数据，所以任何关键字的查找必须走一条从根结点到叶子结点的路。所有关键字查询的路径长度相同，导致每一个数据的查询效率相当。</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<h3 id="网易"><a href="#网易" class="headerlink" title="网易"></a>网易</h3><ul>
+<li><p>cms和G1垃圾回收器的区别？为什么G1适合大内存，G1如何做到可预测的低停顿的？</p>
+<blockquote>
+<p>G1收集器之所以能建立可预测的停顿时间模型，是因为它将Region作为单次回收的最小单元，即每次收集到的内存空间都是Region大小的整数倍，这样可以有计划地避免在整个Java堆中进行全区域的垃圾收集。更具体的处理思路是让G1收集器去跟踪各个Region里面的垃圾堆积的“价值”大小，价值即回收所获得的空间大小以及回收所需时间的经验值，然后在后台维护一个优先级列表，每次根据用户设定允许的收集停顿时间（使用参数 - XX:MaxGCPauseMills指定，默认值是200毫秒），优先处理回收价值收益最大的那些Region，这也就是“Garbage First”名称的由来。这种使用Region划分内存空间，以及具有优先级的区域回收方式，保证了G1收集器在有限的时间内获取尽可能高的收集效率。</p>
+</blockquote>
+</li>
+<li><p>读写锁的实现细节</p>
+</li>
+<li><p>volatile保证了什么？如何保证的？内存屏障的指令有哪些？</p>
+</li>
+<li><p>SQL注入是啥，以及它的原理，如何避免？</p>
+</li>
+<li><p>MySQL如何解决幻读？（除了MVCC之外还能如何解决？）</p>
+</li>
+<li><p>kafka消息投递语义精准一次性（Exactly-once）是如何保证的？</p>
+<blockquote>
+<p> 这个特性是怎么实现的呢？在底层，它和TCP的工作原理有点像，每一批发送到Kafka的消息都将包含一个序列号，broker将使用这个序列号来删除重复的发送。和只能在瞬态内存中的连接中保证不重复的TCP不同，这个序列号被持久化到副本日志，所以，即使分区的leader挂了，其他的broker接管了leader，新leader仍可以判断重新发送的是否重复了。这种机制的开销非常低：每批消息只有几个额外的字段：</p>
+<ul>
+<li>PID，在Producer初始化时分配，作为每个Producer会话的唯一标识；</li>
+<li>序列号（sequence number），Producer发送的每条消息（更准确地说是每一个消息批次，即ProducerBatch）都会带有此序列号，从0开始单调递增。Broker根据它来判断写入的消息是否可接受。</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h3 id="美团"><a href="#美团" class="headerlink" title="美团"></a>美团</h3><ul>
+<li><a href="https://leetcode-cn.com/problems/sort-list/" target="_blank" rel="noopener">148. 排序链表</a></li>
+<li>JVM内存区域</li>
+<li>CMS垃圾回收器</li>
+<li>垃圾回收算法</li>
+<li>类加载过程</li>
+<li>线程池原理，使用场景，参数如何配置，如何预创建线程</li>
+<li>Spring AOP原理</li>
+<li>redis使用场景</li>
+<li>redis单线程为什么这么快</li>
+<li>redis为什么能支撑10万QPS</li>
+</ul>
+<h3 id="阿里"><a href="#阿里" class="headerlink" title="阿里"></a>阿里</h3><ul>
+<li><p>布隆过滤器如何降低误判率</p>
+<blockquote>
+<p>增加hash函数个数或者增大位数组容量</p>
+</blockquote>
+</li>
+<li><p>jdk8为什么要取消方法区，设立元空间</p>
+</li>
+<li><p>元空间参数如何配置</p>
+<blockquote>
+<p><strong>-XX:MetaspaceSize</strong>：Metaspace 空间初始大小，如果不设置的话，默认是20.79M，这个初始大小是触发首次 Metaspace Full GC 的阈值，例如 -XX:MetaspaceSize=256M</p>
+<p><strong>-XX:MaxMetaspaceSize</strong>：Metaspace 最大值，默认不限制大小，但是线上环境建议设置，例如</p>
+<p>-XX:MaxMetaspaceSize=256M</p>
+<p><strong>-XX:MinMetaspaceFreeRatio</strong>：最小空闲比，当 Metaspace 发生 GC 后，会计算 Metaspace 的空闲比，如果空闲比(空闲空间/当前 Metaspace 大小)小于此值，就会触发 Metaspace 扩容。默认值是 40 ，也就是 40%，例如 -XX:MinMetaspaceFreeRatio=40</p>
+<p><strong>-XX:MaxMetaspaceFreeRatio</strong>:最大空闲比，当 Metaspace 发生 GC 后，会计算 Metaspace 的空闲比，如果空闲比(空闲空间/当前 Metaspace 大小)大于此值，就会触发 Metaspace 释放空间。默认值是 70 ，也就是 70%，例如 -XX:MaxMetaspaceFreeRatio=70</p>
+<ul>
+<li>建议将 MetaspaceSize 和 MaxMetaspaceSize 设置为同样大小，避免频繁扩容。</li>
+</ul>
+</blockquote>
+</li>
+<li><p>如何减少回表</p>
+</li>
+<li><p>oom如何排查</p>
+<blockquote>
+<p><a href="https://www.cnblogs.com/lujiango/p/9650927.html" target="_blank" rel="noopener">https://www.cnblogs.com/lujiango/p/9650927.html</a></p>
+<p>1.<strong>确认是不是内存本身就分配过小</strong></p>
+<p><code>jmap -heap pid</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210610232554.png" alt="img"></p>
+<p>如图，可以查看新生代，老年代堆内存的分配大小以及使用情况，看是否本身分配过小。</p>
+<p>2.<strong>找到最耗内存的对象</strong></p>
+<p><code>jmap -histo:live pid | more</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210610232744.png" alt="img"></p>
+<p>如图，结果以表格的形式显示存活对象的信息，并按照所占内存大小排序：</p>
+<p>实例数，所占内存大小，类名</p>
+<p>如果发现某类对象占用内存很大，很可能是类对象创建太多，且一直未释放。例如：</p>
+<p>（1）申请完资源后，未调用close释放资源</p>
+<p>（2）消费者消费速度慢，生产者不断往队列中投递任务，导致队列中任务累积过多</p>
+<p>3.<strong>确认释放是资源耗尽</strong></p>
+<p>pstree：查看进程创建的线程数</p>
+<p>netstat：网络连接数</p>
+<p>还有另一种方法，通过</p>
+<p>ll /proc/pid/fd 查看占用句柄</p>
+<p>ll /proc/pid/task 查看线程数</p>
+<p>例如，某一台显示服务器的sshd进程是1041，查看：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210610233254.png" alt="img"></p>
+<p>sshd共占用了5个句柄。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210610233318.png" alt="img"></p>
+<p>sshd只有一个主线程为1041，并没有多线程。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="阿里（商家）"><a href="#阿里（商家）" class="headerlink" title="阿里（商家）"></a>阿里（商家）</h3><ul>
+<li>本地缓存一般适用于什么场景？如何保证缓存一致性</li>
+</ul>
 
       
 
@@ -346,11 +680,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
         		</li>
       		
 		</ul>
@@ -360,7 +690,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/15/study/数据结构与算法之美/学习笔记/24讲/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/05/09/interview/2021面经第二波/">展开全文 >></a>
         </p>
       
 
@@ -776,95 +1106,6 @@
 
 
   
-    <article id="post-study/MySQL实战45讲/21讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/05/study/MySQL实战45讲/21讲/">02讲</a>
-    </h1>
-  
-
-        
-        
-<a href="/2021/05/05/study/MySQL实战45讲/21讲/" class="archive-article-date">
-  	<time datetime="2021-05-05T05:20:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-05</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h1 id="21-为什么我只改一行的语句，锁这么多？"><a href="#21-为什么我只改一行的语句，锁这么多？" class="headerlink" title="21 | 为什么我只改一行的语句，锁这么多？"></a>21 | 为什么我只改一行的语句，锁这么多？</h1><h2 id="间隙锁和next-lock-key加锁原则"><a href="#间隙锁和next-lock-key加锁原则" class="headerlink" title="间隙锁和next-lock key加锁原则"></a>间隙锁和next-lock key加锁原则</h2><p>因为间隙锁在可重复读隔离级别下才有效，所以本篇文章接下来的描述，若没有特殊说明，默认是可重复读隔离级别。</p>
-<p><strong>我总结的加锁规则里面，包含了两个“原则”、两个“优化”和一个“bug”。</strong></p>
-<ol>
-<li>原则 1：加锁的基本单位是 next-key lock。希望你还记得，next-key lock 是前开后闭区间。</li>
-<li>原则 2：查找过程中访问到的对象才会加锁。</li>
-<li>优化 1：索引上的等值查询，给唯一索引加锁的时候，next-key lock 退化为行锁。</li>
-<li>优化 2：索引上的等值查询，向右遍历时且最后一个值不满足等值条件的时候，next-key lock 退化为间隙锁。</li>
-<li>一个 bug：唯一索引上的范围查询会访问到不满足条件的第一个值为止。</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL实战45讲</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/05/study/MySQL实战45讲/21讲/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-study/MySQL实战45讲/20讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -948,151 +1189,6 @@
 
 
   
-    <article id="post-study/数据结构与算法之美/学习笔记/12讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/04/study/数据结构与算法之美/学习笔记/12讲/">12讲</a>
-    </h1>
-  
-
-        
-        
-<a href="/2021/05/04/study/数据结构与算法之美/学习笔记/12讲/" class="archive-article-date">
-  	<time datetime="2021-05-04T09:20:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-04</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h1 id="12-排序（下）：如何用快排思想在O-n-内查找第K大元素？"><a href="#12-排序（下）：如何用快排思想在O-n-内查找第K大元素？" class="headerlink" title="12 | 排序（下）：如何用快排思想在O(n)内查找第K大元素？"></a>12 | 排序（下）：如何用快排思想在O(n)内查找第K大元素？</h1><h2 id="归并排序的原理"><a href="#归并排序的原理" class="headerlink" title="归并排序的原理"></a>归并排序的原理</h2><p>归并排序的核心思想还是蛮简单的。如果要排序一个数组，我们先把数组从中间分成前后两部分，然后对前后两部分分别排序，再将排好序的两部分合并在一起，这样整个数组就都有序了。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210504154821.jpeg" alt="img"></p>
-<p>归并排序使用的就是分治思想。分治，顾名思义，就是分而治之，将一个大问题分解成小的子问题来解决。小的子问题解决了，大问题也就解决了。</p>
-<p>从我刚才的描述，你有没有感觉到，分治思想跟我们前面讲的递归思想很像。是的，分治算法一般都是用递归来实现的。<strong>分治是一种解决问题的处理思想，递归是一种编程技巧</strong>，这两者并不冲突。分治算法的思想我后面会有专门的一节来讲，现在不展开讨论，我们今天的重点还是排序算法。</p>
-<p>前面我通过举例让你对归并有了一个感性的认识，又告诉你，归并排序用的是分治思想，可以用递归来实现。我们现在就来看看<strong>如何用递归代码来实现归并排序</strong>。</p>
-<p>我在第10 节讲的递归代码的编写技巧你还记得吗？写递归代码的技巧就是，分析得出递推公式，然后找到终止条件，最后将递推公式翻译成递归代码。所以，要想写出归并排序的代码，我们先写出归并排序的递推公式。</p>
-<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">递推公式：</span><br><span class="line">merge<span class="constructor">_sort(<span class="params">p</span>…<span class="params">r</span>)</span> = merge(merge<span class="constructor">_sort(<span class="params">p</span>…<span class="params">q</span>)</span>, merge<span class="constructor">_sort(<span class="params">q</span>+1…<span class="params">r</span>)</span>)</span><br><span class="line"></span><br><span class="line">终止条件：</span><br><span class="line">p &gt;= r 不用再继续分解</span><br></pre></td></tr></table></figure>
-
-<p>我来解释一下这个递推公式。</p>
-<p>merge_sort(p…r) 表示，给下标从 p 到 r 之间的数组排序。我们将这个排序问题转化为了两个子问题，merge_sort(p…q) 和 merge_sort(q+1…r)，其中下标 q 等于 p 和 r 的中间位置，也就是 (p+r)/2。当下标从 p 到 q 和从 q+1 到 r 这两个子数组都排好序之后，我们再将两个有序的子数组合并在一起，这样下标从 p 到 r 之间的数据就也排好序了。</p>
-<p>有了递推公式，转化成代码就简单多了。为了阅读方便，我这里只给出伪代码，你可以翻译成你熟悉的编程语言。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 归并排序算法, A是数组，n表示数组大小</span></span><br><span class="line">merge_sort(A, n) &#123;</span><br><span class="line">  merge_sort_c(A, <span class="number">0</span>, n<span class="number">-1</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 递归调用函数</span></span><br><span class="line">merge_sort_c(A, p, r) &#123;</span><br><span class="line">  <span class="comment">// 递归终止条件</span></span><br><span class="line">  <span class="keyword">if</span> p &gt;= r  then <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 取p到r之间的中间位置q</span></span><br><span class="line">  q = (p+r) / <span class="number">2</span></span><br><span class="line">  <span class="comment">// 分治递归</span></span><br><span class="line">  merge_sort_c(A, p, q)</span><br><span class="line">  merge_sort_c(A, q+<span class="number">1</span>, r)</span><br><span class="line">  <span class="comment">// 将A[p...q]和A[q+1...r]合并为A[p...r]</span></span><br><span class="line">  merge(A[p...r], A[p...q], A[q+<span class="number">1.</span>..r])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>你可能已经发现了，merge(A[p…r], A[p…q], A[q+1…r]) 这个函数的作用就是，将已经有序的 A[p…q]和 A[q+1….r]合并成一个有序的数组，并且放入 A[p….r]。那这个过程具体该如何做呢？</p>
-<p>如图所示，我们申请一个临时数组 tmp，大小与 A[p…r]相同。我们用两个游标 i 和 j，分别指向 A[p…q]和 A[q+1…r]的第一个元素。比较这两个元素 A[i]和 A[j]，如果 A[i]&lt;=A[j]，我们就把 A[i]放入到临时数组 tmp，并且 i 后移一位，否则将 A[j]放入到数组 tmp，j 后移一位。</p>
-<p>继续上述比较过程，直到其中一个子数组中的所有数据都放入临时数组中，再把另一个数组中的数据依次加入到临时数组的末尾，这个时候，临时数组中存储的就是两个子数组合并之后的结果了。最后再把临时数组 tmp 中的数据拷贝到原数组 A[p…r]中。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210504155216.jpeg" alt="img"></p>
-<p>我们把 merge() 函数写成伪代码，就是下面这样：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">merge(A[p...r], A[p...q], A[q+<span class="number">1.</span>..r]) &#123;</span><br><span class="line">  <span class="keyword">var</span> i := p，j := q+<span class="number">1</span>，k := <span class="number">0</span> <span class="comment">// 初始化变量i, j, k</span></span><br><span class="line">  <span class="keyword">var</span> tmp := <span class="built_in">new</span> array[<span class="number">0.</span>..r-p] <span class="comment">// 申请一个大小跟A[p...r]一样的临时数组</span></span><br><span class="line">  while i&lt;=q AND j&lt;=r do &#123;</span><br><span class="line">    <span class="keyword">if</span> A[i] &lt;= A[j] &#123;</span><br><span class="line">      tmp[k++] = A[i++] <span class="comment">// i++等于i:=i+1</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      tmp[k++] = A[j++]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 判断哪个子数组中有剩余的数据</span></span><br><span class="line">  <span class="keyword">var</span> start := i，end := q</span><br><span class="line">  <span class="keyword">if</span> j&lt;=r then start := j, end:=r</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 将剩余的数据拷贝到临时数组tmp</span></span><br><span class="line">  while start &lt;= end do &#123;</span><br><span class="line">    tmp[k++] = A[start++]</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 将tmp中的数组拷贝回A[p...r]</span></span><br><span class="line">  <span class="keyword">for</span> i:=<span class="number">0</span> to r-p do &#123;</span><br><span class="line">    A[p+i] = tmp[i]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="快速排序的原理"><a href="#快速排序的原理" class="headerlink" title="快速排序的原理"></a>快速排序的原理</h2><p>快排的思想是这样的：如果要排序数组中下标从 p 到 r 之间的一组数据，我们选择 p 到 r 之间的任意一个数据作为 pivot（分区点）。</p>
-<p>我们遍历 p 到 r 之间的数据，将小于 pivot 的放到左边，将大于 pivot 的放到右边，将 pivot 放到中间。经过这一步骤之后，数组 p 到 r 之间的数据就被分成了三个部分，前面 p 到 q-1 之间都是小于 pivot 的，中间是 pivot，后面的 q+1 到 r 之间是大于 pivot 的。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427195633.jpeg" alt="img"></p>
-<p>根据分治、递归的处理思想，我们可以用递归排序下标从 p 到 q-1 之间的数据和下标从 q+1 到 r 之间的数据，直到区间缩小为 1，就说明所有的数据都有序了。</p>
-<p>如果我们用递推公式来将上面的过程写出来的话，就是这样：</p>
-<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">递推公式：</span><br><span class="line">quick<span class="constructor">_sort(<span class="params">p</span>…<span class="params">r</span>)</span> = quick<span class="constructor">_sort(<span class="params">p</span>…<span class="params">q</span>-1)</span> + quick<span class="constructor">_sort(<span class="params">q</span>+1… <span class="params">r</span>)</span></span><br><span class="line"></span><br><span class="line">终止条件：</span><br><span class="line">p &gt;= r</span><br></pre></td></tr></table></figure>
-
-<p>我将递推公式转化成递归代码。跟归并排序一样，我还是用伪代码来实现，你可以翻译成你熟悉的任何语言。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 快速排序，A是数组，n表示数组的大小</span></span><br><span class="line">quick_sort(A, n) &#123;</span><br><span class="line">  quick_sort_c(A, <span class="number">0</span>, n<span class="number">-1</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 快速排序递归函数，p,r为下标</span></span><br><span class="line">quick_sort_c(A, p, r) &#123;</span><br><span class="line">  <span class="keyword">if</span> p &gt;= r then <span class="keyword">return</span></span><br><span class="line">  </span><br><span class="line">  q = partition(A, p, r) <span class="comment">// 获取分区点</span></span><br><span class="line">  quick_sort_c(A, p, q<span class="number">-1</span>)</span><br><span class="line">  quick_sort_c(A, q+<span class="number">1</span>, r)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>归并排序中有一个 merge() 合并函数，我们这里有一个 partition() 分区函数。partition() 分区函数实际上我们前面已经讲过了，就是随机选择一个元素作为 pivot（一般情况下，可以选择 p 到 r 区间的最后一个元素），然后对 A[p…r]分区，函数返回 pivot 的下标。</p>
-<p>如果我们不考虑空间消耗的话，partition() 分区函数可以写得非常简单。我们申请两个临时数组 X 和 Y，遍历 A[p…r]，将小于 pivot 的元素都拷贝到临时数组 X，将大于 pivot 的元素都拷贝到临时数组 Y，最后再将数组 X 和数组 Y 中数据顺序拷贝到 A[p….r]。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427200346.jpeg" alt="img"></p>
-<p>但是，如果按照这种思路实现的话，partition() 函数就需要很多额外的内存空间，所以快排就不是原地排序算法了。如果我们希望快排是原地排序算法，那它的空间复杂度得是 O(1)，那 partition() 分区函数就不能占用太多额外的内存空间，我们就需要在 A[p…r]的原地完成分区操作。</p>
-<p>原地分区函数的实现思路非常巧妙，我写成了伪代码，我们一起来看一下。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">partition(A, p, r) &#123;</span><br><span class="line">  pivot := A[r]</span><br><span class="line">  i := p</span><br><span class="line">  <span class="keyword">for</span> j := p to r<span class="number">-1</span> do &#123;</span><br><span class="line">    <span class="keyword">if</span> A[j] &lt; pivot &#123;</span><br><span class="line">      swap A[i] with A[j]</span><br><span class="line">      i := i+<span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  swap A[i] with A[r]</span><br><span class="line">  <span class="keyword">return</span> i</span><br></pre></td></tr></table></figure>
-
-<p>这里的处理有点类似选择排序。我们通过游标 i 把 A[p…r-1]分成两部分。A[p…i-1]的元素都是小于 pivot 的，我们暂且叫它“已处理区间”，A[i…r-1]是“未处理区间”。我们每次都从未处理的区间 A[i…r-1]中取一个元素 A[j]，与 pivot 对比，如果小于 pivot，则将其加入到已处理区间的尾部，也就是 A[i]的位置。</p>
-<p>数组的插入操作还记得吗？在数组某个位置插入元素，需要搬移数据，非常耗时。当时我们也讲了一种处理技巧，就是交换，在 O(1) 的时间复杂度内完成插入操作。这里我们也借助这个思想，只需要将 A[i]与 A[j]交换，就可以在 O(1) 时间复杂度内将 A[j]放到下标为 i 的位置。</p>
-<p>文字不如图直观，所以我画了一张图来展示分区的整个过程。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427201802.jpeg" alt="img"></p>
-<p>因为分区的过程涉及交换操作，如果数组中有两个相同的元素，比如序列 6，8，7，6，3，5，9，4，在经过第一次分区操作之后，两个 6 的相对先后顺序就会改变。所以，快速排序并不是一个稳定的排序算法。</p>
-<p>到此，快速排序的原理你应该也掌握了。现在，我再来看另外一个问题：快排和归并用的都是分治思想，递推公式和递归代码也非常相似，那它们的区别在哪里呢？</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427201947.jpeg" alt="img"></p>
-<p>可以发现，归并排序的处理过程是<strong>由下到上</strong>的，先处理子问题，然后再合并。而快排正好相反，它的处理过程是<strong>由上到下的</strong>，先分区，然后再处理子问题。归并排序虽然是稳定的、时间复杂度为 O(nlogn) 的排序算法，但是它是非原地排序算法。我们前面讲过，归并之所以是非原地排序算法，主要原因是合并函数无法在原地执行。快速排序通过设计巧妙的原地分区函数，可以实现原地排序，解决了归并排序占用太多内存的问题。</p>
-<h2 id="解答开篇"><a href="#解答开篇" class="headerlink" title="解答开篇"></a>解答开篇</h2><p>快排核心思想就是分治和分区，我们可以利用分区的思想，来解答开篇的问题：O(n) 时间复杂度内求无序数组中的第 K 大元素。比如，4， 2， 5， 12， 3 这样一组数据，第 3 大元素就是 4。</p>
-<p>我们选择数组区间 A[0…n-1]的最后一个元素 A[n-1]作为 pivot，对数组 A[0…n-1]原地分区，这样数组就分成了三部分，A[0…p-1]、A[p]、A[p+1…n-1]。</p>
-<p>如果 p+1=K，那 A[p]就是要求解的元素；如果 K&gt;p+1, 说明第 K 大元素出现在 A[p+1…n-1]区间，我们再按照上面的思路递归地在 A[p+1…n-1]这个区间内查找。同理，如果 K&lt;p+1，那我们就在 A[0…p-1]区间查找。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210504155824.jpeg" alt="img"></p>
-<p>我们再来看，为什么上述解决思路的时间复杂度是 O(n)？</p>
-<p>第一次分区查找，我们需要对大小为 n 的数组执行分区操作，需要遍历 n 个元素。第二次分区查找，我们只需要对大小为 n/2 的数组执行分区操作，需要遍历 n/2 个元素。依次类推，分区遍历元素的个数分别为、n/2、n/4、n/8、n/16.……直到区间缩小为 1。</p>
-<p>如果我们把每次分区遍历的元素个数加起来，就是：n+n/2+n/4+n/8+…+1。这是一个等比数列求和，最后的和等于 2n-1。所以，上述解决思路的时间复杂度就为 O(n)。</p>
-<h2 id="内容小结"><a href="#内容小结" class="headerlink" title="内容小结"></a>内容小结</h2><p>归并排序和快速排序是两种稍微复杂的排序算法，它们用的都是分治的思想，代码都通过递归来实现，过程非常相似。理解归并排序的重点是理解递推公式和 merge() 合并函数。同理，理解快排的重点也是理解递推公式，还有 partition() 分区函数。</p>
-<p>归并排序算法是一种在任何情况下时间复杂度都比较稳定的排序算法，这也使它存在致命的缺点，即归并排序不是原地排序算法，空间复杂度比较高，是 O(n)。正因为此，它也没有快排应用广泛。</p>
-<p>快速排序算法虽然最坏情况下的时间复杂度是 O(n2)，但是平均情况下时间复杂度都是 O(nlogn)。不仅如此，快速排序算法时间复杂度退化到 O(n2) 的概率非常小，我们可以通过合理地选择 pivot 来避免这种情况。</p>
-<h2 id="课后思考"><a href="#课后思考" class="headerlink" title="课后思考"></a>课后思考</h2><p>现在你有 10 个接口访问日志文件，每个日志文件大小约 300MB，每个文件里的日志都是按照时间戳从小到大排序的。你希望将这 10 个较小的日志文件，合并为 1 个日志文件，合并之后的日志仍然按照时间戳从小到大排列。如果处理上述排序任务的机器内存只有 1GB，你有什么好的解决思路，能“快速”地将这 10 个日志文件合并吗？</p>
-<blockquote>
-<p>归并思路： </p>
-<p>1.每个文件从最小值记录开始维护一个游标，标志当前文件遍历的记录位置。 </p>
-<p>2.维护一个10空间大小的小顶堆，将每个文件的游标记录压入，顶端的就是最小值。 </p>
-<p>3.将堆顶数据取出，写入新的文件。 </p>
-<p>4.将取出的记录对应的文件游标向前拨动，取出对应的记录（就是下一个记录），压入小顶堆。没有记录说明改文件遍历完毕。 </p>
-<p>5.重复操作3。 （这里的小顶堆作用就是快速取出最小的那个值，考虑到堆结构的代码实现难度，这个地方用简单的有序列表，新的数据有序插入，取出最小的也很ok，10条记录随便搞，慢不到哪里，优化也快不到哪里，简单就好） </p>
-<p>这个简单思路占用空间很小，就是10条数据的小顶堆。但题目给出的是，1G内存，有很大的优化空间，优化点在磁盘IO，优化方式就是批量读文件，批量写文件。 1.批量读，每个文件读取50M到内存，总计500M。上面的游标就对应到内存游标，只是游标到底之后，需要读取对应文件下一个50M数据 2.批量写，上面的写文件，优化为写内存，给予500M的内存空间，写满后再一次刷入新的文件。</p>
-</blockquote>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/04/study/数据结构与算法之美/学习笔记/12讲/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1107,7 +1203,7 @@
     <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2021 Elfred 
+    		&copy; 2022 Elfred 
         <!-- 《网站备案号 -->
         
                 <img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png" title="备案管理系统">
@@ -1213,19 +1309,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">面经</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1241,6 +1333,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
@@ -1250,10 +1350,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">

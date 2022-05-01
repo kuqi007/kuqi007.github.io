@@ -146,6 +146,321 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-interview/2021面经" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/20/interview/2021面经/">2021面经</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/01/20/interview/2021面经/" class="archive-article-date">
+  	<time datetime="2021-01-20T08:49:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-20</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h3 id="叮咚买菜"><a href="#叮咚买菜" class="headerlink" title="叮咚买菜"></a>叮咚买菜</h3><ul>
+<li><p>hashmap的扩容过程</p>
+</li>
+<li><p>单向链表如何判断有环</p>
+<blockquote>
+<p>HashSet遍历和快慢指针</p>
+</blockquote>
+</li>
+<li><p>如何找出一个数组重复元素最多的前K个元素</p>
+<blockquote>
+<p>TopK问题，堆排序，时间复杂度nLogK</p>
+</blockquote>
+</li>
+<li><p>MySQL什么情况下会发生死锁？如何解决？</p>
+<blockquote>
+<p>举个例子：事务A按照先后顺序去更新id=1和id=2的记录，事务B同一时间按照先后顺序去更新id=2和id=1的记录，因为行锁是两阶段协议，A获得id=1的行锁不会马上释放，此时B会等待A释放id=1的行锁，而A会等待B释放id=2的行锁，这样就形成了死锁。<br><strong>如何解决：</strong></p>
+<ul>
+<li>一种策略是，直接进入等待，直到超时。这个超时时间可以通过参数innodb_lock_wait_timeout来设置。</li>
+<li>另一种策略是，发起死锁检测，发现死锁后，主动回滚死锁链条中的某一个事务，让其他事务得以继续执行。将参数innodb_deadlock_detect设置为on，表示开启这个逻辑。</li>
+</ul>
+</blockquote>
+</li>
+<li><p>ArrayList的contains方法和HashSet的contains方法的时间复杂度各是多少</p>
+<blockquote>
+<p>O(n)和O(1）</p>
+</blockquote>
+</li>
+<li><p>2个线程，A生产数据，B消费数据，有哪几种实现形式（使用LinkedList实现有哪些需要注意的，线程安全问题，如何解决：加锁）</p>
+</li>
+<li><p>一个抽奖系统，奖品1的概率是10%，奖品2的概率是20%，不中奖的概率是70%，算法如何实现？</p>
+<blockquote>
+<p>随机数和区间</p>
+</blockquote>
+</li>
+<li><p>缓存一致性如何保证？</p>
+<blockquote>
+<p>最好的解决方案是先更新数据库再删除缓存（在极端情况下也会有问题，比如说B线程更新数据的节点，缓存正好失效，此时线程A读取到了旧值，随后B操作数据库完成更新并且删除缓存之后，A再把旧值写入缓存，此时再去请求拿到的会是脏数据，这种概率非常低，基本可以忽略）</p>
+</blockquote>
+</li>
+<li><p>Dubbo IO线程池和业务线程池有什么区别？默认是哪种线程池（Fixed）</p>
+</li>
+<li><p>使用Dubbo有没有遇到什么坑？</p>
+<blockquote>
+<ul>
+<li>父子类有相同属性时值丢失：hessian序列化问题</li>
+<li>自定义异常被包装成RuntimeException</li>
+<li>Data length too large</li>
+<li>线程耗尽：Provider默认是fixed线程池，且线程数为200</li>
+</ul>
+<p><a href="https://blog.csdn.net/u013256816/article/details/102674846" target="_blank" rel="noopener"><strong>具体参考链接</strong></a></p>
+</blockquote>
+</li>
+<li><p>网关是用来做什么的？为什么要用网关？</p>
+</li>
+<li><p>乐观锁和悲观锁有什么区别？乐观锁有哪些实现方式？（版本号机制和CAS算法）</p>
+<blockquote>
+<p>版本号机制和CAS算法</p>
+</blockquote>
+</li>
+<li><p>线程池主要有哪些东西？线程池中如果没有任务，会是什么状态？</p>
+</li>
+<li><p>项目中遇到的技术难题，是如何解决的？</p>
+</li>
+<li><p>分库分表一些连表问题和条件查询是如何解决的？</p>
+<blockquote>
+<p>分两次查询，第一次把联表的id查出来，通过这些id再做一次查询</p>
+</blockquote>
+</li>
+</ul>
+        
+          <a class="article-more-a" href="/2021/01/20/interview/2021面经/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/20/interview/2021面经/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-interview/dubbo面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/18/interview/dubbo面试题/">Dubbo面试题</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/01/18/interview/dubbo面试题/" class="archive-article-date">
+  	<time datetime="2021-01-18T08:31:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-18</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h3 id="dubbo分层"><a href="#dubbo分层" class="headerlink" title="dubbo分层"></a>dubbo分层</h3><p>从大的范围来说，dubbo分为三层，business业务逻辑层由我们自己来提供接口和实现还有一些配置信息，RPC层就是真正的RPC调用的核心层，封装整个RPC的调用过程、负载均衡、集群容错、代理，remoting则是对网络传输协议和数据转换的封装。</p>
+<p>划分到更细的层面，就是图中的10层模式，整个分层依赖由上至下，除开business业务逻辑之外，其他的几层都是SPI机制。<br><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118155842.webp" alt="图片"></p>
+<h3 id="能说下Dubbo的工作原理吗？"><a href="#能说下Dubbo的工作原理吗？" class="headerlink" title="能说下Dubbo的工作原理吗？"></a>能说下Dubbo的工作原理吗？</h3><ol>
+<li>服务启动的时候，provider和consumer根据配置信息，连接到注册中心register，分别向注册中心注册和订阅服务</li>
+<li>register根据服务订阅关系，返回provider信息到consumer，同时consumer会把provider信息缓存到本地。如果信息有变更，consumer会收到来自register的推送</li>
+<li>consumer生成代理对象，同时根据负载均衡策略，选择一台provider，同时定时向monitor记录接口的调用次数和时间信息</li>
+<li>拿到代理对象之后，consumer通过代理对象发起接口调用</li>
+<li>provider收到请求后对数据进行反序列化，然后通过代理调用具体的接口实现</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118155952.webp" alt="图片"></p>
+<h3 id="dubbo服务暴露的过程"><a href="#dubbo服务暴露的过程" class="headerlink" title="dubbo服务暴露的过程"></a>dubbo服务暴露的过程</h3><ol>
+<li>在容器启动的时候，通过ServiceConfig解析标签，创建dubbo标签解析器来解析dubbo的标签，容器创建完成之后，触发ContextRefreshEvent事件回调开始暴露服务</li>
+<li>通过ProxyFactory获取到invoker，invoker包含了需要执行的方法的对象信息和具体的URL地址</li>
+<li>再通过DubboProtocol的实现把包装后的invoker转换成exporter，然后启动服务器server，监听端口</li>
+<li>最后RegistryProtocol保存URL地址和invoker的映射关系，同时注册到服务中心</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118160055.webp" alt="图片"></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://mp.weixin.qq.com/s/TOcBA5AFDsMNCCosI5tZZA" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/TOcBA5AFDsMNCCosI5tZZA</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/18/interview/dubbo面试题/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-application/面试遇到的简单多线程编程题：线程交替打印的升级版" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/26/application/面试遇到的简单多线程编程题：线程交替打印的升级版/">面试遇到的简单多线程编程题：线程交替打印的升级版</a>
+    </h1>
+  
+
+        
+        
+<a href="/2020/03/26/application/面试遇到的简单多线程编程题：线程交替打印的升级版/" class="archive-article-date">
+  	<time datetime="2020-03-26T07:34:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-26</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近面试遇到一道简单的多线程编码题，线程交替打印的升级版，我们来研究下这道题怎么解决。  </p>
+<h3 id="题目介绍："><a href="#题目介绍：" class="headerlink" title="题目介绍："></a>题目介绍：</h3><blockquote>
+<p>线程A每次处理只能输出一个A<br>线程B每次输出只能输出一个B<br>主线程不能输出A或B<br>请尽可能不使用封装好的工具方法或类来调度线程，然后输出以下内容：<br>ABBBBABBBBABBBBABBBB….<br>加分项：增加线程B1，行为和B一样，要求B和B1负载均衡</p>
+</blockquote>
+        
+          <a class="article-more-a" href="/2020/03/26/application/面试遇到的简单多线程编程题：线程交替打印的升级版/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">面试题</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/26/application/面试遇到的简单多线程编程题：线程交替打印的升级版/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-application/Spring、SpringMvc、SpringBoot和SpringCloud的联系与区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -519,240 +834,6 @@
 
 
   
-    <article id="post-application/JPA实现Specification" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/13/application/JPA实现Specification/">使用JPA实现Specification规范规格模式</a>
-    </h1>
-  
-
-        
-        
-<a href="/2019/10/13/application/JPA实现Specification/" class="archive-article-date">
-  	<time datetime="2019-10-13T13:55:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-13</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>　　由DDD之父 Eric Evans 和OO之父 Martin Fowler定义的规范(Specification也称规格模式)模式article 越来越受到广泛应用，本文介绍如何使用JavaEE 持久层规范JPA实现规格模式，其实现思想也适合其他持久层框架。案例源码见GitHub。</p>
-        
-          <a class="article-more-a" href="/2019/10/13/application/JPA实现Specification/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/13/application/JPA实现Specification/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-application/JPA-OneToMany简单应用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/08/application/JPA-OneToMany简单应用/">JPA OneToMany简单应用</a>
-    </h1>
-  
-
-        
-        
-<a href="/2019/10/08/application/JPA-OneToMany简单应用/" class="archive-article-date">
-  	<time datetime="2019-10-08T13:43:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-08</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="1-单向-OneToMany"><a href="#1-单向-OneToMany" class="headerlink" title="1.单向@OneToMany"></a>1.单向@OneToMany</h3><ol>
-<li>User实体类<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table</span>(name = <span class="string">"user"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="meta">@GeneratedValue</span>(strategy = GenerationType.IDENTITY)</span><br><span class="line">    <span class="meta">@Column</span>(name = <span class="string">"id"</span>)</span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column</span>(name = <span class="string">"username"</span>)</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@OneToMany</span>(cascade = &#123;CascadeType.REMOVE&#125;)</span><br><span class="line">    <span class="meta">@JoinColumn</span>(name = <span class="string">"article_id"</span>)</span><br><span class="line">    <span class="keyword">private</span> Set&lt;Article&gt; articles;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<p>2.Article实体类</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table</span>(name = <span class="string">"article"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Article</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="meta">@GeneratedValue</span>(strategy = GenerationType.IDENTITY)</span><br><span class="line">    <span class="meta">@Column</span>(name = <span class="string">"id"</span>)</span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Column</span>(name = <span class="string">"article_id"</span>)</span><br><span class="line">    <span class="keyword">private</span> Long article_id;    </span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column</span>(name = <span class="string">"title"</span>)</span><br><span class="line">    <span class="keyword">private</span> String title;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column</span>(name = <span class="string">"content"</span>)</span><br><span class="line">    <span class="keyword">private</span> String content;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JPA</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">MapStruct</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Java随笔//" class="article-tag-list-link color2">Java随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/08/application/JPA-OneToMany简单应用/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-application/常用设计模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/06/application/常用设计模式/">常用设计模式</a>
-    </h1>
-  
-
-        
-        
-<a href="/2019/10/06/application/常用设计模式/" class="archive-article-date">
-  	<time datetime="2019-10-06T07:16:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-06</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h3 id="简单工厂"><a href="#简单工厂" class="headerlink" title="简单工厂"></a>简单工厂</h3><h3 id="工厂模式（Factory-Method）"><a href="#工厂模式（Factory-Method）" class="headerlink" title="工厂模式（Factory Method）"></a>工厂模式（Factory Method）</h3><h3 id="单例（Singleton）"><a href="#单例（Singleton）" class="headerlink" title="单例（Singleton）"></a>单例（Singleton）</h3><h3 id="适配器（Adapter）"><a href="#适配器（Adapter）" class="headerlink" title="适配器（Adapter）"></a>适配器（Adapter）</h3><h3 id="包装器（Decorator装饰模式）"><a href="#包装器（Decorator装饰模式）" class="headerlink" title="包装器（Decorator装饰模式）"></a>包装器（Decorator装饰模式）</h3><h3 id="代理（Proxy）"><a href="#代理（Proxy）" class="headerlink" title="代理（Proxy）"></a>代理（Proxy）</h3><h3 id="观察者（Observer）"><a href="#观察者（Observer）" class="headerlink" title="观察者（Observer）"></a>观察者（Observer）</h3><h3 id="策略（Strategy）"><a href="#策略（Strategy）" class="headerlink" title="策略（Strategy）"></a>策略（Strategy）</h3><h3 id="模板方法（Template-Method）"><a href="#模板方法（Template-Method）" class="headerlink" title="模板方法（Template Method）"></a>模板方法（Template Method）</h3>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/06/application/常用设计模式/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
@@ -767,7 +848,7 @@
     <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2021 Elfred 
+    		&copy; 2022 Elfred 
         <!-- 《网站备案号 -->
         
                 <img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png" title="备案管理系统">
@@ -873,19 +954,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">面经</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -901,6 +978,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
@@ -910,10 +995,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -6,20 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://blog.elfred.top">
-  <title>Elfred&#39;s Blog</title>
+  <title> 2021面经第二波 | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="如何保证分布式系统的高可用？限流降级熔断">
-<meta name="keywords" content="前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Elfred&#39;s Blog">
-<meta property="og:url" content="https://blog.elfred.top/private/分布式.html">
+  <meta name="description" content="涂鸦智能 redis为什么这么快 redis为什么是单线程 3000万数据的表，如何进行优化 分库分表、多维度查询  滴滴 24. 两两交换链表中的节点  堆外内存  类加载机制  双亲委派机制，如何打破  不同的类加载器加载的类是不是同一个类  https://cloud.tencent.com/developer/news/627029 不同类加载器加载的类在 JVM 看来是两个不同的类，因">
+<meta name="keywords" content="面经">
+<meta property="og:type" content="article">
+<meta property="og:title" content=" 2021面经第二波">
+<meta property="og:url" content="https://blog.elfred.top/2021/05/09/interview/2021面经第二波/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="如何保证分布式系统的高可用？限流降级熔断">
+<meta property="og:description" content="涂鸦智能 redis为什么这么快 redis为什么是单线程 3000万数据的表，如何进行优化 分库分表、多维度查询  滴滴 24. 两两交换链表中的节点  堆外内存  类加载机制  双亲委派机制，如何打破  不同的类加载器加载的类是不是同一个类  https://cloud.tencent.com/developer/news/627029 不同类加载器加载的类在 JVM 看来是两个不同的类，因">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-02-19T14:57:46.202Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210610232554.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210610232744.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210610233254.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210610233318.png">
+<meta property="og:updated_time" content="2021-06-13T13:19:24.472Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Elfred&#39;s Blog">
-<meta name="twitter:description" content="如何保证分布式系统的高可用？限流降级熔断">
+<meta name="twitter:title" content=" 2021面经第二波">
+<meta name="twitter:description" content="涂鸦智能 redis为什么这么快 redis为什么是单线程 3000万数据的表，如何进行优化 分库分表、多维度查询  滴滴 24. 两两交换链表中的节点  堆外内存  类加载机制  双亲委派机制，如何打破  不同的类加载器加载的类是不是同一个类  https://cloud.tencent.com/developer/news/627029 不同类加载器加载的类在 JVM 看来是两个不同的类，因">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210610232554.png">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -145,12 +150,209 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="page-" class="article article-type-page " itemscope itemprop="blogPost">
+            <article id="post-interview/2021面经第二波" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+       2021面经第二波
+    </h1>
+  
+
+        
+        
+	<!-- 不蒜子统计 -->
+	<span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2021/05/09/interview/2021面经第二波/" class="archive-article-date">
+  	<time datetime="2021-05-09T12:21:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-09</time>
+</a>
+
+        
+      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="如何保证分布式系统的高可用？"><a href="#如何保证分布式系统的高可用？" class="headerlink" title="如何保证分布式系统的高可用？"></a>如何保证分布式系统的高可用？</h2><h3 id="限流"><a href="#限流" class="headerlink" title="限流"></a>限流</h3><h3 id="降级"><a href="#降级" class="headerlink" title="降级"></a>降级</h3><h3 id="熔断"><a href="#熔断" class="headerlink" title="熔断"></a>熔断</h3>
+        <hr>
+<h3 id="涂鸦智能"><a href="#涂鸦智能" class="headerlink" title="涂鸦智能"></a>涂鸦智能</h3><ul>
+<li>redis为什么这么快</li>
+<li>redis为什么是单线程</li>
+<li>3000万数据的表，如何进行优化</li>
+<li>分库分表、多维度查询</li>
+</ul>
+<h3 id="滴滴"><a href="#滴滴" class="headerlink" title="滴滴"></a>滴滴</h3><ul>
+<li><p><a href="https://leetcode-cn.com/problems/swap-nodes-in-pairs/" target="_blank" rel="noopener">24. 两两交换链表中的节点</a></p>
+</li>
+<li><p>堆外内存</p>
+</li>
+<li><p>类加载机制</p>
+</li>
+<li><p>双亲委派机制，如何打破</p>
+</li>
+<li><p>不同的类加载器加载的类是不是同一个类</p>
+<blockquote>
+<p><a href="https://cloud.tencent.com/developer/news/627029" target="_blank" rel="noopener">https://cloud.tencent.com/developer/news/627029</a></p>
+<p>不同类加载器加载的类在 JVM 看来是两个不同的类，因为在 JVM 中一个类的唯一标识是类加载器+类名。通过这种方式我们就能够同时加载 C 的两个不同版本的类，即使它类名是一样的。注意，这里类加载器指的是类加载器的实例，并不是一定要定义两个不同类加载器</p>
+</blockquote>
+</li>
+<li><p>线程池原理以及使用场景</p>
+</li>
+<li><p>synchronized和ReentrantLock的区别（是否是重入锁）</p>
+</li>
+<li><p>ReentrantLock非公平锁和公平锁如何做到的</p>
+</li>
+<li><p>synchronized锁升级原理</p>
+</li>
+<li><p>redis分布式锁如何使用</p>
+</li>
+<li><p>业务没执行完，分布式锁过期释放，如何解决</p>
+</li>
+<li><p>springcloud和dubbo的区别</p>
+</li>
+<li><p>rpc协议和http协议的区别</p>
+</li>
+<li><p>https的原理</p>
+</li>
+<li><p>序列化方式有哪几种，dubbo默认是哪种</p>
+</li>
+<li><p>mysql查询优化</p>
+</li>
+<li><p>mysql为什么用b+树</p>
+</li>
+</ul>
+<h3 id="快手"><a href="#快手" class="headerlink" title="快手"></a>快手</h3><ul>
+<li><a href="https://leetcode-cn.com/problems/merge-k-sorted-lists/" target="_blank" rel="noopener">23. 合并K个升序链表</a></li>
+<li>HashMap在jdk1.7扩容过程</li>
+<li>HashMap什么情况下会链表成环</li>
+<li>HashMap为什么线程不安全</li>
+<li>反射原理以及使用场景</li>
+<li>创建对象的几种形式</li>
+<li>聚合根、实体在业务中的应用</li>
+<li>redis集群、高可用、持久化</li>
+<li>本地事务表如果TPS太高，如何优化</li>
+</ul>
+<h3 id="酷家乐"><a href="#酷家乐" class="headerlink" title="酷家乐"></a>酷家乐</h3><ul>
+<li>最长回文子串</li>
+<li>带<code>+ - * /（）</code>的基本计算器</li>
+<li>binlog存储形式（row和statement）</li>
+<li>mvcc具体是如何解决幻读的？</li>
+<li>类加载过程</li>
+</ul>
+<h3 id="哈罗单车"><a href="#哈罗单车" class="headerlink" title="哈罗单车"></a>哈罗单车</h3><ul>
+<li><p>两个不同版本的类，如果我都想去加载？如何去做（自定义两个类加载器去加载）</p>
+</li>
+<li><p>MySQL为什么不用平衡树？</p>
+<blockquote>
+<p>因为数据是存储在磁盘上的，进行查询操作的时，需要先将数据加载到内存中（磁盘IO操作）。而数据并不能一次性全部加载到内存中，只能逐一加载每个磁盘页（对应树的一个节点），并且磁盘IO操作很慢，平衡二叉树由于深度过大而造成磁盘IO读写过于频繁，进而导致效率低下。为了减少磁盘的IO次数，就需要降低树的深度，那么就引出了B树和B+树：每个节点存储多个元素，采用多叉树结构。所以使用B+树而不是平衡二叉树。</p>
+<p>B树的每个节点可以存储多个关键字，它将节点大小设置为磁盘页的大小，充分利用了磁盘预读的功能。每次读取磁盘页时就会读取一整个节点。也正因每个节点存储着非常多个关键字，树的深度就会非常的小。进而要执行的磁盘读取操作次数就会非常少，更多的是在内存中对读取进来的数据进行查找。</p>
+<p>总结：平衡树没能充分利用磁盘预读（局部性原理）功能，而B+树每个节点是一个磁盘页，每个节点包含多个key，每次加载能把一页数据全部加载到内存，提高了缓存命中率。</p>
+</blockquote>
+</li>
+<li><p>MySQL为什么使用B+树索引而不是B树索引？</p>
+<blockquote>
+<ol>
+<li>B+树叶子节点使用双向链表连接，范围查询非常方便；而B树必须用中序遍历的方法按序扫库，效率低下</li>
+<li>B+树非叶子节点不保存数据，同样的磁盘页大小容纳的关键字更多，一次性读入内存的关键字也就越多，相对来说说IO次数就降低了</li>
+<li>B+树查询效率更稳定：因为B+树非叶子节点不保存数据，所以任何关键字的查找必须走一条从根结点到叶子结点的路。所有关键字查询的路径长度相同，导致每一个数据的查询效率相当。</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<h3 id="网易"><a href="#网易" class="headerlink" title="网易"></a>网易</h3><ul>
+<li><p>cms和G1垃圾回收器的区别？为什么G1适合大内存，G1如何做到可预测的低停顿的？</p>
+<blockquote>
+<p>G1收集器之所以能建立可预测的停顿时间模型，是因为它将Region作为单次回收的最小单元，即每次收集到的内存空间都是Region大小的整数倍，这样可以有计划地避免在整个Java堆中进行全区域的垃圾收集。更具体的处理思路是让G1收集器去跟踪各个Region里面的垃圾堆积的“价值”大小，价值即回收所获得的空间大小以及回收所需时间的经验值，然后在后台维护一个优先级列表，每次根据用户设定允许的收集停顿时间（使用参数 - XX:MaxGCPauseMills指定，默认值是200毫秒），优先处理回收价值收益最大的那些Region，这也就是“Garbage First”名称的由来。这种使用Region划分内存空间，以及具有优先级的区域回收方式，保证了G1收集器在有限的时间内获取尽可能高的收集效率。</p>
+</blockquote>
+</li>
+<li><p>读写锁的实现细节</p>
+</li>
+<li><p>volatile保证了什么？如何保证的？内存屏障的指令有哪些？</p>
+</li>
+<li><p>SQL注入是啥，以及它的原理，如何避免？</p>
+</li>
+<li><p>MySQL如何解决幻读？（除了MVCC之外还能如何解决？）</p>
+</li>
+<li><p>kafka消息投递语义精准一次性（Exactly-once）是如何保证的？</p>
+<blockquote>
+<p> 这个特性是怎么实现的呢？在底层，它和TCP的工作原理有点像，每一批发送到Kafka的消息都将包含一个序列号，broker将使用这个序列号来删除重复的发送。和只能在瞬态内存中的连接中保证不重复的TCP不同，这个序列号被持久化到副本日志，所以，即使分区的leader挂了，其他的broker接管了leader，新leader仍可以判断重新发送的是否重复了。这种机制的开销非常低：每批消息只有几个额外的字段：</p>
+<ul>
+<li>PID，在Producer初始化时分配，作为每个Producer会话的唯一标识；</li>
+<li>序列号（sequence number），Producer发送的每条消息（更准确地说是每一个消息批次，即ProducerBatch）都会带有此序列号，从0开始单调递增。Broker根据它来判断写入的消息是否可接受。</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h3 id="美团"><a href="#美团" class="headerlink" title="美团"></a>美团</h3><ul>
+<li><a href="https://leetcode-cn.com/problems/sort-list/" target="_blank" rel="noopener">148. 排序链表</a></li>
+<li>JVM内存区域</li>
+<li>CMS垃圾回收器</li>
+<li>垃圾回收算法</li>
+<li>类加载过程</li>
+<li>线程池原理，使用场景，参数如何配置，如何预创建线程</li>
+<li>Spring AOP原理</li>
+<li>redis使用场景</li>
+<li>redis单线程为什么这么快</li>
+<li>redis为什么能支撑10万QPS</li>
+</ul>
+<h3 id="阿里"><a href="#阿里" class="headerlink" title="阿里"></a>阿里</h3><ul>
+<li><p>布隆过滤器如何降低误判率</p>
+<blockquote>
+<p>增加hash函数个数或者增大位数组容量</p>
+</blockquote>
+</li>
+<li><p>jdk8为什么要取消方法区，设立元空间</p>
+</li>
+<li><p>元空间参数如何配置</p>
+<blockquote>
+<p><strong>-XX:MetaspaceSize</strong>：Metaspace 空间初始大小，如果不设置的话，默认是20.79M，这个初始大小是触发首次 Metaspace Full GC 的阈值，例如 -XX:MetaspaceSize=256M</p>
+<p><strong>-XX:MaxMetaspaceSize</strong>：Metaspace 最大值，默认不限制大小，但是线上环境建议设置，例如</p>
+<p>-XX:MaxMetaspaceSize=256M</p>
+<p><strong>-XX:MinMetaspaceFreeRatio</strong>：最小空闲比，当 Metaspace 发生 GC 后，会计算 Metaspace 的空闲比，如果空闲比(空闲空间/当前 Metaspace 大小)小于此值，就会触发 Metaspace 扩容。默认值是 40 ，也就是 40%，例如 -XX:MinMetaspaceFreeRatio=40</p>
+<p><strong>-XX:MaxMetaspaceFreeRatio</strong>:最大空闲比，当 Metaspace 发生 GC 后，会计算 Metaspace 的空闲比，如果空闲比(空闲空间/当前 Metaspace 大小)大于此值，就会触发 Metaspace 释放空间。默认值是 70 ，也就是 70%，例如 -XX:MaxMetaspaceFreeRatio=70</p>
+<ul>
+<li>建议将 MetaspaceSize 和 MaxMetaspaceSize 设置为同样大小，避免频繁扩容。</li>
+</ul>
+</blockquote>
+</li>
+<li><p>如何减少回表</p>
+</li>
+<li><p>oom如何排查</p>
+<blockquote>
+<p><a href="https://www.cnblogs.com/lujiango/p/9650927.html" target="_blank" rel="noopener">https://www.cnblogs.com/lujiango/p/9650927.html</a></p>
+<p>1.<strong>确认是不是内存本身就分配过小</strong></p>
+<p><code>jmap -heap pid</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210610232554.png" alt="img"></p>
+<p>如图，可以查看新生代，老年代堆内存的分配大小以及使用情况，看是否本身分配过小。</p>
+<p>2.<strong>找到最耗内存的对象</strong></p>
+<p><code>jmap -histo:live pid | more</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210610232744.png" alt="img"></p>
+<p>如图，结果以表格的形式显示存活对象的信息，并按照所占内存大小排序：</p>
+<p>实例数，所占内存大小，类名</p>
+<p>如果发现某类对象占用内存很大，很可能是类对象创建太多，且一直未释放。例如：</p>
+<p>（1）申请完资源后，未调用close释放资源</p>
+<p>（2）消费者消费速度慢，生产者不断往队列中投递任务，导致队列中任务累积过多</p>
+<p>3.<strong>确认释放是资源耗尽</strong></p>
+<p>pstree：查看进程创建的线程数</p>
+<p>netstat：网络连接数</p>
+<p>还有另一种方法，通过</p>
+<p>ll /proc/pid/fd 查看占用句柄</p>
+<p>ll /proc/pid/task 查看线程数</p>
+<p>例如，某一台显示服务器的sshd进程是1041，查看：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210610233254.png" alt="img"></p>
+<p>sshd共占用了5个句柄。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210610233318.png" alt="img"></p>
+<p>sshd只有一个主线程为1041，并没有多线程。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="阿里（商家）"><a href="#阿里（商家）" class="headerlink" title="阿里（商家）"></a>阿里（商家）</h3><ul>
+<li>本地缓存一般适用于什么场景？如何保证缓存一致性</li>
+</ul>
+
       
 
       
@@ -158,6 +360,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -208,7 +421,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/private/分布式.html" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/2021/05/09/interview/2021面经第二波/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -220,6 +433,25 @@
 </article>
 
   
+<nav id="article-nav">
+  
+    <a href="/2021/05/15/study/数据结构与算法之美/学习笔记/23讲/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          23讲
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/05/09/study/数据结构与算法之美/学习笔记/17讲/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">17讲</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -293,7 +525,7 @@
     <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2021 Elfred 
+    		&copy; 2022 Elfred 
         <!-- 《网站备案号 -->
         
                 <img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png" title="备案管理系统">
@@ -329,7 +561,7 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
@@ -399,19 +631,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">面经</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -427,6 +655,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
@@ -436,10 +672,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
