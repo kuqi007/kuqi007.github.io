@@ -146,6 +146,211 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-study/数据结构与算法之美/每周打卡/10" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/23/study/数据结构与算法之美/每周打卡/10/">五月第二周</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/05/23/study/数据结构与算法之美/每周打卡/10/" class="archive-article-date">
+  	<time datetime="2021-05-23T05:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-23</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>数据结构与算法之美每周打卡 2021.05.17-2021.05.23</p>
+<h3 id="437-路径总和-III"><a href="#437-路径总和-III" class="headerlink" title="437. 路径总和 III"></a><a href="https://leetcode-cn.com/problems/path-sum-iii/" target="_blank" rel="noopener">437. 路径总和 III</a></h3><p>给定一个二叉树，它的每个结点都存放着一个整数值。</p>
+<p>找出路径和等于给定数值的路径总数。</p>
+<p>路径不需要从根节点开始，也不需要在叶子节点结束，但是路径方向必须是向下的（只能从父节点到子节点）。</p>
+<p>二叉树不超过1000个节点，且节点数值范围是 [-1000000,1000000] 的整数。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">root = [<span class="number">10</span>,<span class="number">5</span>,<span class="number">-3</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="literal">null</span>,<span class="number">11</span>,<span class="number">3</span>,<span class="number">-2</span>,<span class="literal">null</span>,<span class="number">1</span>], sum = <span class="number">8</span></span><br><span class="line"></span><br><span class="line">      <span class="number">10</span></span><br><span class="line">     /  \</span><br><span class="line">    <span class="number">5</span>   <span class="number">-3</span></span><br><span class="line">   / \    \</span><br><span class="line">  <span class="number">3</span>   <span class="number">2</span>   <span class="number">11</span></span><br><span class="line"> / \   \</span><br><span class="line"><span class="number">3</span>  <span class="number">-2</span>   <span class="number">1</span></span><br><span class="line"></span><br><span class="line">返回 <span class="number">3</span>。和等于 <span class="number">8</span> 的路径有:</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>  <span class="number">5</span> -&gt; <span class="number">3</span></span><br><span class="line"><span class="number">2.</span>  <span class="number">5</span> -&gt; <span class="number">2</span> -&gt; <span class="number">1</span></span><br><span class="line"><span class="number">3.</span>  <span class="number">-3</span> -&gt; <span class="number">11</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="889-根据前序和后序遍历构造二叉树"><a href="#889-根据前序和后序遍历构造二叉树" class="headerlink" title="889. 根据前序和后序遍历构造二叉树"></a><a href="https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/" target="_blank" rel="noopener">889. 根据前序和后序遍历构造二叉树</a></h3><p>难度中等165</p>
+<p>返回与给定的前序和后序遍历匹配的任何二叉树。</p>
+<p> <code>pre</code> 和 <code>post</code> 遍历中的值是不同的正整数。</p>
+<p> <strong>示例：</strong></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：pre = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">7</span>], post = [<span class="number">4</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">3</span>,<span class="number">1</span>]</span><br><span class="line">输出：[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>]</span><br></pre></td></tr></table></figure>
+
+<p> <strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= pre.length == post.length &lt;= 30</code></li>
+<li><code>pre[]</code> 和 <code>post[]</code> 都是 <code>1, 2, ..., pre.length</code> 的排列</li>
+<li>每个输入保证至少有一个答案。如果有多个答案，可以返回其中一个。</li>
+</ul>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">每周打卡</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/23/study/数据结构与算法之美/每周打卡/10/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-study/数据结构与算法之美/每周打卡/9" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/23/study/数据结构与算法之美/每周打卡/9/">五月第一周</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/05/23/study/数据结构与算法之美/每周打卡/9/" class="archive-article-date">
+  	<time datetime="2021-05-23T05:06:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-23</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>数据结构与算法之美每周打卡 2021.05.10-2021.05.16</p>
+<h3 id="剑指-Offer-34-二叉树中和为某一值的路径"><a href="#剑指-Offer-34-二叉树中和为某一值的路径" class="headerlink" title="剑指 Offer 34. 二叉树中和为某一值的路径"></a><a href="https://leetcode-cn.com/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/" target="_blank" rel="noopener">剑指 Offer 34. 二叉树中和为某一值的路径</a></h3><p>输入一棵二叉树和一个整数，打印出二叉树中节点值的和为输入整数的所有路径。从树的根节点开始往下一直到叶节点所经过的节点形成一条路径。</p>
+<p><strong>示例:</strong><br>给定如下二叉树，以及目标和 <code>target = 22</code>，</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">      <span class="number">5</span></span><br><span class="line">     / \</span><br><span class="line">    <span class="number">4</span>   <span class="number">8</span></span><br><span class="line">   /   / \</span><br><span class="line">  <span class="number">11</span>  <span class="number">13</span>  <span class="number">4</span></span><br><span class="line"> /  \    / \</span><br><span class="line"><span class="number">7</span>    <span class="number">2</span>  <span class="number">5</span>   <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>返回:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">   [<span class="number">5</span>,<span class="number">4</span>,<span class="number">11</span>,<span class="number">2</span>],</span><br><span class="line">   [<span class="number">5</span>,<span class="number">8</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p> <strong>提示：</strong></p>
+<ol>
+<li><code>节点总数 &lt;= 10000</code></li>
+</ol>
+<p>注意：本题与主站 113 题相同：<a href="https://leetcode-cn.com/problems/path-sum-ii/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/path-sum-ii/</a></p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="面试题-04-03-特定深度节点链表"><a href="#面试题-04-03-特定深度节点链表" class="headerlink" title="面试题 04.03. 特定深度节点链表"></a><a href="https://leetcode-cn.com/problems/list-of-depth-lcci/" target="_blank" rel="noopener">面试题 04.03. 特定深度节点链表</a></h3><p>给定一棵二叉树，设计一个算法，创建含有某一深度上所有节点的链表（比如，若一棵树的深度为 <code>D</code>，则会创建出 <code>D</code> 个链表）。返回一个包含所有深度的链表的数组。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">输入：[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="literal">null</span>,<span class="number">7</span>,<span class="number">8</span>]</span><br><span class="line"></span><br><span class="line">        <span class="number">1</span></span><br><span class="line">       /  \ </span><br><span class="line">      <span class="number">2</span>    <span class="number">3</span></span><br><span class="line">     / \    \ </span><br><span class="line">    <span class="number">4</span>   <span class="number">5</span>    <span class="number">7</span></span><br><span class="line">   /</span><br><span class="line">  <span class="number">8</span></span><br><span class="line"></span><br><span class="line">输出：[[<span class="number">1</span>],[<span class="number">2</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">5</span>,<span class="number">7</span>],[<span class="number">8</span>]]</span><br></pre></td></tr></table></figure>
+
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">每周打卡</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/23/study/数据结构与算法之美/每周打卡/9/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-interview/Java基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -197,110 +402,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/05/19/interview/Java基础/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-study/数据结构与算法之美/学习笔记/24讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/15/study/数据结构与算法之美/学习笔记/24讲/">24讲</a>
-    </h1>
-  
-
-        
-        
-<a href="/2021/05/15/study/数据结构与算法之美/学习笔记/24讲/" class="archive-article-date">
-  	<time datetime="2021-05-15T14:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-15</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h1 id="24-二叉树基础（下）：有了如此高效的散列表，为什么还需要二叉树？"><a href="#24-二叉树基础（下）：有了如此高效的散列表，为什么还需要二叉树？" class="headerlink" title="24 | 二叉树基础（下）：有了如此高效的散列表，为什么还需要二叉树？"></a>24 | 二叉树基础（下）：有了如此高效的散列表，为什么还需要二叉树？</h1><h2 id="二叉查找树（Binary-Search-Tree）"><a href="#二叉查找树（Binary-Search-Tree）" class="headerlink" title="二叉查找树（Binary Search Tree）"></a>二叉查找树（Binary Search Tree）</h2><p>二叉查找树是二叉树中最常用的一种类型，也叫二叉搜索树。顾名思义，二叉查找树是为了实现快速查找而生的。不过，它不仅仅支持快速查找一个数据，还支持快速插入、删除一个数据。它是怎么做到这些的呢？</p>
-<p>这些都依赖于二叉查找树的特殊结构<strong>。二叉查找树要求，在树中的任意一个节点，其左子树中的每个节点的值，都要小于这个节点的值，而右子树节点的值都大于这个节点的值。</strong> 我画了几个二叉查找树的例子，你一看应该就清楚了。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210516134604.jpeg" alt="img"></p>
-<p>前面我们讲到，二叉查找树支持快速查找、插入、删除操作，现在我们就依次来看下，这三个操作是如何实现的。</p>
-<h3 id="1-二叉查找树的查找操作"><a href="#1-二叉查找树的查找操作" class="headerlink" title="1. 二叉查找树的查找操作"></a>1. 二叉查找树的查找操作</h3><p>首先，我们看如何在二叉查找树中查找一个节点。我们先取根节点，如果它等于我们要查找的数据，那就返回。如果要查找的数据比根节点的值小，那就在左子树中递归查找；如果要查找的数据比根节点的值大，那就在右子树中递归查找。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210516134630.jpeg" alt="img"></p>
-<p>这里我把查找的代码实现了一下，贴在下面了，结合代码，理解起来会更加容易。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BinarySearchTree</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> Node tree;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Node <span class="title">find</span><span class="params">(<span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">    Node p = tree;</span><br><span class="line">    <span class="keyword">while</span> (p != <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (data &lt; p.data) p = p.left;</span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">if</span> (data &gt; p.data) p = p.right;</span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">return</span> p;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> data;</span><br><span class="line">    <span class="keyword">private</span> Node left;</span><br><span class="line">    <span class="keyword">private</span> Node right;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(<span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.data = data;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-二叉查找树的插入操作"><a href="#2-二叉查找树的插入操作" class="headerlink" title="2. 二叉查找树的插入操作"></a>2. 二叉查找树的插入操作</h3><p>二叉查找树的插入过程有点类似查找操作。新插入的数据一般都是在叶子节点上，所以我们只需要从根节点开始，依次比较要插入的数据和节点的大小关系。</p>
-<p>如果要插入的数据比节点的数据大，并且节点的右子树为空，就将新数据直接插到右子节点的位置；如果不为空，就再递归遍历右子树，查找插入位置。同理，如果要插入的数据比节点数值小，并且节点的左子树为空，就将新数据插入到左子节点的位置；如果不为空，就再递归遍历左子树，查找插入位置。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210516134908.jpeg" alt="img"></p>
-<p>同样，插入的代码我也实现了一下，贴在下面，你可以看看。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (tree == <span class="keyword">null</span>) &#123;</span><br><span class="line">    tree = <span class="keyword">new</span> Node(data);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  Node p = tree;</span><br><span class="line">  <span class="keyword">while</span> (p != <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (data &gt; p.data) &#123;</span><br><span class="line">      <span class="keyword">if</span> (p.right == <span class="keyword">null</span>) &#123;</span><br><span class="line">        p.right = <span class="keyword">new</span> Node(data);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      p = p.right;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// data &lt; p.data</span></span><br><span class="line">      <span class="keyword">if</span> (p.left == <span class="keyword">null</span>) &#123;</span><br><span class="line">        p.left = <span class="keyword">new</span> Node(data);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      p = p.left;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-二叉查找树的删除操作"><a href="#3-二叉查找树的删除操作" class="headerlink" title="3. 二叉查找树的删除操作"></a>3. 二叉查找树的删除操作</h3><p>二叉查找树的查找、插入操作都比较简单易懂，但是它的删除操作就比较复杂了 。针对要删除节点的子节点个数的不同，我们需要分三种情况来处理。</p>
-<p>第一种情况是，如果要删除的节点没有子节点，我们只需要直接将父节点中，指向要删除节点的指针置为 null。比如图中的删除节点 55。</p>
-<p>第二种情况是，如果要删除的节点只有一个子节点（只有左子节点或者右子节点），我们只需要更新父节点中，指向要删除节点的指针，让它指向要删除节点的子节点就可以了。比如图中的删除节点 13。</p>
-<p>第三种情况是，如果要删除的节点有两个子节点，这就比较复杂了。我们需要找到这个节点的右子树中的最小节点，把它替换到要删除的节点上。然后再删除掉这个最小节点，因为最小节点肯定没有左子节点（如果有左子结点，那就不是最小节点了），所以，我们可以应用上面两条规则来删除这个最小节点。比如图中的删除节点 18。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210516135051.jpeg" alt="img"></p>
-<p>老规矩，我还是把删除的代码贴在这里。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">(<span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">  Node p = tree; <span class="comment">// p指向要删除的节点，初始化指向根节点</span></span><br><span class="line">  Node pp = <span class="keyword">null</span>; <span class="comment">// pp记录的是p的父节点</span></span><br><span class="line">  <span class="keyword">while</span> (p != <span class="keyword">null</span> &amp;&amp; p.data != data) &#123;</span><br><span class="line">    pp = p;</span><br><span class="line">    <span class="keyword">if</span> (data &gt; p.data) p = p.right;</span><br><span class="line">    <span class="keyword">else</span> p = p.left;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (p == <span class="keyword">null</span>) <span class="keyword">return</span>; <span class="comment">// 没有找到</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 要删除的节点有两个子节点</span></span><br><span class="line">  <span class="keyword">if</span> (p.left != <span class="keyword">null</span> &amp;&amp; p.right != <span class="keyword">null</span>) &#123; <span class="comment">// 查找右子树中最小节点</span></span><br><span class="line">    Node minP = p.right;</span><br><span class="line">    Node minPP = p; <span class="comment">// minPP表示minP的父节点</span></span><br><span class="line">    <span class="keyword">while</span> (minP.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">      minPP = minP;</span><br><span class="line">      minP = minP.left;</span><br><span class="line">    &#125;</span><br><span class="line">    p.data = minP.data; <span class="comment">// 将minP的数据替换到p中</span></span><br><span class="line">    p = minP; <span class="comment">// 下面就变成了删除minP了</span></span><br><span class="line">    pp = minPP;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 删除节点是叶子节点或者仅有一个子节点</span></span><br><span class="line">  Node child; <span class="comment">// p的子节点</span></span><br><span class="line">  <span class="keyword">if</span> (p.left != <span class="keyword">null</span>) child = p.left;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (p.right != <span class="keyword">null</span>) child = p.right;</span><br><span class="line">  <span class="keyword">else</span> child = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (pp == <span class="keyword">null</span>) tree = child; <span class="comment">// 删除的是根节点</span></span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (pp.left == p) pp.left = child;</span><br><span class="line">  <span class="keyword">else</span> pp.right = child;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>实际上，关于二叉查找树的删除操作，还有个非常简单、取巧的方法，就是单纯将要删除的节点标记为“已删除”，但是并不真正从树中将这个节点去掉。这样原本删除的节点还需要存储在内存中，比较浪费内存空间，但是删除操作就变得简单了很多。而且，这种处理方法也并没有增加插入、查找操作代码实现的难度。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/15/study/数据结构与算法之美/学习笔记/24讲/">展开全文 >></a>
         </p>
       
 
@@ -441,6 +542,110 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/05/15/study/数据结构与算法之美/学习笔记/23讲/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-study/数据结构与算法之美/学习笔记/24讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/15/study/数据结构与算法之美/学习笔记/24讲/">24讲</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/05/15/study/数据结构与算法之美/学习笔记/24讲/" class="archive-article-date">
+  	<time datetime="2021-05-15T14:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-15</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h1 id="24-二叉树基础（下）：有了如此高效的散列表，为什么还需要二叉树？"><a href="#24-二叉树基础（下）：有了如此高效的散列表，为什么还需要二叉树？" class="headerlink" title="24 | 二叉树基础（下）：有了如此高效的散列表，为什么还需要二叉树？"></a>24 | 二叉树基础（下）：有了如此高效的散列表，为什么还需要二叉树？</h1><h2 id="二叉查找树（Binary-Search-Tree）"><a href="#二叉查找树（Binary-Search-Tree）" class="headerlink" title="二叉查找树（Binary Search Tree）"></a>二叉查找树（Binary Search Tree）</h2><p>二叉查找树是二叉树中最常用的一种类型，也叫二叉搜索树。顾名思义，二叉查找树是为了实现快速查找而生的。不过，它不仅仅支持快速查找一个数据，还支持快速插入、删除一个数据。它是怎么做到这些的呢？</p>
+<p>这些都依赖于二叉查找树的特殊结构<strong>。二叉查找树要求，在树中的任意一个节点，其左子树中的每个节点的值，都要小于这个节点的值，而右子树节点的值都大于这个节点的值。</strong> 我画了几个二叉查找树的例子，你一看应该就清楚了。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210516134604.jpeg" alt="img"></p>
+<p>前面我们讲到，二叉查找树支持快速查找、插入、删除操作，现在我们就依次来看下，这三个操作是如何实现的。</p>
+<h3 id="1-二叉查找树的查找操作"><a href="#1-二叉查找树的查找操作" class="headerlink" title="1. 二叉查找树的查找操作"></a>1. 二叉查找树的查找操作</h3><p>首先，我们看如何在二叉查找树中查找一个节点。我们先取根节点，如果它等于我们要查找的数据，那就返回。如果要查找的数据比根节点的值小，那就在左子树中递归查找；如果要查找的数据比根节点的值大，那就在右子树中递归查找。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210516134630.jpeg" alt="img"></p>
+<p>这里我把查找的代码实现了一下，贴在下面了，结合代码，理解起来会更加容易。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BinarySearchTree</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> Node tree;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Node <span class="title">find</span><span class="params">(<span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">    Node p = tree;</span><br><span class="line">    <span class="keyword">while</span> (p != <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (data &lt; p.data) p = p.left;</span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">if</span> (data &gt; p.data) p = p.right;</span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">return</span> p;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> data;</span><br><span class="line">    <span class="keyword">private</span> Node left;</span><br><span class="line">    <span class="keyword">private</span> Node right;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(<span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.data = data;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-二叉查找树的插入操作"><a href="#2-二叉查找树的插入操作" class="headerlink" title="2. 二叉查找树的插入操作"></a>2. 二叉查找树的插入操作</h3><p>二叉查找树的插入过程有点类似查找操作。新插入的数据一般都是在叶子节点上，所以我们只需要从根节点开始，依次比较要插入的数据和节点的大小关系。</p>
+<p>如果要插入的数据比节点的数据大，并且节点的右子树为空，就将新数据直接插到右子节点的位置；如果不为空，就再递归遍历右子树，查找插入位置。同理，如果要插入的数据比节点数值小，并且节点的左子树为空，就将新数据插入到左子节点的位置；如果不为空，就再递归遍历左子树，查找插入位置。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210516134908.jpeg" alt="img"></p>
+<p>同样，插入的代码我也实现了一下，贴在下面，你可以看看。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (tree == <span class="keyword">null</span>) &#123;</span><br><span class="line">    tree = <span class="keyword">new</span> Node(data);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  Node p = tree;</span><br><span class="line">  <span class="keyword">while</span> (p != <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (data &gt; p.data) &#123;</span><br><span class="line">      <span class="keyword">if</span> (p.right == <span class="keyword">null</span>) &#123;</span><br><span class="line">        p.right = <span class="keyword">new</span> Node(data);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      p = p.right;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// data &lt; p.data</span></span><br><span class="line">      <span class="keyword">if</span> (p.left == <span class="keyword">null</span>) &#123;</span><br><span class="line">        p.left = <span class="keyword">new</span> Node(data);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      p = p.left;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-二叉查找树的删除操作"><a href="#3-二叉查找树的删除操作" class="headerlink" title="3. 二叉查找树的删除操作"></a>3. 二叉查找树的删除操作</h3><p>二叉查找树的查找、插入操作都比较简单易懂，但是它的删除操作就比较复杂了 。针对要删除节点的子节点个数的不同，我们需要分三种情况来处理。</p>
+<p>第一种情况是，如果要删除的节点没有子节点，我们只需要直接将父节点中，指向要删除节点的指针置为 null。比如图中的删除节点 55。</p>
+<p>第二种情况是，如果要删除的节点只有一个子节点（只有左子节点或者右子节点），我们只需要更新父节点中，指向要删除节点的指针，让它指向要删除节点的子节点就可以了。比如图中的删除节点 13。</p>
+<p>第三种情况是，如果要删除的节点有两个子节点，这就比较复杂了。我们需要找到这个节点的右子树中的最小节点，把它替换到要删除的节点上。然后再删除掉这个最小节点，因为最小节点肯定没有左子节点（如果有左子结点，那就不是最小节点了），所以，我们可以应用上面两条规则来删除这个最小节点。比如图中的删除节点 18。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210516135051.jpeg" alt="img"></p>
+<p>老规矩，我还是把删除的代码贴在这里。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">(<span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">  Node p = tree; <span class="comment">// p指向要删除的节点，初始化指向根节点</span></span><br><span class="line">  Node pp = <span class="keyword">null</span>; <span class="comment">// pp记录的是p的父节点</span></span><br><span class="line">  <span class="keyword">while</span> (p != <span class="keyword">null</span> &amp;&amp; p.data != data) &#123;</span><br><span class="line">    pp = p;</span><br><span class="line">    <span class="keyword">if</span> (data &gt; p.data) p = p.right;</span><br><span class="line">    <span class="keyword">else</span> p = p.left;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (p == <span class="keyword">null</span>) <span class="keyword">return</span>; <span class="comment">// 没有找到</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 要删除的节点有两个子节点</span></span><br><span class="line">  <span class="keyword">if</span> (p.left != <span class="keyword">null</span> &amp;&amp; p.right != <span class="keyword">null</span>) &#123; <span class="comment">// 查找右子树中最小节点</span></span><br><span class="line">    Node minP = p.right;</span><br><span class="line">    Node minPP = p; <span class="comment">// minPP表示minP的父节点</span></span><br><span class="line">    <span class="keyword">while</span> (minP.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">      minPP = minP;</span><br><span class="line">      minP = minP.left;</span><br><span class="line">    &#125;</span><br><span class="line">    p.data = minP.data; <span class="comment">// 将minP的数据替换到p中</span></span><br><span class="line">    p = minP; <span class="comment">// 下面就变成了删除minP了</span></span><br><span class="line">    pp = minPP;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 删除节点是叶子节点或者仅有一个子节点</span></span><br><span class="line">  Node child; <span class="comment">// p的子节点</span></span><br><span class="line">  <span class="keyword">if</span> (p.left != <span class="keyword">null</span>) child = p.left;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (p.right != <span class="keyword">null</span>) child = p.right;</span><br><span class="line">  <span class="keyword">else</span> child = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (pp == <span class="keyword">null</span>) tree = child; <span class="comment">// 删除的是根节点</span></span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (pp.left == p) pp.left = child;</span><br><span class="line">  <span class="keyword">else</span> pp.right = child;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实际上，关于二叉查找树的删除操作，还有个非常简单、取巧的方法，就是单纯将要删除的节点标记为“已删除”，但是并不真正从树中将这个节点去掉。这样原本删除的节点还需要存储在内存中，比较浪费内存空间，但是删除操作就变得简单了很多。而且，这种处理方法也并没有增加插入、查找操作代码实现的难度。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/15/study/数据结构与算法之美/学习笔记/24讲/">展开全文 >></a>
         </p>
       
 
@@ -980,215 +1185,6 @@
 
 
   
-    <article id="post-study/数据结构与算法之美/学习笔记/15讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/06/study/数据结构与算法之美/学习笔记/15讲/">15讲</a>
-    </h1>
-  
-
-        
-        
-<a href="/2021/05/06/study/数据结构与算法之美/学习笔记/15讲/" class="archive-article-date">
-  	<time datetime="2021-05-05T23:57:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-06</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h1 id="15-二分查找（上）：如何用最省内存的方式实现快速查找功能？"><a href="#15-二分查找（上）：如何用最省内存的方式实现快速查找功能？" class="headerlink" title="15 | 二分查找（上）：如何用最省内存的方式实现快速查找功能？"></a>15 | 二分查找（上）：如何用最省内存的方式实现快速查找功能？</h1><h2 id="无处不在的二分思想"><a href="#无处不在的二分思想" class="headerlink" title="无处不在的二分思想"></a>无处不在的二分思想</h2><p><strong>二分查找针对的是一个有序的数据集合，查找思想有点类似分治思想。每次都通过跟区间的中间元素对比，将待查找的区间缩小为之前的一半，直到找到要查找的元素，或者区间被缩小为 0</strong>。</p>
-<h2 id="二分查找的递归与非递归实现"><a href="#二分查找的递归与非递归实现" class="headerlink" title="二分查找的递归与非递归实现"></a>二分查找的递归与非递归实现</h2><p><strong>最简单的情况</strong>就是有序数组中<strong>不存在重复元素</strong>，我们在其中用二分查找值等于给定值的数据。我用 Java 代码实现了一个最简单的二分查找算法。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">bsearch</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> n, <span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> low = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> high = n - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">    <span class="keyword">int</span> mid = (low + high) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span> (a[mid] == value) &#123;</span><br><span class="line">      <span class="keyword">return</span> mid;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (a[mid] &lt; value) &#123;</span><br><span class="line">      low = mid + <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      high = mid - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个代码我稍微解释一下，low、high、mid 都是指数组下标，其中 low 和 high 表示当前查找的区间范围，初始 low=0， high=n-1。mid 表示[low, high]的中间位置。我们通过对比 a[mid]与 value 的大小，来更新接下来要查找的区间范围，直到找到或者区间缩小为 0，就退出。如果你有一些编程基础，看懂这些应该不成问题。现在，我就着重强调一下<strong>容易出错的 3 个地方</strong>。</p>
-<p><strong>1.循环退出条件</strong></p>
-<p>注意是 low&lt;=high，而不是 low&lt;high。</p>
-<p><strong>2.mid 的取值</strong></p>
-<p>实际上，mid=(low+high)/2 这种写法是有问题的。因为如果 low 和 high 比较大的话，两者之和就有可能会溢出。改进的方法是将 mid 的计算方式写成 low+(high-low)/2。更进一步，如果要将性能优化到极致的话，我们可以将这里的除以 2 操作转化成位运算 low+((high-low)&gt;&gt;1)。因为相比除法运算来说，计算机处理位运算要快得多。</p>
-<p><strong>3.low 和 high 的更新</strong></p>
-<p>low=mid+1，high=mid-1。注意这里的 +1 和 -1，如果直接写成 low=mid 或者 high=mid，就可能会发生死循环。比如，当 high=3，low=3 时，如果 a[3]不等于 value，就会导致一直循环不退出。</p>
-<p>如果你留意我刚讲的这三点，我想一个简单的二分查找你已经可以实现了。<strong>实际上，二分查找除了用循环来实现，还可以用递归来实现</strong>，过程也非常简单。</p>
-<p>我用 Java 语言实现了一下这个过程，正好你可以借此机会回顾一下写递归代码的技巧。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 二分查找的递归实现</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">bsearch</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> n, <span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> bsearchInternally(a, <span class="number">0</span>, n - <span class="number">1</span>, val);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">bsearchInternally</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> low, <span class="keyword">int</span> high, <span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (low &gt; high) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> mid =  low + ((high - low) &gt;&gt; <span class="number">1</span>);</span><br><span class="line">  <span class="keyword">if</span> (a[mid] == value) &#123;</span><br><span class="line">    <span class="keyword">return</span> mid;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (a[mid] &lt; value) &#123;</span><br><span class="line">    <span class="keyword">return</span> bsearchInternally(a, mid+<span class="number">1</span>, high, value);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> bsearchInternally(a, low, mid-<span class="number">1</span>, value);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="二分查找应用场景的局限性"><a href="#二分查找应用场景的局限性" class="headerlink" title="二分查找应用场景的局限性"></a>二分查找应用场景的局限性</h2><p>前面我们分析过，二分查找的时间复杂度是 O(logn)，查找数据的效率非常高。不过，并不是什么情况下都可以用二分查找，它的应用场景是有很大局限性的。那什么情况下适合用二分查找，什么情况下不适合呢？</p>
-<p><strong>首先，二分查找依赖的是顺序表结构，简单点说就是数组</strong>。</p>
-<p>那二分查找能否依赖其他数据结构呢？比如链表。答案是不可以的，主要原因是二分查找算法需要按照下标随机访问元素。我们在数组和链表那两节讲过，数组按照下标随机访问数据的时间复杂度是 O(1)，而链表随机访问的时间复杂度是 O(n)。所以，如果数据使用链表存储，二分查找的时间复杂就会变得很高。</p>
-<p>二分查找只能用在数据是通过顺序表来存储的数据结构上。如果你的数据是通过其他数据结构存储的，则无法应用二分查找。</p>
-<p><strong>其次，二分查找针对的是有序数据。</strong></p>
-<p>二分查找对这一点的要求比较苛刻，数据必须是有序的。如果数据没有序，我们需要先排序。前面章节里我们讲到，排序的时间复杂度最低是 O(nlogn)。所以，如果我们针对的是一组静态的数据，没有频繁地插入、删除，我们可以进行一次排序，多次二分查找。这样排序的成本可被均摊，二分查找的边际成本就会比较低。</p>
-<p>但是，如果我们的数据集合有频繁的插入和删除操作，要想用二分查找，要么每次插入、删除操作之后保证数据仍然有序，要么在每次二分查找之前都先进行排序。针对这种动态数据集合，无论哪种方法，维护有序的成本都是很高的。</p>
-<p>所以，二分查找只能用在插入、删除操作不频繁，一次排序多次查找的场景中。针对动态变化的数据集合，二分查找将不再适用。那针对动态数据集合，如何在其中快速查找某个数据呢？别急，等到二叉树那一节我会详细讲。</p>
-<p><strong>再次，数据量太小不适合二分查找。</strong></p>
-<p>如果要处理的数据量很小，完全没有必要用二分查找，顺序遍历就足够了。比如我们在一个大小为 10 的数组中查找一个元素，不管用二分查找还是顺序遍历，查找速度都差不多。只有数据量比较大的时候，二分查找的优势才会比较明显。</p>
-<p>不过，这里有一个例外。如果数据之间的比较操作非常耗时，不管数据量大小，我都推荐使用二分查找。比如，数组中存储的都是长度超过 300 的字符串，如此长的两个字符串之间比对大小，就会非常耗时。我们需要尽可能地减少比较次数，而比较次数的减少会大大提高性能，这个时候二分查找就比顺序遍历更有优势。</p>
-<p><strong>最后，数据量太大也不适合二分查找。</strong></p>
-<p>二分查找的底层需要依赖数组这种数据结构，而数组为了支持随机访问的特性，要求内存空间连续，对内存的要求比较苛刻。比如，我们有 1GB 大小的数据，如果希望用数组来存储，那就需要 1GB 的连续内存空间。</p>
-<p>注意这里的“连续”二字，也就是说，即便有 2GB 的内存空间剩余，但是如果这剩余的 2GB 内存空间都是零散的，没有连续的 1GB 大小的内存空间，那照样无法申请一个 1GB 大小的数组。而我们的二分查找是作用在数组这种数据结构之上的，所以太大的数据用数组存储就比较吃力了，也就不能用二分查找了。</p>
-<h2 id="内容小结"><a href="#内容小结" class="headerlink" title="内容小结"></a>内容小结</h2><p>今天我们学习了一种针对有序数据的高效查找算法，二分查找，它的时间复杂度是 O(logn)。</p>
-<p>二分查找的核心思想理解起来非常简单，有点类似分治思想。即每次都通过跟区间中的中间元素对比，将待查找的区间缩小为一半，直到找到要查找的元素，或者区间被缩小为 0。但是二分查找的代码实现比较容易写错。你需要着重掌握它的三个容易出错的地方：循环退出条件、mid 的取值，low 和 high 的更新。</p>
-<p>二分查找虽然性能比较优秀，但应用场景也比较有限。底层必须依赖数组，并且还要求数据是有序的。对于较小规模的数据查找，我们直接使用顺序遍历就可以了，二分查找的优势并不明显。二分查找更适合处理静态数据，也就是没有频繁的数据插入、删除操作。</p>
-<h2 id="课后思考"><a href="#课后思考" class="headerlink" title="课后思考"></a>课后思考</h2><ol>
-<li><p>如何编程实现“求一个数的平方根”？要求精确到小数点后 6 位。</p>
-<blockquote>
-</blockquote>
-</li>
-<li><p>我刚才说了，如果数据使用链表存储，二分查找的时间复杂就会变得很高，那查找的时间复杂度究竟是多少呢？如果你自己推导一下，你就会深刻地认识到，为何我们会选择用数组而不是链表来实现二分查找了。</p>
-<blockquote>
-<p>假设链表长度为n，二分查找每次都要找到中间点(计算中忽略奇偶数差异):<br>第一次查找中间点，需要移动指针n/2次；<br>第二次，需要移动指针n/4次；<br>第三次需要移动指针n/8次；<br>……<br>以此类推，一直到1次为值</p>
-<p>总共指针移动次数(查找次数) = n/2 + n/4 + n/8 + …+ 1，这显然是个等比数列，根据等比数列求和公式：Sum = n - 1.</p>
-<p>最后算法时间复杂度是：O(n-1)，忽略常数，记为O(n)，时间复杂度和顺序查找时间复杂度相同</p>
-<p>但是稍微思考下，在二分查找的时候，由于要进行多余的运算，严格来说，会比顺序查找时间慢</p>
-</blockquote>
-</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/06/study/数据结构与算法之美/学习笔记/15讲/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-study/MySQL实战45讲/20讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/05/study/MySQL实战45讲/20讲/">20讲</a>
-    </h1>
-  
-
-        
-        
-<a href="/2021/05/05/study/MySQL实战45讲/20讲/" class="archive-article-date">
-  	<time datetime="2021-05-05T05:20:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-05</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h1 id="20-幻读是什么，幻读有什么问题？"><a href="#20-幻读是什么，幻读有什么问题？" class="headerlink" title="20 | 幻读是什么，幻读有什么问题？"></a>20 | 幻读是什么，幻读有什么问题？</h1><p>为了便于说明问题，这一篇文章，我们就先使用一个小一点儿的表。建表和初始化语句如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `t` (</span><br><span class="line">  `id` int(11) NOT NULL,</span><br><span class="line">  `c` int(11) DEFAULT NULL,</span><br><span class="line">  `d` int(11) DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`id`),</span><br><span class="line">  KEY `c` (`c`)</span><br><span class="line">) ENGINE=InnoDB;</span><br><span class="line"></span><br><span class="line">insert into t values(0,0,0),(5,5,5),</span><br><span class="line">(10,10,10),(15,15,15),(20,20,20),(25,25,25);</span><br></pre></td></tr></table></figure>
-
-<h2 id="幻读是什么？"><a href="#幻读是什么？" class="headerlink" title="幻读是什么？"></a>幻读是什么？</h2>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL实战45讲</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/05/study/MySQL实战45讲/20讲/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1317,6 +1313,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
@@ -1333,19 +1333,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">面试题</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1361,15 +1357,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MySQL实战45讲</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -146,6 +146,211 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-study/数据结构与算法之美/每周打卡/3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/24/study/数据结构与算法之美/每周打卡/3/">第三周</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/03/24/study/数据结构与算法之美/每周打卡/3/" class="archive-article-date">
+  	<time datetime="2021-03-24T05:59:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-24</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>数据结构与算法之美每周打卡 2021.03.22-2021.03.28</p>
+<h3 id="面试题-16-26-计算器"><a href="#面试题-16-26-计算器" class="headerlink" title="面试题 16.26. 计算器"></a><a href="https://leetcode-cn.com/problems/calculator-lcci/" target="_blank" rel="noopener">面试题 16.26. 计算器</a></h3><p>给定一个包含正整数、加(+)、减(-)、乘(*)、除(/)的算数表达式(括号除外)，计算其结果。</p>
+<p>表达式仅包含非负整数，<code>+</code>， <code>-</code> ，<code>*</code>，<code>/</code> 四种运算符和空格 <code></code>。 整数除法仅保留整数部分。</p>
+<p><strong>示例 1:</strong></p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">输入: "3+2*2"</span></span><br><span class="line"><span class="section">输出: 7</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2:</strong></p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">输入: " 3/2 "</span></span><br><span class="line"><span class="section">输出: 1</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 3:</strong></p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">输入: " 3+5 / 2 "</span></span><br><span class="line"><span class="section">输出: 5</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>说明：</strong></p>
+<ul>
+<li>你可以假设所给定的表达式都是有效的。</li>
+<li>请<strong>不要</strong>使用内置的库函数 <code>eval</code>。</li>
+</ul>
+<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>主要思想如下：</p>
+<ol>
+<li>将减法转化为加法（取相反数） </li>
+<li>由于乘除法优先级高，直接计算</li>
+<li>整数不仅一位，会&gt;10 </li>
+<li>表达式中没有括号</li>
+</ol>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">calculate</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = s.length();</span><br><span class="line">        Deque&lt;Integer&gt; stack = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span> num = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">char</span> preSign = <span class="string">'+'</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">char</span> c = s.charAt(i);</span><br><span class="line">            <span class="keyword">if</span> (Character.isDigit(c)) &#123;</span><br><span class="line">                <span class="comment">// 连续数字字符串转为数字，比如字符串 “23”</span></span><br><span class="line">                <span class="comment">// num 第一次保存为2，num第二次保存 2*10 + 3 = 23。</span></span><br><span class="line">                num = num * <span class="number">10</span> + c - <span class="string">'0'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 如果是运算符或者是最后一个字符</span></span><br><span class="line">            <span class="keyword">if</span> ((!Character.isDigit(c) &amp;&amp; c != <span class="string">' '</span>) || i == n - <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">switch</span> (preSign) &#123;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">'+'</span>:</span><br><span class="line">                        stack.push(num);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">'-'</span>:</span><br><span class="line">                        stack.push(-num);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">'*'</span>:</span><br><span class="line">                        stack.push(stack.pop() * num);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">'/'</span>:</span><br><span class="line">                        stack.push(stack.pop() / num);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                preSign = c;</span><br><span class="line">                <span class="comment">// num用完归零</span></span><br><span class="line">                num = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 将栈中元素求和</span></span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (!stack.isEmpty()) &#123;</span><br><span class="line">            res += stack.pop();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="739-每日温度"><a href="#739-每日温度" class="headerlink" title="739. 每日温度"></a><a href="https://leetcode-cn.com/problems/daily-temperatures/" target="_blank" rel="noopener">739. 每日温度</a></h3><p>请根据每日 <code>气温</code> 列表，重新生成一个列表。对应位置的输出为：要想观测到更高的气温，至少需要等待的天数。如果气温在这之后都不会升高，请在该位置用 <code>0</code> 来代替。</p>
+<p>例如，给定一个列表 <code>temperatures = [73, 74, 75, 71, 69, 72, 76, 73]</code>，你的输出应该是 <code>[1, 1, 4, 2, 1, 1, 0, 0]</code>。</p>
+<p><strong>提示：</strong><code>气温</code> 列表长度的范围是 <code>[1, 30000]</code>。每个气温的值的均为华氏度，都是在 <code>[30, 100]</code> 范围内的整数。</p>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] dailyTemperatures(<span class="keyword">int</span>[] T) &#123;</span><br><span class="line">        <span class="keyword">int</span> n = T.length;</span><br><span class="line">        <span class="keyword">int</span>[] ans = <span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line">        <span class="comment">// 维护一个单调递减栈</span></span><br><span class="line">        Deque&lt;Integer&gt; stack = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> num = T[i];</span><br><span class="line">            <span class="comment">// 如果栈不为空并且当前元素大于栈顶元素，弹出栈中比当前小的元素</span></span><br><span class="line">            <span class="comment">// 并更新它们在返回数组中对应位置的值（需要等待的天数）</span></span><br><span class="line">            <span class="comment">// 栈里面需要保存元素在数组中的下标，而不是具体的数字。因为需要根据下标修改结果数组</span></span><br><span class="line">            <span class="keyword">while</span> (!stack.isEmpty() &amp;&amp; num &gt; T[stack.peek()]) &#123;</span><br><span class="line">                Integer preIndex = stack.pop();</span><br><span class="line">                ans[preIndex] = i - preIndex;</span><br><span class="line">            &#125;</span><br><span class="line">            stack.push(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">每周打卡</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/24/study/数据结构与算法之美/每周打卡/3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-study/数据结构与算法之美/学习笔记/04讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/21/study/数据结构与算法之美/学习笔记/04讲/">04讲</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/03/21/study/数据结构与算法之美/学习笔记/04讲/" class="archive-article-date">
+  	<time datetime="2021-03-21T14:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-21</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h1 id="复杂度分析（下）：浅析最好、最坏、平均、均摊时间复杂度"><a href="#复杂度分析（下）：浅析最好、最坏、平均、均摊时间复杂度" class="headerlink" title="复杂度分析（下）：浅析最好、最坏、平均、均摊时间复杂度"></a>复杂度分析（下）：浅析最好、最坏、平均、均摊时间复杂度</h1><h3 id="一、复杂度分析的4个概念"><a href="#一、复杂度分析的4个概念" class="headerlink" title="一、复杂度分析的4个概念"></a>一、复杂度分析的4个概念</h3><ol>
+<li><strong>最好情况时间复杂度</strong>：代码在最理想情况下执行的时间复杂度。</li>
+<li><strong>最坏情况时间复杂度</strong>：代码在最坏情况下执行的时间复杂度。</li>
+<li><strong>平均时间复杂度</strong>：用代码在所有情况下执行的次数的加权平均值表示。</li>
+<li><strong>均摊时间复杂度</strong>：在代码执行的所有复杂度情况中绝大部分是低级别的复杂度，个别情况是高级别复杂度且发生具有时序关系时，可以将个别高级别复杂度均摊到低级别复杂度上。基本上均摊结果就等于低级别复杂度。</li>
+</ol>
+<h3 id="二、为什么要引入这4个概念？"><a href="#二、为什么要引入这4个概念？" class="headerlink" title="二、为什么要引入这4个概念？"></a>二、为什么要引入这4个概念？</h3><ol>
+<li>同一段代码在不同情况下时间复杂度会出现量级差异，为了更全面，更准确的描述代码的时间复杂度，所以引入这4个概念。</li>
+<li>代码复杂度在不同情况下出现量级差别时才需要区别这四种复杂度。大多数情况下，是不需要区别分析它们的。</li>
+</ol>
+<h3 id="三、如何分析平均、均摊时间复杂度？"><a href="#三、如何分析平均、均摊时间复杂度？" class="headerlink" title="三、如何分析平均、均摊时间复杂度？"></a>三、如何分析平均、均摊时间复杂度？</h3><ol>
+<li><strong>平均时间复杂度</strong>：代码在不同情况下复杂度出现量级差别，则用代码所有可能情况下执行次数的加权平均值表示。</li>
+<li><strong>均摊时间复杂度</strong>：两个条件满足时使用：1）代码在绝大多数情况下是低级别复杂度，只有极少数情况是高级别复杂度；2）低级别和高级别复杂度出现具有时序规律。均摊结果一般都等于低级别复杂度。</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/21/study/数据结构与算法之美/学习笔记/04讲/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-study/数据结构与算法之美/学习笔记/03讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -760,222 +965,6 @@
 
 
   
-    <article id="post-algorithm/算法思想掌握" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/27/algorithm/算法思想掌握/">算法思想掌握</a>
-    </h1>
-  
-
-        
-        
-<a href="/2021/02/27/algorithm/算法思想掌握/" class="archive-article-date">
-  	<time datetime="2021-02-27T04:36:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-27</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><h3 id="395-至少有K个重复字符的最长子串"><a href="#395-至少有K个重复字符的最长子串" class="headerlink" title="395. 至少有K个重复字符的最长子串"></a><a href="https://leetcode-cn.com/problems/longest-substring-with-at-least-k-repeating-characters/" target="_blank" rel="noopener">395. 至少有K个重复字符的最长子串</a></h3><p>给你一个字符串 <code>s</code> 和一个整数 <code>k</code> ，请你找出 <code>s</code> 中的最长子串， 要求该子串中的每一字符出现次数都不少于 <code>k</code> 。返回这一子串的长度。</p>
-<p><strong>示例 1：</strong></p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">"aaabb"</span>, k = <span class="number">3</span></span><br><span class="line">输出：<span class="number">3</span></span><br><span class="line">解释：最长子串为 <span class="string">"aaa"</span> ，其中 'a' 重复了 <span class="number">3</span> 次。</span><br></pre></td></tr></table></figure>
-
-<p><strong>示例 2：</strong></p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">"ababbc"</span>, k = <span class="number">2</span></span><br><span class="line">输出：<span class="number">5</span></span><br><span class="line">解释：最长子串为 <span class="string">"ababb"</span> ，其中 'a' 重复了 <span class="number">2</span> 次， 'b' 重复了 <span class="number">3</span> 次。</span><br></pre></td></tr></table></figure>
-
-<p> <strong>提示：</strong></p>
-<ul>
-<li><code>1 &lt;= s.length &lt;= 10^4</code></li>
-<li><code>s</code> 仅由小写英文字母组成</li>
-<li><code>1 &lt;= k &lt;= 10^5</code></li>
-</ul>
-        
-          <a class="article-more-a" href="/2021/02/27/algorithm/算法思想掌握/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/算法//" class="article-tag-list-link color3">算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/27/algorithm/算法思想掌握/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-algorithm/你需要了解这 14 种编程面试模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/25/algorithm/你需要了解这 14 种编程面试模式/">你需要了解这14种编程面试模式</a>
-    </h1>
-  
-
-        
-        
-<a href="/2021/02/25/algorithm/你需要了解这 14 种编程面试模式/" class="archive-article-date">
-  	<time datetime="2021-02-25T01:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-25</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>作者：Fahim ul Haq</p>
-<p>机器之心编译</p>
-<p>参与：Panda</p>
-<h1 id="解题套路"><a href="#解题套路" class="headerlink" title="解题套路"></a>解题套路</h1><p>咱们在面试程序员岗位时往往需要经历一个编程面试过程，雇主会借此考验面试者的技术实力。</p>
-<p>然而，这些技术问题有时候却和我们的实际工作并无太大关系，也由此可能给我们的编程面试准备阶段带来很大的压力。</p>
-<p>曾在 Facebook 和微软工作过的 Educative.io 创始人 Fahim ul Haq 近日发文总结了编程面试所遇到的问题的 14 种最常见的模式，也许能帮你看清各种编程面试问题「背后的真相」。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210225100733.png" alt="图片"></p>
-<p>对很多开发者来说，编程工作的面试准备很容易让人焦虑。面试要涉及的东西实在太多，其中很多还往往与开发者的日常工作无关，只会额外增添压力。</p>
-<p>这种现状导致了一个后果：现在的开发者往往需要花费数周时间在 LeetCode 等网站上了解综合数百个问题。</p>
-<p>与我谈过的开发者在面试前的一个常见焦虑问题是：<strong>我是否已经解决过足够多的实际问题？我本可以做到更多吗？</strong></p>
-<p>这就是我想要帮助开发者了解每个问题背后的底层模式的原因——这样他们就不必担忧解决数百个问题以及被 LeetCode 整得疲惫不堪了。</p>
-<p>如果你理解面试的通用模式，你就可以将其用作模板，从而解决各种层级的稍有不同的问题。</p>
-<p>这里我将列出最常见的 14 种模式，它们可被用于解决任何编程面试问题。</p>
-<p>另外我还会说明如何识别每种模式，并会为每种模式提供一些问题示例。</p>
-<p>这些内容都只是蜻蜓点水——<strong>我强烈建议你看看课程《Grokking the Coding Interview: Patterns for Coding Questions》，里面提供了全面的解释、示例和编程实践</strong>。</p>
-<p>下面的模式说明假设你已经知悉了数据结构。如果你还不了解，那需要补充一下知识点哦。</p>
-<p>我们今天将说明以下 14 种模式：</p>
-<blockquote>
-<ul>
-<li>1．滑动窗口</li>
-<li>2．二指针或迭代器</li>
-<li>3．快速和慢速指针或迭代器</li>
-<li>4．合并区间</li>
-<li>5．循环排序</li>
-<li>6．原地反转链表</li>
-<li>7．树的宽度优先搜索（Tree BFS）</li>
-<li>8．树的深度优先搜索（Tree DFS）</li>
-<li>9．Two Heaps</li>
-<li>10．子集</li>
-<li>11．经过修改的二叉搜索</li>
-<li>12．前 K 个元素</li>
-<li>13．K 路合并</li>
-<li>14．拓扑排序</li>
-</ul>
-</blockquote>
-<p>我们开始吧！</p>
-        
-          <a class="article-more-a" href="/2021/02/25/algorithm/你需要了解这 14 种编程面试模式/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/25/algorithm/你需要了解这 14 种编程面试模式/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
@@ -1104,6 +1093,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
@@ -1120,19 +1113,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">面试题</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1148,15 +1137,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MySQL实战45讲</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -146,6 +146,334 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-internet/bloom-filter" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="布隆过滤器"><a href="#布隆过滤器" class="headerlink" title="布隆过滤器"></a>布隆过滤器</h1><p>海量数据处理以及缓存穿透这两个场景让我认识了 布隆过滤器 ，我查阅了一些资料来了解它，但是很多现成资料并不满足我的需求，所以就决定自己总结一篇关于布隆过滤器的文章。希望通过这篇文章让更多人了解布隆过滤器，并且会实际去使用它！</p>
+<p>下面我们将分为几个方面来介绍布隆过滤器：</p>
+<ol>
+<li>什么是布隆过滤器？</li>
+<li>布隆过滤器的原理介绍。</li>
+<li>布隆过滤器使用场景。</li>
+<li>通过 Java 编程手动实现布隆过滤器。</li>
+<li>利用 Google 开源的 Guava 中自带的布隆过滤器。</li>
+<li>Redis 中的布隆过滤器。</li>
+</ol>
+<h2 id="什么是布隆过滤器？"><a href="#什么是布隆过滤器？" class="headerlink" title="什么是布隆过滤器？"></a>什么是布隆过滤器？</h2><p>首先，我们需要了解布隆过滤器的概念。</p>
+<p>布隆过滤器（Bloom Filter）是一个叫做 Bloom 的老哥于 1970 年提出的。我们可以把它看作由二进制向量（或者说位数组）和一系列随机映射函数（哈希函数）两部分组成的数据结构。相比于我们平时常用的的 List、Map 、Set 等数据结构，它占用空间更少并且效率更高，但是缺点是其返回的结果是概率性的，而不是非常准确的。理论情况下添加到集合中的元素越多，误报的可能性就越大。并且，存放在布隆过滤器的数据不容易删除。</p>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-11/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8-bit%E6%95%B0%E7%BB%84.png" alt="布隆过滤器示意图"></p>
+<p>位数组中的每个元素都只占用 1 bit ，并且每个元素只能是 0 或者 1。这样申请一个 100w 个元素的位数组只占用 1000000Bit / 8 = 125000 Byte = 125000/1024 kb ≈ 122kb 的空间。</p>
+<p>总结：<strong>一个名叫 Bloom 的人提出了一种来检索元素是否在给定大集合中的数据结构，这种数据结构是高效且性能很好的，但缺点是具有一定的错误识别率和删除难度。并且，理论情况下，添加到集合中的元素越多，误报的可能性就越大。</strong></p>
+<h2 id="布隆过滤器的原理介绍"><a href="#布隆过滤器的原理介绍" class="headerlink" title="布隆过滤器的原理介绍"></a>布隆过滤器的原理介绍</h2><p><strong>当一个元素加入布隆过滤器中的时候，会进行如下操作：</strong></p>
+<ol>
+<li>使用布隆过滤器中的哈希函数对元素值进行计算，得到哈希值（有几个哈希函数得到几个哈希值）。</li>
+<li>根据得到的哈希值，在位数组中把对应下标的值置为 1。</li>
+</ol>
+<p><strong>当我们需要判断一个元素是否存在于布隆过滤器的时候，会进行如下操作：</strong></p>
+<ol>
+<li>对给定元素再次进行相同的哈希计算；</li>
+<li>得到值之后判断位数组中的每个元素是否都为 1，如果值都为 1，那么说明这个值在布隆过滤器中，如果存在一个值不为 1，说明该元素不在布隆过滤器中。</li>
+</ol>
+<p>举个简单的例子：</p>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-11/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8-hash%E8%BF%90%E7%AE%97.png" alt="布隆过滤器hash计算"></p>
+<p>如图所示，当字符串存储要加入到布隆过滤器中时，该字符串首先由多个哈希函数生成不同的哈希值，然后将对应的位数组的下标设置为 1（当位数组初始化时，所有位置均为 0）。当第二次存储相同字符串时，因为先前的对应位置已设置为 1，所以很容易知道此值已经存在（去重非常方便）。</p>
+<p>如果我们需要判断某个字符串是否在布隆过滤器中时，只需要对给定字符串再次进行相同的哈希计算，得到值之后判断位数组中的每个元素是否都为 1，如果值都为 1，那么说明这个值在布隆过滤器中，如果存在一个值不为 1，说明该元素不在布隆过滤器中。</p>
+<p><strong>不同的字符串可能哈希出来的位置相同，这种情况我们可以适当增加位数组大小或者调整我们的哈希函数。</strong></p>
+<p>综上，我们可以得出：<strong>布隆过滤器说某个元素存在，小概率会误判。布隆过滤器说某个元素不在，那么这个元素一定不在。</strong></p>
+<h2 id="布隆过滤器使用场景"><a href="#布隆过滤器使用场景" class="headerlink" title="布隆过滤器使用场景"></a>布隆过滤器使用场景</h2><ol>
+<li>判断给定数据是否存在：比如判断一个数字是否存在于包含大量数字的数字集中（数字集很大，5 亿以上！）、 防止缓存穿透（判断请求的数据是否有效避免直接绕过缓存请求数据库）等等、邮箱的垃圾邮件过滤、黑名单功能等等。</li>
+<li>去重：比如爬给定网址的时候对已经爬取过的 URL 去重。</li>
+</ol>
+<h2 id="编码实战"><a href="#编码实战" class="headerlink" title="编码实战"></a>编码实战</h2><h3 id="通过-Java-编程手动实现布隆过滤器"><a href="#通过-Java-编程手动实现布隆过滤器" class="headerlink" title="通过 Java 编程手动实现布隆过滤器"></a>通过 Java 编程手动实现布隆过滤器</h3><p>我们上面已经说了布隆过滤器的原理，知道了布隆过滤器的原理之后就可以自己手动实现一个了。</p>
+<p>如果你想要手动实现一个的话，你需要：</p>
+<ol>
+<li>一个合适大小的位数组保存数据</li>
+<li>几个不同的哈希函数</li>
+<li>添加元素到位数组（布隆过滤器）的方法实现</li>
+<li>判断给定元素是否存在于位数组（布隆过滤器）的方法实现。</li>
+</ol>
+<p>下面给出一个我觉得写的还算不错的代码（参考网上已有代码改进得到，对于所有类型对象皆适用）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.BitSet;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBloomFilter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 位数组的大小</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_SIZE = <span class="number">2</span> &lt;&lt; <span class="number">24</span>;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 通过这个数组可以创建 6 个不同的哈希函数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span>[] SEEDS = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">3</span>, <span class="number">13</span>, <span class="number">46</span>, <span class="number">71</span>, <span class="number">91</span>, <span class="number">134</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 位数组。数组中的元素只能是 0 或者 1</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> BitSet bits = <span class="keyword">new</span> BitSet(DEFAULT_SIZE);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 存放包含 hash 函数的类的数组</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> SimpleHash[] func = <span class="keyword">new</span> SimpleHash[SEEDS.length];</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 初始化多个包含 hash 函数的类的数组，每个类中的 hash 函数都不一样</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyBloomFilter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 初始化多个不同的 Hash 函数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; SEEDS.length; i++) &#123;</span><br><span class="line">            func[i] = <span class="keyword">new</span> SimpleHash(DEFAULT_SIZE, SEEDS[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加元素到位数组</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(Object value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (SimpleHash f : func) &#123;</span><br><span class="line">            bits.set(f.hash(value), <span class="keyword">true</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 判断指定元素是否存在于位数组</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">contains</span><span class="params">(Object value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">boolean</span> ret = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">for</span> (SimpleHash f : func) &#123;</span><br><span class="line">            ret = ret &amp;&amp; bits.get(f.hash(value));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 静态内部类。用于 hash 操作！</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleHash</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> cap;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> seed;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">SimpleHash</span><span class="params">(<span class="keyword">int</span> cap, <span class="keyword">int</span> seed)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.cap = cap;</span><br><span class="line">            <span class="keyword">this</span>.seed = seed;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 计算 hash 值</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(Object value)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">int</span> h;</span><br><span class="line">            <span class="keyword">return</span> (value == <span class="keyword">null</span>) ? <span class="number">0</span> : Math.abs(seed * (cap - <span class="number">1</span>) &amp; ((h = value.hashCode()) ^ (h &gt;&gt;&gt; <span class="number">16</span>)));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">String value1 = <span class="string">"https://javaguide.cn/"</span>;</span><br><span class="line">String value2 = <span class="string">"https://github.com/Snailclimb"</span>;</span><br><span class="line">MyBloomFilter filter = <span class="keyword">new</span> MyBloomFilter();</span><br><span class="line">System.out.println(filter.contains(value1));</span><br><span class="line">System.out.println(filter.contains(value2));</span><br><span class="line">filter.add(value1);</span><br><span class="line">filter.add(value2);</span><br><span class="line">System.out.println(filter.contains(value1));</span><br><span class="line">System.out.println(filter.contains(value2));</span><br></pre></td></tr></table></figure>
+
+<p>Output:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">false</span></span><br><span class="line"><span class="literal">false</span></span><br><span class="line"><span class="literal">true</span></span><br><span class="line"><span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>测试：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Integer value1 = <span class="number">13423</span>;</span><br><span class="line">Integer value2 = <span class="number">22131</span>;</span><br><span class="line">MyBloomFilter filter = <span class="keyword">new</span> MyBloomFilter();</span><br><span class="line">System.out.println(filter.contains(value1));</span><br><span class="line">System.out.println(filter.contains(value2));</span><br><span class="line">filter.add(value1);</span><br><span class="line">filter.add(value2);</span><br><span class="line">System.out.println(filter.contains(value1));</span><br><span class="line">System.out.println(filter.contains(value2));</span><br></pre></td></tr></table></figure>
+
+<p>Output:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">false</span></span><br><span class="line"><span class="keyword">false</span></span><br><span class="line"><span class="keyword">true</span></span><br><span class="line"><span class="keyword">true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="利用-Google-开源的-Guava-中自带的布隆过滤器"><a href="#利用-Google-开源的-Guava-中自带的布隆过滤器" class="headerlink" title="利用 Google 开源的 Guava 中自带的布隆过滤器"></a>利用 Google 开源的 Guava 中自带的布隆过滤器</h3><p>自己实现的目的主要是为了让自己搞懂布隆过滤器的原理，Guava 中布隆过滤器的实现算是比较权威的，所以实际项目中我们不需要手动实现一个布隆过滤器。</p>
+<p>首先我们需要在项目中引入 Guava 的依赖：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.google.guava&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;guava&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;28.0-jre&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>实际使用如下：</p>
+<p>我们创建了一个最多存放 最多 1500 个整数的布隆过滤器，并且我们可以容忍误判的概率为百分之（0.01）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建布隆过滤器对象</span></span><br><span class="line">BloomFilter&lt;Integer&gt; filter = BloomFilter.create(</span><br><span class="line">    Funnels.integerFunnel(),</span><br><span class="line">    <span class="number">1500</span>,</span><br><span class="line">    <span class="number">0.01</span>);</span><br><span class="line"><span class="comment">// 判断指定元素是否存在</span></span><br><span class="line">System.out.println(filter.mightContain(<span class="number">1</span>));</span><br><span class="line">System.out.println(filter.mightContain(<span class="number">2</span>));</span><br><span class="line"><span class="comment">// 将元素添加进布隆过滤器</span></span><br><span class="line">filter.put(<span class="number">1</span>);</span><br><span class="line">filter.put(<span class="number">2</span>);</span><br><span class="line">System.out.println(filter.mightContain(<span class="number">1</span>));</span><br><span class="line">System.out.println(filter.mightContain(<span class="number">2</span>));</span><br></pre></td></tr></table></figure>
+
+<p>在我们的示例中，当 <code>mightContain()</code> 方法返回 <em>true</em> 时，我们可以 99％确定该元素在过滤器中，当过滤器返回 <em>false</em> 时，我们可以 100％确定该元素不存在于过滤器中。</p>
+<p><strong>Guava 提供的布隆过滤器的实现还是很不错的（想要详细了解的可以看一下它的源码实现），但是它有一个重大的缺陷就是只能单机使用（另外，容量扩展也不容易），而现在互联网一般都是分布式的场景。为了解决这个问题，我们就需要用到 Redis 中的布隆过滤器了。</strong></p>
+<h2 id="Redis-中的布隆过滤器"><a href="#Redis-中的布隆过滤器" class="headerlink" title="Redis 中的布隆过滤器"></a>Redis 中的布隆过滤器</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>Redis v4.0 之后有了 Module（模块/插件） 功能，Redis Modules 让 Redis 可以使用外部模块扩展其功能 。布隆过滤器就是其中的 Module。详情可以查看 Redis 官方对 Redis Modules 的介绍 ：<a href="https://redis.io/modules" target="_blank" rel="noopener">https://redis.io/modules</a></p>
+<p>另外，官网推荐了一个 RedisBloom 作为 Redis 布隆过滤器的 Module，地址：<a href="https://github.com/RedisBloom/RedisBloom" target="_blank" rel="noopener">https://github.com/RedisBloom/RedisBloom</a><br>其他还有：</p>
+<ul>
+<li>redis-lua-scaling-bloom-filter（lua 脚本实现）：<a href="https://github.com/erikdubbelboer/redis-lua-scaling-bloom-filter" target="_blank" rel="noopener">https://github.com/erikdubbelboer/redis-lua-scaling-bloom-filter</a></li>
+<li>pyreBloom（Python 中的快速 Redis 布隆过滤器） ：<a href="https://github.com/seomoz/pyreBloom" target="_blank" rel="noopener">https://github.com/seomoz/pyreBloom</a></li>
+<li>……</li>
+</ul>
+<p>RedisBloom 提供了多种语言的客户端支持，包括：Python、Java、JavaScript 和 PHP。</p>
+<h3 id="使用-Docker-安装"><a href="#使用-Docker-安装" class="headerlink" title="使用 Docker 安装"></a>使用 Docker 安装</h3><p>如果我们需要体验 Redis 中的布隆过滤器非常简单，通过 Docker 就可以了！我们直接在 Google 搜索 <strong>docker redis bloomfilter</strong> 然后在排除广告的第一条搜素结果就找到了我们想要的答案（这是我平常解决问题的一种方式，分享一下），具体地址：<a href="https://hub.docker.com/r/redislabs/rebloom/" target="_blank" rel="noopener">https://hub.docker.com/r/redislabs/rebloom/</a> （介绍的很详细 ）。</p>
+<p><strong>具体操作如下：</strong></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ docker run -p <span class="number">6379</span>:<span class="number">6379</span> --name redis-redisbloom redislabs/rebloom:latest</span><br><span class="line">➜  ~ docker exec -it redis-redisbloom bash</span><br><span class="line"><span class="symbol">root@</span><span class="number">21396</span>d02c252:/data# redis-cli</span><br><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">6379</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="常用命令一览"><a href="#常用命令一览" class="headerlink" title="常用命令一览"></a>常用命令一览</h3><blockquote>
+<p>注意： key : 布隆过滤器的名称，item : 添加的元素。</p>
+</blockquote>
+<ol>
+<li><strong><code>BF.ADD</code></strong>：将元素添加到布隆过滤器中，如果该过滤器尚不存在，则创建该过滤器。格式：<code>BF.ADD {key} {item}</code>。</li>
+<li><strong><code>BF.MADD</code></strong> : 将一个或多个元素添加到“布隆过滤器”中，并创建一个尚不存在的过滤器。该命令的操作方式<code>BF.ADD</code>与之相同，只不过它允许多个输入并返回多个值。格式：<code>BF.MADD {key} {item} [item ...]</code> 。</li>
+<li><strong><code>BF.EXISTS</code></strong> : 确定元素是否在布隆过滤器中存在。格式：<code>BF.EXISTS {key} {item}</code>。</li>
+<li><strong><code>BF.MEXISTS</code></strong> ： 确定一个或者多个元素是否在布隆过滤器中存在格式：<code>BF.MEXISTS {key} {item} [item ...]</code>。</li>
+</ol>
+<p>另外， <code>BF. RESERVE</code> 命令需要单独介绍一下：</p>
+<p>这个命令的格式如下：</p>
+<p><code>BF. RESERVE {key} {error_rate} {capacity} [EXPANSION expansion]</code> 。</p>
+<p>下面简单介绍一下每个参数的具体含义：</p>
+<ol>
+<li>key：布隆过滤器的名称</li>
+<li>error_rate : 期望的误报率。该值必须介于 0 到 1 之间。例如，对于期望的误报率 0.1％（1000 中为 1），error_rate 应该设置为 0.001。该数字越接近零，则每个项目的内存消耗越大，并且每个操作的 CPU 使用率越高。</li>
+<li>capacity: 过滤器的容量。当实际存储的元素个数超过这个值之后，性能将开始下降。实际的降级将取决于超出限制的程度。随着过滤器元素数量呈指数增长，性能将线性下降。</li>
+</ol>
+<p>可选参数：</p>
+<ul>
+<li>expansion：如果创建了一个新的子过滤器，则其大小将是当前过滤器的大小乘以<code>expansion</code>。默认扩展值为 2。这意味着每个后续子过滤器将是前一个子过滤器的两倍。</li>
+</ul>
+<h3 id="实际使用"><a href="#实际使用" class="headerlink" title="实际使用"></a>实际使用</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; BF.ADD myFilter java</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; BF.ADD myFilter javaguide</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; BF.EXISTS myFilter java</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; BF.EXISTS myFilter javaguide</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; BF.EXISTS myFilter github</span><br><span class="line">(integer) 0</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/计算机基础//" class="article-tag-list-link color1">计算机基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/05/16/internet/bloom-filter/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-interview/2022面经" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="高仙一面"><a href="#高仙一面" class="headerlink" title="高仙一面"></a>高仙一面</h3><ul>
+<li><p>对象一定是在堆上分配的吗？</p>
+<blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021202205122013107.png" alt="在这里插入图片描述"></p>
+</blockquote>
+</li>
+<li><p>G1和CMS垃圾回收器的区别？</p>
+</li>
+<li><p>线程有几种状态</p>
+</li>
+<li><p>加了synchronized的代码块一定会加锁吗？</p>
+</li>
+<li><p>Thread.sleep(0)有什么用？</p>
+</li>
+<li><p>分布式锁怎么实现？</p>
+</li>
+<li><p>不停机如何迁移数据？</p>
+</li>
+<li><p>如何保证数据库和缓存的一致性？</p>
+</li>
+</ul>
+<h3 id="高仙二面"><a href="#高仙二面" class="headerlink" title="高仙二面"></a>高仙二面</h3><p>- </p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/05/12/interview/2022面经/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-study/数据结构与算法之美/学习笔记/29讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/08/23/study/数据结构与算法之美/学习笔记/29讲/">28讲</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/08/23/study/数据结构与算法之美/学习笔记/29讲/" class="archive-article-date">
+  	<time datetime="2021-08-23T00:30:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-23</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h1 id="29-堆的应用：如何快速获取到Top-10最热门的搜索关键词？"><a href="#29-堆的应用：如何快速获取到Top-10最热门的搜索关键词？" class="headerlink" title="29 | 堆的应用：如何快速获取到Top 10最热门的搜索关键词？"></a>29 | 堆的应用：如何快速获取到Top 10最热门的搜索关键词？</h1><h2 id="堆的应用一：优先级队列"><a href="#堆的应用一：优先级队列" class="headerlink" title="堆的应用一：优先级队列"></a>堆的应用一：优先级队列</h2><h3 id="1-合并有序小文件"><a href="#1-合并有序小文件" class="headerlink" title="1. 合并有序小文件"></a>1. 合并有序小文件</h3><p>假设我们有 100 个小文件，每个文件的大小是 100MB，每个文件中存储的都是有序的字符串。我们希望将这些 100 个小文件合并成一个有序的大文件。这里就会用到优先级队列。</p>
+<p>整体思路有点像归并排序中的合并函数。我们从这 100 个文件中，各取第一个字符串，放入数组中，然后比较大小，把最小的那个字符串放入合并后的大文件中，并从数组中删除。</p>
+<p>假设，这个最小的字符串来自于 13.txt 这个小文件，我们就再从这个小文件取下一个字符串，放到数组中，重新比较大小，并且选择最小的放入合并后的大文件，将它从数组中删除。依次类推，直到所有的文件中的数据都放入到大文件为止。</p>
+<p>这里我们用数组这种数据结构，来存储从小文件中取出来的字符串。每次从数组中取最小字符串，都需要循环遍历整个数组，显然，这不是很高效。有没有更加高效方法呢？</p>
+<p>这里就可以用到优先级队列，也可以说是堆。我们将从小文件中取出来的字符串放入到小顶堆中，那堆顶的元素，也就是优先级队列队首的元素，就是最小的字符串。我们将这个字符串放入到大文件中，并将其从堆中删除。然后再从小文件中取出下一个字符串，放入到堆中。循环这个过程，就可以将 100 个小文件中的数据依次放入到大文件中。</p>
+<p>我们知道，删除堆顶数据和往堆中插入数据的时间复杂度都是 O(logn)，n 表示堆中的数据个数，这里就是 100。是不是比原来数组存储的方式高效了很多呢？</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/08/23/study/数据结构与算法之美/学习笔记/29讲/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-study/数据结构与算法之美/学习笔记/28讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -304,92 +632,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/08/23/study/数据结构与算法之美/学习笔记/28讲/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-study/数据结构与算法之美/学习笔记/29讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/08/23/study/数据结构与算法之美/学习笔记/29讲/">28讲</a>
-    </h1>
-  
-
-        
-        
-<a href="/2021/08/23/study/数据结构与算法之美/学习笔记/29讲/" class="archive-article-date">
-  	<time datetime="2021-08-23T00:30:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-23</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h1 id="29-堆的应用：如何快速获取到Top-10最热门的搜索关键词？"><a href="#29-堆的应用：如何快速获取到Top-10最热门的搜索关键词？" class="headerlink" title="29 | 堆的应用：如何快速获取到Top 10最热门的搜索关键词？"></a>29 | 堆的应用：如何快速获取到Top 10最热门的搜索关键词？</h1><h2 id="堆的应用一：优先级队列"><a href="#堆的应用一：优先级队列" class="headerlink" title="堆的应用一：优先级队列"></a>堆的应用一：优先级队列</h2><h3 id="1-合并有序小文件"><a href="#1-合并有序小文件" class="headerlink" title="1. 合并有序小文件"></a>1. 合并有序小文件</h3><p>假设我们有 100 个小文件，每个文件的大小是 100MB，每个文件中存储的都是有序的字符串。我们希望将这些 100 个小文件合并成一个有序的大文件。这里就会用到优先级队列。</p>
-<p>整体思路有点像归并排序中的合并函数。我们从这 100 个文件中，各取第一个字符串，放入数组中，然后比较大小，把最小的那个字符串放入合并后的大文件中，并从数组中删除。</p>
-<p>假设，这个最小的字符串来自于 13.txt 这个小文件，我们就再从这个小文件取下一个字符串，放到数组中，重新比较大小，并且选择最小的放入合并后的大文件，将它从数组中删除。依次类推，直到所有的文件中的数据都放入到大文件为止。</p>
-<p>这里我们用数组这种数据结构，来存储从小文件中取出来的字符串。每次从数组中取最小字符串，都需要循环遍历整个数组，显然，这不是很高效。有没有更加高效方法呢？</p>
-<p>这里就可以用到优先级队列，也可以说是堆。我们将从小文件中取出来的字符串放入到小顶堆中，那堆顶的元素，也就是优先级队列队首的元素，就是最小的字符串。我们将这个字符串放入到大文件中，并将其从堆中删除。然后再从小文件中取出下一个字符串，放入到堆中。循环这个过程，就可以将 100 个小文件中的数据依次放入到大文件中。</p>
-<p>我们知道，删除堆顶数据和往堆中插入数据的时间复杂度都是 O(logn)，n 表示堆中的数据个数，这里就是 100。是不是比原来数组存储的方式高效了很多呢？</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/08/23/study/数据结构与算法之美/学习笔记/29讲/">展开全文 >></a>
         </p>
       
 
@@ -925,211 +1167,6 @@
 
 
   
-    <article id="post-study/数据结构与算法之美/每周打卡/10" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/23/study/数据结构与算法之美/每周打卡/10/">五月第二周</a>
-    </h1>
-  
-
-        
-        
-<a href="/2021/05/23/study/数据结构与算法之美/每周打卡/10/" class="archive-article-date">
-  	<time datetime="2021-05-23T05:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-23</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>数据结构与算法之美每周打卡 2021.05.17-2021.05.23</p>
-<h3 id="437-路径总和-III"><a href="#437-路径总和-III" class="headerlink" title="437. 路径总和 III"></a><a href="https://leetcode-cn.com/problems/path-sum-iii/" target="_blank" rel="noopener">437. 路径总和 III</a></h3><p>给定一个二叉树，它的每个结点都存放着一个整数值。</p>
-<p>找出路径和等于给定数值的路径总数。</p>
-<p>路径不需要从根节点开始，也不需要在叶子节点结束，但是路径方向必须是向下的（只能从父节点到子节点）。</p>
-<p>二叉树不超过1000个节点，且节点数值范围是 [-1000000,1000000] 的整数。</p>
-<p><strong>示例：</strong></p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">root = [<span class="number">10</span>,<span class="number">5</span>,<span class="number">-3</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="literal">null</span>,<span class="number">11</span>,<span class="number">3</span>,<span class="number">-2</span>,<span class="literal">null</span>,<span class="number">1</span>], sum = <span class="number">8</span></span><br><span class="line"></span><br><span class="line">      <span class="number">10</span></span><br><span class="line">     /  \</span><br><span class="line">    <span class="number">5</span>   <span class="number">-3</span></span><br><span class="line">   / \    \</span><br><span class="line">  <span class="number">3</span>   <span class="number">2</span>   <span class="number">11</span></span><br><span class="line"> / \   \</span><br><span class="line"><span class="number">3</span>  <span class="number">-2</span>   <span class="number">1</span></span><br><span class="line"></span><br><span class="line">返回 <span class="number">3</span>。和等于 <span class="number">8</span> 的路径有:</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>  <span class="number">5</span> -&gt; <span class="number">3</span></span><br><span class="line"><span class="number">2.</span>  <span class="number">5</span> -&gt; <span class="number">2</span> -&gt; <span class="number">1</span></span><br><span class="line"><span class="number">3.</span>  <span class="number">-3</span> -&gt; <span class="number">11</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="889-根据前序和后序遍历构造二叉树"><a href="#889-根据前序和后序遍历构造二叉树" class="headerlink" title="889. 根据前序和后序遍历构造二叉树"></a><a href="https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/" target="_blank" rel="noopener">889. 根据前序和后序遍历构造二叉树</a></h3><p>难度中等165</p>
-<p>返回与给定的前序和后序遍历匹配的任何二叉树。</p>
-<p> <code>pre</code> 和 <code>post</code> 遍历中的值是不同的正整数。</p>
-<p> <strong>示例：</strong></p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：pre = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">7</span>], post = [<span class="number">4</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">3</span>,<span class="number">1</span>]</span><br><span class="line">输出：[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>]</span><br></pre></td></tr></table></figure>
-
-<p> <strong>提示：</strong></p>
-<ul>
-<li><code>1 &lt;= pre.length == post.length &lt;= 30</code></li>
-<li><code>pre[]</code> 和 <code>post[]</code> 都是 <code>1, 2, ..., pre.length</code> 的排列</li>
-<li>每个输入保证至少有一个答案。如果有多个答案，可以返回其中一个。</li>
-</ul>
-<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">每周打卡</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/23/study/数据结构与算法之美/每周打卡/10/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-study/数据结构与算法之美/每周打卡/9" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/23/study/数据结构与算法之美/每周打卡/9/">五月第一周</a>
-    </h1>
-  
-
-        
-        
-<a href="/2021/05/23/study/数据结构与算法之美/每周打卡/9/" class="archive-article-date">
-  	<time datetime="2021-05-23T05:06:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-23</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>数据结构与算法之美每周打卡 2021.05.10-2021.05.16</p>
-<h3 id="剑指-Offer-34-二叉树中和为某一值的路径"><a href="#剑指-Offer-34-二叉树中和为某一值的路径" class="headerlink" title="剑指 Offer 34. 二叉树中和为某一值的路径"></a><a href="https://leetcode-cn.com/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/" target="_blank" rel="noopener">剑指 Offer 34. 二叉树中和为某一值的路径</a></h3><p>输入一棵二叉树和一个整数，打印出二叉树中节点值的和为输入整数的所有路径。从树的根节点开始往下一直到叶节点所经过的节点形成一条路径。</p>
-<p><strong>示例:</strong><br>给定如下二叉树，以及目标和 <code>target = 22</code>，</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">      <span class="number">5</span></span><br><span class="line">     / \</span><br><span class="line">    <span class="number">4</span>   <span class="number">8</span></span><br><span class="line">   /   / \</span><br><span class="line">  <span class="number">11</span>  <span class="number">13</span>  <span class="number">4</span></span><br><span class="line"> /  \    / \</span><br><span class="line"><span class="number">7</span>    <span class="number">2</span>  <span class="number">5</span>   <span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<p>返回:</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">   [<span class="number">5</span>,<span class="number">4</span>,<span class="number">11</span>,<span class="number">2</span>],</span><br><span class="line">   [<span class="number">5</span>,<span class="number">8</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<p> <strong>提示：</strong></p>
-<ol>
-<li><code>节点总数 &lt;= 10000</code></li>
-</ol>
-<p>注意：本题与主站 113 题相同：<a href="https://leetcode-cn.com/problems/path-sum-ii/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/path-sum-ii/</a></p>
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="面试题-04-03-特定深度节点链表"><a href="#面试题-04-03-特定深度节点链表" class="headerlink" title="面试题 04.03. 特定深度节点链表"></a><a href="https://leetcode-cn.com/problems/list-of-depth-lcci/" target="_blank" rel="noopener">面试题 04.03. 特定深度节点链表</a></h3><p>给定一棵二叉树，设计一个算法，创建含有某一深度上所有节点的链表（比如，若一棵树的深度为 <code>D</code>，则会创建出 <code>D</code> 个链表）。返回一个包含所有深度的链表的数组。</p>
-<p><strong>示例：</strong></p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">输入：[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="literal">null</span>,<span class="number">7</span>,<span class="number">8</span>]</span><br><span class="line"></span><br><span class="line">        <span class="number">1</span></span><br><span class="line">       /  \ </span><br><span class="line">      <span class="number">2</span>    <span class="number">3</span></span><br><span class="line">     / \    \ </span><br><span class="line">    <span class="number">4</span>   <span class="number">5</span>    <span class="number">7</span></span><br><span class="line">   /</span><br><span class="line">  <span class="number">8</span></span><br><span class="line"></span><br><span class="line">输出：[[<span class="number">1</span>],[<span class="number">2</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">5</span>,<span class="number">7</span>],[<span class="number">8</span>]]</span><br></pre></td></tr></table></figure>
-
-<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">每周打卡</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/05/23/study/数据结构与算法之美/每周打卡/9/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1258,6 +1295,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
@@ -1274,19 +1315,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">面试题</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1302,15 +1339,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MySQL实战45讲</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
