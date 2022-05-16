@@ -18,8 +18,8 @@
   
   <entry>
     <title>布隆过滤器</title>
-    <link href="https://blog.elfred.top/2022/05/16/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/"/>
-    <id>https://blog.elfred.top/2022/05/16/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/</id>
+    <link href="https://blog.elfred.top/2022/05/16/internet/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/"/>
+    <id>https://blog.elfred.top/2022/05/16/internet/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/</id>
     <published>2022-05-16T14:50:00.000Z</published>
     <updated>2022-05-16T14:53:38.870Z</updated>
     
@@ -422,31 +422,6 @@
   </entry>
   
   <entry>
-    <title>02讲</title>
-    <link href="https://blog.elfred.top/2021/05/05/study/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/21%E8%AE%B2/"/>
-    <id>https://blog.elfred.top/2021/05/05/study/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/21%E8%AE%B2/</id>
-    <published>2021-05-05T05:20:00.000Z</published>
-    <updated>2021-05-05T05:58:30.729Z</updated>
-    
-    <content type="html"><![CDATA[<hr><h1 id="21-为什么我只改一行的语句，锁这么多？"><a href="#21-为什么我只改一行的语句，锁这么多？" class="headerlink" title="21 | 为什么我只改一行的语句，锁这么多？"></a>21 | 为什么我只改一行的语句，锁这么多？</h1><h2 id="间隙锁和next-lock-key加锁原则"><a href="#间隙锁和next-lock-key加锁原则" class="headerlink" title="间隙锁和next-lock key加锁原则"></a>间隙锁和next-lock key加锁原则</h2><p>因为间隙锁在可重复读隔离级别下才有效，所以本篇文章接下来的描述，若没有特殊说明，默认是可重复读隔离级别。</p><p><strong>我总结的加锁规则里面，包含了两个“原则”、两个“优化”和一个“bug”。</strong></p><ol><li>原则 1：加锁的基本单位是 next-key lock。希望你还记得，next-key lock 是前开后闭区间。</li><li>原则 2：查找过程中访问到的对象才会加锁。</li><li>优化 1：索引上的等值查询，给唯一索引加锁的时候，next-key lock 退化为行锁。</li><li>优化 2：索引上的等值查询，向右遍历时且最后一个值不满足等值条件的时候，next-key lock 退化为间隙锁。</li><li>一个 bug：唯一索引上的范围查询会访问到不满足条件的第一个值为止。</li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;hr&gt;
-&lt;h1 id=&quot;21-为什么我只改一行的语句，锁这么多？&quot;&gt;&lt;a href=&quot;#21-为什么我只改一行的语句，锁这么多？&quot; class=&quot;headerlink&quot; title=&quot;21 | 为什么我只改一行的语句，锁这么多？&quot;&gt;&lt;/a&gt;21 | 为什么我只改一行的语句，锁这</summary>
-      
-    
-    
-    
-    
-    <category term="MySQL实战45讲" scheme="https://blog.elfred.top/tags/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/"/>
-    
-    <category term="学习笔记" scheme="https://blog.elfred.top/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
     <title>20讲</title>
     <link href="https://blog.elfred.top/2021/05/05/study/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/20%E8%AE%B2/"/>
     <id>https://blog.elfred.top/2021/05/05/study/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/20%E8%AE%B2/</id>
@@ -460,6 +435,31 @@
       
     <summary type="html">&lt;hr&gt;
 &lt;h1 id=&quot;20-幻读是什么，幻读有什么问题？&quot;&gt;&lt;a href=&quot;#20-幻读是什么，幻读有什么问题？&quot; class=&quot;headerlink&quot; title=&quot;20 | 幻读是什么，幻读有什么问题？&quot;&gt;&lt;/a&gt;20 | 幻读是什么，幻读有什么问题？&lt;/h1&gt;&lt;p&gt;为</summary>
+      
+    
+    
+    
+    
+    <category term="MySQL实战45讲" scheme="https://blog.elfred.top/tags/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/"/>
+    
+    <category term="学习笔记" scheme="https://blog.elfred.top/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>02讲</title>
+    <link href="https://blog.elfred.top/2021/05/05/study/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/21%E8%AE%B2/"/>
+    <id>https://blog.elfred.top/2021/05/05/study/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/21%E8%AE%B2/</id>
+    <published>2021-05-05T05:20:00.000Z</published>
+    <updated>2021-05-05T05:58:30.729Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h1 id="21-为什么我只改一行的语句，锁这么多？"><a href="#21-为什么我只改一行的语句，锁这么多？" class="headerlink" title="21 | 为什么我只改一行的语句，锁这么多？"></a>21 | 为什么我只改一行的语句，锁这么多？</h1><h2 id="间隙锁和next-lock-key加锁原则"><a href="#间隙锁和next-lock-key加锁原则" class="headerlink" title="间隙锁和next-lock key加锁原则"></a>间隙锁和next-lock key加锁原则</h2><p>因为间隙锁在可重复读隔离级别下才有效，所以本篇文章接下来的描述，若没有特殊说明，默认是可重复读隔离级别。</p><p><strong>我总结的加锁规则里面，包含了两个“原则”、两个“优化”和一个“bug”。</strong></p><ol><li>原则 1：加锁的基本单位是 next-key lock。希望你还记得，next-key lock 是前开后闭区间。</li><li>原则 2：查找过程中访问到的对象才会加锁。</li><li>优化 1：索引上的等值查询，给唯一索引加锁的时候，next-key lock 退化为行锁。</li><li>优化 2：索引上的等值查询，向右遍历时且最后一个值不满足等值条件的时候，next-key lock 退化为间隙锁。</li><li>一个 bug：唯一索引上的范围查询会访问到不满足条件的第一个值为止。</li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;hr&gt;
+&lt;h1 id=&quot;21-为什么我只改一行的语句，锁这么多？&quot;&gt;&lt;a href=&quot;#21-为什么我只改一行的语句，锁这么多？&quot; class=&quot;headerlink&quot; title=&quot;21 | 为什么我只改一行的语句，锁这么多？&quot;&gt;&lt;/a&gt;21 | 为什么我只改一行的语句，锁这</summary>
       
     
     
