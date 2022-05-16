@@ -6,23 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://blog.elfred.top">
-  <title>Elfred&#39;s Blog</title>
+  <title>布隆过滤器 | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="布隆过滤器海量数据处理以及缓存穿透这两个场景让我认识了 布隆过滤器 ，我查阅了一些资料来了解它，但是很多现成资料并不满足我的需求，所以就决定自己总结一篇关于布隆过滤器的文章。希望通过这篇文章让更多人了解布隆过滤器，并且会实际去使用它！ 下面我们将分为几个方面来介绍布隆过滤器：  什么是布隆过滤器？ 布隆过滤器的原理介绍。 布隆过滤器使用场景。 通过 Java 编程手动实现布隆过滤器。 利用 Goo">
 <meta name="keywords" content="数据结构">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Elfred&#39;s Blog">
+<meta property="og:title" content="布隆过滤器">
 <meta property="og:url" content="https://blog.elfred.top/2022/05/16/internet/bloom-filter/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
 <meta property="og:description" content="布隆过滤器海量数据处理以及缓存穿透这两个场景让我认识了 布隆过滤器 ，我查阅了一些资料来了解它，但是很多现成资料并不满足我的需求，所以就决定自己总结一篇关于布隆过滤器的文章。希望通过这篇文章让更多人了解布隆过滤器，并且会实际去使用它！ 下面我们将分为几个方面来介绍布隆过滤器：  什么是布隆过滤器？ 布隆过滤器的原理介绍。 布隆过滤器使用场景。 通过 Java 编程手动实现布隆过滤器。 利用 Goo">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-11/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8-bit%E6%95%B0%E7%BB%84.png">
-<meta property="og:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-11/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8-hash%E8%BF%90%E7%AE%97.png">
-<meta property="og:updated_time" content="2022-05-16T12:01:21.444Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021202205162010908.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021202205162010477.png">
+<meta property="og:updated_time" content="2022-05-16T12:10:29.528Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Elfred&#39;s Blog">
+<meta name="twitter:title" content="布隆过滤器">
 <meta name="twitter:description" content="布隆过滤器海量数据处理以及缓存穿透这两个场景让我认识了 布隆过滤器 ，我查阅了一些资料来了解它，但是很多现成资料并不满足我的需求，所以就决定自己总结一篇关于布隆过滤器的文章。希望通过这篇文章让更多人了解布隆过滤器，并且会实际去使用它！ 下面我们将分为几个方面来介绍布隆过滤器：  什么是布隆过滤器？ 布隆过滤器的原理介绍。 布隆过滤器使用场景。 通过 Java 编程手动实现布隆过滤器。 利用 Goo">
-<meta name="twitter:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-11/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8-bit%E6%95%B0%E7%BB%84.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021202205162010908.png">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -151,6 +151,28 @@
             <article id="post-internet/bloom-filter" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      布隆过滤器
+    </h1>
+  
+
+        
+        
+	<!-- 不蒜子统计 -->
+	<span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2022/05/16/internet/bloom-filter/" class="archive-article-date">
+  	<time datetime="2022-05-16T12:09:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-16</time>
+</a>
+
+        
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="布隆过滤器"><a href="#布隆过滤器" class="headerlink" title="布隆过滤器"></a>布隆过滤器</h1><p>海量数据处理以及缓存穿透这两个场景让我认识了 布隆过滤器 ，我查阅了一些资料来了解它，但是很多现成资料并不满足我的需求，所以就决定自己总结一篇关于布隆过滤器的文章。希望通过这篇文章让更多人了解布隆过滤器，并且会实际去使用它！</p>
@@ -165,7 +187,7 @@
 </ol>
 <h2 id="什么是布隆过滤器？"><a href="#什么是布隆过滤器？" class="headerlink" title="什么是布隆过滤器？"></a>什么是布隆过滤器？</h2><p>首先，我们需要了解布隆过滤器的概念。</p>
 <p>布隆过滤器（Bloom Filter）是一个叫做 Bloom 的老哥于 1970 年提出的。我们可以把它看作由二进制向量（或者说位数组）和一系列随机映射函数（哈希函数）两部分组成的数据结构。相比于我们平时常用的的 List、Map 、Set 等数据结构，它占用空间更少并且效率更高，但是缺点是其返回的结果是概率性的，而不是非常准确的。理论情况下添加到集合中的元素越多，误报的可能性就越大。并且，存放在布隆过滤器的数据不容易删除。</p>
-<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-11/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8-bit%E6%95%B0%E7%BB%84.png" alt="布隆过滤器示意图"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021202205162010908.png" alt="布隆过滤器示意图"></p>
 <p>位数组中的每个元素都只占用 1 bit ，并且每个元素只能是 0 或者 1。这样申请一个 100w 个元素的位数组只占用 1000000Bit / 8 = 125000 Byte = 125000/1024 kb ≈ 122kb 的空间。</p>
 <p>总结：<strong>一个名叫 Bloom 的人提出了一种来检索元素是否在给定大集合中的数据结构，这种数据结构是高效且性能很好的，但缺点是具有一定的错误识别率和删除难度。并且，理论情况下，添加到集合中的元素越多，误报的可能性就越大。</strong></p>
 <h2 id="布隆过滤器的原理介绍"><a href="#布隆过滤器的原理介绍" class="headerlink" title="布隆过滤器的原理介绍"></a>布隆过滤器的原理介绍</h2><p><strong>当一个元素加入布隆过滤器中的时候，会进行如下操作：</strong></p>
@@ -179,7 +201,7 @@
 <li>得到值之后判断位数组中的每个元素是否都为 1，如果值都为 1，那么说明这个值在布隆过滤器中，如果存在一个值不为 1，说明该元素不在布隆过滤器中。</li>
 </ol>
 <p>举个简单的例子：</p>
-<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-11/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8-hash%E8%BF%90%E7%AE%97.png" alt="布隆过滤器hash计算"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021202205162010477.png" alt="布隆过滤器hash计算"></p>
 <p>如图所示，当字符串存储要加入到布隆过滤器中时，该字符串首先由多个哈希函数生成不同的哈希值，然后将对应的位数组的下标设置为 1（当位数组初始化时，所有位置均为 0）。当第二次存储相同字符串时，因为先前的对应位置已设置为 1，所以很容易知道此值已经存在（去重非常方便）。</p>
 <p>如果我们需要判断某个字符串是否在布隆过滤器中时，只需要对给定字符串再次进行相同的哈希计算，得到值之后判断位数组中的每个元素是否都为 1，如果值都为 1，那么说明这个值在布隆过滤器中，如果存在一个值不为 1，说明该元素不在布隆过滤器中。</p>
 <p><strong>不同的字符串可能哈希出来的位置相同，这种情况我们可以适当增加位数组大小或者调整我们的哈希函数。</strong></p>
@@ -546,7 +568,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -566,15 +588,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">面试题</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -586,11 +608,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">限流算法原理及实现</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color5">限流算法原理及实现</a>
               </li>
              
               <li class="article-tag-list-item">
