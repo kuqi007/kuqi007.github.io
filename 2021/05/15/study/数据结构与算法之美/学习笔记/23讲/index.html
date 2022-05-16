@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://blog.elfred.top">
   <title>23讲 | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="23 | 二叉树基础（上）：什么样的二叉树适合用数组来存储？树（Tree）我们首先来看，什么是“树”？再完备的定义，都没有图直观。所以我在图中画了几棵“树”。你来看看，这些“树”都有什么特征？  你有没有发现，“树”这种数据结构真的很像我们现实生活中的“树”，这里面每个元素我们叫做“节点”；用来连接相邻节点之间的关系，我们叫做“父子关系”。 比如下面这幅图，A 节点就是 B 节点的父节点，B 节">
-<meta name="keywords" content="学习笔记,数据结构与算法之美">
 <meta property="og:type" content="article">
 <meta property="og:title" content="23讲">
-<meta property="og:url" content="https://blog.elfred.top/2021/05/15/study/数据结构与算法之美/学习笔记/23讲/index.html">
+<meta property="og:url" content="https://blog.elfred.top/2021/05/15/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/23%E8%AE%B2/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
 <meta property="og:description" content="23 | 二叉树基础（上）：什么样的二叉树适合用数组来存储？树（Tree）我们首先来看，什么是“树”？再完备的定义，都没有图直观。所以我在图中画了几棵“树”。你来看看，这些“树”都有什么特征？  你有没有发现，“树”这种数据结构真的很像我们现实生活中的“树”，这里面每个元素我们叫做“节点”；用来连接相邻节点之间的关系，我们叫做“父子关系”。 比如下面这幅图，A 节点就是 B 节点的父节点，B 节">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515215731.jpeg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515215750.jpeg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515215851.jpeg">
@@ -26,10 +25,12 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515214026.jpeg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515214223.jpeg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515220044.jpeg">
-<meta property="og:updated_time" content="2021-05-16T06:05:27.768Z">
+<meta property="article:published_time" content="2021-05-15T14:00:00.000Z">
+<meta property="article:modified_time" content="2021-05-16T06:05:27.768Z">
+<meta property="article:author" content="Elfred">
+<meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="数据结构与算法之美">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="23讲">
-<meta name="twitter:description" content="23 | 二叉树基础（上）：什么样的二叉树适合用数组来存储？树（Tree）我们首先来看，什么是“树”？再完备的定义，都没有图直观。所以我在图中画了几棵“树”。你来看看，这些“树”都有什么特征？  你有没有发现，“树”这种数据结构真的很像我们现实生活中的“树”，这里面每个元素我们叫做“节点”；用来连接相邻节点之间的关系，我们叫做“父子关系”。 比如下面这幅图，A 节点就是 B 节点的父节点，B 节">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515215731.jpeg">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
@@ -48,8 +49,8 @@
 
   
 
-</head>
-</html>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -62,10 +63,8 @@
 			<img src="/images/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">Elfred</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">上善若水</p>
 		
 
 		<nav class="header-menu">
@@ -116,10 +115,8 @@
 				<img src="/images/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">Elfred</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>上善若水<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -174,7 +171,7 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2021/05/15/study/数据结构与算法之美/学习笔记/23讲/" class="archive-article-date">
+<a href="/2021/05/15/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/23%E8%AE%B2/" class="archive-article-date">
   	<time datetime="2021-05-15T14:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-15</time>
 </a>
 
@@ -211,9 +208,9 @@
 <p>想要存储一棵二叉树，我们有两种方法，一种是基于指针或者引用的二叉链式存储法，一种是基于数组的顺序存储法。</p>
 <p>我们先来看比较简单、直观的<strong>链式存储法</strong>。从图中你应该可以很清楚地看到，每个节点有三个字段，其中一个存储数据，另外两个是指向左右子节点的指针。我们只要拎住根节点，就可以通过左右子节点的指针，把整棵树都串起来。这种存储方式我们比较常用。大部分二叉树代码都是通过这种结构来实现的。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515213921.jpeg" alt="img"></p>
-<p>我们再来看，基于数组的<strong>顺序存储法</strong>。我们把根节点存储在下标 i = 1 的位置，那左子节点存储在下标 2 * i = 2 的位置，右子节点存储在 2 * i + 1 = 3 的位置。以此类推，B 节点的左子节点存储在 2 * i = 2 * 2 = 4 的位置，右子节点存储在 2 * i + 1 = 2 * 2 + 1 = 5 的位置。</p>
+<p>我们再来看，基于数组的<strong>顺序存储法</strong>。我们把根节点存储在下标 i &#x3D; 1 的位置，那左子节点存储在下标 2 * i &#x3D; 2 的位置，右子节点存储在 2 * i + 1 &#x3D; 3 的位置。以此类推，B 节点的左子节点存储在 2 * i &#x3D; 2 * 2 &#x3D; 4 的位置，右子节点存储在 2 * i + 1 &#x3D; 2 * 2 + 1 &#x3D; 5 的位置。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515214026.jpeg" alt="img"></p>
-<p>我来总结一下，如果节点 X 存储在数组中下标为 i 的位置，下标为 2 * i 的位置存储的就是左子节点，下标为 2 * i + 1 的位置存储的就是右子节点。反过来，下标为 i/2 的位置存储就是它的父节点。通过这种方式，我们只要知道根节点存储的位置（一般情况下，为了方便计算子节点，根节点会存储在下标为 1 的位置），这样就可以通过下标计算，把整棵树都串起来。</p>
+<p>我来总结一下，如果节点 X 存储在数组中下标为 i 的位置，下标为 2 * i 的位置存储的就是左子节点，下标为 2 * i + 1 的位置存储的就是右子节点。反过来，下标为 i&#x2F;2 的位置存储就是它的父节点。通过这种方式，我们只要知道根节点存储的位置（一般情况下，为了方便计算子节点，根节点会存储在下标为 1 的位置），这样就可以通过下标计算，把整棵树都串起来。</p>
 <p>不过，我刚刚举的例子是一棵完全二叉树，所以仅仅“浪费”了一个下标为 0 的存储位置。如果是非完全二叉树，其实会浪费比较多的数组存储空间。你可以看我举的下面这个例子。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515214223.jpeg" alt="img"></p>
 <p>所以，如果某棵二叉树是一棵完全二叉树，那用数组存储无疑是最节省内存的一种方式。因为数组的存储方式并不需要像链式存储法那样，要存储额外的左右子节点的指针。这也是为什么完全二叉树会单独拎出来的原因，也是为什么完全二叉树要求最后一层的子节点都靠左的原因。</p>
@@ -231,14 +228,14 @@
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">前序遍历的递推公式：</span><br><span class="line">preOrder(r) = <span class="built_in">print</span> r-&gt;preOrder(r-&gt;left)-&gt;preOrder(r-&gt;right)</span><br><span class="line"></span><br><span class="line">中序遍历的递推公式：</span><br><span class="line">inOrder(r) = inOrder(r-&gt;left)-&gt;<span class="built_in">print</span> r-&gt;inOrder(r-&gt;right)</span><br><span class="line"></span><br><span class="line">后序遍历的递推公式：</span><br><span class="line">postOrder(r) = postOrder(r-&gt;left)-&gt;postOrder(r-&gt;right)-&gt;<span class="built_in">print</span> r</span><br></pre></td></tr></table></figure>
 
 <p>有了递推公式，代码写起来就简单多了。这三种遍历方式的代码，我都写出来了，你可以看看。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">preOrder</span><span class="params">(Node* root)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span>;</span><br><span class="line">  print root <span class="comment">// 此处为伪代码，表示打印root节点</span></span><br><span class="line">  preOrder(root-&gt;left);</span><br><span class="line">  preOrder(root-&gt;right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">inOrder</span><span class="params">(Node* root)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span>;</span><br><span class="line">  inOrder(root-&gt;left);</span><br><span class="line">  print root <span class="comment">// 此处为伪代码，表示打印root节点</span></span><br><span class="line">  inOrder(root-&gt;right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">postOrder</span><span class="params">(Node* root)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span>;</span><br><span class="line">  postOrder(root-&gt;left);</span><br><span class="line">  postOrder(root-&gt;right);</span><br><span class="line">  print root <span class="comment">// 此处为伪代码，表示打印root节点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">preOrder</span><span class="params">(Node* root)</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (root == <span class="literal">null</span>) <span class="keyword">return</span>;</span><br><span class="line">  print root <span class="comment">// 此处为伪代码，表示打印root节点</span></span><br><span class="line">  preOrder(root-&gt;left);</span><br><span class="line">  preOrder(root-&gt;right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">inOrder</span><span class="params">(Node* root)</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (root == <span class="literal">null</span>) <span class="keyword">return</span>;</span><br><span class="line">  inOrder(root-&gt;left);</span><br><span class="line">  print root <span class="comment">// 此处为伪代码，表示打印root节点</span></span><br><span class="line">  inOrder(root-&gt;right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">postOrder</span><span class="params">(Node* root)</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (root == <span class="literal">null</span>) <span class="keyword">return</span>;</span><br><span class="line">  postOrder(root-&gt;left);</span><br><span class="line">  postOrder(root-&gt;right);</span><br><span class="line">  print root <span class="comment">// 此处为伪代码，表示打印root节点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>二叉树的前、中、后序遍历的递归实现是不是很简单？你知道二叉树遍历的时间复杂度是多少吗？我们一起来看看。</p>
 <p>从我前面画的前、中、后序遍历的顺序图，可以看出来，每个节点最多会被访问两次，所以遍历操作的时间复杂度，跟节点的个数 n 成正比，也就是说二叉树遍历的时间复杂度是 O(n)。</p>
 <h2 id="课后思考"><a href="#课后思考" class="headerlink" title="课后思考"></a>课后思考</h2><ol>
 <li><p>给定一组数据，比如 1，3，5，6，9，10。你来算算，可以构建出多少种不同的二叉树？</p>
 <blockquote>
-<p>是卡特兰数，是C[n,2n] / (n+1)种形状，c是组合数，节点的不同又是一个全排列，一共就是n!*C[n,2n] / (n+1)个二叉树。可以通过数学归纳法推导得出。</p>
+<p>是卡特兰数，是C[n,2n] &#x2F; (n+1)种形状，c是组合数，节点的不同又是一个全排列，一共就是n!*C[n,2n] &#x2F; (n+1)个二叉树。可以通过数学归纳法推导得出。</p>
 </blockquote>
 </li>
 <li><p>我们讲了三种二叉树的遍历方式，前、中、后序。实际上，还有另外一种遍历方式，也就是按层遍历，你知道如何实现吗？(队列)</p>
@@ -317,7 +314,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/2021/05/15/study/数据结构与算法之美/学习笔记/23讲/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/2021/05/15/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/23%E8%AE%B2/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -331,18 +328,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/05/15/study/数据结构与算法之美/学习笔记/24讲/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/05/19/interview/Java%E5%9F%BA%E7%A1%80/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          24讲
+          Java基础
         
       </div>
     </a>
   
   
-    <a href="/2021/05/09/interview/2021面经第二波/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title"> 2021面经第二波</div>
+    <a href="/2021/05/15/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/24%E8%AE%B2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">24讲</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -423,11 +420,6 @@
     	<div class="footer-left">
     		&copy; 2022 Elfred 
         <!-- 《网站备案号 -->
-        
-                <img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png" title="备案管理系统">
-                <a href="http://www.beian.miit.gov.cn/" style="color:#f72b07" target="_blank" title="备案号">
-                    皖ICP备20005183号
-                </a>
         
         <!-- 网站备案号》 -->
     	</div>
@@ -535,10 +527,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
@@ -559,6 +547,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">框架</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
@@ -567,15 +559,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">框架</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -583,7 +575,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -592,10 +584,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
              
               <li class="article-tag-list-item">

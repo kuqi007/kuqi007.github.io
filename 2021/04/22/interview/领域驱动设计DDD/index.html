@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://blog.elfred.top">
   <title>领域驱动设计DDD | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="什么是领域驱动设计？为什么要使用DDD？过度耦合业务初期，我们的功能大都非常简单，普通的CRUD就能满足，此时系统是清晰的。随着迭代的不断演化，业务逻辑变得越来越复杂，我们的系统也越来越冗杂。模块彼此关联，谁都很难说清模块的具体功能意图是啥。修改一个功能时，往往光回溯该功能需要的修改点就需要很长时间，更别提修改带来的不可预知的影响面。 下图是一个常见的系统耦合病例。  服务耦合示意图 订单服务接">
-<meta name="keywords" content="面经,DDD">
 <meta property="og:type" content="article">
 <meta property="og:title" content="领域驱动设计DDD">
-<meta property="og:url" content="https://blog.elfred.top/2021/04/22/interview/领域驱动设计DDD/index.html">
+<meta property="og:url" content="https://blog.elfred.top/2021/04/22/interview/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1DDD/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
 <meta property="og:description" content="什么是领域驱动设计？为什么要使用DDD？过度耦合业务初期，我们的功能大都非常简单，普通的CRUD就能满足，此时系统是清晰的。随着迭代的不断演化，业务逻辑变得越来越复杂，我们的系统也越来越冗杂。模块彼此关联，谁都很难说清模块的具体功能意图是啥。修改一个功能时，往往光回溯该功能需要的修改点就需要很长时间，更别提修改带来的不可预知的影响面。 下图是一个常见的系统耦合病例。  服务耦合示意图 订单服务接">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://awps-assets.meituan.net/mit-x/blog-images-bundle-2017/8a1f7d38.svg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210307204734.svg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210307204709.svg">
@@ -28,10 +27,12 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210225154636.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210225154614.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210225165545.png">
-<meta property="og:updated_time" content="2021-04-22T13:16:47.849Z">
+<meta property="article:published_time" content="2021-04-22T11:47:00.000Z">
+<meta property="article:modified_time" content="2021-04-22T13:16:47.849Z">
+<meta property="article:author" content="Elfred">
+<meta property="article:tag" content="面经">
+<meta property="article:tag" content="DDD">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="领域驱动设计DDD">
-<meta name="twitter:description" content="什么是领域驱动设计？为什么要使用DDD？过度耦合业务初期，我们的功能大都非常简单，普通的CRUD就能满足，此时系统是清晰的。随着迭代的不断演化，业务逻辑变得越来越复杂，我们的系统也越来越冗杂。模块彼此关联，谁都很难说清模块的具体功能意图是啥。修改一个功能时，往往光回溯该功能需要的修改点就需要很长时间，更别提修改带来的不可预知的影响面。 下图是一个常见的系统耦合病例。  服务耦合示意图 订单服务接">
 <meta name="twitter:image" content="https://awps-assets.meituan.net/mit-x/blog-images-bundle-2017/8a1f7d38.svg">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
@@ -50,8 +51,8 @@
 
   
 
-</head>
-</html>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -64,10 +65,8 @@
 			<img src="/images/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">Elfred</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">上善若水</p>
 		
 
 		<nav class="header-menu">
@@ -118,10 +117,8 @@
 				<img src="/images/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">Elfred</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>上善若水<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -176,7 +173,7 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2021/04/22/interview/领域驱动设计DDD/" class="archive-article-date">
+<a href="/2021/04/22/interview/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1DDD/" class="archive-article-date">
   	<time datetime="2021-04-22T11:47:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-22</time>
 </a>
 
@@ -201,7 +198,7 @@
 <p><strong>贫血领域对象</strong></p>
 <p>贫血领域对象（Anemic Domain Object）是指仅用作数据载体，而没有行为和动作的领域对象。</p>
 </blockquote>
-<p>在我们习惯了J2EE的开发模式后，Action/Service/DAO这种分层模式，会很自然地写出过程式代码，而学到的很多关于OO理论的也毫无用武之地。使用这种开发方式，对象只是数据的载体，没有行为。以数据为中心，以数据库ER设计作驱动。分层架构在这种开发模式下，可以理解为是对数据移动、处理和实现的过程。</p>
+<p>在我们习惯了J2EE的开发模式后，Action&#x2F;Service&#x2F;DAO这种分层模式，会很自然地写出过程式代码，而学到的很多关于OO理论的也毫无用武之地。使用这种开发方式，对象只是数据的载体，没有行为。以数据为中心，以数据库ER设计作驱动。分层架构在这种开发模式下，可以理解为是对数据移动、处理和实现的过程。</p>
 <p>以笔者最近开发的系统抽奖平台为例：</p>
 <ul>
 <li>场景需求</li>
@@ -216,13 +213,13 @@
 <ul>
 <li>设计AwardPool和Award两个对象，只有简单的get和set属性的方法</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AwardPool</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> awardPoolId;</span><br><span class="line">    List&lt;Award&gt; awards;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Award&gt; <span class="title">getAwards</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> awards;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAwards</span><span class="params">(List&lt;Award&gt; awards)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.awards = awards;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Award</span> </span>&#123;</span><br><span class="line">   <span class="keyword">int</span> awardId;</span><br><span class="line">   <span class="keyword">int</span> probability;<span class="comment">//概率</span></span><br><span class="line">  </span><br><span class="line">   ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">AwardPool</span> &#123;</span><br><span class="line">    <span class="type">int</span> awardPoolId;</span><br><span class="line">    List&lt;Award&gt; awards;</span><br><span class="line">    <span class="keyword">public</span> List&lt;Award&gt; <span class="title function_">getAwards</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> awards;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setAwards</span><span class="params">(List&lt;Award&gt; awards)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.awards = awards;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Award</span> &#123;</span><br><span class="line">   <span class="type">int</span> awardId;</span><br><span class="line">   <span class="type">int</span> probability;<span class="comment">//概率</span></span><br><span class="line">  </span><br><span class="line">   ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>Service代码实现</li>
 </ul>
 <p>设计一个LotteryService，在其中的drawLottery()方法写服务逻辑</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AwardPool awardPool = awardPoolDao.getAwardPool(poolId);<span class="comment">//sql查询，将数据映射到AwardPool对象</span></span><br><span class="line"><span class="keyword">for</span> (Award award : awardPool.getAwards()) &#123;</span><br><span class="line">   <span class="comment">//寻找到符合award.getProbability()概率的award</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">AwardPool</span> <span class="variable">awardPool</span> <span class="operator">=</span> awardPoolDao.getAwardPool(poolId);<span class="comment">//sql查询，将数据映射到AwardPool对象</span></span><br><span class="line"><span class="keyword">for</span> (Award award : awardPool.getAwards()) &#123;</span><br><span class="line">   <span class="comment">//寻找到符合award.getProbability()概率的award</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>按照我们通常思路实现，可以发现：在业务领域里非常重要的抽奖，我的业务逻辑都是写在Service中的，Award充其量只是个数据载体，没有任何行为。<strong>简单的业务系统采用这种贫血模型和过程化设计是没有问题的，</strong>但在业务逻辑复杂了，业务逻辑、状态会散落到在大量方法中，原本的代码意图会渐渐不明确，我们将这种情况称为由贫血症引起的<strong>失忆症</strong>。</li>
@@ -275,7 +272,7 @@
 <p>抽奖平台领域</p>
 <p>在确认了M端领域和C端的限界上下文后，我们再对各自上下文内部进行限界上下文的划分。下面我们用C端进行举例。</p>
 <p>产品的需求概述如下：</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> 抽奖活动有活动限制，例如用户的抽奖次数限制，抽奖的开始和结束的时间等；</span><br><span class="line"><span class="number">2.</span> 一个抽奖活动包含多个奖品，可以针对一个或多个用户群体；</span><br><span class="line"><span class="number">3.</span> 奖品有自身的奖品配置，例如库存量，被抽中的概率等，最多被一个用户抽中的次数等等；</span><br><span class="line"><span class="number">4.</span> 用户群体有多种区别方式，如按照用户所在城市区分，按照新老客区分等；</span><br><span class="line"><span class="number">5.</span> 活动具有风控配置，能够限制用户参与抽奖的频率。</span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">1.</span> 抽奖活动有活动限制，例如用户的抽奖次数限制，抽奖的开始和结束的时间等；</span><br><span class="line"><span class="bullet">2.</span> 一个抽奖活动包含多个奖品，可以针对一个或多个用户群体；</span><br><span class="line"><span class="bullet">3.</span> 奖品有自身的奖品配置，例如库存量，被抽中的概率等，最多被一个用户抽中的次数等等；</span><br><span class="line"><span class="bullet">4.</span> 用户群体有多种区别方式，如按照用户所在城市区分，按照新老客区分等；</span><br><span class="line"><span class="bullet">5.</span> 活动具有风控配置，能够限制用户参与抽奖的频率。</span><br></pre></td></tr></table></figure>
 
 <p>根据产品的需求，我们提取了一些关键性的概念作为子域，形成我们的限界上下文。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210307204603.svg" alt="C端抽奖领域"></p>
@@ -284,7 +281,7 @@
 <ul>
 <li>在设计初期，我们曾经考虑划分出抽奖和发奖两个领域，前者负责选奖，后者负责将选中的奖品发放出去。但在实际开发过程中，我们发现这两部分的逻辑紧密连接，难以拆分。并且单纯的发奖逻辑足够简单，仅仅是调用第三方服务进行发奖，不足以独立出来成为一个领域。</li>
 </ul>
-<p>对于活动的限制，我们定义了活动准入的通用语言，将活动开始/结束时间，活动可参与次数等限制条件都收拢到活动准入上下文中。</p>
+<p>对于活动的限制，我们定义了活动准入的通用语言，将活动开始&#x2F;结束时间，活动可参与次数等限制条件都收拢到活动准入上下文中。</p>
 <p>对于抽奖的奖品库存量，由于库存的行为与奖品本身相对解耦，库存关注点更多是库存内容的核销，且库存本身具备通用性，可以被奖品之外的内容使用，因此我们定义了独立的库存上下文。</p>
 <p>由于C端存在一些刷单行为，我们根据产品需求定义了风控上下文，用于对活动进行风控。 最后，活动准入、风控、抽奖等领域都涉及到一些次数的限制，因此我们定义了计数上下文。</p>
 <p>可以看到，通过DDD的限界上下文划分，我们界定出抽奖、活动准入、风控、计数、库存等五个上下文，每个上下文在系统中都高度内聚。</p>
@@ -395,8 +392,8 @@
 <p>数据源方法提供了 100%可靠的业务实体变化监控日志，使得获取任何时点实体状态成为可能。另外，事件源方法可以使得业务逻辑可以由事件交换的松耦合业务实体构成。这些优势使得单体应用移植到微服务架构变的相对容易。</p>
 <p>事件源方法也有不少缺点，因为采用不同或者不太熟悉的变成模式，使得重新学习不太容易；事件存储只支持主键查询业务实体，必须使用 Command Query Responsibility Segregation (CQRS) 来完成查询业务，因此，应用必须处理最终一致数据。</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
-<li><a href="https://tech.meituan.com/2017/12/22/ddd-in-practice.html" target="_blank" rel="noopener">美团技术博客-领域驱动设计在互联网业务开发中的实践</a></li>
-<li><a href="https://doocs.github.io/advanced-java/#/./docs/micro-services/event-driven-data-management-for-microservices" target="_blank" rel="noopener">微服务和分布式数据管理问题</a></li>
+<li><a target="_blank" rel="noopener" href="https://tech.meituan.com/2017/12/22/ddd-in-practice.html">美团技术博客-领域驱动设计在互联网业务开发中的实践</a></li>
+<li><a target="_blank" rel="noopener" href="https://doocs.github.io/advanced-java/#/./docs/micro-services/event-driven-data-management-for-microservices">微服务和分布式数据管理问题</a></li>
 </ol>
 
       
@@ -471,7 +468,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/2021/04/22/interview/领域驱动设计DDD/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/2021/04/22/interview/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1DDD/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -485,7 +482,7 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/04/24/study/数据结构与算法之美/学习笔记/10讲/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/04/24/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/10%E8%AE%B2/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
@@ -495,7 +492,7 @@
     </a>
   
   
-    <a href="/2021/04/20/study/数据结构与算法之美/学习笔记/08讲/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2021/04/20/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/08%E8%AE%B2/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">08讲</div>
       <i class="icon-circle-right"></i>
     </a>
@@ -577,11 +574,6 @@
     	<div class="footer-left">
     		&copy; 2022 Elfred 
         <!-- 《网站备案号 -->
-        
-                <img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png" title="备案管理系统">
-                <a href="http://www.beian.miit.gov.cn/" style="color:#f72b07" target="_blank" title="备案号">
-                    皖ICP备20005183号
-                </a>
         
         <!-- 网站备案号》 -->
     	</div>
@@ -689,10 +681,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
@@ -713,6 +701,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">框架</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
@@ -721,15 +713,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">框架</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -737,7 +729,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -746,10 +738,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
              
               <li class="article-tag-list-item">

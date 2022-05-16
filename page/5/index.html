@@ -1,24 +1,23 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://blog.elfred.top">
   <title>Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="好记性不如烂笔头">
-<meta name="keywords" content="前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Elfred&#39;s Blog">
 <meta property="og:url" content="https://blog.elfred.top/page/5/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
 <meta property="og:description" content="好记性不如烂笔头">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Elfred">
+<meta property="article:tag" content="前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Elfred&#39;s Blog">
-<meta name="twitter:description" content="好记性不如烂笔头">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -36,8 +35,8 @@
 
   
 
-</head>
-</html>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -50,10 +49,8 @@
 			<img src="/images/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">Elfred</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">上善若水</p>
 		
 
 		<nav class="header-menu">
@@ -104,10 +101,8 @@
 				<img src="/images/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">Elfred</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>上善若水<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -146,211 +141,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-study/数据结构与算法之美/每周打卡/3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/24/study/数据结构与算法之美/每周打卡/3/">第三周</a>
-    </h1>
-  
-
-        
-        
-<a href="/2021/03/24/study/数据结构与算法之美/每周打卡/3/" class="archive-article-date">
-  	<time datetime="2021-03-24T05:59:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-24</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>数据结构与算法之美每周打卡 2021.03.22-2021.03.28</p>
-<h3 id="面试题-16-26-计算器"><a href="#面试题-16-26-计算器" class="headerlink" title="面试题 16.26. 计算器"></a><a href="https://leetcode-cn.com/problems/calculator-lcci/" target="_blank" rel="noopener">面试题 16.26. 计算器</a></h3><p>给定一个包含正整数、加(+)、减(-)、乘(*)、除(/)的算数表达式(括号除外)，计算其结果。</p>
-<p>表达式仅包含非负整数，<code>+</code>， <code>-</code> ，<code>*</code>，<code>/</code> 四种运算符和空格 <code></code>。 整数除法仅保留整数部分。</p>
-<p><strong>示例 1:</strong></p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">输入: "3+2*2"</span></span><br><span class="line"><span class="section">输出: 7</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>示例 2:</strong></p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">输入: " 3/2 "</span></span><br><span class="line"><span class="section">输出: 1</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>示例 3:</strong></p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">输入: " 3+5 / 2 "</span></span><br><span class="line"><span class="section">输出: 5</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>说明：</strong></p>
-<ul>
-<li>你可以假设所给定的表达式都是有效的。</li>
-<li>请<strong>不要</strong>使用内置的库函数 <code>eval</code>。</li>
-</ul>
-<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>主要思想如下：</p>
-<ol>
-<li>将减法转化为加法（取相反数） </li>
-<li>由于乘除法优先级高，直接计算</li>
-<li>整数不仅一位，会&gt;10 </li>
-<li>表达式中没有括号</li>
-</ol>
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">calculate</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = s.length();</span><br><span class="line">        Deque&lt;Integer&gt; stack = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span> num = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">char</span> preSign = <span class="string">'+'</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">char</span> c = s.charAt(i);</span><br><span class="line">            <span class="keyword">if</span> (Character.isDigit(c)) &#123;</span><br><span class="line">                <span class="comment">// 连续数字字符串转为数字，比如字符串 “23”</span></span><br><span class="line">                <span class="comment">// num 第一次保存为2，num第二次保存 2*10 + 3 = 23。</span></span><br><span class="line">                num = num * <span class="number">10</span> + c - <span class="string">'0'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 如果是运算符或者是最后一个字符</span></span><br><span class="line">            <span class="keyword">if</span> ((!Character.isDigit(c) &amp;&amp; c != <span class="string">' '</span>) || i == n - <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">switch</span> (preSign) &#123;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">'+'</span>:</span><br><span class="line">                        stack.push(num);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">'-'</span>:</span><br><span class="line">                        stack.push(-num);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">'*'</span>:</span><br><span class="line">                        stack.push(stack.pop() * num);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">'/'</span>:</span><br><span class="line">                        stack.push(stack.pop() / num);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                preSign = c;</span><br><span class="line">                <span class="comment">// num用完归零</span></span><br><span class="line">                num = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 将栈中元素求和</span></span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (!stack.isEmpty()) &#123;</span><br><span class="line">            res += stack.pop();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="739-每日温度"><a href="#739-每日温度" class="headerlink" title="739. 每日温度"></a><a href="https://leetcode-cn.com/problems/daily-temperatures/" target="_blank" rel="noopener">739. 每日温度</a></h3><p>请根据每日 <code>气温</code> 列表，重新生成一个列表。对应位置的输出为：要想观测到更高的气温，至少需要等待的天数。如果气温在这之后都不会升高，请在该位置用 <code>0</code> 来代替。</p>
-<p>例如，给定一个列表 <code>temperatures = [73, 74, 75, 71, 69, 72, 76, 73]</code>，你的输出应该是 <code>[1, 1, 4, 2, 1, 1, 0, 0]</code>。</p>
-<p><strong>提示：</strong><code>气温</code> 列表长度的范围是 <code>[1, 30000]</code>。每个气温的值的均为华氏度，都是在 <code>[30, 100]</code> 范围内的整数。</p>
-<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] dailyTemperatures(<span class="keyword">int</span>[] T) &#123;</span><br><span class="line">        <span class="keyword">int</span> n = T.length;</span><br><span class="line">        <span class="keyword">int</span>[] ans = <span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line">        <span class="comment">// 维护一个单调递减栈</span></span><br><span class="line">        Deque&lt;Integer&gt; stack = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> num = T[i];</span><br><span class="line">            <span class="comment">// 如果栈不为空并且当前元素大于栈顶元素，弹出栈中比当前小的元素</span></span><br><span class="line">            <span class="comment">// 并更新它们在返回数组中对应位置的值（需要等待的天数）</span></span><br><span class="line">            <span class="comment">// 栈里面需要保存元素在数组中的下标，而不是具体的数字。因为需要根据下标修改结果数组</span></span><br><span class="line">            <span class="keyword">while</span> (!stack.isEmpty() &amp;&amp; num &gt; T[stack.peek()]) &#123;</span><br><span class="line">                Integer preIndex = stack.pop();</span><br><span class="line">                ans[preIndex] = i - preIndex;</span><br><span class="line">            &#125;</span><br><span class="line">            stack.push(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">每周打卡</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/24/study/数据结构与算法之美/每周打卡/3/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-study/数据结构与算法之美/学习笔记/04讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/21/study/数据结构与算法之美/学习笔记/04讲/">04讲</a>
-    </h1>
-  
-
-        
-        
-<a href="/2021/03/21/study/数据结构与算法之美/学习笔记/04讲/" class="archive-article-date">
-  	<time datetime="2021-03-21T14:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-21</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h1 id="复杂度分析（下）：浅析最好、最坏、平均、均摊时间复杂度"><a href="#复杂度分析（下）：浅析最好、最坏、平均、均摊时间复杂度" class="headerlink" title="复杂度分析（下）：浅析最好、最坏、平均、均摊时间复杂度"></a>复杂度分析（下）：浅析最好、最坏、平均、均摊时间复杂度</h1><h3 id="一、复杂度分析的4个概念"><a href="#一、复杂度分析的4个概念" class="headerlink" title="一、复杂度分析的4个概念"></a>一、复杂度分析的4个概念</h3><ol>
-<li><strong>最好情况时间复杂度</strong>：代码在最理想情况下执行的时间复杂度。</li>
-<li><strong>最坏情况时间复杂度</strong>：代码在最坏情况下执行的时间复杂度。</li>
-<li><strong>平均时间复杂度</strong>：用代码在所有情况下执行的次数的加权平均值表示。</li>
-<li><strong>均摊时间复杂度</strong>：在代码执行的所有复杂度情况中绝大部分是低级别的复杂度，个别情况是高级别复杂度且发生具有时序关系时，可以将个别高级别复杂度均摊到低级别复杂度上。基本上均摊结果就等于低级别复杂度。</li>
-</ol>
-<h3 id="二、为什么要引入这4个概念？"><a href="#二、为什么要引入这4个概念？" class="headerlink" title="二、为什么要引入这4个概念？"></a>二、为什么要引入这4个概念？</h3><ol>
-<li>同一段代码在不同情况下时间复杂度会出现量级差异，为了更全面，更准确的描述代码的时间复杂度，所以引入这4个概念。</li>
-<li>代码复杂度在不同情况下出现量级差别时才需要区别这四种复杂度。大多数情况下，是不需要区别分析它们的。</li>
-</ol>
-<h3 id="三、如何分析平均、均摊时间复杂度？"><a href="#三、如何分析平均、均摊时间复杂度？" class="headerlink" title="三、如何分析平均、均摊时间复杂度？"></a>三、如何分析平均、均摊时间复杂度？</h3><ol>
-<li><strong>平均时间复杂度</strong>：代码在不同情况下复杂度出现量级差别，则用代码所有可能情况下执行次数的加权平均值表示。</li>
-<li><strong>均摊时间复杂度</strong>：两个条件满足时使用：1）代码在绝大多数情况下是低级别复杂度，只有极少数情况是高级别复杂度；2）低级别和高级别复杂度出现具有时序规律。均摊结果一般都等于低级别复杂度。</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/21/study/数据结构与算法之美/学习笔记/04讲/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-study/数据结构与算法之美/学习笔记/03讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -358,13 +148,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/21/study/数据结构与算法之美/学习笔记/03讲/">03讲</a>
+      <a class="article-title" href="/2021/03/21/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/03%E8%AE%B2/">03讲</a>
     </h1>
   
 
         
         
-<a href="/2021/03/21/study/数据结构与算法之美/学习笔记/03讲/" class="archive-article-date">
+<a href="/2021/03/21/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/03%E8%AE%B2/" class="archive-article-date">
   	<time datetime="2021-03-21T14:47:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-21</time>
 </a>
 
@@ -378,7 +168,7 @@
 <h4 id="2-加法法则：总复杂度等于量级最大的那段代码的复杂度"><a href="#2-加法法则：总复杂度等于量级最大的那段代码的复杂度" class="headerlink" title="2.加法法则：总复杂度等于量级最大的那段代码的复杂度"></a>2.加法法则：总复杂度等于量级最大的那段代码的复杂度</h4><p><strong>时间复杂度不是代码的执行时间，而是一种随着数据规模不断增长的一种变化趋势</strong>。所以遇到常量执行时间的代码，无论这段代码执行10000次、100000次，只要是一个已知的数，跟 n 无关，照样也是常量级的执行时间。当 n 无限大的时候，就可以忽略。尽管对代码的执行时间会有很大影响，但是回到时间复杂度的概念来说，它表示的是一个算法执行效率与数据规模增长的变化趋势，所以不管常量的执行时间多大，我们都可以忽略掉。因为它本身对增长趋势并没有影响。</p>
 <h4 id="3-乘法法则：嵌套代码的复杂度等于嵌套内外代码复杂度的乘积"><a href="#3-乘法法则：嵌套代码的复杂度等于嵌套内外代码复杂度的乘积" class="headerlink" title="3.乘法法则：嵌套代码的复杂度等于嵌套内外代码复杂度的乘积"></a>3.乘法法则：嵌套代码的复杂度等于嵌套内外代码复杂度的乘积</h4><h3 id="几种常见时间复杂度实例分析"><a href="#几种常见时间复杂度实例分析" class="headerlink" title="几种常见时间复杂度实例分析"></a>几种常见时间复杂度实例分析</h3><p>虽然代码千差万别，但是常见的复杂度量级并不多。我稍微总结了一下，这些复杂度量级几乎涵盖了你今后可以接触的所有代码的复杂度量级。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210321211233.jpeg" alt="img"></p>
-<h4 id="1-O-1"><a href="#1-O-1" class="headerlink" title="1.O(1)"></a>1.O(1)</h4><p>我稍微总结一下，只要代码的执行时间不随 n 的增大而增长，这样代码的时间复杂度我们都记作 O(1)。或者说，<strong>一般情况下，只要算法中不存在循环语句、递归语句，即使有成千上万行的代码，其时间复杂度也是Ο(1)</strong>。</p>
+<h4 id="1-O-1"><a href="#1-O-1" class="headerlink" title="1.O(1)"></a>1.O(1)</h4><p>我稍微总结一下，只要代码的执行时间不随 n 的增大而增长，这样代码的时间复杂度我们都记作 O(1)。或者说，**一般情况下，只要算法中不存在循环语句、递归语句，即使有成千上万行的代码，其时间复杂度也是Ο(1)**。</p>
 <h4 id="2-O-logn-、O-nlogn"><a href="#2-O-logn-、O-nlogn" class="headerlink" title="2.O(logn)、O(nlogn)"></a>2.O(logn)、O(nlogn)</h4><h4 id="3-O-m-n-、O-m-n"><a href="#3-O-m-n-、O-m-n" class="headerlink" title="3.O(m+n)、O(m*n)"></a>3.O(m+n)、O(m*n)</h4><h3 id="空间复杂度分析"><a href="#空间复杂度分析" class="headerlink" title="空间复杂度分析"></a>空间复杂度分析</h3><p>前面我讲过，时间复杂度的全称是<strong>渐进时间复杂度，表示算法的执行时间与数据规模之间的增长关系</strong>。类比一下，空间复杂度全称就是<strong>渐进空间复杂度</strong>（asymptotic space complexity），<strong>表示算法的存储空间与数据规模之间的增长关系</strong>。</p>
 <p>我们常见的空间复杂度就是 O(1)、O(n)、O(n2 )，像 O(logn)、O(nlogn) 这样的对数阶复杂度平时都用不到。</p>
 <h3 id="内容小结"><a href="#内容小结" class="headerlink" title="内容小结"></a>内容小结</h3><p>基础复杂度分析的知识到此就讲完了，我们来总结一下。</p>
@@ -386,7 +176,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210321220126.jpeg" alt="img"></p>
 <h3 id="留言区优秀总结"><a href="#留言区优秀总结" class="headerlink" title="留言区优秀总结"></a>留言区优秀总结</h3><h4 id="一、什么是复杂度分析？"><a href="#一、什么是复杂度分析？" class="headerlink" title="一、什么是复杂度分析？"></a>一、什么是复杂度分析？</h4><p>1.数据结构和算法解决是“如何让计算机更快时间、更省空间的解决问题”。<br>2.因此需从执行时间和占用空间两个维度来评估数据结构和算法的性能。<br>3.分别用时间复杂度和空间复杂度两个概念来描述性能问题，二者统称为复杂度。<br>4.复杂度描述的是算法执行时间（或占用空间）与数据规模的增长关系。</p>
 <h4 id="二、为什么要进行复杂度分析？"><a href="#二、为什么要进行复杂度分析？" class="headerlink" title="二、为什么要进行复杂度分析？"></a>二、为什么要进行复杂度分析？</h4><p>1.和性能测试相比，复杂度分析有不依赖执行环境、成本低、效率高、易操作、指导性强的特点。<br>2.掌握复杂度分析，将能编写出性能更优的代码，有利于降低系统开发和维护成本。</p>
-<h4 id="三、如何进行复杂度分析？"><a href="#三、如何进行复杂度分析？" class="headerlink" title="三、如何进行复杂度分析？"></a>三、如何进行复杂度分析？</h4><h5 id="1-大O表示法"><a href="#1-大O表示法" class="headerlink" title="1.大O表示法"></a>1.大O表示法</h5><p>1）来源<br>算法的执行时间与每行代码的执行次数成正比，用T(n) = O(f(n))表示，其中T(n)表示算法执行总时间，f(n)表示每行代码执行总次数，而n往往表示数据的规模。<br>2）特点<br>以时间复杂度为例，由于时间复杂度描述的是算法执行时间与数据规模的增长变化趋势，所以常量阶、低阶以及系数实际上对这种增长趋势不产决定性影响，所以在做时间复杂度分析时忽略这些项。</p>
+<h4 id="三、如何进行复杂度分析？"><a href="#三、如何进行复杂度分析？" class="headerlink" title="三、如何进行复杂度分析？"></a>三、如何进行复杂度分析？</h4><h5 id="1-大O表示法"><a href="#1-大O表示法" class="headerlink" title="1.大O表示法"></a>1.大O表示法</h5><p>1）来源<br>算法的执行时间与每行代码的执行次数成正比，用T(n) &#x3D; O(f(n))表示，其中T(n)表示算法执行总时间，f(n)表示每行代码执行总次数，而n往往表示数据的规模。<br>2）特点<br>以时间复杂度为例，由于时间复杂度描述的是算法执行时间与数据规模的增长变化趋势，所以常量阶、低阶以及系数实际上对这种增长趋势不产决定性影响，所以在做时间复杂度分析时忽略这些项。</p>
 <h5 id="2-复杂度分析法则"><a href="#2-复杂度分析法则" class="headerlink" title="2.复杂度分析法则"></a>2.复杂度分析法则</h5><p>1）单段代码看高频：比如循环。<br>2）多段代码取最大：比如一段代码中有单循环和多重循环，那么取多重循环的复杂度。<br>3）嵌套代码求乘积：比如递归、多重循环等<br>4）多个规模求加法：比如方法有两个参数控制两个循环的次数，那么这时就取二者复杂度相加。</p>
 <h4 id="四、常用的复杂度级别？"><a href="#四、常用的复杂度级别？" class="headerlink" title="四、常用的复杂度级别？"></a>四、常用的复杂度级别？</h4><p>多项式阶：随着数据规模的增长，算法的执行时间和空间占用，按照多项式的比例增长。包括，<br>O(1)（常数阶）、O(logn)（对数阶）、O(n)（线性阶）、O(nlogn)（线性对数阶）、O(n^2)（平方阶）、O(n^3)（立方阶）<br>非多项式阶：随着数据规模的增长，算法的执行时间和空间占用暴增，这类算法性能极差。包括，<br>O(2^n)（指数阶）、O(n!)（阶乘阶）</p>
 <h4 id="五、如何掌握好复杂度分析方法？"><a href="#五、如何掌握好复杂度分析方法？" class="headerlink" title="五、如何掌握好复杂度分析方法？"></a>五、如何掌握好复杂度分析方法？</h4><p>复杂度分析关键在于多练，所谓孰能生巧。</p>
@@ -417,7 +207,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/21/study/数据结构与算法之美/学习笔记/03讲/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/03/21/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/03%E8%AE%B2/">展开全文 >></a>
         </p>
       
 
@@ -454,13 +244,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/21/algorithm/面试高频算法题/">面试高频算法题</a>
+      <a class="article-title" href="/2021/03/21/algorithm/%E9%9D%A2%E8%AF%95%E9%AB%98%E9%A2%91%E7%AE%97%E6%B3%95%E9%A2%98/">面试高频算法题</a>
     </h1>
   
 
         
         
-<a href="/2021/03/21/algorithm/面试高频算法题/" class="archive-article-date">
+<a href="/2021/03/21/algorithm/%E9%9D%A2%E8%AF%95%E9%AB%98%E9%A2%91%E7%AE%97%E6%B3%95%E9%A2%98/" class="archive-article-date">
   	<time datetime="2021-03-21T09:35:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-21</time>
 </a>
 
@@ -472,10 +262,10 @@
         <hr>
 <h2 id="字节跳动"><a href="#字节跳动" class="headerlink" title="字节跳动"></a>字节跳动</h2><h3 id="36进制加法"><a href="#36进制加法" class="headerlink" title="36进制加法"></a>36进制加法</h3><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210321174103.png" alt="图片"></p>
 <h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>36进制由0-9，a-z，共36个字符表示。</p>
-<p>要求按照加法规则计算出任意两个36进制正整数的和，如 1b + 2x = 48  （解释：47+105=152），1 + a = b （解释：1+10 = 11 ） , 1z + 1 = 20 （解释：71 + 1 = 72）</p>
+<p>要求按照加法规则计算出任意两个36进制正整数的和，如 1b + 2x &#x3D; 48  （解释：47+105&#x3D;152），1 + a &#x3D; b （解释：1+10 &#x3D; 11 ） , 1z + 1 &#x3D; 20 （解释：71 + 1 &#x3D; 72）</p>
 <p>要求：不允许使用先将36进制数字整体转为10进制，相加后再转回为36进制的做法</p>
-<h4 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h4><p>跟<a href="https://leetcode-cn.com/problems/add-strings/" target="_blank" rel="noopener">LC415. 字符串相加</a>做法类似，掌握十进制的大整数加法后，本题只需要注意将<code>10</code>变成<code>36</code>，以及36进制字符与数值的转换。这里使用<code>getChar(int n)</code>和<code>getInt(char c)</code>两个辅助函数来完成36进制字符与数值的转换。</p>
-<h4 id="参考代码"><a href="#参考代码" class="headerlink" title="参考代码"></a>参考代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Add36Strings</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">add36Strings</span><span class="params">(String num1, String num2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n1 = num1.length(), n2 = num2.length();</span><br><span class="line">        StringBuilder res = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">int</span> i = n1 - <span class="number">1</span>, j = n2 - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> carry = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &gt;= <span class="number">0</span> || j &gt;= <span class="number">0</span> || carry != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">int</span> x = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span> (i &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                x = getInt(num1.charAt(i));</span><br><span class="line">                i--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">int</span> y = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span> (j &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                y = getInt(num2.charAt(j));</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">int</span> sum = x + y + carry;</span><br><span class="line">            res.append(getChar(sum % <span class="number">36</span>));</span><br><span class="line">            carry = sum / <span class="number">36</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res.reverse().toString();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将字符转换为数字</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getInt</span><span class="params">(<span class="keyword">char</span> c)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (c &gt;= <span class="string">'0'</span> &amp;&amp; c &lt;= <span class="string">'9'</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> c - <span class="string">'0'</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> c - <span class="string">'a'</span> + <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将数字转换为字符</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">char</span> <span class="title">getChar</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (n &lt;= <span class="number">9</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> (<span class="keyword">char</span>) (n + <span class="string">'0'</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> (<span class="keyword">char</span>) (n - <span class="number">10</span> + <span class="string">'a'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Add36Strings add36Strings = <span class="keyword">new</span> Add36Strings();</span><br><span class="line">        add36Strings.add36Strings(<span class="string">"1"</span>, <span class="string">"a"</span>);</span><br><span class="line">        add36Strings.add36Strings(<span class="string">"1b"</span>, <span class="string">"2x"</span>);</span><br><span class="line">        add36Strings.add36Strings(<span class="string">"1z"</span>, <span class="string">"1"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h4><p>跟<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/add-strings/">LC415. 字符串相加</a>做法类似，掌握十进制的大整数加法后，本题只需要注意将<code>10</code>变成<code>36</code>，以及36进制字符与数值的转换。这里使用<code>getChar(int n)</code>和<code>getInt(char c)</code>两个辅助函数来完成36进制字符与数值的转换。</p>
+<h4 id="参考代码"><a href="#参考代码" class="headerlink" title="参考代码"></a>参考代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Add36Strings</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">add36Strings</span><span class="params">(String num1, String num2)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n1</span> <span class="operator">=</span> num1.length(), n2 = num2.length();</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">res</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> n1 - <span class="number">1</span>, j = n2 - <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">carry</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &gt;= <span class="number">0</span> || j &gt;= <span class="number">0</span> || carry != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span> (i &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                x = getInt(num1.charAt(i));</span><br><span class="line">                i--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">int</span> <span class="variable">y</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span> (j &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                y = getInt(num2.charAt(j));</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> x + y + carry;</span><br><span class="line">            res.append(getChar(sum % <span class="number">36</span>));</span><br><span class="line">            carry = sum / <span class="number">36</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res.reverse().toString();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将字符转换为数字</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">getInt</span><span class="params">(<span class="type">char</span> c)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (c &gt;= <span class="string">&#x27;0&#x27;</span> &amp;&amp; c &lt;= <span class="string">&#x27;9&#x27;</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> c - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> c - <span class="string">&#x27;a&#x27;</span> + <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将数字转换为字符</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">char</span> <span class="title function_">getChar</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (n &lt;= <span class="number">9</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> (<span class="type">char</span>) (n + <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> (<span class="type">char</span>) (n - <span class="number">10</span> + <span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Add36Strings</span> <span class="variable">add36Strings</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Add36Strings</span>();</span><br><span class="line">        add36Strings.add36Strings(<span class="string">&quot;1&quot;</span>, <span class="string">&quot;a&quot;</span>);</span><br><span class="line">        add36Strings.add36Strings(<span class="string">&quot;1b&quot;</span>, <span class="string">&quot;2x&quot;</span>);</span><br><span class="line">        add36Strings.add36Strings(<span class="string">&quot;1z&quot;</span>, <span class="string">&quot;1&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -500,7 +290,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/21/algorithm/面试高频算法题/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/03/21/algorithm/%E9%9D%A2%E8%AF%95%E9%AB%98%E9%A2%91%E7%AE%97%E6%B3%95%E9%A2%98/">展开全文 >></a>
         </p>
       
 
@@ -537,13 +327,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/17/study/数据结构与算法之美/学习笔记/02讲/">02讲</a>
+      <a class="article-title" href="/2021/03/17/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/02%E8%AE%B2/">02讲</a>
     </h1>
   
 
         
         
-<a href="/2021/03/17/study/数据结构与算法之美/学习笔记/02讲/" class="archive-article-date">
+<a href="/2021/03/17/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/02%E8%AE%B2/" class="archive-article-date">
   	<time datetime="2021-03-17T14:10:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-17</time>
 </a>
 
@@ -557,7 +347,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210317221223.jpeg" alt="img"></p>
 <h4 id="常用的数据结构与算法"><a href="#常用的数据结构与算法" class="headerlink" title="常用的数据结构与算法"></a>常用的数据结构与算法</h4><p>所以，结合我自己的学习心得，还有这些年的面试、开发经验，我总结了<strong>20个最常用的、最基础</strong>的数据结构与算法，<strong>不管是应付面试还是工作需要，只要集中精力逐一攻克这20个知识点就足够了。</strong></p>
 <p>这里面有 10 个数据结构：<strong>数组、链表、栈、队列、散列表、二叉树、堆、跳表、图、Trie 树</strong>；10 个算法：<strong>递归、排序、二分查找、搜索、哈希算法、贪心算法、分治算法、回溯算法、动态规划、字符串匹配算法</strong>。</p>
-<p>在学习数据结构和算法的过程中，你也要注意，不要只是死记硬背，不要为了学习和学习，而是*<em>要学习它的“来历” “自身的特点” “适合解决的问题” 以及 “实际的应用场景” *</em> 。</p>
+<p>在学习数据结构和算法的过程中，你也要注意，不要只是死记硬背，不要为了学习和学习，而是**要学习它的“来历” “自身的特点” “适合解决的问题” 以及 “实际的应用场景” ** 。</p>
 <h3 id="一些可以让你事半功倍的学习技巧"><a href="#一些可以让你事半功倍的学习技巧" class="headerlink" title="一些可以让你事半功倍的学习技巧"></a>一些可以让你事半功倍的学习技巧</h3><h4 id="1-边学边练，适度刷题"><a href="#1-边学边练，适度刷题" class="headerlink" title="1.边学边练，适度刷题"></a>1.边学边练，适度刷题</h4><h4 id="2-多问、多思考、多互动"><a href="#2-多问、多思考、多互动" class="headerlink" title="2.多问、多思考、多互动"></a>2.多问、多思考、多互动</h4><h4 id="3-打怪升级学习法"><a href="#3-打怪升级学习法" class="headerlink" title="3.打怪升级学习法"></a>3.打怪升级学习法</h4><p><strong>学习的过程中，我们碰到最大的问题就是，坚持不下来。</strong></p>
 <p>所以，<strong>我们在枯燥的学习过程中，也可以给自己设立一个切实可行的目标</strong>，就像打怪升级一样。</p>
 <h4 id="4-只是需要沉淀，不要想试图一下子掌握所有"><a href="#4-只是需要沉淀，不要想试图一下子掌握所有" class="headerlink" title="4.只是需要沉淀，不要想试图一下子掌握所有"></a>4.只是需要沉淀，不要想试图一下子掌握所有</h4><p>在学习的过程中，一定会碰到“拦路虎”。如果哪个知识点没有怎么学懂，不要着急，这是正常的。因为，想听一遍、看一遍就把所有知识掌握，这肯定是不可能的。<strong>学习知识的过程是反复迭代、不断沉淀的过程</strong>。</p>
@@ -574,7 +364,7 @@
 </ol>
 <hr>
 <p>flag：每篇文章必写学习笔记，每周必实现一次该周代码。</p>
-<h3 id="学习工具"><a href="#学习工具" class="headerlink" title="学习工具"></a>学习工具</h3><p><a href="https://www.cs.usfca.edu/~galles/visualization/Algorithms.html" target="_blank" rel="noopener">https://www.cs.usfca.edu/~galles/visualization/Algorithms.html</a><br>此网站可以将指定算法可视化，能方便理解。</p>
+<h3 id="学习工具"><a href="#学习工具" class="headerlink" title="学习工具"></a>学习工具</h3><p><a target="_blank" rel="noopener" href="https://www.cs.usfca.edu/~galles/visualization/Algorithms.html">https://www.cs.usfca.edu/~galles/visualization/Algorithms.html</a><br>此网站可以将指定算法可视化，能方便理解。</p>
 
       
 
@@ -602,7 +392,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/17/study/数据结构与算法之美/学习笔记/02讲/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/03/17/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/02%E8%AE%B2/">展开全文 >></a>
         </p>
       
 
@@ -639,13 +429,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/16/study/数据结构与算法之美/每周打卡/2/">第二周</a>
+      <a class="article-title" href="/2021/03/16/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E6%AF%8F%E5%91%A8%E6%89%93%E5%8D%A1/2/">第二周</a>
     </h1>
   
 
         
         
-<a href="/2021/03/16/study/数据结构与算法之美/每周打卡/2/" class="archive-article-date">
+<a href="/2021/03/16/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E6%AF%8F%E5%91%A8%E6%89%93%E5%8D%A1/2/" class="archive-article-date">
   	<time datetime="2021-03-16T05:59:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-16</time>
 </a>
 
@@ -656,12 +446,12 @@
       
         <hr>
 <p>数据结构与算法之美每周打卡 2021.03.15-2021.03.21</p>
-<h3 id="Leetcode-206-反转链表"><a href="#Leetcode-206-反转链表" class="headerlink" title="Leetcode 206. 反转链表"></a><a href="https://leetcode-cn.com/problems/reverse-linked-list/" target="_blank" rel="noopener">Leetcode 206. 反转链表</a></h3><p>反转一个单链表。</p>
+<h3 id="Leetcode-206-反转链表"><a href="#Leetcode-206-反转链表" class="headerlink" title="Leetcode 206. 反转链表"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/reverse-linked-list/">Leetcode 206. 反转链表</a></h3><p>反转一个单链表。</p>
 <p><strong>示例:</strong></p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: <span class="number">1</span>-&gt;<span class="number">2</span>-&gt;<span class="number">3</span>-&gt;<span class="number">4</span>-&gt;<span class="number">5</span>-&gt;NULL</span><br><span class="line">输出: <span class="number">5</span>-&gt;<span class="number">4</span>-&gt;<span class="number">3</span>-&gt;<span class="number">2</span>-&gt;<span class="number">1</span>-&gt;NULL</span><br></pre></td></tr></table></figure>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: <span class="number">1</span>-&gt;<span class="number">2</span>-&gt;<span class="number">3</span>-&gt;<span class="number">4</span>-&gt;<span class="number">5</span>-&gt;NULL</span><br><span class="line">输出: <span class="number">5</span>-&gt;<span class="number">4</span>-&gt;<span class="number">3</span>-&gt;<span class="number">2</span>-&gt;<span class="number">1</span>-&gt;NULL</span><br></pre></td></tr></table></figure>
 
 <p><strong>进阶:</strong><br>你可以迭代或递归地反转链表。你能否用两种方法解决这道题？</p>
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><h5 id="迭代法："><a href="#迭代法：" class="headerlink" title="迭代法："></a>迭代法：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseList</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">         ListNode pre = <span class="keyword">null</span>, cur = head;</span><br><span class="line">         <span class="keyword">while</span> (cur != <span class="keyword">null</span>) &#123;</span><br><span class="line">            ListNode next = cur.next;</span><br><span class="line">            cur.next = pre;</span><br><span class="line">            pre = cur;</span><br><span class="line">            cur = next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> pre;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><h5 id="迭代法："><a href="#迭代法：" class="headerlink" title="迭代法："></a>迭代法：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> ListNode <span class="title function_">reverseList</span><span class="params">(ListNode head)</span> &#123;</span><br><span class="line">         <span class="type">ListNode</span> <span class="variable">pre</span> <span class="operator">=</span> <span class="literal">null</span>, cur = head;</span><br><span class="line">         <span class="keyword">while</span> (cur != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="type">ListNode</span> <span class="variable">next</span> <span class="operator">=</span> cur.next;</span><br><span class="line">            cur.next = pre;</span><br><span class="line">            pre = cur;</span><br><span class="line">            cur = next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> pre;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h5 id="递归："><a href="#递归：" class="headerlink" title="递归："></a>递归：</h5><p><strong>递归编程的三个条件</strong>：</p>
 <ol>
@@ -669,20 +459,20 @@
 <li>子问题求解方式和大问题一样</li>
 <li>存在最小子问题</li>
 </ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseList</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">        <span class="comment">/* 递归终止条件：</span></span><br><span class="line"><span class="comment">         * 1. head==null链表为空，不需要反转</span></span><br><span class="line"><span class="comment">         * 2. head.next==null只剩一个节点的时候，也不需要反转</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">if</span> (head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> head;</span><br><span class="line">        &#125;</span><br><span class="line">        ListNode newHead = reverseList(head.next);</span><br><span class="line">        head.next.next = head;</span><br><span class="line">        head.next = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">return</span> newHead;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> ListNode <span class="title function_">reverseList</span><span class="params">(ListNode head)</span> &#123;</span><br><span class="line">        <span class="comment">/* 递归终止条件：</span></span><br><span class="line"><span class="comment">         * 1. head==null链表为空，不需要反转</span></span><br><span class="line"><span class="comment">         * 2. head.next==null只剩一个节点的时候，也不需要反转</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">if</span> (head == <span class="literal">null</span> || head.next == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> head;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">newHead</span> <span class="operator">=</span> reverseList(head.next);</span><br><span class="line">        head.next.next = head;</span><br><span class="line">        head.next = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">return</span> newHead;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="Leetcode-2-两数相加"><a href="#Leetcode-2-两数相加" class="headerlink" title="Leetcode 2. 两数相加"></a><a href="https://leetcode-cn.com/problems/add-two-numbers/" target="_blank" rel="noopener">Leetcode 2. 两数相加</a></h3><p>给你两个 <strong>非空</strong> 的链表，表示两个非负的整数。它们每位数字都是按照 <strong>逆序</strong> 的方式存储的，并且每个节点只能存储 <strong>一位</strong> 数字。</p>
+<h3 id="Leetcode-2-两数相加"><a href="#Leetcode-2-两数相加" class="headerlink" title="Leetcode 2. 两数相加"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/add-two-numbers/">Leetcode 2. 两数相加</a></h3><p>给你两个 <strong>非空</strong> 的链表，表示两个非负的整数。它们每位数字都是按照 <strong>逆序</strong> 的方式存储的，并且每个节点只能存储 <strong>一位</strong> 数字。</p>
 <p>请你将两个数相加，并以相同形式返回一个表示和的链表。</p>
 <p>你可以假设除了数字 0 之外，这两个数都不会以 0 开头。</p>
 <p><strong>示例 1：</strong></p>
 <p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210316155523.jpeg" alt="img"></p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：l1 = [<span class="number">2</span>,<span class="number">4</span>,<span class="number">3</span>], l2 = [<span class="number">5</span>,<span class="number">6</span>,<span class="number">4</span>]</span><br><span class="line">输出：[<span class="number">7</span>,<span class="number">0</span>,<span class="number">8</span>]</span><br><span class="line">解释：<span class="number">342</span> + <span class="number">465</span> = <span class="number">807.</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：l1 = <span class="comment">[2,4,3]</span>, l2 = <span class="comment">[5,6,4]</span></span><br><span class="line">输出：<span class="comment">[7,0,8]</span></span><br><span class="line">解释：342 + 465 = 807.</span><br></pre></td></tr></table></figure>
 
 <p><strong>示例 2：</strong></p>
-<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：l1 = <span class="string">[0]</span>, l2 = <span class="string">[0]</span></span><br><span class="line">输出：<span class="string">[0]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：l1 = <span class="comment">[0]</span>, l2 = <span class="comment">[0]</span></span><br><span class="line">输出：<span class="comment">[0]</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>示例 3：</strong></p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：l1 = [<span class="number">9</span>,<span class="number">9</span>,<span class="number">9</span>,<span class="number">9</span>,<span class="number">9</span>,<span class="number">9</span>,<span class="number">9</span>], l2 = [<span class="number">9</span>,<span class="number">9</span>,<span class="number">9</span>,<span class="number">9</span>]</span><br><span class="line">输出：[<span class="number">8</span>,<span class="number">9</span>,<span class="number">9</span>,<span class="number">9</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：l1 = [<span class="number">9,9,9,9</span>,<span class="number">9</span>,<span class="number">9</span>,<span class="number">9</span>], l2 = [<span class="number">9,9,9,9</span>]</span><br><span class="line">输出：[<span class="number">8,9,9,9</span>,<span class="number">0,0,0,1</span>]</span><br></pre></td></tr></table></figure>
 
 <p> <strong>提示：</strong></p>
 <ul>
@@ -690,7 +480,7 @@
 <li><code>0 &lt;= Node.val &lt;= 9</code></li>
 <li>题目数据保证列表表示的数字不含前导零</li>
 </ul>
-<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">addTwoNumbers</span><span class="params">(ListNode l1, ListNode l2)</span> </span>&#123;</span><br><span class="line">        ListNode dummyNode = <span class="keyword">new</span> ListNode(-<span class="number">1</span>);</span><br><span class="line">        ListNode head = dummyNode;</span><br><span class="line">        <span class="keyword">int</span> carry = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 如果l1或l2不为空或者进位为1，则继续循环</span></span><br><span class="line">        <span class="keyword">while</span> (l1 != <span class="keyword">null</span> || l2 != <span class="keyword">null</span> || carry != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">int</span> sum = carry;</span><br><span class="line">            <span class="comment">// 不为空则sum加上这个值，同时指针往下走</span></span><br><span class="line">            <span class="keyword">if</span> (l1 != <span class="keyword">null</span>) &#123;</span><br><span class="line">                sum += l1.val;</span><br><span class="line">                l1 = l1.next;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (l2 != <span class="keyword">null</span>) &#123;</span><br><span class="line">                sum += l2.val;</span><br><span class="line">                l2 = l2.next;</span><br><span class="line">            &#125;</span><br><span class="line">            head.next = <span class="keyword">new</span> ListNode(sum % <span class="number">10</span>);</span><br><span class="line">            head = head.next;</span><br><span class="line">            carry = sum / <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dummyNode.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> ListNode <span class="title function_">addTwoNumbers</span><span class="params">(ListNode l1, ListNode l2)</span> &#123;</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">dummyNode</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ListNode</span>(-<span class="number">1</span>);</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">head</span> <span class="operator">=</span> dummyNode;</span><br><span class="line">        <span class="type">int</span> <span class="variable">carry</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 如果l1或l2不为空或者进位为1，则继续循环</span></span><br><span class="line">        <span class="keyword">while</span> (l1 != <span class="literal">null</span> || l2 != <span class="literal">null</span> || carry != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> carry;</span><br><span class="line">            <span class="comment">// 不为空则sum加上这个值，同时指针往下走</span></span><br><span class="line">            <span class="keyword">if</span> (l1 != <span class="literal">null</span>) &#123;</span><br><span class="line">                sum += l1.val;</span><br><span class="line">                l1 = l1.next;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (l2 != <span class="literal">null</span>) &#123;</span><br><span class="line">                sum += l2.val;</span><br><span class="line">                l2 = l2.next;</span><br><span class="line">            &#125;</span><br><span class="line">            head.next = <span class="keyword">new</span> <span class="title class_">ListNode</span>(sum % <span class="number">10</span>);</span><br><span class="line">            head = head.next;</span><br><span class="line">            carry = sum / <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dummyNode.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -719,7 +509,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/16/study/数据结构与算法之美/每周打卡/2/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/03/16/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E6%AF%8F%E5%91%A8%E6%89%93%E5%8D%A1/2/">展开全文 >></a>
         </p>
       
 
@@ -756,13 +546,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/08/study/数据结构与算法之美/每周打卡/1/">第一周</a>
+      <a class="article-title" href="/2021/03/08/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E6%AF%8F%E5%91%A8%E6%89%93%E5%8D%A1/1/">第一周</a>
     </h1>
   
 
         
         
-<a href="/2021/03/08/study/数据结构与算法之美/每周打卡/1/" class="archive-article-date">
+<a href="/2021/03/08/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E6%AF%8F%E5%91%A8%E6%89%93%E5%8D%A1/1/" class="archive-article-date">
   	<time datetime="2021-03-08T05:59:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-08</time>
 </a>
 
@@ -773,41 +563,37 @@
       
         <hr>
 <p>数据结构与算法之美每周打卡 2021.03.08-2021.03.14</p>
-<h3 id="面试题-01-03-URL化"><a href="#面试题-01-03-URL化" class="headerlink" title="面试题 01.03. URL化"></a><a href="https://leetcode-cn.com/problems/string-to-url-lcci/" target="_blank" rel="noopener">面试题 01.03. URL化</a></h3><p>URL化。编写一种方法，将字符串中的空格全部替换为<code>%20</code>。假定该字符串尾部有足够的空间存放新增字符，并且知道字符串的“真实”长度。（注：用<code>Java</code>实现的话，请使用字符数组实现，以便直接在数组上操作。）</p>
+<h3 id="面试题-01-03-URL化"><a href="#面试题-01-03-URL化" class="headerlink" title="面试题 01.03. URL化"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/string-to-url-lcci/">面试题 01.03. URL化</a></h3><p>URL化。编写一种方法，将字符串中的空格全部替换为<code>%20</code>。假定该字符串尾部有足够的空间存放新增字符，并且知道字符串的“真实”长度。（注：用<code>Java</code>实现的话，请使用字符数组实现，以便直接在数组上操作。）</p>
 <p><strong>示例 1：</strong></p>
-<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：<span class="string">"Mr John Smith    "</span>, <span class="number">13</span></span><br><span class="line">输出：<span class="string">"Mr%20John%20Smith"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：<span class="string">&quot;Mr John Smith    &quot;</span>, <span class="number">13</span></span><br><span class="line">输出：<span class="string">&quot;Mr%20John%20Smith&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>示例 2：</strong></p>
-<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：<span class="string">"               "</span>, <span class="number">5</span></span><br><span class="line">输出：<span class="string">"%20%20%20%20%20"</span></span><br></pre></td></tr></table></figure>
-
-
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：<span class="string">&quot;               &quot;</span>, <span class="number">5</span></span><br><span class="line">输出：<span class="string">&quot;%20%20%20%20%20&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>提示：</strong></p>
 <ul>
 <li>字符串长度在 [0, 500000] 范围内。</li>
 </ul>
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">replaceSpaces</span><span class="params">(String S, <span class="keyword">int</span> length)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">char</span>[] chs = S.toCharArray();</span><br><span class="line">        <span class="keyword">int</span> i = length - <span class="number">1</span>, j = S.length() - <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// 从右往前走，把左边的的字符串拷贝到右边</span></span><br><span class="line">        <span class="keyword">while</span> (i &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (chs[i] == <span class="string">' '</span>) &#123;</span><br><span class="line">                chs[j--] = <span class="string">'0'</span>;</span><br><span class="line">                chs[j--] = <span class="string">'2'</span>;</span><br><span class="line">                chs[j--] = <span class="string">'%'</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                chs[j--] = chs[i];</span><br><span class="line">            &#125;</span><br><span class="line">            i--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 最后取拷贝完之后的字符串，也就是j+1开始，字符串长度减去j+1</span></span><br><span class="line">        <span class="keyword">return</span> String.valueOf(chs, j + <span class="number">1</span>, S.length() - j - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">replaceSpaces</span><span class="params">(String S, <span class="type">int</span> length)</span> &#123;</span><br><span class="line">        <span class="type">char</span>[] chs = S.toCharArray();</span><br><span class="line">        <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> length - <span class="number">1</span>, j = S.length() - <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// 从右往前走，把左边的的字符串拷贝到右边</span></span><br><span class="line">        <span class="keyword">while</span> (i &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (chs[i] == <span class="string">&#x27; &#x27;</span>) &#123;</span><br><span class="line">                chs[j--] = <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">                chs[j--] = <span class="string">&#x27;2&#x27;</span>;</span><br><span class="line">                chs[j--] = <span class="string">&#x27;%&#x27;</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                chs[j--] = chs[i];</span><br><span class="line">            &#125;</span><br><span class="line">            i--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 最后取拷贝完之后的字符串，也就是j+1开始，字符串长度减去j+1</span></span><br><span class="line">        <span class="keyword">return</span> String.valueOf(chs, j + <span class="number">1</span>, S.length() - j - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="1528-重新排列字符串"><a href="#1528-重新排列字符串" class="headerlink" title="1528. 重新排列字符串"></a><a href="https://leetcode-cn.com/problems/shuffle-string/" target="_blank" rel="noopener">1528. 重新排列字符串</a></h3><p>给你一个字符串 <code>s</code> 和一个 <strong>长度相同</strong> 的整数数组 <code>indices</code> 。</p>
+<h3 id="1528-重新排列字符串"><a href="#1528-重新排列字符串" class="headerlink" title="1528. 重新排列字符串"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/shuffle-string/">1528. 重新排列字符串</a></h3><p>给你一个字符串 <code>s</code> 和一个 <strong>长度相同</strong> 的整数数组 <code>indices</code> 。</p>
 <p>请你重新排列字符串 <code>s</code> ，其中第 <code>i</code> 个字符需要移动到 <code>indices[i]</code> 指示的位置。</p>
 <p>返回重新排列后的字符串。</p>
 <p><strong>示例 1：</strong></p>
 <p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210322161725.jpeg" alt="img"></p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">"codeleet"</span>, indices = [<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">3</span>]</span><br><span class="line">输出：<span class="string">"leetcode"</span></span><br><span class="line">解释：如图所示，<span class="string">"codeleet"</span> 重新排列后变为 <span class="string">"leetcode"</span> 。</span><br></pre></td></tr></table></figure>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;codeleet&quot;</span>, <span class="built_in">indices</span> = [<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">3</span>]</span><br><span class="line">输出：<span class="string">&quot;leetcode&quot;</span></span><br><span class="line">解释：如图所示，<span class="string">&quot;codeleet&quot;</span> 重新排列后变为 <span class="string">&quot;leetcode&quot;</span> 。</span><br></pre></td></tr></table></figure>
 
 <p><strong>示例 2：</strong></p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">"abc"</span>, indices = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">输出：<span class="string">"abc"</span></span><br><span class="line">解释：重新排列后，每个字符都还留在原来的位置上。</span><br></pre></td></tr></table></figure>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;abc&quot;</span>, <span class="built_in">indices</span> = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">输出：<span class="string">&quot;abc&quot;</span></span><br><span class="line">解释：重新排列后，每个字符都还留在原来的位置上。</span><br></pre></td></tr></table></figure>
 
 <p><strong>示例 3：</strong></p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">"aiohn"</span>, indices = [<span class="number">3</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">0</span>]</span><br><span class="line">输出：<span class="string">"nihao"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;aiohn&quot;</span>, <span class="built_in">indices</span> = [<span class="number">3</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">0</span>]</span><br><span class="line">输出：<span class="string">&quot;nihao&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>示例 4：</strong></p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">"aaiougrt"</span>, indices = [<span class="number">4</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">5</span>]</span><br><span class="line">输出：<span class="string">"arigatou"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;aaiougrt&quot;</span>, <span class="built_in">indices</span> = [<span class="number">4</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">5</span>]</span><br><span class="line">输出：<span class="string">&quot;arigatou&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>示例 5：</strong></p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">"art"</span>, indices = [<span class="number">1</span>,<span class="number">0</span>,<span class="number">2</span>]</span><br><span class="line">输出：<span class="string">"rat"</span></span><br></pre></td></tr></table></figure>
-
-
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;art&quot;</span>, <span class="built_in">indices</span> = [<span class="number">1</span>,<span class="number">0</span>,<span class="number">2</span>]</span><br><span class="line">输出：<span class="string">&quot;rat&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>提示：</strong></p>
 <ul>
@@ -817,7 +603,7 @@
 <li><code>0 &lt;= indices[i] &lt; n</code></li>
 <li><code>indices</code> 的所有的值都是唯一的（也就是说，<code>indices</code> 是整数 <code>0</code> 到 <code>n - 1</code> 形成的一组排列）。</li>
 </ul>
-<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">restoreString</span><span class="params">(String s, <span class="keyword">int</span>[] indices)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">char</span>[] res = <span class="keyword">new</span> <span class="keyword">char</span>[s.length()];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</span><br><span class="line">            res[indices[i]] = s.charAt(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> String.valueOf(res);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">restoreString</span><span class="params">(String s, <span class="type">int</span>[] indices)</span> &#123;</span><br><span class="line">       <span class="type">char</span>[] res = <span class="keyword">new</span> <span class="title class_">char</span>[s.length()];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; s.length(); i++) &#123;</span><br><span class="line">            res[indices[i]] = s.charAt(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> String.valueOf(res);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -846,7 +632,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/08/study/数据结构与算法之美/每周打卡/1/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/03/08/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E6%AF%8F%E5%91%A8%E6%89%93%E5%8D%A1/1/">展开全文 >></a>
         </p>
       
 
@@ -883,13 +669,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/01/design/设计模式简介/">设计模式简介</a>
+      <a class="article-title" href="/2021/03/01/design/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%AE%80%E4%BB%8B/">设计模式简介</a>
     </h1>
   
 
         
         
-<a href="/2021/03/01/design/设计模式简介/" class="archive-article-date">
+<a href="/2021/03/01/design/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%AE%80%E4%BB%8B/" class="archive-article-date">
   	<time datetime="2021-03-01T12:48:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-01</time>
 </a>
 
@@ -906,12 +692,12 @@
 <li>里氏代换原则（Liskov Substitution Principle，LSP）</li>
 <li>依赖倒转原则（Dependency Inversion Principle，DIP）</li>
 <li>接口隔离原则（Interface Segregation Principle，ISP）</li>
-<li>合成/聚合复用原则（Composite/Aggregate Reuse Principle，CARP）</li>
+<li>合成&#x2F;聚合复用原则（Composite&#x2F;Aggregate Reuse Principle，CARP）</li>
 <li>最少知识原则（Least Knowledge Principle，LKP）或者迪米特法则（Law of Demeter，LOD）</li>
 </ul>
 <p>简单理解就是：<strong>开闭原则是总纲</strong>，它指导我们要对扩展开放，对修改关闭；单一职责原则指导我们实现类要职责单一；里氏替换原则指导我们不要破坏继承体系；依赖倒置原则指导我们要面向接口编程；接口隔离原则指导我们在设计接口的时候要精简单一；迪米特法则指导我们要降低耦合。</p>
         
-          <a class="article-more-a" href="/2021/03/01/design/设计模式简介/#more">more >></a>
+          <a class="article-more-a" href="/2021/03/01/design/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%AE%80%E4%BB%8B/#more">more >></a>
         
       
 
@@ -935,7 +721,223 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/01/design/设计模式简介/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/03/01/design/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%AE%80%E4%BB%8B/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-algorithm/算法思想掌握" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/27/algorithm/%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3%E6%8E%8C%E6%8F%A1/">算法思想掌握</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/02/27/algorithm/%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3%E6%8E%8C%E6%8F%A1/" class="archive-article-date">
+  	<time datetime="2021-02-27T04:36:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-27</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><h3 id="395-至少有K个重复字符的最长子串"><a href="#395-至少有K个重复字符的最长子串" class="headerlink" title="395. 至少有K个重复字符的最长子串"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/longest-substring-with-at-least-k-repeating-characters/">395. 至少有K个重复字符的最长子串</a></h3><p>给你一个字符串 <code>s</code> 和一个整数 <code>k</code> ，请你找出 <code>s</code> 中的最长子串， 要求该子串中的每一字符出现次数都不少于 <code>k</code> 。返回这一子串的长度。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;aaabb&quot;</span>, k = <span class="number">3</span></span><br><span class="line">输出：<span class="number">3</span></span><br><span class="line">解释：最长子串为 <span class="string">&quot;aaa&quot;</span> ，其中 &#x27;a&#x27; 重复了 <span class="number">3</span> 次。</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;ababbc&quot;</span>, k = <span class="number">2</span></span><br><span class="line">输出：<span class="number">5</span></span><br><span class="line">解释：最长子串为 <span class="string">&quot;ababb&quot;</span> ，其中 &#x27;a&#x27; 重复了 <span class="number">2</span> 次， &#x27;b&#x27; 重复了 <span class="number">3</span> 次。</span><br></pre></td></tr></table></figure>
+
+<p> <strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 10^4</code></li>
+<li><code>s</code> 仅由小写英文字母组成</li>
+<li><code>1 &lt;= k &lt;= 10^5</code></li>
+</ul>
+        
+          <a class="article-more-a" href="/2021/02/27/algorithm/%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3%E6%8E%8C%E6%8F%A1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/算法//" class="article-tag-list-link color3">算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/02/27/algorithm/%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3%E6%8E%8C%E6%8F%A1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-algorithm/你需要了解这 14 种编程面试模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/25/algorithm/%E4%BD%A0%E9%9C%80%E8%A6%81%E4%BA%86%E8%A7%A3%E8%BF%99%2014%20%E7%A7%8D%E7%BC%96%E7%A8%8B%E9%9D%A2%E8%AF%95%E6%A8%A1%E5%BC%8F/">你需要了解这14种编程面试模式</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/02/25/algorithm/%E4%BD%A0%E9%9C%80%E8%A6%81%E4%BA%86%E8%A7%A3%E8%BF%99%2014%20%E7%A7%8D%E7%BC%96%E7%A8%8B%E9%9D%A2%E8%AF%95%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2021-02-25T01:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-25</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>作者：Fahim ul Haq</p>
+<p>机器之心编译</p>
+<p>参与：Panda</p>
+<h1 id="解题套路"><a href="#解题套路" class="headerlink" title="解题套路"></a>解题套路</h1><p>咱们在面试程序员岗位时往往需要经历一个编程面试过程，雇主会借此考验面试者的技术实力。</p>
+<p>然而，这些技术问题有时候却和我们的实际工作并无太大关系，也由此可能给我们的编程面试准备阶段带来很大的压力。</p>
+<p>曾在 Facebook 和微软工作过的 Educative.io 创始人 Fahim ul Haq 近日发文总结了编程面试所遇到的问题的 14 种最常见的模式，也许能帮你看清各种编程面试问题「背后的真相」。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210225100733.png" alt="图片"></p>
+<p>对很多开发者来说，编程工作的面试准备很容易让人焦虑。面试要涉及的东西实在太多，其中很多还往往与开发者的日常工作无关，只会额外增添压力。</p>
+<p>这种现状导致了一个后果：现在的开发者往往需要花费数周时间在 LeetCode 等网站上了解综合数百个问题。</p>
+<p>与我谈过的开发者在面试前的一个常见焦虑问题是：<strong>我是否已经解决过足够多的实际问题？我本可以做到更多吗？</strong></p>
+<p>这就是我想要帮助开发者了解每个问题背后的底层模式的原因——这样他们就不必担忧解决数百个问题以及被 LeetCode 整得疲惫不堪了。</p>
+<p>如果你理解面试的通用模式，你就可以将其用作模板，从而解决各种层级的稍有不同的问题。</p>
+<p>这里我将列出最常见的 14 种模式，它们可被用于解决任何编程面试问题。</p>
+<p>另外我还会说明如何识别每种模式，并会为每种模式提供一些问题示例。</p>
+<p>这些内容都只是蜻蜓点水——<strong>我强烈建议你看看课程《Grokking the Coding Interview: Patterns for Coding Questions》，里面提供了全面的解释、示例和编程实践</strong>。</p>
+<p>下面的模式说明假设你已经知悉了数据结构。如果你还不了解，那需要补充一下知识点哦。</p>
+<p>我们今天将说明以下 14 种模式：</p>
+<blockquote>
+<ul>
+<li>1．滑动窗口</li>
+<li>2．二指针或迭代器</li>
+<li>3．快速和慢速指针或迭代器</li>
+<li>4．合并区间</li>
+<li>5．循环排序</li>
+<li>6．原地反转链表</li>
+<li>7．树的宽度优先搜索（Tree BFS）</li>
+<li>8．树的深度优先搜索（Tree DFS）</li>
+<li>9．Two Heaps</li>
+<li>10．子集</li>
+<li>11．经过修改的二叉搜索</li>
+<li>12．前 K 个元素</li>
+<li>13．K 路合并</li>
+<li>14．拓扑排序</li>
+</ul>
+</blockquote>
+<p>我们开始吧！</p>
+        
+          <a class="article-more-a" href="/2021/02/25/algorithm/%E4%BD%A0%E9%9C%80%E8%A6%81%E4%BA%86%E8%A7%A3%E8%BF%99%2014%20%E7%A7%8D%E7%BC%96%E7%A8%8B%E9%9D%A2%E8%AF%95%E6%A8%A1%E5%BC%8F/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/02/25/algorithm/%E4%BD%A0%E9%9C%80%E8%A6%81%E4%BA%86%E8%A7%A3%E8%BF%99%2014%20%E7%A7%8D%E7%BC%96%E7%A8%8B%E9%9D%A2%E8%AF%95%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
         </p>
       
 
@@ -967,7 +969,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/4/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/6/">Next &amp;raquo;</a>
     </nav>
   
 
@@ -981,11 +983,6 @@
     	<div class="footer-left">
     		&copy; 2022 Elfred 
         <!-- 《网站备案号 -->
-        
-                <img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png" title="备案管理系统">
-                <a href="http://www.beian.miit.gov.cn/" style="color:#f72b07" target="_blank" title="备案号">
-                    皖ICP备20005183号
-                </a>
         
         <!-- 网站备案号》 -->
     	</div>
@@ -1093,10 +1090,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
@@ -1117,6 +1110,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">框架</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
@@ -1125,15 +1122,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">框架</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1141,7 +1138,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1150,10 +1147,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
              
               <li class="article-tag-list-item">

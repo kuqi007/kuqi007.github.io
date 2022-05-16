@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://blog.elfred.top">
   <title>MySQL常见面试题 | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="数据库优化：索引失效的场景： like 以%开头，索引无效；当like前缀没有%，后缀有%时，索引有效。 or语句前后没有同时使用索引。当or左右查询字段只有一个是索引，该索引失效，只有当or左右查询字段均为索引时，才会生效。 组合索引，不是使用第一列索引，索引失效。 数据类型出现隐式转化。如varchar不加单引号的话可能会自动转换为int型，使索引无效，产生全表扫描。 在索引列上使用 IS N">
-<meta name="keywords" content="面经,MySQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL常见面试题">
-<meta property="og:url" content="https://blog.elfred.top/2021/04/27/interview/MySQL常见面试题/index.html">
+<meta property="og:url" content="https://blog.elfred.top/2021/04/27/interview/MySQL%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
 <meta property="og:description" content="数据库优化：索引失效的场景： like 以%开头，索引无效；当like前缀没有%，后缀有%时，索引有效。 or语句前后没有同时使用索引。当or左右查询字段只有一个是索引，该索引失效，只有当or左右查询字段均为索引时，才会生效。 组合索引，不是使用第一列索引，索引失效。 数据类型出现隐式转化。如varchar不加单引号的话可能会自动转换为int型，使索引无效，产生全表扫描。 在索引列上使用 IS N">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427162633.jpeg">
-<meta property="og:updated_time" content="2021-05-09T12:56:43.443Z">
+<meta property="article:published_time" content="2021-04-27T08:42:00.000Z">
+<meta property="article:modified_time" content="2021-05-09T12:56:43.443Z">
+<meta property="article:author" content="Elfred">
+<meta property="article:tag" content="面经">
+<meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MySQL常见面试题">
-<meta name="twitter:description" content="数据库优化：索引失效的场景： like 以%开头，索引无效；当like前缀没有%，后缀有%时，索引有效。 or语句前后没有同时使用索引。当or左右查询字段只有一个是索引，该索引失效，只有当or左右查询字段均为索引时，才会生效。 组合索引，不是使用第一列索引，索引失效。 数据类型出现隐式转化。如varchar不加单引号的话可能会自动转换为int型，使索引无效，产生全表扫描。 在索引列上使用 IS N">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427162633.jpeg">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
@@ -39,8 +40,8 @@
 
   
 
-</head>
-</html>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -53,10 +54,8 @@
 			<img src="/images/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">Elfred</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">上善若水</p>
 		
 
 		<nav class="header-menu">
@@ -107,10 +106,8 @@
 				<img src="/images/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">Elfred</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>上善若水<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -165,7 +162,7 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2021/04/27/interview/MySQL常见面试题/" class="archive-article-date">
+<a href="/2021/04/27/interview/MySQL%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/" class="archive-article-date">
   	<time datetime="2021-04-27T08:42:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-27</time>
 </a>
 
@@ -180,7 +177,7 @@
 <li>组合索引，不是使用第一列索引，索引失效。</li>
 <li>数据类型出现隐式转化。如varchar不加单引号的话可能会自动转换为int型，使索引无效，产生全表扫描。</li>
 <li>在索引列上使用 IS NULL 或 IS NOT NULL操作。索引是不索引空值的，所以这样的操作不能使用索引，可以用其他的办法处理，例如：数字类型，判断大于0，字符串类型设置一个默认值，判断是否等于默认值即可。</li>
-<li>在索引字段上使用not，&lt;&gt;，!=。不等于操作符是永远不会用到索引的，因此对它的处理只会产生全表扫描。 优化方法： key&lt;&gt;0 改为 key&gt;0 or key&lt;0。</li>
+<li>在索引字段上使用not，&lt;&gt;，!&#x3D;。不等于操作符是永远不会用到索引的，因此对它的处理只会产生全表扫描。 优化方法： key&lt;&gt;0 改为 key&gt;0 or key&lt;0。</li>
 <li>对索引字段进行计算操作。</li>
 <li>在索引字段上使用函数。</li>
 <li>当全表扫描速度比索引速度快时，mysql会使用全表扫描，此时索引失效。</li>
@@ -190,7 +187,7 @@
 <h3 id="索引使用注意事项"><a href="#索引使用注意事项" class="headerlink" title="索引使用注意事项"></a>索引使用注意事项</h3><ol>
 <li>不要滥用索引<ul>
 <li>索引提高查询速度，却会降低更新表的速度，因为更新表时，mysql不仅要更新数据，保存数据，还要更新索引，保存索引</li>
-<li>索引会占用磁盘空间 </li>
+<li>索引会占用磁盘空间</li>
 </ul>
 </li>
 <li>索引不会包含含有NULL值的列    ，复合索引只要有一列含有NULL值，那么这一列对于此符合索引就是无效的，因此我们在设计数据库设计时不要让字段的默认值为NULL。 </li>
@@ -200,12 +197,12 @@
 <h3 id="联合索引最左匹配原则"><a href="#联合索引最左匹配原则" class="headerlink" title="联合索引最左匹配原则"></a>联合索引最左匹配原则</h3><ol>
 <li>是不是用索引，和查询条件的顺序无关（优化器会自动调整条件的顺序），但和这些字段的查询手段有关</li>
 <li>建立了abc的联合索引，相当于建立了 a的单列索引，ab的联合索引，以及abc的联合索引</li>
-<li>一般根据最左匹配的原则，但在遇到范围查询后，匹配终止，也就是说，当条件为：<br>a like ‘%str%’、a like ‘%str’ 时，不走索引；当条件为 a like ‘str%’ 或者 “&gt;”, “&lt;”, “between”时， 仅使用了<strong>联合索引中a的部分</strong>；<br>b，c 同理，根据查询方式不同，即便条件中的3个字段都在索引里，也不一定使用了全索引<br>假如条件是  a = 1 and b = 2 and c = 3 这类情况，是必然走这个联合索引了</li>
+<li>一般根据最左匹配的原则，但在遇到范围查询后，匹配终止，也就是说，当条件为：<br>a like ‘%str%’、a like ‘%str’ 时，不走索引；当条件为 a like ‘str%’ 或者 “&gt;”, “&lt;”, “between”时， 仅使用了<strong>联合索引中a的部分</strong>；<br>b，c 同理，根据查询方式不同，即便条件中的3个字段都在索引里，也不一定使用了全索引<br>假如条件是  a &#x3D; 1 and b &#x3D; 2 and c &#x3D; 3 这类情况，是必然走这个联合索引了</li>
 </ol>
 <h3 id="我们的数据库当中如何做的优化"><a href="#我们的数据库当中如何做的优化" class="headerlink" title="我们的数据库当中如何做的优化?"></a>我们的数据库当中如何做的优化?</h3><ul>
 <li>对查询进行优化，要尽量避免全表扫描，首先应考虑在 where 及 order by 涉及的列上建立索引。</li>
 <li>应尽量避免在 where 子句中对字段进行 null 值判断，否则将导致引擎放弃使用索引而进行全表扫描</li>
-<li>应尽量避免在 where 子句中使用 != 或 &lt;&gt; 操作符，否则将引擎放弃使用索引而进行全表扫描。</li>
+<li>应尽量避免在 where 子句中使用 !&#x3D; 或 &lt;&gt; 操作符，否则将引擎放弃使用索引而进行全表扫描。</li>
 <li>应尽量避免在 where 子句中使用 or 来连接条件，如果一个字段有索引，一个字段没有索引，将导致引擎放弃使用索引而进行全表扫描</li>
 <li>in 和 not in 也要慎用，否则会导致全表扫描（当数据库人为IN和NotIn使用索引查询的效率不如全表扫描时会放弃使用索引转而使用权标扫描）</li>
 <li>like模糊全匹配也将导致全表扫描</li>
@@ -218,15 +215,14 @@
 <p>如何实现索引覆盖：</p>
 <ul>
 <li>主键索引存储的是主键值和行记录（即聚簇索引），无需回表查询</li>
-<li>普通索引存储的是索引和rowid的值，查询其他字段（非rowid字段和其他字段）需要回表查询，建立联合索引实现索引覆盖可以解决这个问题  </li>
+<li>普通索引存储的是索引和rowid的值，查询其他字段（非rowid字段和其他字段）需要回表查询，建立联合索引实现索引覆盖可以解决这个问题</li>
 </ul>
 <p>结合下面的实例：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 有一张表</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`test`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  <span class="string">`a`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`b`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`c`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>),</span><br><span class="line">  <span class="keyword">KEY</span> <span class="string">`a`</span> (<span class="string">`a`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> AUTO_INCREMENT=<span class="number">4</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br><span class="line"><span class="comment"># 这几条语句有什么区别</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 没有区别，没有回表查询</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">from</span> <span class="keyword">test</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">1</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span> <span class="keyword">from</span> <span class="keyword">test</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">1</span></span><br><span class="line"><span class="keyword">SELECT</span> a <span class="keyword">from</span> <span class="keyword">test</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第一句会出现回表查询，其余都直接可以查到数据</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">from</span> <span class="keyword">test</span> <span class="keyword">where</span> a = <span class="number">1</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span> <span class="keyword">from</span> <span class="keyword">test</span> <span class="keyword">where</span> a = <span class="number">1</span></span><br><span class="line"><span class="keyword">SELECT</span> a <span class="keyword">from</span> <span class="keyword">test</span> <span class="keyword">where</span> a = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 没有索引，都是全表查询</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">from</span> <span class="keyword">test</span> <span class="keyword">where</span> b = <span class="number">1</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span> <span class="keyword">from</span> <span class="keyword">test</span> <span class="keyword">where</span> b = <span class="number">1</span></span><br><span class="line"><span class="keyword">SELECT</span> a <span class="keyword">from</span> <span class="keyword">test</span> <span class="keyword">where</span> b = <span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Select-from-table-where-a-‘1’-and-b-gt-‘2’-and-c-’3’-索引-a-b-c-是否走索引"><a href="#Select-from-table-where-a-‘1’-and-b-gt-‘2’-and-c-’3’-索引-a-b-c-是否走索引" class="headerlink" title="Select * from table where a = ‘1’ and b &gt; ‘2’ and c=’3’ 索引(a,b,c)是否走索引"></a>Select * from table where a = ‘1’ and b &gt; ‘2’ and c=’3’ 索引(a,b,c)是否走索引</h3><p>在a、b走完索引后，c肯定是无序了，所以c就没法走索引，数据库会觉得还不如全表扫描c字段来的快（扫描全部满足a=1和b&gt;2的纪录）</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># 有一张表</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `test` (</span><br><span class="line">  `id` <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `a` <span class="type">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `b` <span class="type">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `c` <span class="type">varchar</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`id`),</span><br><span class="line">  KEY `a` (`a`)</span><br><span class="line">) ENGINE<span class="operator">=</span>InnoDB AUTO_INCREMENT<span class="operator">=</span><span class="number">4</span> <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8;</span><br><span class="line"># 这几条语句有什么区别</span><br><span class="line"></span><br><span class="line"># 没有区别，没有回表查询</span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> test <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">SELECT</span> id <span class="keyword">from</span> test <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">SELECT</span> a <span class="keyword">from</span> test <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"># 第一句会出现回表查询，其余都直接可以查到数据</span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> test <span class="keyword">where</span> a <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">SELECT</span> id <span class="keyword">from</span> test <span class="keyword">where</span> a <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">SELECT</span> a <span class="keyword">from</span> test <span class="keyword">where</span> a <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"># 没有索引，都是全表查询</span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> test <span class="keyword">where</span> b <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">SELECT</span> id <span class="keyword">from</span> test <span class="keyword">where</span> b <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">SELECT</span> a <span class="keyword">from</span> test <span class="keyword">where</span> b <span class="operator">=</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h3 id="Select-from-table-where-a-x3D-‘1’-and-b-gt-‘2’-and-c-x3D-’3’-索引-a-b-c-是否走索引"><a href="#Select-from-table-where-a-x3D-‘1’-and-b-gt-‘2’-and-c-x3D-’3’-索引-a-b-c-是否走索引" class="headerlink" title="Select * from table where a &#x3D; ‘1’ and b &gt; ‘2’ and c&#x3D;’3’ 索引(a,b,c)是否走索引"></a>Select * from table where a &#x3D; ‘1’ and b &gt; ‘2’ and c&#x3D;’3’ 索引(a,b,c)是否走索引</h3><p>在a、b走完索引后，c肯定是无序了，所以c就没法走索引，数据库会觉得还不如全表扫描c字段来的快（扫描全部满足a&#x3D;1和b&gt;2的纪录）</p>
 <p> 始终记得，在数据库中是先按照a排序，后按照b排序，最后按照c排序。 首先索引找a，找到后在a相等的条件下，b必然是有序的。因为先按照a排序，若a相同，按照b排序，因此a相等的条件下，b必然有序。 好，我们继续。当找到所有b&gt;2的之后，c还有序么？不，c不有序。因为（b,c）的组合可以是（100000,1），也可以是（1，100）。发现了么，当你根据b找到区间之后，c是无序的，因为b和c之间没有关系。你不能保证所有大于2的b的那些记录中，c还是有序的。</p>
-<h3 id="现在一张表table，有a-b-c三个索引，select-from-table-where-a-1-and-b-2-order-by-c，这些字段是否都能使用索引？如果不能怎么优化"><a href="#现在一张表table，有a-b-c三个索引，select-from-table-where-a-1-and-b-2-order-by-c，这些字段是否都能使用索引？如果不能怎么优化" class="headerlink" title="现在一张表table，有a,b,c三个索引，select * from table where a = 1 and b = 2 order by c，这些字段是否都能使用索引？如果不能怎么优化"></a>现在一张表table，有a,b,c三个索引，select * from table where a = 1 and b = 2 order by c，这些字段是否都能使用索引？如果不能怎么优化</h3><p><a href="https://blog.csdn.net/gb4215287/article/details/78037835" target="_blank" rel="noopener">https://blog.csdn.net/gb4215287/article/details/78037835</a><br>与其说是数据库只支持一条查询语句只使用一个索引，倒不如说N条独立索引同时在一条语句使用的消耗比只使用一个索引还要慢。<br>所以如上条的情况，最佳推荐是使用index(column1,column2,column3） 这种联合索引，此联合索引可以把b+tree结构的优势发挥得淋漓尽致：<br>一条主二叉树（column=1），查询到column=1节点后基于当前节点进行二级二叉树column2=foo的查询，在二级二叉树查询到column2=foo后，去三级二叉树column3=bar查找。</p>
-<h2 id="索引底层数据结构："><a href="#索引底层数据结构：" class="headerlink" title="索引底层数据结构："></a>索引底层数据结构：</h2><h3 id="MySql中InnoDB表为什么要建议用自增列做主键"><a href="#MySql中InnoDB表为什么要建议用自增列做主键" class="headerlink" title="MySql中InnoDB表为什么要建议用自增列做主键"></a>MySql中InnoDB表为什么要建议用自增列做主键</h3><p><a href="https://blog.csdn.net/bigtree_3721/article/details/73151028" target="_blank" rel="noopener">https://blog.csdn.net/bigtree_3721/article/details/73151028</a></p>
+<h3 id="现在一张表table，有a-b-c三个索引，select-from-table-where-a-x3D-1-and-b-x3D-2-order-by-c，这些字段是否都能使用索引？如果不能怎么优化"><a href="#现在一张表table，有a-b-c三个索引，select-from-table-where-a-x3D-1-and-b-x3D-2-order-by-c，这些字段是否都能使用索引？如果不能怎么优化" class="headerlink" title="现在一张表table，有a,b,c三个索引，select * from table where a &#x3D; 1 and b &#x3D; 2 order by c，这些字段是否都能使用索引？如果不能怎么优化"></a>现在一张表table，有a,b,c三个索引，select * from table where a &#x3D; 1 and b &#x3D; 2 order by c，这些字段是否都能使用索引？如果不能怎么优化</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/gb4215287/article/details/78037835">https://blog.csdn.net/gb4215287/article/details/78037835</a><br>与其说是数据库只支持一条查询语句只使用一个索引，倒不如说N条独立索引同时在一条语句使用的消耗比只使用一个索引还要慢。<br>所以如上条的情况，最佳推荐是使用index(column1,column2,column3） 这种联合索引，此联合索引可以把b+tree结构的优势发挥得淋漓尽致：<br>一条主二叉树（column&#x3D;1），查询到column&#x3D;1节点后基于当前节点进行二级二叉树column2&#x3D;foo的查询，在二级二叉树查询到column2&#x3D;foo后，去三级二叉树column3&#x3D;bar查找。</p>
+<h2 id="索引底层数据结构："><a href="#索引底层数据结构：" class="headerlink" title="索引底层数据结构："></a>索引底层数据结构：</h2><h3 id="MySql中InnoDB表为什么要建议用自增列做主键"><a href="#MySql中InnoDB表为什么要建议用自增列做主键" class="headerlink" title="MySql中InnoDB表为什么要建议用自增列做主键"></a>MySql中InnoDB表为什么要建议用自增列做主键</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/bigtree_3721/article/details/73151028">https://blog.csdn.net/bigtree_3721/article/details/73151028</a></p>
 <p>InnoDB引擎表的特点：</p>
 <ol>
 <li>InnoDB引擎表是基于B+树的索引组织表(IOT)</li>
@@ -237,23 +233,23 @@
 <p>（3）非叶子结点相当于是叶子结点的索引(稀疏索引)，叶子结点相当于是存储(关键字)数据的数据层;</p>
 <ol start="2">
 <li>如果我们定义了主键(PRIMARY KEY)，那么InnoDB会选择主键作为聚集索引、如果没有显式定义主键，则InnoDB会选择第一个不包含有NULL值的唯一索引作为主键索引、如果也没有这样的唯一索引，则InnoDB会选择内置6字节长的ROWID作为隐含的聚集索引(ROWID随着行记录的写入而主键递增，这个ROWID不像ORACLE的ROWID那样可引用，是隐含的)。</li>
-<li>数据记录本身被存于主索引（一颗B+Tree）的叶子节点上。这就要求同一个叶子节点内（大小为一个内存页或磁盘页）的各条数据记录按主键顺序存放，因此每当有一条新的记录插入时，MySQL会根据其主键将其插入适当的节点和位置，如果页面达到装载因子（InnoDB默认为15/16），则开辟一个新的页（节点）</li>
+<li>数据记录本身被存于主索引（一颗B+Tree）的叶子节点上。这就要求同一个叶子节点内（大小为一个内存页或磁盘页）的各条数据记录按主键顺序存放，因此每当有一条新的记录插入时，MySQL会根据其主键将其插入适当的节点和位置，如果页面达到装载因子（InnoDB默认为15&#x2F;16），则开辟一个新的页（节点）</li>
 <li>如果表使用自增主键，那么每次插入新的记录，记录就会顺序添加到当前索引节点的后续位置，当一页写满，就会自动开辟一个新的页</li>
 <li>如果使用非自增主键（如果身份证号或学号等），由于每次插入主键的值近似于随机，因此每次新纪录都要被插到现有索引页得中间某个位置，此时MySQL不得不为了将新记录插到合适位置而移动数据，甚至目标页面可能已经被回写到磁盘上而从缓存中清掉，此时又要从磁盘上读回来，这增加了很多开销，同时频繁的移动、分页操作造成了大量的碎片，得到了不够紧凑的索引结构，后续不得不通过OPTIMIZE TABLE来重建表并优化填充页面。</li>
 </ol>
 <p>综上总结，如果InnoDB表的数据写入顺序能和B+树索引的叶子节点顺序一致的话，这时候存取效率是最高的，也就是下面这几种情况的存取效率最高：</p>
 <ol>
-<li>使用自增列(INT/BIGINT类型)做主键，这时候写入顺序是自增的，和B+数叶子节点分裂顺序一致；</li>
+<li>使用自增列(INT&#x2F;BIGINT类型)做主键，这时候写入顺序是自增的，和B+数叶子节点分裂顺序一致；</li>
 <li>该表不指定自增列做主键，同时也没有可以被选为主键的唯一索引(上面的条件)，这时候InnoDB会选择内置的ROWID作为主键，写入顺序和ROWID增长顺序一致；<br>除此以外，如果一个InnoDB表又没有显示主键，又有可以被选择为主键的唯一索引，但该唯一索引可能不是递增关系时(例如字符串、UUID、多字段联合唯一索引的情况)，该表的存取效率就会比较差。</li>
 </ol>
-<h3 id="MySql为什么使用B-Tree作为索引而不是其他二叉查找树（比如红黑树等）？"><a href="#MySql为什么使用B-Tree作为索引而不是其他二叉查找树（比如红黑树等）？" class="headerlink" title="MySql为什么使用B-Tree作为索引而不是其他二叉查找树（比如红黑树等）？"></a>MySql为什么使用B-Tree作为索引而不是其他二叉查找树（比如红黑树等）？</h3><p><a href="https://www.cnblogs.com/aspirant/p/9214485.html" target="_blank" rel="noopener">https://www.cnblogs.com/aspirant/p/9214485.html</a><br>平衡二叉树不适合作为索引。那么什么才适合作为索引——B树。</p>
+<h3 id="MySql为什么使用B-Tree作为索引而不是其他二叉查找树（比如红黑树等）？"><a href="#MySql为什么使用B-Tree作为索引而不是其他二叉查找树（比如红黑树等）？" class="headerlink" title="MySql为什么使用B-Tree作为索引而不是其他二叉查找树（比如红黑树等）？"></a>MySql为什么使用B-Tree作为索引而不是其他二叉查找树（比如红黑树等）？</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/aspirant/p/9214485.html">https://www.cnblogs.com/aspirant/p/9214485.html</a><br>平衡二叉树不适合作为索引。那么什么才适合作为索引——B树。</p>
 <p>平衡二叉树没能充分利用磁盘预读功能，而B树是为了充分利用磁盘预读功能来而创建的一种数据结构，也就是说B树就是为了作为索引才被发明出来的的。</p>
 <p>来看看关于“局部性原理与磁盘预读”的知识： </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">局部性原理与磁盘预读：</span><br><span class="line"></span><br><span class="line">由于存储介质的特性，磁盘本身存取就比主存慢很多，再加上机械运动耗费，磁盘的存取速度往往是主存的几百分分之一，因此为了提高效率，要尽量减少磁盘I/O。为了达到这个目的，磁盘往往不是严格按需读取，而是每次都会预读，即使只需要一个字节，磁盘也会从这个位置开始，顺序向后读取一定长度的数据放入内存。这样做的理论依据是计算机科学中著名的局部性原理： </span><br><span class="line">当一个数据被用到时，其附近的数据也通常会马上被使用。 </span><br><span class="line">程序运行期间所需要的数据通常比较集中。 </span><br><span class="line">由于磁盘顺序读取的效率很高（不需要寻道时间，只需很少的旋转时间），因此对于具有局部性的程序来说，预读可以提高I/O效率。</span><br></pre></td></tr></table></figure>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">局部性原理与磁盘预读：</span><br><span class="line"></span><br><span class="line">由于存储介质的特性，磁盘本身存取就比主存慢很多，再加上机械运动耗费，磁盘的存取速度往往是主存的几百分分之一，因此为了提高效率，要尽量减少磁盘<span class="built_in">I</span><span class="operator">/</span><span class="built_in">O</span>。为了达到这个目的，磁盘往往不是严格按需读取，而是每次都会预读，即使只需要一个字节，磁盘也会从这个位置开始，顺序向后读取一定长度的数据放入内存。这样做的理论依据是计算机科学中著名的局部性原理： </span><br><span class="line">当一个数据被用到时，其附近的数据也通常会马上被使用。 </span><br><span class="line">程序运行期间所需要的数据通常比较集中。 </span><br><span class="line">由于磁盘顺序读取的效率很高（不需要寻道时间，只需很少的旋转时间），因此对于具有局部性的程序来说，预读可以提高<span class="built_in">I</span><span class="operator">/</span><span class="built_in">O</span>效率。</span><br></pre></td></tr></table></figure>
 
 <p>搞清楚上面的意思。磁盘预读是具体实现，其理论依据是局部性原理。</p>
 <p>为什么说红黑树没能充分利用磁盘预读功能，引用一篇博文的一段话： </p>
-<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">红黑树这种结构，h明显要深的多。由于逻辑上很近的节点（父子）物理上可能很远，无法利用局部性，所以红黑树的I/O渐进复杂度也为<span class="constructor">O(<span class="params">h</span>)</span>，效率明显比B-Tree差很多。</span><br></pre></td></tr></table></figure>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">红黑树这种结构，<span class="variable">h</span>明显要深的多。由于逻辑上很近的节点（父子）物理上可能很远，无法利用局部性，所以红黑树的<span class="built_in">I</span><span class="operator">/</span><span class="built_in">O</span>渐进复杂度也为<span class="built_in">O</span><span class="punctuation">(</span><span class="variable">h</span><span class="punctuation">)</span>，效率明显比<span class="variable">B</span><span class="operator">-</span><span class="variable">Tree</span>差很多。</span><br></pre></td></tr></table></figure>
 
 <p>也就是说，使用红黑树（平衡二叉树）结构的话，每次磁盘预读中的很多数据是用不上的数据。因此，它没能利用好磁盘预读的提供的数据。然后又由于深度大（较B树而言），所以进行的磁盘IO操作更多。</p>
 <p>B树的每个节点可以存储多个关键字，它将节点大小设置为磁盘页的大小，充分利用了磁盘预读的功能。每次读取磁盘页时就会读取一整个节点。也正因每个节点存储着非常多个关键字，树的深度就会非常的小。进而要执行的磁盘读取操作次数就会非常少，更多的是在内存中对读取进来的数据进行查找。</p>
@@ -262,7 +258,8 @@
 <p>B树：有序数组+平衡多叉树；<br>B+树：有序数组链表+平衡多叉树；</p>
 <p>B+树的关键字全部存放在叶子节点中，非叶子节点用来做索引，而叶子节点中有一个指针指向一下个叶子节点。做这个优化的目的是为了提高区间访问的性能。而正是这个特性决定了B+树更适合用来存储外部数据。</p>
 <p>引用一段话： </p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">走进搜索引擎的作者梁斌老师针对B树、B+树给出了他的意见（为了真实性，特引用其原话，未作任何改动）： “B+树还有一个最大的好处，方便扫库，B树必须用中序遍历的方法按序扫库，而B+树直接从叶子结点挨个扫一遍就完了，B+树支持range-query非常方便，而B树不支持。这是数据库选用B+树的最主要原因。 </span><br><span class="line">比如要查 <span class="number">5</span><span class="number">-10</span>之间的，B+树一把到<span class="number">5</span>这个标记，再一把到<span class="number">10</span>，然后串起来就行了，B树就非常麻烦。B树的好处，就是成功查询特别有利，因为树的高度总体要比B+树矮。不成功的情况下，B树也比B+树稍稍占一点点便宜。 </span><br><span class="line">B树比如你的例子中查，<span class="number">17</span>的话，一把就得到结果了， </span><br><span class="line">有很多基于频率的搜索是选用B树，越频繁query的结点越往根上走，前提是需要对query做统计，而且要对<span class="type">key</span>做一些变化。 </span><br><span class="line">另外B树也好B+树也好，根或者上面几层因为被反复query，所以这几块基本都在内存中，不会出现读磁盘IO，一般已启动的时候，就会主动换入内存。”</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">走进搜索引擎的作者梁斌老师针对<span class="selector-tag">B</span>树、<span class="selector-tag">B</span>+树给出了他的意见（为了真实性，特引用其原话，未作任何改动）： “<span class="selector-tag">B</span>+树还有一个最大的好处，方便扫库，<span class="selector-tag">B</span>树必须用中序遍历的方法按序扫库，而<span class="selector-tag">B</span>+树直接从叶子结点挨个扫一遍就完了，<span class="selector-tag">B</span>+树支持range-query非常方便，而<span class="selector-tag">B</span>树不支持。这是数据库选用<span class="selector-tag">B</span>+树的最主要原因。 </span><br><span class="line">比如要查 <span class="number">5</span>-<span class="number">10</span>之间的，<span class="selector-tag">B</span>+树一把到<span class="number">5</span>这个标记，再一把到<span class="number">10</span>，然后串起来就行了，<span class="selector-tag">B</span>树就非常麻烦。<span class="selector-tag">B</span>树的好处，就是成功查询特别有利，因为树的高度总体要比<span class="selector-tag">B</span>+树矮。不成功的情况下，<span class="selector-tag">B</span>树也比<span class="selector-tag">B</span>+树稍稍占一点点便宜。 </span><br><span class="line"><span class="selector-tag">B</span>树比如你的例子中查，<span class="number">17</span>的话，一把就得到结果了， </span><br><span class="line">有很多基于频率的搜索是选用<span class="selector-tag">B</span>树，越频繁query的结点越往根上走，前提是需要对query做统计，而且要对key做一些变化。 </span><br><span class="line">另外<span class="selector-tag">B</span>树也好<span class="selector-tag">B</span>+树也好，根或者上面几层因为被反复query，所以这几块基本都在内存中，不会出现读磁盘IO，一般已启动的时候，就会主动换入内存。”</span><br></pre></td></tr></table></figure>
+
 
 <p>举个例子来对比。<br>B树： </p>
 <p>比如说，我们要查找关键字范围在3到7的关键字，在找到第一个符合条件的数字3后，访问完第一个关键字所在的块后，得遍历这个B树，获取下一个块，直到遇到一个不符合条件的关键字。遍历的过程是比较复杂的。</p>
@@ -299,14 +296,11 @@
 </li>
 </ul>
 <p>悲观锁：缺点性能低</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> eb_sku <span class="keyword">where</span> sku_id = <span class="number">1001</span> <span class="keyword">for</span> <span class="keyword">update</span>;</span><br><span class="line"><span class="keyword">update</span> eb_sku <span class="keyword">set</span> stock = <span class="number">100</span>- $&#123;quantity&#125; <span class="keyword">where</span> sku_id = <span class="number">10001</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> eb_sku <span class="keyword">where</span> sku_id <span class="operator">=</span> <span class="number">1001</span> <span class="keyword">for</span> <span class="keyword">update</span>;</span><br><span class="line"><span class="keyword">update</span> eb_sku <span class="keyword">set</span> stock <span class="operator">=</span> <span class="number">100</span><span class="operator">-</span> $&#123;quantity&#125; <span class="keyword">where</span> sku_id <span class="operator">=</span> <span class="number">10001</span></span><br></pre></td></tr></table></figure>
 
-
-</li>
+<p>乐观锁：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> eb_sku <span class="keyword">set</span> stock <span class="operator">=</span> <span class="number">100</span><span class="operator">-</span>$&#123;quantity&#125;, version <span class="operator">=</span> $&#123;version&#125;<span class="operator">+</span><span class="number">1</span> <span class="keyword">where</span> sku_id <span class="operator">=</span> $&#123;sku_id&#125; <span class="keyword">and</span> version<span class="operator">=</span>$&#123;version&#125; <span class="keyword">and</span> stock <span class="operator">&gt;</span> $&#123;quantity&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
-<p>  乐观锁：</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> eb_sku <span class="keyword">set</span> stock = <span class="number">100</span>-$&#123;quantity&#125;, <span class="keyword">version</span> = $&#123;<span class="keyword">version</span>&#125;+<span class="number">1</span> <span class="keyword">where</span> sku_id = $&#123;sku_id&#125; <span class="keyword">and</span> <span class="keyword">version</span>=$&#123;<span class="keyword">version</span>&#125; <span class="keyword">and</span> stock &gt; $&#123;quantity&#125;</span><br></pre></td></tr></table></figure>
-
 <h2 id="其他知识点"><a href="#其他知识点" class="headerlink" title="其他知识点"></a>其他知识点</h2><h3 id="Mysql中utf-8和utf8mb4的区别与使用场景"><a href="#Mysql中utf-8和utf8mb4的区别与使用场景" class="headerlink" title="Mysql中utf-8和utf8mb4的区别与使用场景"></a>Mysql中utf-8和utf8mb4的区别与使用场景</h3><p>MySQL中的<strong>utf8</strong>编码只支持最大3字节每字符，<strong>utf8mb4</strong>才是 真正意义上的“UTF-8”，utf8mb4支持4字节每字符，支持存储emoji，而utf8不支持。</p>
 <h3 id="MySql-Innodb引擎和MyIASM引擎的区别"><a href="#MySql-Innodb引擎和MyIASM引擎的区别" class="headerlink" title="MySql Innodb引擎和MyIASM引擎的区别"></a>MySql Innodb引擎和MyIASM引擎的区别</h3><h4 id="Innodb引擎"><a href="#Innodb引擎" class="headerlink" title="Innodb引擎"></a>Innodb引擎</h4><ul>
 <li>Innodb引擎提供了对数据库ACID事务的支持，并且实现了SQL标准的四种隔离级别。</li>
@@ -448,7 +442,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/2021/04/27/interview/MySQL常见面试题/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/2021/04/27/interview/MySQL%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -462,7 +456,7 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/05/01/study/数据结构与算法之美/每周打卡/8/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/05/01/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E6%AF%8F%E5%91%A8%E6%89%93%E5%8D%A1/8/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
@@ -472,7 +466,7 @@
     </a>
   
   
-    <a href="/2021/04/24/study/数据结构与算法之美/每周打卡/7/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2021/04/24/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E6%AF%8F%E5%91%A8%E6%89%93%E5%8D%A1/7/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">第七周</div>
       <i class="icon-circle-right"></i>
     </a>
@@ -554,11 +548,6 @@
     	<div class="footer-left">
     		&copy; 2022 Elfred 
         <!-- 《网站备案号 -->
-        
-                <img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png" title="备案管理系统">
-                <a href="http://www.beian.miit.gov.cn/" style="color:#f72b07" target="_blank" title="备案号">
-                    皖ICP备20005183号
-                </a>
         
         <!-- 网站备案号》 -->
     	</div>
@@ -666,10 +655,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
@@ -690,6 +675,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">框架</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
@@ -698,15 +687,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">框架</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -714,7 +703,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -723,10 +712,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
              
               <li class="article-tag-list-item">

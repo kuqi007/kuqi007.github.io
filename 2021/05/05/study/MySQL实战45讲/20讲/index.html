@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://blog.elfred.top">
   <title>20讲 | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="20 | 幻读是什么，幻读有什么问题？为了便于说明问题，这一篇文章，我们就先使用一个小一点儿的表。建表和初始化语句如下： 12345678910CREATE TABLE `t` (  `id` int(11) NOT NULL,  `c` int(11) DEFAULT NULL,  `d` int(11) DEFAULT NULL,  PRIMARY KEY (`id`),  KEY `c`">
-<meta name="keywords" content="MySQL实战45讲,学习笔记">
+  <meta name="description" content="20 | 幻读是什么，幻读有什么问题？为了便于说明问题，这一篇文章，我们就先使用一个小一点儿的表。建表和初始化语句如下： 12345678910CREATE TABLE &#96;t&#96; (  &#96;id&#96; int(11) NOT NULL,  &#96;c&#96; int(11) DEFAULT NULL,  &#96;d&#96; int(11) DEFAULT NULL,  PRIMARY KEY (&#96;id&#96;),  KEY &#96;c&#96;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="20讲">
-<meta property="og:url" content="https://blog.elfred.top/2021/05/05/study/MySQL实战45讲/20讲/index.html">
+<meta property="og:url" content="https://blog.elfred.top/2021/05/05/study/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/20%E8%AE%B2/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="20 | 幻读是什么，幻读有什么问题？为了便于说明问题，这一篇文章，我们就先使用一个小一点儿的表。建表和初始化语句如下： 12345678910CREATE TABLE `t` (  `id` int(11) NOT NULL,  `c` int(11) DEFAULT NULL,  `d` int(11) DEFAULT NULL,  PRIMARY KEY (`id`),  KEY `c`">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-05-05T13:12:21.162Z">
+<meta property="og:description" content="20 | 幻读是什么，幻读有什么问题？为了便于说明问题，这一篇文章，我们就先使用一个小一点儿的表。建表和初始化语句如下： 12345678910CREATE TABLE &#96;t&#96; (  &#96;id&#96; int(11) NOT NULL,  &#96;c&#96; int(11) DEFAULT NULL,  &#96;d&#96; int(11) DEFAULT NULL,  PRIMARY KEY (&#96;id&#96;),  KEY &#96;c&#96;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-05-05T05:20:00.000Z">
+<meta property="article:modified_time" content="2021-05-05T13:12:21.162Z">
+<meta property="article:author" content="Elfred">
+<meta property="article:tag" content="MySQL实战45讲">
+<meta property="article:tag" content="学习笔记">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="20讲">
-<meta name="twitter:description" content="20 | 幻读是什么，幻读有什么问题？为了便于说明问题，这一篇文章，我们就先使用一个小一点儿的表。建表和初始化语句如下： 12345678910CREATE TABLE `t` (  `id` int(11) NOT NULL,  `c` int(11) DEFAULT NULL,  `d` int(11) DEFAULT NULL,  PRIMARY KEY (`id`),  KEY `c`">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -37,8 +38,8 @@
 
   
 
-</head>
-</html>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -51,10 +52,8 @@
 			<img src="/images/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">Elfred</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">上善若水</p>
 		
 
 		<nav class="header-menu">
@@ -105,10 +104,8 @@
 				<img src="/images/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">Elfred</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>上善若水<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -163,7 +160,7 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2021/05/05/study/MySQL实战45讲/20讲/" class="archive-article-date">
+<a href="/2021/05/05/study/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/20%E8%AE%B2/" class="archive-article-date">
   	<time datetime="2021-05-05T05:20:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-05</time>
 </a>
 
@@ -174,7 +171,7 @@
       
         <hr>
 <h1 id="20-幻读是什么，幻读有什么问题？"><a href="#20-幻读是什么，幻读有什么问题？" class="headerlink" title="20 | 幻读是什么，幻读有什么问题？"></a>20 | 幻读是什么，幻读有什么问题？</h1><p>为了便于说明问题，这一篇文章，我们就先使用一个小一点儿的表。建表和初始化语句如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `t` (</span><br><span class="line">  `id` int(11) NOT NULL,</span><br><span class="line">  `c` int(11) DEFAULT NULL,</span><br><span class="line">  `d` int(11) DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`id`),</span><br><span class="line">  KEY `c` (`c`)</span><br><span class="line">) ENGINE=InnoDB;</span><br><span class="line"></span><br><span class="line">insert into t values(0,0,0),(5,5,5),</span><br><span class="line">(10,10,10),(15,15,15),(20,20,20),(25,25,25);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `t` (</span><br><span class="line">  `id` int(11) NOT NULL,</span><br><span class="line">  `c` int(11) DEFAULT NULL,</span><br><span class="line">  `d` int(11) DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`id`),</span><br><span class="line">  KEY `c` (`c`)</span><br><span class="line">) ENGINE=InnoDB;</span><br><span class="line"></span><br><span class="line">insert into t values(0,0,0),(5,5,5),</span><br><span class="line">(10,10,10),(15,15,15),(20,20,20),(25,25,25);</span><br></pre></td></tr></table></figure>
 
 <h2 id="幻读是什么？"><a href="#幻读是什么？" class="headerlink" title="幻读是什么？"></a>幻读是什么？</h2>
       
@@ -249,7 +246,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/2021/05/05/study/MySQL实战45讲/20讲/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/2021/05/05/study/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/20%E8%AE%B2/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -263,18 +260,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/05/05/study/MySQL实战45讲/21讲/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/05/06/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/15%E8%AE%B2/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          02讲
+          15讲
         
       </div>
     </a>
   
   
-    <a href="/2021/05/04/study/数据结构与算法之美/学习笔记/12讲/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">12讲</div>
+    <a href="/2021/05/05/study/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/21%E8%AE%B2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">02讲</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -355,11 +352,6 @@
     	<div class="footer-left">
     		&copy; 2022 Elfred 
         <!-- 《网站备案号 -->
-        
-                <img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png" title="备案管理系统">
-                <a href="http://www.beian.miit.gov.cn/" style="color:#f72b07" target="_blank" title="备案号">
-                    皖ICP备20005183号
-                </a>
         
         <!-- 网站备案号》 -->
     	</div>
@@ -467,10 +459,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
@@ -491,6 +479,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">框架</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
@@ -499,15 +491,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">框架</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -515,7 +507,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -524,10 +516,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -1,24 +1,23 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://blog.elfred.top">
   <title>Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="好记性不如烂笔头">
-<meta name="keywords" content="前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Elfred&#39;s Blog">
 <meta property="og:url" content="https://blog.elfred.top/page/6/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
 <meta property="og:description" content="好记性不如烂笔头">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Elfred">
+<meta property="article:tag" content="前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Elfred&#39;s Blog">
-<meta name="twitter:description" content="好记性不如烂笔头">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -36,8 +35,8 @@
 
   
 
-</head>
-</html>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -50,10 +49,8 @@
 			<img src="/images/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">Elfred</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">上善若水</p>
 		
 
 		<nav class="header-menu">
@@ -104,10 +101,8 @@
 				<img src="/images/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">Elfred</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>上善若水<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -146,222 +141,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-algorithm/算法思想掌握" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/27/algorithm/算法思想掌握/">算法思想掌握</a>
-    </h1>
-  
-
-        
-        
-<a href="/2021/02/27/algorithm/算法思想掌握/" class="archive-article-date">
-  	<time datetime="2021-02-27T04:36:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-27</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><h3 id="395-至少有K个重复字符的最长子串"><a href="#395-至少有K个重复字符的最长子串" class="headerlink" title="395. 至少有K个重复字符的最长子串"></a><a href="https://leetcode-cn.com/problems/longest-substring-with-at-least-k-repeating-characters/" target="_blank" rel="noopener">395. 至少有K个重复字符的最长子串</a></h3><p>给你一个字符串 <code>s</code> 和一个整数 <code>k</code> ，请你找出 <code>s</code> 中的最长子串， 要求该子串中的每一字符出现次数都不少于 <code>k</code> 。返回这一子串的长度。</p>
-<p><strong>示例 1：</strong></p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">"aaabb"</span>, k = <span class="number">3</span></span><br><span class="line">输出：<span class="number">3</span></span><br><span class="line">解释：最长子串为 <span class="string">"aaa"</span> ，其中 'a' 重复了 <span class="number">3</span> 次。</span><br></pre></td></tr></table></figure>
-
-<p><strong>示例 2：</strong></p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">"ababbc"</span>, k = <span class="number">2</span></span><br><span class="line">输出：<span class="number">5</span></span><br><span class="line">解释：最长子串为 <span class="string">"ababb"</span> ，其中 'a' 重复了 <span class="number">2</span> 次， 'b' 重复了 <span class="number">3</span> 次。</span><br></pre></td></tr></table></figure>
-
-<p> <strong>提示：</strong></p>
-<ul>
-<li><code>1 &lt;= s.length &lt;= 10^4</code></li>
-<li><code>s</code> 仅由小写英文字母组成</li>
-<li><code>1 &lt;= k &lt;= 10^5</code></li>
-</ul>
-        
-          <a class="article-more-a" href="/2021/02/27/algorithm/算法思想掌握/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/算法//" class="article-tag-list-link color3">算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/27/algorithm/算法思想掌握/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-algorithm/你需要了解这 14 种编程面试模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/25/algorithm/你需要了解这 14 种编程面试模式/">你需要了解这14种编程面试模式</a>
-    </h1>
-  
-
-        
-        
-<a href="/2021/02/25/algorithm/你需要了解这 14 种编程面试模式/" class="archive-article-date">
-  	<time datetime="2021-02-25T01:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-25</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>作者：Fahim ul Haq</p>
-<p>机器之心编译</p>
-<p>参与：Panda</p>
-<h1 id="解题套路"><a href="#解题套路" class="headerlink" title="解题套路"></a>解题套路</h1><p>咱们在面试程序员岗位时往往需要经历一个编程面试过程，雇主会借此考验面试者的技术实力。</p>
-<p>然而，这些技术问题有时候却和我们的实际工作并无太大关系，也由此可能给我们的编程面试准备阶段带来很大的压力。</p>
-<p>曾在 Facebook 和微软工作过的 Educative.io 创始人 Fahim ul Haq 近日发文总结了编程面试所遇到的问题的 14 种最常见的模式，也许能帮你看清各种编程面试问题「背后的真相」。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210225100733.png" alt="图片"></p>
-<p>对很多开发者来说，编程工作的面试准备很容易让人焦虑。面试要涉及的东西实在太多，其中很多还往往与开发者的日常工作无关，只会额外增添压力。</p>
-<p>这种现状导致了一个后果：现在的开发者往往需要花费数周时间在 LeetCode 等网站上了解综合数百个问题。</p>
-<p>与我谈过的开发者在面试前的一个常见焦虑问题是：<strong>我是否已经解决过足够多的实际问题？我本可以做到更多吗？</strong></p>
-<p>这就是我想要帮助开发者了解每个问题背后的底层模式的原因——这样他们就不必担忧解决数百个问题以及被 LeetCode 整得疲惫不堪了。</p>
-<p>如果你理解面试的通用模式，你就可以将其用作模板，从而解决各种层级的稍有不同的问题。</p>
-<p>这里我将列出最常见的 14 种模式，它们可被用于解决任何编程面试问题。</p>
-<p>另外我还会说明如何识别每种模式，并会为每种模式提供一些问题示例。</p>
-<p>这些内容都只是蜻蜓点水——<strong>我强烈建议你看看课程《Grokking the Coding Interview: Patterns for Coding Questions》，里面提供了全面的解释、示例和编程实践</strong>。</p>
-<p>下面的模式说明假设你已经知悉了数据结构。如果你还不了解，那需要补充一下知识点哦。</p>
-<p>我们今天将说明以下 14 种模式：</p>
-<blockquote>
-<ul>
-<li>1．滑动窗口</li>
-<li>2．二指针或迭代器</li>
-<li>3．快速和慢速指针或迭代器</li>
-<li>4．合并区间</li>
-<li>5．循环排序</li>
-<li>6．原地反转链表</li>
-<li>7．树的宽度优先搜索（Tree BFS）</li>
-<li>8．树的深度优先搜索（Tree DFS）</li>
-<li>9．Two Heaps</li>
-<li>10．子集</li>
-<li>11．经过修改的二叉搜索</li>
-<li>12．前 K 个元素</li>
-<li>13．K 路合并</li>
-<li>14．拓扑排序</li>
-</ul>
-</blockquote>
-<p>我们开始吧！</p>
-        
-          <a class="article-more-a" href="/2021/02/25/algorithm/你需要了解这 14 种编程面试模式/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/25/algorithm/你需要了解这 14 种编程面试模式/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-algorithm/算法模板" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -369,13 +148,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/22/algorithm/算法模板/">算法模板</a>
+      <a class="article-title" href="/2021/02/22/algorithm/%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BF/">算法模板</a>
     </h1>
   
 
         
         
-<a href="/2021/02/22/algorithm/算法模板/" class="archive-article-date">
+<a href="/2021/02/22/algorithm/%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BF/" class="archive-article-date">
   	<time datetime="2021-02-22T14:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-22</time>
 </a>
 
@@ -385,14 +164,16 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<h3 id="滑动窗口"><a href="#滑动窗口" class="headerlink" title="滑动窗口"></a>滑动窗口</h3><h4 id="1-滑动窗口通用模板"><a href="#1-滑动窗口通用模板" class="headerlink" title="1.滑动窗口通用模板"></a>1.滑动窗口通用模板</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">findSubArray</span><span class="params">(nums)</span>:</span></span><br><span class="line">    N = len(nums) <span class="comment"># 数组/字符串长度</span></span><br><span class="line">    left, right = <span class="number">0</span>, <span class="number">0</span> <span class="comment"># 双指针，表示当前遍历的区间[left, right]，闭区间</span></span><br><span class="line">    sums = <span class="number">0</span> <span class="comment"># 用于统计 子数组/子区间 是否有效，根据题目可能会改成求和/计数</span></span><br><span class="line">    res = <span class="number">0</span> <span class="comment"># 保存最大的满足题目要求的 子数组/子串 长度</span></span><br><span class="line">    <span class="keyword">while</span> right &lt; N: <span class="comment"># 当右边的指针没有搜索到 数组/字符串 的结尾</span></span><br><span class="line">        sums += nums[right] <span class="comment"># 增加当前右边指针的数字/字符的求和/计数</span></span><br><span class="line">        <span class="keyword">while</span> 区间[left, right]不符合题意：<span class="comment"># 此时需要一直移动左指针，直至找到一个符合题意的区间</span></span><br><span class="line">            sums -= nums[left] <span class="comment"># 移动左指针前需要从counter中减少left位置字符的求和/计数</span></span><br><span class="line">            left += <span class="number">1</span> <span class="comment"># 真正的移动左指针，注意不能跟上面一行代码写反</span></span><br><span class="line">        <span class="comment"># 到 while 结束时，我们找到了一个符合题意要求的 子数组/子串</span></span><br><span class="line">        res = max(res, right - left + <span class="number">1</span>) <span class="comment"># 需要更新结果</span></span><br><span class="line">        right += <span class="number">1</span> <span class="comment"># 移动右指针，去探索新的区间</span></span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<h3 id="滑动窗口"><a href="#滑动窗口" class="headerlink" title="滑动窗口"></a>滑动窗口</h3><h4 id="1-滑动窗口通用模板"><a href="#1-滑动窗口通用模板" class="headerlink" title="1.滑动窗口通用模板"></a>1.滑动窗口通用模板</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">findSubArray</span>(<span class="params">nums</span>):</span><br><span class="line">    N = <span class="built_in">len</span>(nums) <span class="comment"># 数组/字符串长度</span></span><br><span class="line">    left, right = <span class="number">0</span>, <span class="number">0</span> <span class="comment"># 双指针，表示当前遍历的区间[left, right]，闭区间</span></span><br><span class="line">    sums = <span class="number">0</span> <span class="comment"># 用于统计 子数组/子区间 是否有效，根据题目可能会改成求和/计数</span></span><br><span class="line">    res = <span class="number">0</span> <span class="comment"># 保存最大的满足题目要求的 子数组/子串 长度</span></span><br><span class="line">    <span class="keyword">while</span> right &lt; N: <span class="comment"># 当右边的指针没有搜索到 数组/字符串 的结尾</span></span><br><span class="line">        sums += nums[right] <span class="comment"># 增加当前右边指针的数字/字符的求和/计数</span></span><br><span class="line">        <span class="keyword">while</span> 区间[left, right]不符合题意：<span class="comment"># 此时需要一直移动左指针，直至找到一个符合题意的区间</span></span><br><span class="line">            sums -= nums[left] <span class="comment"># 移动左指针前需要从counter中减少left位置字符的求和/计数</span></span><br><span class="line">            left += <span class="number">1</span> <span class="comment"># 真正的移动左指针，注意不能跟上面一行代码写反</span></span><br><span class="line">        <span class="comment"># 到 while 结束时，我们找到了一个符合题意要求的 子数组/子串</span></span><br><span class="line">        res = <span class="built_in">max</span>(res, right - left + <span class="number">1</span>) <span class="comment"># 需要更新结果</span></span><br><span class="line">        right += <span class="number">1</span> <span class="comment"># 移动右指针，去探索新的区间</span></span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
 
 <p>滑动窗口中用到了左右两个指针，它们移动的思路是：以右指针作为驱动，拖着左指针向前走。右指针每次只移动一步，而左指针在内部 while 循环中每次可能移动多步。右指针是主动前移，探索未知的新区域；左指针是被迫移动，负责寻找满足题意的区间。</p>
 <p>模板的整体思想是：</p>
-<p>定义两个指针 left 和 right 分别指向区间的开头和结尾，注意是闭区间；定义 sums 用来统计该区间内的各个字符出现次数；<br>第一重 while 循环是为了判断 right 指针的位置是否超出了数组边界；当 right 每次到了新位置，需要增加 right 指针的求和/计数；<br>第二重 while 循环是让 left 指针向右移动到 [left, right] 区间符合题意的位置；当 left 每次移动到了新位置，需要减少 left 指针的求和/计数；<br>在第二重 while 循环之后，成功找到了一个符合题意的 [left, right] 区间，题目要求最大的区间长度，因此更新 res 为 max(res, 当前区间的长度) 。<br>right 指针每次向右移动一步，开始探索新的区间。<br>模板中的 sums 需要根据题目意思具体去修改，本题是求和题目因此把sums 定义成整数用于求和；如果是计数题目，就需要改成字典用于计数。当左右指针发生变化的时候，都需要更新 sums 。</p>
-<h4 id="2-固定滑动窗口"><a href="#2-固定滑动窗口" class="headerlink" title="2.固定滑动窗口"></a>2.固定滑动窗口</h4><h5 id="leetcode-643-子数组最大平均数-I"><a href="#leetcode-643-子数组最大平均数-I" class="headerlink" title="leetcode 643. 子数组最大平均数 I"></a><a href="https://leetcode-cn.com/problems/maximum-average-subarray-i/" target="_blank" rel="noopener">leetcode 643. 子数组最大平均数 I</a></h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">findMaxAverage</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">        sum += nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> max = sum;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = k; i &lt; nums.length; i++) &#123;</span><br><span class="line">        sum = sum + nums[i] - nums[i - k];</span><br><span class="line">        max = Math.max(sum, max);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1.0</span> * max / k;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定义两个指针 left 和 right 分别指向区间的开头和结尾，注意是闭区间；定义 sums 用来统计该区间内的各个字符出现次数；<br>第一重 while 循环是为了判断 right 指针的位置是否超出了数组边界；当 right 每次到了新位置，需要增加 right 指针的求和&#x2F;计数；<br>第二重 while 循环是让 left 指针向右移动到 [left, right] 区间符合题意的位置；当 left 每次移动到了新位置，需要减少 left 指针的求和&#x2F;计数；<br>在第二重 while 循环之后，成功找到了一个符合题意的 [left, right] 区间，题目要求最大的区间长度，因此更新 res 为 max(res, 当前区间的长度) 。<br>right 指针每次向右移动一步，开始探索新的区间。<br>模板中的 sums 需要根据题目意思具体去修改，本题是求和题目因此把sums 定义成整数用于求和；如果是计数题目，就需要改成字典用于计数。当左右指针发生变化的时候，都需要更新 sums 。</p>
+<h4 id="2-固定滑动窗口"><a href="#2-固定滑动窗口" class="headerlink" title="2.固定滑动窗口"></a>2.固定滑动窗口</h4><h5 id="leetcode-643-子数组最大平均数-I"><a href="#leetcode-643-子数组最大平均数-I" class="headerlink" title="leetcode 643. 子数组最大平均数 I"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/maximum-average-subarray-i/">leetcode 643. 子数组最大平均数 I</a></h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">double</span> <span class="title function_">findMaxAverage</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> k)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">        sum += nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> <span class="variable">max</span> <span class="operator">=</span> sum;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> k; i &lt; nums.length; i++) &#123;</span><br><span class="line">        sum = sum + nums[i] - nums[i - k];</span><br><span class="line">        max = Math.max(sum, max);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1.0</span> * max / k;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h5 id="leetcode-1052-爱生气的书店老板"><a href="#leetcode-1052-爱生气的书店老板" class="headerlink" title="leetcode 1052.爱生气的书店老板"></a><a href="https://leetcode-cn.com/problems/grumpy-bookstore-owner/" target="_blank" rel="noopener">leetcode 1052.爱生气的书店老板</a></h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">maxSatisfied</span><span class="params">(<span class="keyword">int</span>[] customers, <span class="keyword">int</span>[] grumpy, <span class="keyword">int</span> X)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">int</span> n = customers.length;</span><br><span class="line">      <span class="keyword">int</span> total = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">          total += customers[i] * (<span class="number">1</span> - grumpy[i]);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">int</span> increase = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; X; i++) &#123;</span><br><span class="line">          increase += customers[i] * grumpy[i];</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">int</span> maxIncrease = increase;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = X; i &lt; n; i++) &#123;</span><br><span class="line">          <span class="comment">// 如果是1的代表生气，0的代表不生气直接乘就可以（仍为0），因为之前已经算出来了</span></span><br><span class="line">          increase = increase - customers[i - X] * grumpy[i - X] + customers[i] * grumpy[i];</span><br><span class="line">          maxIncrease = Math.max(maxIncrease, increase);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> total + maxIncrease;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+
+<h5 id="leetcode-1052-爱生气的书店老板"><a href="#leetcode-1052-爱生气的书店老板" class="headerlink" title="leetcode 1052.爱生气的书店老板"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/grumpy-bookstore-owner/">leetcode 1052.爱生气的书店老板</a></h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">maxSatisfied</span><span class="params">(<span class="type">int</span>[] customers, <span class="type">int</span>[] grumpy, <span class="type">int</span> X)</span> &#123;</span><br><span class="line">      <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> customers.length;</span><br><span class="line">      <span class="type">int</span> <span class="variable">total</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">          total += customers[i] * (<span class="number">1</span> - grumpy[i]);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="type">int</span> <span class="variable">increase</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; X; i++) &#123;</span><br><span class="line">          increase += customers[i] * grumpy[i];</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="type">int</span> <span class="variable">maxIncrease</span> <span class="operator">=</span> increase;</span><br><span class="line">      <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> X; i &lt; n; i++) &#123;</span><br><span class="line">          <span class="comment">// 如果是1的代表生气，0的代表不生气直接乘就可以（仍为0），因为之前已经算出来了</span></span><br><span class="line">          increase = increase - customers[i - X] * grumpy[i - X] + customers[i] * grumpy[i];</span><br><span class="line">          maxIncrease = Math.max(maxIncrease, increase);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> total + maxIncrease;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -417,7 +198,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/22/algorithm/算法模板/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/02/22/algorithm/%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BF/">展开全文 >></a>
         </p>
       
 
@@ -454,13 +235,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/21/interview/分布式事务/">分布式事务</a>
+      <a class="article-title" href="/2021/02/21/interview/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/">分布式事务</a>
     </h1>
   
 
         
         
-<a href="/2021/02/21/interview/分布式事务/" class="archive-article-date">
+<a href="/2021/02/21/interview/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" class="archive-article-date">
   	<time datetime="2021-02-21T15:49:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-21</time>
 </a>
 
@@ -470,7 +251,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<h3 id="两阶段提交方案-XA-方案"><a href="#两阶段提交方案-XA-方案" class="headerlink" title="两阶段提交方案/XA 方案"></a>两阶段提交方案/XA 方案</h3><p>所谓的 XA 方案，即：两阶段提交，有一个<strong>事务管理器</strong>的概念，负责协调多个数据库（资源管理器）的事务，事务管理器先问问各个数据库你准备好了吗？如果每个数据库都回复 ok，那么就正式提交事务，在各个数据库上执行操作；如果任何其中一个数据库回答不 ok，那么就回滚事务。</p>
+<h3 id="两阶段提交方案-x2F-XA-方案"><a href="#两阶段提交方案-x2F-XA-方案" class="headerlink" title="两阶段提交方案&#x2F;XA 方案"></a>两阶段提交方案&#x2F;XA 方案</h3><p>所谓的 XA 方案，即：两阶段提交，有一个<strong>事务管理器</strong>的概念，负责协调多个数据库（资源管理器）的事务，事务管理器先问问各个数据库你准备好了吗？如果每个数据库都回复 ok，那么就正式提交事务，在各个数据库上执行操作；如果任何其中一个数据库回答不 ok，那么就回滚事务。</p>
 <p>这种分布式事务方案，比较适合单块应用里，跨多个库的分布式事务，而且因为严重依赖于数据库层面来搞定复杂的事务，效率很低，绝对不适合高并发的场景。如果要玩儿，那么基于 <code>Spring + JTA</code> 就可以搞定，自己随便搜个 demo 看看就知道了。</p>
 <p>这个方案，我们很少用，一般来说<strong>某个系统内部如果出现跨多个库</strong>的这么一个操作，是<strong>不合规</strong>的。我可以给大家介绍一下， 现在微服务，一个大的系统分成几十个甚至几百个服务。一般来说，我们的规定和规范，是要求<strong>每个服务只能操作自己对应的一个数据库</strong>。</p>
 <p>如果你要操作别的服务对应的库，不允许直连别的服务的库，违反微服务架构的规范，你随便交叉胡乱访问，几百个服务的话，全体乱套，这样的一套服务是没法管理的，没法治理的，可能会出现数据被别人改错，自己的库被别人写挂等情况。</p>
@@ -561,7 +342,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/21/interview/分布式事务/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/02/21/interview/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/">展开全文 >></a>
         </p>
       
 
@@ -598,13 +379,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/04/interview/计算机网络/">计算机网络</a>
+      <a class="article-title" href="/2021/02/04/interview/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
     </h1>
   
 
         
         
-<a href="/2021/02/04/interview/计算机网络/" class="archive-article-date">
+<a href="/2021/02/04/interview/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" class="archive-article-date">
   	<time datetime="2021-02-04T07:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-04</time>
 </a>
 
@@ -614,8 +395,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<h2 id="TCP-UDP"><a href="#TCP-UDP" class="headerlink" title="TCP/UDP"></a>TCP/UDP</h2><h3 id="什么是TCP"><a href="#什么是TCP" class="headerlink" title="什么是TCP"></a>什么是TCP</h3><h3 id="TCP三次握手"><a href="#TCP三次握手" class="headerlink" title="TCP三次握手"></a>TCP三次握手</h3><h4 id="三次握手的流程"><a href="#三次握手的流程" class="headerlink" title="三次握手的流程"></a>三次握手的流程</h4><h4 id="为什么是三次，两次行不行？"><a href="#为什么是三次，两次行不行？" class="headerlink" title="为什么是三次，两次行不行？"></a>为什么是三次，两次行不行？</h4><h3 id="TCP四次挥手"><a href="#TCP四次挥手" class="headerlink" title="TCP四次挥手"></a>TCP四次挥手</h3><h4 id="四次挥手的流程？"><a href="#四次挥手的流程？" class="headerlink" title="四次挥手的流程？"></a>四次挥手的流程？</h4><h4 id="为什么是四次挥手不是三次？"><a href="#为什么是四次挥手不是三次？" class="headerlink" title="为什么是四次挥手不是三次？"></a>为什么是四次挥手不是三次？</h4><h3 id="TCP如何保证可靠性传输"><a href="#TCP如何保证可靠性传输" class="headerlink" title="TCP如何保证可靠性传输"></a>TCP如何保证可靠性传输</h3><h3 id="TCP粘包和拆包"><a href="#TCP粘包和拆包" class="headerlink" title="TCP粘包和拆包"></a>TCP粘包和拆包</h3><p>TCP是个“流”协议，所谓流，就是没有界限的一串数据。大家可以想想河里的流水，是连成一片的，其间并没有分界线。TCP底层并不了解上层业务数据的具体含义，它会根据TCP缓冲区的实际情况进行包的划分，所以在业务上认为，一个完整的包可能会被TCP拆分成多个包进行发送，也有可能把多个小的包封装成一个大的数据包发送，这就是所谓的TCP粘包和拆包问题。</p>
-<h4 id="TCP粘包-拆包问题说明"><a href="#TCP粘包-拆包问题说明" class="headerlink" title="TCP粘包/拆包问题说明"></a>TCP粘包/拆包问题说明</h4><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210212215650.png" alt="img"></p>
+<h2 id="TCP-x2F-UDP"><a href="#TCP-x2F-UDP" class="headerlink" title="TCP&#x2F;UDP"></a>TCP&#x2F;UDP</h2><h3 id="什么是TCP"><a href="#什么是TCP" class="headerlink" title="什么是TCP"></a>什么是TCP</h3><h3 id="TCP三次握手"><a href="#TCP三次握手" class="headerlink" title="TCP三次握手"></a>TCP三次握手</h3><h4 id="三次握手的流程"><a href="#三次握手的流程" class="headerlink" title="三次握手的流程"></a>三次握手的流程</h4><h4 id="为什么是三次，两次行不行？"><a href="#为什么是三次，两次行不行？" class="headerlink" title="为什么是三次，两次行不行？"></a>为什么是三次，两次行不行？</h4><h3 id="TCP四次挥手"><a href="#TCP四次挥手" class="headerlink" title="TCP四次挥手"></a>TCP四次挥手</h3><h4 id="四次挥手的流程？"><a href="#四次挥手的流程？" class="headerlink" title="四次挥手的流程？"></a>四次挥手的流程？</h4><h4 id="为什么是四次挥手不是三次？"><a href="#为什么是四次挥手不是三次？" class="headerlink" title="为什么是四次挥手不是三次？"></a>为什么是四次挥手不是三次？</h4><h3 id="TCP如何保证可靠性传输"><a href="#TCP如何保证可靠性传输" class="headerlink" title="TCP如何保证可靠性传输"></a>TCP如何保证可靠性传输</h3><h3 id="TCP粘包和拆包"><a href="#TCP粘包和拆包" class="headerlink" title="TCP粘包和拆包"></a>TCP粘包和拆包</h3><p>TCP是个“流”协议，所谓流，就是没有界限的一串数据。大家可以想想河里的流水，是连成一片的，其间并没有分界线。TCP底层并不了解上层业务数据的具体含义，它会根据TCP缓冲区的实际情况进行包的划分，所以在业务上认为，一个完整的包可能会被TCP拆分成多个包进行发送，也有可能把多个小的包封装成一个大的数据包发送，这就是所谓的TCP粘包和拆包问题。</p>
+<h4 id="TCP粘包-x2F-拆包问题说明"><a href="#TCP粘包-x2F-拆包问题说明" class="headerlink" title="TCP粘包&#x2F;拆包问题说明"></a>TCP粘包&#x2F;拆包问题说明</h4><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210212215650.png" alt="img"></p>
 <p>假设客户端分别发送了两个数据包D1和D2给服务端，由于服务端一次读取到的字节数是不确定的，故可能存在以下4种情况。</p>
 <ol>
 <li>服务端分两次读取到了两个独立的数据包，分别是D1和D2，没有粘包和拆包；</li>
@@ -624,7 +405,7 @@
 <li>服务端分两次读取到了两个数据包，第一次读取到了D1包的部分内容D1_1，第二次读取到了D1包的剩余内容D1_2和D2包的整包。</li>
 </ol>
 <p>如果此时服务端TCP接收滑窗非常小，而数据包D1和D2比较大，很有可能会发生第五种可能，即服务端分多次才能将D1和D2包接收完全，期间发生多次拆包。</p>
-<h4 id="TCP粘包-拆包发生的原因"><a href="#TCP粘包-拆包发生的原因" class="headerlink" title="TCP粘包/拆包发生的原因"></a>TCP粘包/拆包发生的原因</h4><ol>
+<h4 id="TCP粘包-x2F-拆包发生的原因"><a href="#TCP粘包-x2F-拆包发生的原因" class="headerlink" title="TCP粘包&#x2F;拆包发生的原因"></a>TCP粘包&#x2F;拆包发生的原因</h4><ol>
 <li>应用程序write写入的字节大小大于套接口发送缓冲区大小；</li>
 <li>进行MSS大小的TCP分段；</li>
 <li>以太网帧的payload大于MTU进行IP分片。</li>
@@ -660,7 +441,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/04/interview/计算机网络/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/02/04/interview/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">展开全文 >></a>
         </p>
       
 
@@ -697,13 +478,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/30/interview/系统架构设计/">系统架构设计</a>
+      <a class="article-title" href="/2021/01/30/interview/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/">系统架构设计</a>
     </h1>
   
 
         
         
-<a href="/2021/01/30/interview/系统架构设计/" class="archive-article-date">
+<a href="/2021/01/30/interview/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/" class="archive-article-date">
   	<time datetime="2021-01-30T06:09:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-30</time>
 </a>
 
@@ -729,7 +510,7 @@
 <h2 id="哪些情况会导致系统不可用？"><a href="#哪些情况会导致系统不可用？" class="headerlink" title="哪些情况会导致系统不可用？"></a>哪些情况会导致系统不可用？</h2><ol>
 <li>黑客攻击；</li>
 <li>硬件故障，比如服务器坏掉。</li>
-<li>并发量/用户请求量激增导致整个服务宕掉或者部分服务不可用。</li>
+<li>并发量&#x2F;用户请求量激增导致整个服务宕掉或者部分服务不可用。</li>
 <li>代码中的坏味道导致内存泄漏或者其他问题导致程序挂掉。</li>
 <li>网站架构某个重要的角色比如 Nginx 或者数据库突然不可用。</li>
 <li>自然灾害或者人为破坏。</li>
@@ -743,7 +524,7 @@
 <li>IDEA 自带的代码分析等工具进行代码扫描也是非常非常棒的。</li>
 </ol>
 <h3 id="2-使用集群，减少单点故障"><a href="#2-使用集群，减少单点故障" class="headerlink" title="2.使用集群，减少单点故障"></a>2.使用集群，减少单点故障</h3><p>先拿常用的 Redis 举个例子！我们如何保证我们的 Redis 缓存高可用呢？答案就是使用集群，避免单点故障。当我们使用一个 Redis 实例作为缓存的时候，这个 Redis 实例挂了之后，整个缓存服务可能就挂了。使用了集群之后，即使一台 Redis 实例，不到一秒就会有另外一台 Redis 实例顶上。</p>
-<h3 id="3-限流"><a href="#3-限流" class="headerlink" title="3.限流"></a>3.限流</h3><p>流量控制（flow control），其原理是监控应用流量的 QPS 或并发线程数等指标，当达到指定的阈值时对流量进行控制，以避免被瞬时的流量高峰冲垮，从而保障应用的高可用性。——来自 alibaba-<a href="https://github.com/alibaba/Sentinel" target="_blank" rel="noopener">Sentinel</a> 的 wiki。</p>
+<h3 id="3-限流"><a href="#3-限流" class="headerlink" title="3.限流"></a>3.限流</h3><p>流量控制（flow control），其原理是监控应用流量的 QPS 或并发线程数等指标，当达到指定的阈值时对流量进行控制，以避免被瞬时的流量高峰冲垮，从而保障应用的高可用性。——来自 alibaba-<a target="_blank" rel="noopener" href="https://github.com/alibaba/Sentinel">Sentinel</a> 的 wiki。</p>
 <h3 id="4-超时和重试机制设置"><a href="#4-超时和重试机制设置" class="headerlink" title="4.超时和重试机制设置"></a>4.超时和重试机制设置</h3><p>一旦用户请求超过某个时间的得不到响应，就抛出异常。这个是非常重要的，很多线上系统故障都是因为没有进行超时设置或者超时设置的方式不对导致的。我们在读取第三方服务的时候，尤其适合设置超时和重试机制。一般我们使用一些 RPC 框架的时候，这些框架都自带的超时重试的配置。如果不进行超时设置可能会导致请求响应速度慢，甚至导致请求堆积进而让系统无法在处理请求。重试的次数一般设为 3 次，再多次的重试没有好处，反而会加重服务器压力（部分场景使用失败重试机制会不太适合）。</p>
 <h3 id="5-熔断机制"><a href="#5-熔断机制" class="headerlink" title="5.熔断机制"></a>5.熔断机制</h3><p>超时和重试机制设置之外，熔断机制也是很重要的。 熔断机制说的是系统自动收集所依赖服务的资源使用情况和性能指标，当所依赖的服务恶化或者调用失败次数达到某个阈值的时候就迅速失败，让当前系统立即切换依赖其他备用服务。 比较常用的是流量控制和熔断降级框架是 Netflix 的 Hystrix 和 alibaba 的 Sentinel。</p>
 <h3 id="6-异步调用"><a href="#6-异步调用" class="headerlink" title="6.异步调用"></a>6.异步调用</h3><p>异步调用的话我们不需要关心最后的结果，这样我们就可以用户请求完成之后就立即返回结果，具体处理我们可以后续再做，秒杀场景用这个还是蛮多的。但是，使用异步之后我们可能需要 <strong>适当修改业务流程进行配合</strong>，比如<strong>用户在提交订单之后，不能立即返回用户订单提交成功，需要在消息队列的订单消费者进程真正处理完该订单之后，甚至出库后，再通过电子邮件或短信通知用户订单成功</strong>。除了可以在程序中实现异步之外，我们常常还使用消息队列，消息队列可以通过异步处理提高系统性能（削峰、减少响应所需时间）并且可以降低系统耦合性。</p>
@@ -753,7 +534,7 @@
 <li><strong>监控系统资源使用情况增加报警设置。</strong></li>
 <li><strong>注意备份，必要时候回滚。</strong></li>
 <li><strong>灰度发布：</strong> 将服务器集群分成若干部分，每天只发布一部分机器，观察运行稳定没有故障，第二天继续发布一部分机器，持续几天才把整个集群全部发布完毕，期间如果发现问题，只需要回滚已发布的一部分服务器即可</li>
-<li><strong>定期检查/更换硬件：</strong> 如果不是购买的云服务的话，定期还是需要对硬件进行一波检查的，对于一些需要更换或者升级的硬件，要及时更换或者升级。</li>
+<li><strong>定期检查&#x2F;更换硬件：</strong> 如果不是购买的云服务的话，定期还是需要对硬件进行一波检查的，对于一些需要更换或者升级的硬件，要及时更换或者升级。</li>
 <li>…..(想起来再补充！也欢迎各位欢迎补充！)</li>
 </ol>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210213235715.png" alt="如何设计高可用系统？"></p>
@@ -780,7 +561,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/01/30/interview/系统架构设计/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/01/30/interview/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/">展开全文 >></a>
         </p>
       
 
@@ -817,13 +598,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/30/interview/计算机基础/">计算机基础</a>
+      <a class="article-title" href="/2021/01/30/interview/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a>
     </h1>
   
 
         
         
-<a href="/2021/01/30/interview/计算机基础/" class="archive-article-date">
+<a href="/2021/01/30/interview/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="archive-article-date">
   	<time datetime="2021-01-30T05:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-30</time>
 </a>
 
@@ -845,11 +626,11 @@
 <p>阻塞指的是线程一直等待数据准备好，期间什么都不干，但是会让出CPU，这样其他线程可以执行（CPU的利用率比较高），数据准备好之后自己来拷贝数据。</p>
 <p>非阻塞指的是在第一阶段，发起网络IO请求的时候会立即返回去干别的事情，但是会不断地进行询问数据是否准备好，这种方式称之为轮询。由于CPU要处理更多的系统调用（每次询问都是系统调用），这种模型的CPU利用率低。</p>
 <h2 id="NIO是如何实现同步非阻塞的呢？"><a href="#NIO是如何实现同步非阻塞的呢？" class="headerlink" title="NIO是如何实现同步非阻塞的呢？"></a>NIO是如何实现同步非阻塞的呢？</h2><p>Java的NIO实现采用了同步非阻塞IO和IO多路复用，其核心组件是Selector。Selector会不断的主动的询问Channel是否有事件发生，有事件发生，会进行事件处理。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//java nio</span></span><br><span class="line"><span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</span><br><span class="line">  ......</span><br><span class="line">  selector.select(<span class="number">1</span>); <span class="comment">//不阻塞</span></span><br><span class="line">  Set&lt;SelectionKey&gt; selectionKeySet= selector.selectedKeys();</span><br><span class="line">  ......</span><br><span class="line">  <span class="comment">//处理selectionKeySet中事件,线程没有阻塞</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//java socket处理连接，线程会阻塞</span></span><br><span class="line"><span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</span><br><span class="line">  ......</span><br><span class="line">  Socket socket = serverSocket.accept(); <span class="comment">//阻塞</span></span><br><span class="line">  InputStream in = socket.getInputStream(); </span><br><span class="line">  ......</span><br><span class="line">  <span class="comment">//处理in中内容</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//java nio</span></span><br><span class="line"><span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">  ......</span><br><span class="line">  selector.select(<span class="number">1</span>); <span class="comment">//不阻塞</span></span><br><span class="line">  Set&lt;SelectionKey&gt; selectionKeySet= selector.selectedKeys();</span><br><span class="line">  ......</span><br><span class="line">  <span class="comment">//处理selectionKeySet中事件,线程没有阻塞</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//java socket处理连接，线程会阻塞</span></span><br><span class="line"><span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">  ......</span><br><span class="line">  <span class="type">Socket</span> <span class="variable">socket</span> <span class="operator">=</span> serverSocket.accept(); <span class="comment">//阻塞</span></span><br><span class="line">  <span class="type">InputStream</span> <span class="variable">in</span> <span class="operator">=</span> socket.getInputStream(); </span><br><span class="line">  ......</span><br><span class="line">  <span class="comment">//处理in中内容</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>Netty采用的是NIO其对Java的NIO进行了改进，其内部也封装了Selector和Channel，采用串行并发来提高效率。</p>
 <p>Java的NIO采用的是Reactor线程模型中的单Reactor单线程模型（前台和服务员是一个人，全程为顾客服务，可以服务多个人），Netty的NIO采用的是主从Reactor模型，是多Reactor多线程模型。</p>
-<h2 id="I-O-多路复用"><a href="#I-O-多路复用" class="headerlink" title="I/O 多路复用"></a>I/O 多路复用</h2><p><a href="https://imageslr.com/2020/02/27/select-poll-epoll.html#%E4%BB%8E%E9%98%BB%E5%A1%9E-io-%E5%88%B0-io-%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8" target="_blank" rel="noopener">参考：从阻塞-io-到-io-多路复用</a></p>
+<h2 id="I-x2F-O-多路复用"><a href="#I-x2F-O-多路复用" class="headerlink" title="I&#x2F;O 多路复用"></a>I&#x2F;O 多路复用</h2><p><a target="_blank" rel="noopener" href="https://imageslr.com/2020/02/27/select-poll-epoll.html#%E4%BB%8E%E9%98%BB%E5%A1%9E-io-%E5%88%B0-io-%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8">参考：从阻塞-io-到-io-多路复用</a></p>
 <h3 id="select-的缺点"><a href="#select-的缺点" class="headerlink" title="select 的缺点"></a>select 的缺点</h3><ol>
 <li>性能开销大<ol>
 <li>调用 <code>select</code> 时会陷入内核，这时需要将参数中的 <code>fd_set</code> 从用户空间拷贝到内核空间</li>
@@ -876,26 +657,26 @@
 </blockquote>
 <p>此外，每次调用 <code>select</code> 时都需要向内核拷贝所有要监听的描述符集合，而 epoll 对于每个描述符，只需要在 <code>epoll_ctl</code> 传递一次，之后 <code>epoll_wait</code> 不需要再次传递。这也大大提高了效率。</p>
 <h3 id="水平触发、边缘触发"><a href="#水平触发、边缘触发" class="headerlink" title="水平触发、边缘触发"></a>水平触发、边缘触发</h3><p><code>select</code> 只支持水平触发，<code>epoll</code> 支持水平触发和边缘触发。</p>
-<p>水平触发（LT，Level Trigger）：当文件描述符就绪时，会触发通知，如果用户程序没有一次性把数据读/写完，下次还会发出可读/可写信号进行通知。</p>
+<p>水平触发（LT，Level Trigger）：当文件描述符就绪时，会触发通知，如果用户程序没有一次性把数据读&#x2F;写完，下次还会发出可读&#x2F;可写信号进行通知。</p>
 <p>边缘触发（ET，Edge Trigger）：仅当描述符从未就绪变为就绪时，通知一次，之后不会再通知。</p>
 <p>区别：边缘触发效率更高，<strong>减少了事件被重复触发的次数</strong>，函数不会返回大量用户程序可能不需要的文件描述符。</p>
 <blockquote>
 <p>水平触发、边缘触发的名称来源：数字电路当中的电位水平，高低电平切换瞬间的触发动作叫边缘触发，而处于高电平的触发动作叫做水平触发。</p>
 </blockquote>
-<h3 id="为什么边缘触发必须使用非阻塞-I-O？"><a href="#为什么边缘触发必须使用非阻塞-I-O？" class="headerlink" title="为什么边缘触发必须使用非阻塞 I/O？"></a>为什么边缘触发必须使用非阻塞 I/O？</h3><p>关于这个问题的解答，强烈建议阅读<a href="https://eklitzke.org/blocking-io-nonblocking-io-and-epoll" target="_blank" rel="noopener">这篇文章</a>。下面是一些关键摘要：</p>
+<h3 id="为什么边缘触发必须使用非阻塞-I-x2F-O？"><a href="#为什么边缘触发必须使用非阻塞-I-x2F-O？" class="headerlink" title="为什么边缘触发必须使用非阻塞 I&#x2F;O？"></a>为什么边缘触发必须使用非阻塞 I&#x2F;O？</h3><p>关于这个问题的解答，强烈建议阅读<a target="_blank" rel="noopener" href="https://eklitzke.org/blocking-io-nonblocking-io-and-epoll">这篇文章</a>。下面是一些关键摘要：</p>
 <ul>
 <li>每次通过 <code>read</code> 系统调用读取数据时，最多只能读取缓冲区大小的字节数；如果某个文件描述符一次性收到的数据超过了缓冲区的大小，那么需要对其 <code>read</code> 多次才能全部读取完毕</li>
-<li><strong><code>select</code> 可以使用阻塞 I/O</strong>。通过 <code>select</code> 获取到所有可读的文件描述符后，遍历每个文件描述符，<code>read</code> <strong>一次</strong>数据（见上文 <a href="https://imageslr.com/2020/02/27/select-poll-epoll.html#selectdemo" target="_blank" rel="noopener">select 示例</a>）<ul>
-<li>这些文件描述符都是可读的，因此即使 <code>read</code> 是阻塞 I/O，也一定可以读到数据，不会一直阻塞下去</li>
+<li><strong><code>select</code> 可以使用阻塞 I&#x2F;O</strong>。通过 <code>select</code> 获取到所有可读的文件描述符后，遍历每个文件描述符，<code>read</code> <strong>一次</strong>数据（见上文 <a target="_blank" rel="noopener" href="https://imageslr.com/2020/02/27/select-poll-epoll.html#selectdemo">select 示例</a>）<ul>
+<li>这些文件描述符都是可读的，因此即使 <code>read</code> 是阻塞 I&#x2F;O，也一定可以读到数据，不会一直阻塞下去</li>
 <li><code>select</code> 采用水平触发模式，因此如果第一次 <code>read</code> 没有读取完全部数据，那么下次调用 <code>select</code> 时依然会返回这个文件描述符，可以再次 <code>read</code></li>
-<li><strong><code>select</code> 也可以使用非阻塞 I/O</strong>。当遍历某个可读文件描述符时，使用 <code>for</code> 循环调用 <code>read</code> <strong>多次</strong>，直到读取完所有数据为止（返回 <code>EWOULDBLOCK</code>）。这样做会多一次 <code>read</code> 调用，但可以减少调用 <code>select</code> 的次数</li>
+<li><strong><code>select</code> 也可以使用非阻塞 I&#x2F;O</strong>。当遍历某个可读文件描述符时，使用 <code>for</code> 循环调用 <code>read</code> <strong>多次</strong>，直到读取完所有数据为止（返回 <code>EWOULDBLOCK</code>）。这样做会多一次 <code>read</code> 调用，但可以减少调用 <code>select</code> 的次数</li>
 </ul>
 </li>
-<li>在 <code>epoll</code> 的边缘触发模式下，只会在文件描述符的可读/可写状态发生切换时，才会收到操作系统的通知<ul>
-<li>因此，如果使用 <code>epoll</code> 的<strong>边缘触发模式</strong>，在收到通知时，<strong>必须使用非阻塞 I/O，并且必须循环调用 <code>read</code> 或 <code>write</code> 多次，直到返回 <code>EWOULDBLOCK</code> 为止</strong>，然后再调用 <code>epoll_wait</code> 等待操作系统的下一次通知</li>
-<li>如果没有一次性读/写完所有数据，那么在操作系统看来这个文件描述符的状态没有发生改变，将不会再发起通知，调用 <code>epoll_wait</code> 会使得该文件描述符一直等待下去，服务端也会一直等待客户端的响应，业务流程无法走完</li>
-<li>这样做的好处是每次调用 <code>epoll_wait</code> 都是<strong>有效</strong>的——保证数据全部读写完毕了，等待下次通知。在水平触发模式下，如果调用 <code>epoll_wait</code> 时数据没有读/写完毕，会直接返回，再次通知。因此边缘触发能显著减少事件被触发的次数</li>
-<li>为什么 <code>epoll</code> 的<strong>边缘触发模式不能使用阻塞 I/O</strong>？很显然，边缘触发模式需要循环读/写一个文件描述符的所有数据。如果使用阻塞 I/O，那么一定会在最后一次调用（没有数据可读/写）时阻塞，导致无法正常结束</li>
+<li>在 <code>epoll</code> 的边缘触发模式下，只会在文件描述符的可读&#x2F;可写状态发生切换时，才会收到操作系统的通知<ul>
+<li>因此，如果使用 <code>epoll</code> 的<strong>边缘触发模式</strong>，在收到通知时，<strong>必须使用非阻塞 I&#x2F;O，并且必须循环调用 <code>read</code> 或 <code>write</code> 多次，直到返回 <code>EWOULDBLOCK</code> 为止</strong>，然后再调用 <code>epoll_wait</code> 等待操作系统的下一次通知</li>
+<li>如果没有一次性读&#x2F;写完所有数据，那么在操作系统看来这个文件描述符的状态没有发生改变，将不会再发起通知，调用 <code>epoll_wait</code> 会使得该文件描述符一直等待下去，服务端也会一直等待客户端的响应，业务流程无法走完</li>
+<li>这样做的好处是每次调用 <code>epoll_wait</code> 都是<strong>有效</strong>的——保证数据全部读写完毕了，等待下次通知。在水平触发模式下，如果调用 <code>epoll_wait</code> 时数据没有读&#x2F;写完毕，会直接返回，再次通知。因此边缘触发能显著减少事件被触发的次数</li>
+<li>为什么 <code>epoll</code> 的<strong>边缘触发模式不能使用阻塞 I&#x2F;O</strong>？很显然，边缘触发模式需要循环读&#x2F;写一个文件描述符的所有数据。如果使用阻塞 I&#x2F;O，那么一定会在最后一次调用（没有数据可读&#x2F;写）时阻塞，导致无法正常结束</li>
 </ul>
 </li>
 </ul>
@@ -907,13 +688,13 @@
 <p><code>select</code>、<code>poll</code> 都是在用户态维护文件描述符集合，因此每次需要将完整集合传给内核；<code>epoll</code> 由操作系统在内核中维护文件描述符集合，因此只需要在创建的时候传入文件描述符。</p>
 <p>此外 <code>select</code> 只支持水平触发，<code>epoll</code> 支持边缘触发。</p>
 <h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h3><p>当连接数较多并且有很多的不活跃连接时，epoll 的效率比其它两者高很多。当连接数较少并且都十分活跃的情况下，由于 epoll 需要很多回调，因此性能可能低于其它两者。</p>
-<h3 id="Redis-的线程模型"><a href="#Redis-的线程模型" class="headerlink" title="Redis 的线程模型"></a>Redis 的线程模型</h3><p>Redis 是一个单线程的工作模型，使用 I/O 多路复用来处理客户端的多个连接。为什么 Redis 选择单线程也能效率这么高？</p>
-<p>I/O 设备（如磁盘、网络）等速度远远慢于 CPU，因此引入了多线程技术。当一个线程发起 I/O 请求时，先将它挂起，切换到别的线程；当 I/O 设备就绪时，再切换回该线程。总之，<strong>多线程技术是为了充分利用 CPU 的计算资源，适用于下层存储慢速的场景</strong>。</p>
-<p>而 redis 是纯内存操作，读写速度非常快。所有的操作都会在内存中完成，不涉及任何 I/O 操作，因此<strong>多线程频繁的上下文切换反而是一种负优化</strong>。Redis 选择基于非阻塞 I/O 的 <strong>I/O 多路复用机制</strong>，在单线程里<strong>并发</strong>处理客户端的多个连接，减少多线程带来的系统开销，同时也有更好的可维护性，方便开发和调试。</p>
+<h3 id="Redis-的线程模型"><a href="#Redis-的线程模型" class="headerlink" title="Redis 的线程模型"></a>Redis 的线程模型</h3><p>Redis 是一个单线程的工作模型，使用 I&#x2F;O 多路复用来处理客户端的多个连接。为什么 Redis 选择单线程也能效率这么高？</p>
+<p>I&#x2F;O 设备（如磁盘、网络）等速度远远慢于 CPU，因此引入了多线程技术。当一个线程发起 I&#x2F;O 请求时，先将它挂起，切换到别的线程；当 I&#x2F;O 设备就绪时，再切换回该线程。总之，<strong>多线程技术是为了充分利用 CPU 的计算资源，适用于下层存储慢速的场景</strong>。</p>
+<p>而 redis 是纯内存操作，读写速度非常快。所有的操作都会在内存中完成，不涉及任何 I&#x2F;O 操作，因此<strong>多线程频繁的上下文切换反而是一种负优化</strong>。Redis 选择基于非阻塞 I&#x2F;O 的 <strong>I&#x2F;O 多路复用机制</strong>，在单线程里<strong>并发</strong>处理客户端的多个连接，减少多线程带来的系统开销，同时也有更好的可维护性，方便开发和调试。</p>
 <p>不过 redis 在最新的几个版本中也引入了多线程，目的是：</p>
 <ol>
 <li>异步处理删除操作。当删除超大键值对的时候，单线程内同步地删除可能会阻塞待处理的任务</li>
-<li>应对网络 I/O 的场景，网络 I/O 是慢速 I/O。redis6 吞吐量提高了 1 倍</li>
+<li>应对网络 I&#x2F;O 的场景，网络 I&#x2F;O 是慢速 I&#x2F;O。redis6 吞吐量提高了 1 倍</li>
 </ol>
 
       
@@ -938,7 +719,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/01/30/interview/计算机基础/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/01/30/interview/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">展开全文 >></a>
         </p>
       
 
@@ -975,13 +756,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/23/interview/Redis常见面试题/">Redis常见面试题</a>
+      <a class="article-title" href="/2021/01/23/interview/Redis%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/">Redis常见面试题</a>
     </h1>
   
 
         
         
-<a href="/2021/01/23/interview/Redis常见面试题/" class="archive-article-date">
+<a href="/2021/01/23/interview/Redis%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/" class="archive-article-date">
   	<time datetime="2021-01-23T08:24:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-23</time>
 </a>
 
@@ -993,27 +774,27 @@
         <hr>
 <h2 id="Redis线程模型"><a href="#Redis线程模型" class="headerlink" title="Redis线程模型"></a>Redis线程模型</h2><h3 id="Redis单线程的理解，Redis-为什么早期版本选择单线程？"><a href="#Redis单线程的理解，Redis-为什么早期版本选择单线程？" class="headerlink" title="Redis单线程的理解，Redis 为什么早期版本选择单线程？"></a>Redis单线程的理解，Redis 为什么早期版本选择单线程？</h3><h4 id="官方解释"><a href="#官方解释" class="headerlink" title="官方解释"></a>官方解释</h4><p>因为 Redis 是基于内存的操作，<strong>CPU 不是 Redis 的瓶颈</strong>，Redis 的瓶颈最有可能是 <strong>机器内存的大小</strong> 或者 <strong>网络带宽</strong>。既然单线程容易实现，而且 CPU 不会成为瓶颈，那就顺理成章地采用单线程的方案了。</p>
 <blockquote>
-<p>首先，我们需要明白，多线程解决的问题。当一个线程处理的任务是I/O密集型的，而I/O传输数据很慢，因此线程总是处于等待数据传输，从而造成CPU资源的浪费。这时我们可以开辟多个线程，当一个线程在等待I/O传输时，调度其他线程进行任务处理。<br>然而，redis所有的数据都存储在内存中，此时并不需要I/O操作。而多线程调度还会造成额外的开销且实现复杂。<br>最终，选用单线程即可。</p>
+<p>首先，我们需要明白，多线程解决的问题。当一个线程处理的任务是I&#x2F;O密集型的，而I&#x2F;O传输数据很慢，因此线程总是处于等待数据传输，从而造成CPU资源的浪费。这时我们可以开辟多个线程，当一个线程在等待I&#x2F;O传输时，调度其他线程进行任务处理。<br>然而，redis所有的数据都存储在内存中，此时并不需要I&#x2F;O操作。而多线程调度还会造成额外的开销且实现复杂。<br>最终，选用单线程即可。</p>
 </blockquote>
 <p>一种解释：</p>
 <p>因为Redis是基于内存的操作，CPU不是Redis的瓶颈，Redis的瓶颈最有可能是机器内存的大小或者网络带宽。既然单线程容易实现，而且CPU不会成为瓶颈，那就顺理成章地采用单线程的方案了。</p>
 <h4 id="简单总结一下"><a href="#简单总结一下" class="headerlink" title="简单总结一下"></a>简单总结一下</h4><ol>
 <li>使用单线程模型能带来更好的 <strong>可维护性</strong>，方便开发和调试；</li>
-<li>使用单线程模型也能 <strong>并发</strong> 的处理客户端的请求(I/O 多路复用机制epoll)；</li>
+<li>使用单线程模型也能 <strong>并发</strong> 的处理客户端的请求(I&#x2F;O 多路复用机制epoll)；</li>
 <li>Redis 服务中运行的绝大多数操作的 <strong>性能瓶颈都不是 CPU</strong>；</li>
 </ol>
 <h3 id="Redis为什么这么快？"><a href="#Redis为什么这么快？" class="headerlink" title="Redis为什么这么快？"></a>Redis为什么这么快？</h3><p>简单总结：</p>
 <ol>
-<li><strong>纯内存操作</strong>：读取不需要进行磁盘 I/O，所以比传统数据库要快上不少；<em>(但不要有误区说磁盘就一定慢，例如 Kafka 就是使用磁盘顺序读取但仍然较快)</em></li>
+<li><strong>纯内存操作</strong>：读取不需要进行磁盘 I&#x2F;O，所以比传统数据库要快上不少；*(但不要有误区说磁盘就一定慢，例如 Kafka 就是使用磁盘顺序读取但仍然较快)*</li>
 <li><strong>单线程，无锁竞争</strong>：这保证了没有线程的上下文切换，不会因为多线程的一些操作而降低性能；</li>
-<li><strong>多路 I/O 复用模型，非阻塞 I/O</strong>：采用多路 I/O 复用技术可以让单个线程高效的处理多个网络连接请求（尽量减少网络 IO 的时间消耗）；</li>
+<li><strong>多路 I&#x2F;O 复用模型，非阻塞 I&#x2F;O</strong>：采用多路 I&#x2F;O 复用技术可以让单个线程高效的处理多个网络连接请求（尽量减少网络 IO 的时间消耗）；</li>
 <li><strong>高效的数据结构，加上底层做了大量优化</strong>：Redis 对于底层的数据结构和内存占用做了大量的优化，例如不同长度的字符串使用不同的结构体表示，HyperLogLog 的密集型存储结构等等..</li>
 </ol>
 <h2 id="Redis数据结构"><a href="#Redis数据结构" class="headerlink" title="Redis数据结构"></a>Redis数据结构</h2><h3 id="Redis-的-SDS-和-C-中字符串相比有什么优势？"><a href="#Redis-的-SDS-和-C-中字符串相比有什么优势？" class="headerlink" title="Redis 的 SDS 和 C 中字符串相比有什么优势？"></a>Redis 的 SDS 和 C 中字符串相比有什么优势？</h3><h4 id="先简单总结一下"><a href="#先简单总结一下" class="headerlink" title="先简单总结一下"></a>先简单总结一下</h4><p>C 语言使用了一个长度为 <code>N+1</code> 的字符数组来表示长度为 <code>N</code> 的字符串，并且字符数组最后一个元素总是 <code>\0</code>，这种简单的字符串表示方式 <strong>不符合 Redis 对字符串在安全性、效率以及功能方面的要求</strong>。</p>
 <h4 id="再来说-C-语言字符串的问题"><a href="#再来说-C-语言字符串的问题" class="headerlink" title="再来说 C 语言字符串的问题"></a>再来说 C 语言字符串的问题</h4><p>这样简单的数据结构可能会造成以下一些问题：</p>
 <ul>
 <li><strong>获取字符串长度为 O(N) 级别的操作</strong> → 因为 C 不保存数组的长度，每次都需要遍历一遍整个数组；</li>
-<li>不能很好的杜绝 <strong>缓冲区溢出/内存泄漏</strong> 的问题 → 跟上述问题原因一样，如果执行拼接 or 缩短字符串的操作，如果操作不当就很容易造成上述问题；</li>
+<li>不能很好的杜绝 <strong>缓冲区溢出&#x2F;内存泄漏</strong> 的问题 → 跟上述问题原因一样，如果执行拼接 or 缩短字符串的操作，如果操作不当就很容易造成上述问题；</li>
 <li>C 字符串 <strong>只能保存文本数据</strong> → 因为 C 语言中的字符串必须符合某种编码（比如 ASCII），例如中间出现的 <code>&#39;\0&#39;</code> 可能会被判定为提前结束的字符串而识别不了；</li>
 </ul>
 <h4 id="Redis-如何解决的-SDS-的优势"><a href="#Redis-如何解决的-SDS-的优势" class="headerlink" title="Redis 如何解决的 | SDS 的优势"></a>Redis 如何解决的 | SDS 的优势</h4><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210228212624.webp" alt="图片"></p>
@@ -1024,11 +805,11 @@
 <li><strong>有效降低内存分配次数</strong>：C 字符串在涉及增加或者清除操作时会改变底层数组的大小造成重新分配，SDS 使用了 <strong>空间预分配</strong> 和 <strong>惰性空间释放</strong> 机制，简单理解就是每次在扩展时是成倍的多分配的，在缩容是也是先留着并不正式归还给 OS；</li>
 <li><strong>二进制安全</strong>：C 语言字符串只能保存 <code>ascii</code> 码，对于图片、音频等信息无法保存，SDS 是二进制安全的，写入什么读取就是什么，不做任何过滤和限制；</li>
 </ol>
-<h3 id="字典是如何实现的？Rehash-了解吗？"><a href="#字典是如何实现的？Rehash-了解吗？" class="headerlink" title="字典是如何实现的？Rehash 了解吗？"></a>字典是如何实现的？Rehash 了解吗？</h3><h4 id="先总体聊一下-Redis-中的字典"><a href="#先总体聊一下-Redis-中的字典" class="headerlink" title="先总体聊一下 Redis 中的字典"></a>先总体聊一下 Redis 中的字典</h4><p>字典是 Redis 服务器中出现最为频繁的复合型数据结构。除了 <strong>hash</strong> 结构的数据会用到字典外，整个 Redis 数据库的所有 <code>key</code> 和 <code>value</code> 也组成了一个 <strong>全局字典</strong>，还有带过期时间的 <code>key</code> 也是一个字典。<em>(存储在 RedisDb 数据结构中)</em></p>
+<h3 id="字典是如何实现的？Rehash-了解吗？"><a href="#字典是如何实现的？Rehash-了解吗？" class="headerlink" title="字典是如何实现的？Rehash 了解吗？"></a>字典是如何实现的？Rehash 了解吗？</h3><h4 id="先总体聊一下-Redis-中的字典"><a href="#先总体聊一下-Redis-中的字典" class="headerlink" title="先总体聊一下 Redis 中的字典"></a>先总体聊一下 Redis 中的字典</h4><p>字典是 Redis 服务器中出现最为频繁的复合型数据结构。除了 <strong>hash</strong> 结构的数据会用到字典外，整个 Redis 数据库的所有 <code>key</code> 和 <code>value</code> 也组成了一个 <strong>全局字典</strong>，还有带过期时间的 <code>key</code> 也是一个字典。*(存储在 RedisDb 数据结构中)*</p>
 <h4 id="说明字典内部结构和-rehash"><a href="#说明字典内部结构和-rehash" class="headerlink" title="说明字典内部结构和 rehash"></a>说明字典内部结构和 rehash</h4><p><strong>Redis</strong> 中的字典相当于 Java 中的 <strong>HashMap</strong>，内部实现也差不多类似，都是通过 <strong>“数组 + 链表”</strong> 的 <strong>链地址法</strong> 来解决部分 哈希冲突，同时这样的结构也吸收了两种不同数据结构的优点。</p>
-<p>字典结构内部包含 <strong>两个 hashtable</strong>，通常情况下只有一个 <code>hashtable</code> 有值，但是在字典扩容缩容时，需要分配新的 <code>hashtable</code>，然后进行 <strong>渐进式搬迁</strong> <em>(rehash)</em>，这时候两个 <code>hashtable</code> 分别存储旧的和新的 <code>hashtable</code>，待搬迁结束后，旧的将被删除，新的 <code>hashtable</code> 取而代之。</p>
+<p>字典结构内部包含 <strong>两个 hashtable</strong>，通常情况下只有一个 <code>hashtable</code> 有值，但是在字典扩容缩容时，需要分配新的 <code>hashtable</code>，然后进行 <strong>渐进式搬迁</strong> *(rehash)*，这时候两个 <code>hashtable</code> 分别存储旧的和新的 <code>hashtable</code>，待搬迁结束后，旧的将被删除，新的 <code>hashtable</code> 取而代之。</p>
 <h4 id="扩缩容的条件"><a href="#扩缩容的条件" class="headerlink" title="扩缩容的条件"></a>扩缩容的条件</h4><p>正常情况下，当 hash 表中 <strong>元素的个数等于第一维数组的长度时</strong>，就会开始扩容，扩容的新数组是 <strong>原数组大小的 2 倍</strong>。不过如果 Redis 正在做 <code>bgsave(持久化命令)</code>，为了减少内存也得过多分离，Redis 尽量不去扩容，但是如果 hash 表非常满了，<strong>达到了第一维数组长度的 5 倍了</strong>，这个时候就会 <strong>强制扩容</strong>。</p>
-<p>当 hash 表因为元素逐渐被删除变得越来越稀疏时，Redis 会对 hash 表进行缩容来减少 hash 表的第一维数组空间占用。所用的条件是 <strong>元素个数低于数组长度的 10%</strong>，缩容不会考虑 Redis 是否在做 <code>bgsave</code>。</p>
+<p>当 hash 表因为元素逐渐被删除变得越来越稀疏时，Redis 会对 hash 表进行缩容来减少 hash 表的第一维数组空间占用。所用的条件是 **元素个数低于数组长度的 10%**，缩容不会考虑 Redis 是否在做 <code>bgsave</code>。</p>
 <h3 id="跳跃表"><a href="#跳跃表" class="headerlink" title="跳跃表"></a>跳跃表</h3><h2 id="Redis高可用"><a href="#Redis高可用" class="headerlink" title="Redis高可用"></a>Redis高可用</h2><h3 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h3><h4 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h4><p><strong>Redis 快照</strong> 是最简单的 Redis 持久性模式。当满足特定条件时，它将生成数据集的时间点快照，例如，如果先前的快照是在 2 分钟前创建的，并且现在已经至少有 <code>100</code> 次新写入，则将创建一个新的快照。此条件可以由用户配置 Redis 实例来控制，也可以在运行时修改而无需重新启动服务器。快照作为包含整个数据集的单个 <code>.rdb</code> 文件生成。</p>
 <h4 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h4><p><strong>快照不是很持久</strong>。如果运行 Redis 的计算机停止运行，电源线出现故障或者您 <code>kill -9</code> 的实例意外发生，则写入 Redis 的最新数据将丢失。尽管这对于某些应用程序可能不是什么大问题，但有些使用案例具有充分的耐用性，在这些情况下，快照并不是可行的选择。</p>
 <p><strong>AOF(Append Only File - 仅追加文件)</strong> 它的工作方式非常简单：每次执行 <strong>修改内存</strong> 中数据集的写操作时，都会 <strong>记录</strong> 该操作。假设 AOF 日志记录了自 Redis 实例创建以来 <strong>所有的修改性指令序列</strong>，那么就可以通过对一个空的 Redis 实例 <strong>顺序执行所有的指令</strong>，也就是 <strong>「重放」</strong>，来恢复 Redis 当前实例的内存数据结构的状态。</p>
@@ -1079,7 +860,7 @@
 <p> 如果根据 host+ip 定位 master node，是不靠谱的，如果 master node 重启或者数据出现了变化，那么 slave node 应该根据不同的 run id 区分。</p>
 </blockquote>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
-<li><a href="https://mp.weixin.qq.com/s?__biz=Mzg5MzU2NDgyNw==&mid=2247487138&idx=1&sn=0e580a60cf28707b012f7c2068ca2bbc&source=41#wechat_redirect" target="_blank" rel="noopener">妈妈再也不担心我面试被Redis问得脸都绿了</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg5MzU2NDgyNw==&mid=2247487138&idx=1&sn=0e580a60cf28707b012f7c2068ca2bbc&source=41#wechat_redirect">妈妈再也不担心我面试被Redis问得脸都绿了</a></li>
 </ol>
 
       
@@ -1104,7 +885,287 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/01/23/interview/Redis常见面试题/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/01/23/interview/Redis%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-interview/JVM面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/23/interview/JVM%E9%9D%A2%E8%AF%95%E9%A2%98/">JVM面试题</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/01/23/interview/JVM%E9%9D%A2%E8%AF%95%E9%A2%98/" class="archive-article-date">
+  	<time datetime="2021-01-23T08:23:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-23</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h2 id="JVM内存划分"><a href="#JVM内存划分" class="headerlink" title="JVM内存划分"></a>JVM内存划分</h2><h2 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h2><p><strong>过程：加载、验证、准备、解析、初始化</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210610235314.jpeg" alt="img"></p>
+<p>类加载过程分为三个阶段：Load、Link和Init，即<strong>加载</strong>、<strong>链接</strong>、<strong>初始化</strong></p>
+<ol>
+<li>第一步，Load阶段读取类文件产生二进制流，并转化为特定的数据结构，初步校验cafe babe魔法数、常量池、文件长度、是否有父类等，然后创建对应的java.lang.Class实例</li>
+<li>第二步，Link阶段包括<strong>验证</strong>、<strong>准备</strong>、<strong>解析</strong>三个步骤。验证是更详细的校验，比如final是否合规、类型是否正确、静态变量是否合理等；准备阶段是为静态变量分配内存，并设定默认值，解析类和方法确保类与类之间的相互引用正确性，完成内存结构布局。</li>
+<li>第三步，Init阶段执行雷构造器&lt;clint&gt;方法，如果赋值运算是通过其他类的静态方法来完成的，那么会马上解析另外一个类，在虚拟机栈中执行完毕后通过返回值进行赋值。</li>
+</ol>
+<h2 id="JVM垃圾回收"><a href="#JVM垃圾回收" class="headerlink" title="JVM垃圾回收"></a>JVM垃圾回收</h2><h3 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h3><h4 id="JDK8-CMS：（关注最短垃圾回收停顿时间）"><a href="#JDK8-CMS：（关注最短垃圾回收停顿时间）" class="headerlink" title="JDK8-CMS：（关注最短垃圾回收停顿时间）"></a>JDK8-CMS：（关注最短垃圾回收停顿时间）</h4><p><strong>CMS回收器</strong>（Concurrent Mark Sweep Collector）是回收停顿时间比较短，目前比较常用的垃圾回收器。它通过初始标记（Initial Mark）、并发标记（Concurrent Mark）、重新标记（Remark)、并发清除（Concurrent Sweep）四个步骤完成垃圾回收工作。第1、3步的初始标记和重新标记阶段依然会引发STW。2、4步可以和应用程序并发执行。CMS采用“标记 - 清除算法”，因此产生大量的空间碎片。可以通过<code>-XX:+UseCMSCompactAtFullCollection</code>参数，强制JVM在FGC完成后对老年代进行压缩，执行一次空间碎片整理，但是会引发STW。为了减少STW次数，CMS还可以通过配置<code>-XX:+CMSFullGCsBeforeCompaction=n</code>参数，在执行了n次FGC后，JVM再在老年代执行空间碎片整理。</p>
+<h4 id="JDK9-G1：（精准控制停顿时间，避免垃圾碎片）"><a href="#JDK9-G1：（精准控制停顿时间，避免垃圾碎片）" class="headerlink" title="JDK9-G1：（精准控制停顿时间，避免垃圾碎片）"></a>JDK9-G1：（精准控制停顿时间，避免垃圾碎片）</h4><p>G1（Garbage-First Garbage Collector）垃圾回收器。</p>
+<p>是⼀款⾯向服务器的垃圾收集器,主要针对配备多颗处理器及⼤容量内存的机器.以极⾼概率满⾜GC停顿时<br>间要求的同时,还具备⾼吞吐量性能特征；相比与 CMS 收集器，G1 收集器两个最突出的改进是：</p>
+<p>【1】基于标记-整理算法，不产生内存碎片。</p>
+<p>【2】可以非常精确控制停顿时间，在不牺牲吞吐量前提下，实现低停顿垃圾回收。</p>
+<p>G1 收集器避免全区域垃圾收集，它把堆内存划分为大小固定的几个独立区域，并且跟踪这些区域的垃圾<br>收集进度，同时在后台维护一个优先级列表，每次根据所允许的收集时间，优先回收垃圾最多的区域。<strong>区域划</strong><br><strong>分</strong>和<strong>优先级区域</strong>回收机制，确保 G1 收集器可以在有限时间获得最高的垃圾收集效率。</p>
+<ul>
+<li><p><strong>初始标记</strong>：<strong>Stop The World，</strong>仅使用一条初始标记线程对GC Roots关联的对象进行标记</p>
+</li>
+<li><p><strong>并发标记</strong>：使用一条标记线程与用户线程并发执行。此过程进行<strong>可达性分析，速度很慢</strong></p>
+</li>
+<li><p><strong>最终标记</strong>：<strong>Stop The World</strong>，使用多条标记线程并发执行</p>
+</li>
+<li><p><strong>筛选回收</strong>：回收废弃对象，此时也要 <strong>Stop The World</strong>，并使用多条筛选回收线程并发执行</p>
+</li>
+</ul>
+<h4 id="如何配置垃圾收集器"><a href="#如何配置垃圾收集器" class="headerlink" title="如何配置垃圾收集器"></a><strong>如何配置垃圾收集器</strong></h4><ul>
+<li>首先是内存大小问题，基本上每一个内存区域我都会设置一个上限，来避免溢出问题，比如元空间。</li>
+<li>通常，堆空间我会设置成操作系统的 2&#x2F;3，超过 8GB 的堆，优先选用 G1</li>
+<li>然后我会对 JVM 进行初步优化，比如根据老年代的对象提升速度，来调整年轻代和老年代之间的比例</li>
+<li>依据系统容量、访问延迟、吞吐量等进行专项优化，我们的服务是高并发的，对 STW 的时间敏感</li>
+<li>我会通过记录详细的 GC 日志，来找到这个瓶颈点，借用 GCeasy 这样的日志分析工具，定位问题</li>
+</ul>
+<h3 id="GC触发条件"><a href="#GC触发条件" class="headerlink" title="GC触发条件"></a>GC触发条件</h3><h4 id="MinorGC触发条件"><a href="#MinorGC触发条件" class="headerlink" title="MinorGC触发条件"></a>MinorGC触发条件</h4><p>当Eden区满时触发MinorGC</p>
+<h4 id="FullGC触发条件"><a href="#FullGC触发条件" class="headerlink" title="FullGC触发条件"></a>FullGC触发条件</h4><ol>
+<li>调用System.gc时，系统建议执行FullGC，但是不必然执行</li>
+<li>老年代空间不足</li>
+<li>方法区空间不足（jdk8之前）</li>
+<li>通过MinorGC后进入老年代的平均大小大于老年代的可用内存</li>
+<li>由Eden区、FromSpace向ToSpace区复制时，对象大小大于ToSpace可用内存，则把该对象转存到老年代，且老年代的可用内存小于该对象大小</li>
+</ol>
+<h2 id="JVM调优"><a href="#JVM调优" class="headerlink" title="JVM调优"></a>JVM调优</h2><h3 id="JVM优化的思路"><a href="#JVM优化的思路" class="headerlink" title="JVM优化的思路"></a>JVM优化的思路</h3><p>1、一般来说，当survivor区不够大或者占用量达到50%，就会把一些对象放到老年区。通过设置合理的eden区，survivor区及使用率，可以将年轻对象保存在年轻代，从而避免full GC，使用<code>-Xmn</code>设置年轻代的大小</p>
+<p>2、对于占用内存比较多的大对象，一般会选择在老年代分配内存。如果在年轻代给大对象分配内存，年轻代内存不够了，就要在eden区移动大量对象到老年代，然后这些移动的对象可能很快消亡，因此导致full GC。通过设置参数：<code>-XX:PetenureSizeThreshold=1000000</code>，单位为B，标明对象大小超过1M时，在老年代(tenured)分配内存空间。</p>
+<p>3、一般情况下，年轻对象放在eden区，当第一次GC后，如果对象还存活，放到survivor区，此后，每GC一次，年龄增加1，当对象的年龄达到阈值，就被放到tenured老年区。这个阈值可以同构<code>-XX:MaxTenuringThreshold</code>设置。如果想让对象留在年轻代，可以设置比较大的阈值。</p>
+<p>4、设置最小堆和最大堆：<code>-Xmx</code>和<code>-Xms</code>稳定的堆大小堆垃圾回收是有利的，获得一个稳定的堆大小的方法是设置-Xms和-Xmx的值一样，即最大堆和最小堆一样，如果这样子设置，系统在运行时堆大小理论上是恒定的，稳定的堆空间可以减少GC次数，因此，很多服务端都会将这两个参数设置为一样的数值。稳定的堆大小虽然减少GC次数，但是增加每次GC的时间，因为每次GC要把堆的大小维持在一个区间内。</p>
+<p>5、一个不稳定的堆并非毫无用处。在系统不需要使用大内存的时候，压缩堆空间，使得GC每次应对一个较小的堆空间，加快单次GC次数。基于这种考虑，JVM提供两个参数，用于压缩和扩展堆空间。<br>（1）<code>-XX:MinHeapFreeRatio</code> 参数用于设置堆空间的最小空闲比率。默认值是40，当堆空间的空闲内存比率小于40，JVM便会扩展堆空间<br>（2）<code>-XX:MaxHeapFreeRatio</code> 参数用于设置堆空间的最大空闲比率。默认值是70， 当堆空间的空闲内存比率大于70，JVM便会压缩堆空间。<br>（3）当-Xmx和-Xmx相等时，上面两个参数无效</p>
+<p>6、通过增大吞吐量提高系统性能，可以通过设置并行垃圾回收收集器。<br>（1）<code>-XX:+UseParallelGC</code>:年轻代使用并行垃圾回收收集器。这是一个关注吞吐量的收集器，可以尽可能的减少垃圾回收时间。<br>（2）<code>-XX:+UseParallelOldGC</code>:设置老年代使用并行垃圾回收收集器。</p>
+<p>7、尝试使用大的内存分页：使用大的内存分页增加CPU的内存寻址能力，从而系统的性能。<code>-XX:+LargePageSizeInBytes</code> 设置内存页的大小</p>
+<p>8、使用非占用的垃圾收集器。<code>-XX:+UseConcMarkSweepGC</code>老年代使用CMS收集器降低停顿。</p>
+<p>9、<code>-XXSurvivorRatio=3</code>，表示年轻代中的分配比率：survivor:eden &#x3D; 2:3</p>
+<p>10、JVM性能调优的工具：<br>（1）jps（Java Process Status）：输出JVM中运行的进程状态信息(现在一般使用jconsole)<br>（2）jstack：查看java进程内线程的堆栈信息。<br>（3）jmap：用于生成堆转存快照<br>（4）jhat：用于分析jmap生成的堆转存快照（一般不推荐使用，而是使用Ecplise Memory Analyzer）<br>（3）jstat是JVM统计监测工具。可以用来显示垃圾回收信息、类加载信息、新生代统计信息等。<br>（4）VisualVM：故障处理工具</p>
+<h3 id="生产环境JVM调优具体步骤"><a href="#生产环境JVM调优具体步骤" class="headerlink" title="生产环境JVM调优具体步骤"></a>生产环境JVM调优具体步骤</h3><h5 id="1-监控GC的状态"><a href="#1-监控GC的状态" class="headerlink" title="1.监控GC的状态"></a>1.监控GC的状态</h5><p>使用各种JVM工具，查看当前日志，分析当前JVM参数设置，并且分析当前堆内存快照和gc日志，根据实际的各区域内存划分和GC执行时间，觉得是否进行优化。举一个例子，系统崩溃前的一些现象：每次垃圾回收的时间越来越长，由之前的10ms延长到50ms左右，FullGC的时间也由之前的0.5s延长到4、5s，FullGC的次数越来越多，最频繁时隔不到1分钟就进行一次FullGC，老年代的内存越来越大并且每次FGC后老年代没有内存释放，之后系统会无法响应新的数据，逐渐到达OutMemoryError的临界值，这个时候就需要分析JVM内存快照dump。</p>
+<h5 id="2-生成堆的dump文件"><a href="#2-生成堆的dump文件" class="headerlink" title="2.生成堆的dump文件"></a>2.生成堆的dump文件</h5><p>通过JMX的MBean生成当前的Heap信息，大小为一个3G（整个堆得大小）的hprof文件，如果没有启动JMX可以通过Java的jmap命令来生成改文件。</p>
+<h5 id="3-分析dump文件"><a href="#3-分析dump文件" class="headerlink" title="3.分析dump文件"></a>3.分析dump文件</h5><p>打开这个3G的堆信息文件，显然一般的Windows系统没有这么大的内存，必须借助高配置的Linux，几种工具打开该文件：Visual VM、IBM HeadpAnalyzer、JDK自带的Hprof工具、Mat（Eclipse专门的静态内存分析工具）推荐使用。Tips：文件太大，建议使用Eclipse专门的静态内存工具Mat打开分析。</p>
+<h5 id="4-分析结果，判断是否需要优化"><a href="#4-分析结果，判断是否需要优化" class="headerlink" title="4.分析结果，判断是否需要优化"></a>4.分析结果，判断是否需要优化</h5><p>如果各项参数设置合理，系统没有超时日志出现，GC频率不高，GC耗时不高，那么没有必要进行GC优化，如果GC时间超过1-3s，或者频繁GC，则必须优化。注意： 如果满足下面的指标，<strong>则一般不需要进行 GC 优化：</strong></p>
+<blockquote>
+<ul>
+<li>MinorGC 执行时间不到50ms；</li>
+<li>Minor GC 执行不频繁，约10秒一次；</li>
+<li>Full GC 执行时间不到1s；</li>
+<li>Full GC 执行频率不算频繁，不低于10分钟1次。</li>
+</ul>
+</blockquote>
+<h5 id="5-调整GC类型和内存分配"><a href="#5-调整GC类型和内存分配" class="headerlink" title="5.调整GC类型和内存分配"></a>5.调整GC类型和内存分配</h5><p>如果内存分配 过大或过小，或者采用的GC收集器比较慢，则应该优先调整这些参数，并且先找1台或几台机器进行beta，然后比较优化过的机器和没有优化的机器的性能对比，并有针对性的做出最后选择。</p>
+<h5 id="6-不断的分析和调整"><a href="#6-不断的分析和调整" class="headerlink" title="6.不断的分析和调整"></a>6.不断的分析和调整</h5><p>通过不断的试验和试错，分析并找出最合适的参数，如果找到了最合适的参数，则将这些参数应用到所有服务器。</p>
+<p>一般遇到问题就是打出当时的线程信息生成dump然后查异常代码。</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MjM5NzMyMjAwMA==&mid=2651485913&idx=1&sn=c40e03e94a7eb1f62baaa09173afc860&chksm=bd251aa68a5293b00dd0228451e19eef1e98684e5d596bbed2d647b8530e02eac2042580870e&scene=21#wechat_redirect">附：JVM 性能调优监控工具 jps、jstack、jmap、jhat、jstat、hprof 使用详解</a></p>
+<h2 id="对象已经死亡？"><a href="#对象已经死亡？" class="headerlink" title="对象已经死亡？"></a>对象已经死亡？</h2><h3 id="如何判断一个类是无用的类"><a href="#如何判断一个类是无用的类" class="headerlink" title="如何判断一个类是无用的类"></a>如何判断一个类是无用的类</h3><p>方法区主要回收的是无用的类，那么如何判断一个类是无用的类的呢？</p>
+<p>判定一个常量是否是“废弃常量”比较简单，而要判定一个类是否是“无用的类”的条件则相对苛刻许多。类需要同时满足下面 3 个条件才能算是 <strong>“无用的类”</strong> ：</p>
+<ul>
+<li>该类所有的实例都已经被回收，也就是 Java 堆中不存在该类的任何实例。</li>
+<li>加载该类的 <code>ClassLoader</code> 已经被回收。</li>
+<li>该类对应的 <code>java.lang.Class</code> 对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。</li>
+</ul>
+<p>虚拟机可以对满足上述 3 个条件的无用类进行回收，这里说的仅仅是“可以”，而并不是和对象一样不使用了就会必然被回收。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/23/interview/JVM%E9%9D%A2%E8%AF%95%E9%A2%98/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-interview/多线程面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/23/interview/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%9D%A2%E8%AF%95%E9%A2%98/">多线程面试题</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/01/23/interview/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%9D%A2%E8%AF%95%E9%A2%98/" class="archive-article-date">
+  	<time datetime="2021-01-23T08:23:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-23</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><h3 id="进程和线程的区别？"><a href="#进程和线程的区别？" class="headerlink" title="进程和线程的区别？"></a>进程和线程的区别？</h3><h3 id="进程上下文切换开销都有哪些？"><a href="#进程上下文切换开销都有哪些？" class="headerlink" title="进程上下文切换开销都有哪些？"></a>进程上下文切换开销都有哪些？</h3><p>那么上下文切换的时候，CPU的开销都具体有哪些呢？开销分成两种，一种是直接开销、一种是间接开销。</p>
+<p>直接开销就是在切换时，cpu必须做的事情，包括：</p>
+<ul>
+<li><p>1、切换页表全局目录</p>
+</li>
+<li><p>2、切换内核态堆栈</p>
+</li>
+<li><p>3、切换硬件上下文（进程恢复前，必须装入寄存器的数据统称为硬件上下文）</p>
+</li>
+<li><ul>
+<li>ip(instruction pointer)：指向当前执行指令的下一条指令</li>
+<li>bp(base pointer): 用于存放执行中的函数对应的栈帧的栈底地址</li>
+<li>sp(stack poinger): 用于存放执行中的函数对应的栈帧的栈顶地址</li>
+<li>cr3:页目录基址寄存器，保存页目录表的物理地址</li>
+<li>……</li>
+</ul>
+</li>
+<li><p>4、刷新TLB</p>
+</li>
+<li><p>5、系统调度器的代码执行</p>
+</li>
+</ul>
+<p>间接开销主要指的是虽然切换到一个新进程后，由于各种缓存并不热，速度运行会慢一些。如果进程始终都在一个CPU上调度还好一些，如果跨CPU的话，之前热起来的TLB、L1、L2、L3因为运行的进程已经变了，所以以局部性原理cache起来的代码、数据也都没有用了，导致新进程穿透到内存的IO会变多。其实我们上面的实验并没有很好地测量到这种情况，所以实际的上下文切换开销可能比3.5us要大。</p>
+<p>想了解更详细操作过程的同学请参考《深入理解Linux内核》中的第三章和第九章。</p>
+<h3 id="线程上下文切换"><a href="#线程上下文切换" class="headerlink" title="线程上下文切换"></a>线程上下文切换</h3><p>上下文切换：</p>
+<p>多线程编程中一般线程的个数都大于 CPU 核心的个数，而一个 CPU 核心在任意时刻只能被一个线程使用，为了让这些线程都能得到有效执行，CPU 采取的策略是为每个线程分配时间片并轮转的形式。当一个线程的时间片用完的时候就会重新处于就绪状态让给其他线程使用，这个过程就属于一次上下文切换。概括来说就是：当前任务在执行完 CPU 时间片切换到另一个任务之前会先保存自己的状态，以便下次再切换回这个任务时，可以再加载这个任务的状态。<strong>任务从保存到再加载的过程就是一次上下文切换</strong>。</p>
+<p>上下文切换通常是计算密集型的。也就是说，它需要相当可观的处理器时间，在每秒几十上百次的切换中，每次切换都需要纳秒量级的时间。所以，上下文切换对系统来说意味着消耗大量的 CPU 时间，事实上，可能是操作系统中时间消耗最大的操作。</p>
+<p>Linux 相比与其他操作系统（包括其他类 Unix 系统）有很多的优点，其中有一项就是，其上下文切换和模式切换的时间消耗非常少。</p>
+<h2 id="原子性、有序性和可见性"><a href="#原子性、有序性和可见性" class="headerlink" title="原子性、有序性和可见性"></a>原子性、有序性和可见性</h2><h3 id="final关键字的可见性"><a href="#final关键字的可见性" class="headerlink" title="final关键字的可见性"></a>final关键字的可见性</h3><h2 id="悲观锁和乐观锁"><a href="#悲观锁和乐观锁" class="headerlink" title="悲观锁和乐观锁"></a>悲观锁和乐观锁</h2><h3 id="CAS有什么问题？"><a href="#CAS有什么问题？" class="headerlink" title="CAS有什么问题？"></a>CAS有什么问题？</h3><p>CAS的缺点有如ABA问题，自旋锁消耗问题、多变量共享一致性问题：</p>
+<p>1.<strong>ABA</strong>：<br>问题描述：线程t1将它的值从A变为B，再从B变为A。同时有线程t2要将值从A变为C。但CAS检查的时候会发现没有改变，但是实质上它已经发生了改变 。可能会造成数据的缺失。</p>
+<p>解决方法：CAS还是类似于乐观锁，同数据乐观锁的方式给它加一个版本号或者时间戳，如AtomicStampedReference</p>
+<p>2.<strong>自旋消耗资源</strong>：<br>问题描述：多个线程争夺同一个资源时，如果自旋一直不成功，将会一直占用CPU。</p>
+<p>解决方法：破坏掉for死循环，当超过一定时间或者一定次数时，return退出。</p>
+<p>JDK8新增的LongAddr和ConcurrentHashMap类似的方法。当多个线程竞争时，将粒度变小，将一个变量拆分为多个变量，达到多个线程访问多个资源的效果，最后再调用sum把它合起来。虽然base和cells都是volatile修饰的，但感觉这个sum操作没有加锁，可能sum的结果不是那么精确。</p>
+<p>3.<strong>多变量共享一致性问题</strong>：<br>解决方法： CAS操作是针对一个变量的，如果对多个变量操作，解决方案如下</p>
+<ol>
+<li>可以加锁来解决</li>
+<li>封装成对象类解决</li>
+</ol>
+<h2 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a>Java内存模型</h2><h3 id="happens-before简介"><a href="#happens-before简介" class="headerlink" title="happens-before简介"></a>happens-before简介</h3><p>在JMM中，如果一个操作执行的结果需要对另一个操作可见，那么这两个操作之间必须要存在happens-before关系。这里提到的两个操作既可以是在一个线程里，也可以是在不同的线程里。</p>
+<p>与程序员密切相关的happens-before规则如下：</p>
+<ul>
+<li>程序顺序规则：一个线程中的每个操作，happens-before于该线程中的任意后续操作。</li>
+<li>监视器锁规则：对一个锁的解锁，happens-before于随后对这个锁的加锁。</li>
+<li>volatile变量规则：对一个volatile域的写，happens-before于任意后续对这个volatile域的读。</li>
+<li>传递性：如果A happens-before B，且B happens-before C，那么A happens-before C。</li>
+</ul>
+<blockquote>
+<p><strong>注意：</strong>两个操作之间具有happens-before关系，并不意味着前一个操作必须要在后一个操作之前执行！happens-before仅仅要求前一个操作（执行的结果）对后一个操作可见，且前一个操作按顺序排在第二个操作之前（the first is visible to and ordered before the second）。</p>
+</blockquote>
+<h3 id="单线程、多线程在单核CPU、多核CPU中的影响"><a href="#单线程、多线程在单核CPU、多核CPU中的影响" class="headerlink" title="单线程、多线程在单核CPU、多核CPU中的影响"></a>单线程、多线程在单核CPU、多核CPU中的影响</h3><p>我们分别来分析下单线程、多线程在单核CPU、多核CPU中的影响。</p>
+<p><strong>单线程。</strong>cpu核心的缓存只被一个线程访问。缓存独占，不会出现访问冲突等问题。</p>
+<p><strong>单核CPU，多线程。</strong>进程中的多个线程会同时访问进程中的共享数据，CPU将某块内存加载到缓存后，不同线程在访问相同的物理地址的时候，都会映射到相同的缓存位置，这样即使发生线程的切换，缓存仍然不会失效。但由于任何时刻只能有一个线程在执行，因此不会出现缓存访问冲突。</p>
+<p><strong>多核CPU，多线程。</strong>每个核都至少有一个L1 缓存。多个线程访问进程中的某个共享内存，且这多个线程分别在不同的核心上执行，则每个核心都会在各自的caehe中保留一份共享内存的缓冲。由于多核是可以并行的，可能会出现多个线程同时写各自的缓存的情况，而各自的cache之间的数据就有可能不同。</p>
+<p>在CPU和主存之间增加缓存，在多线程场景下就可能存在<strong>缓存一致性问题</strong>，也就是说，在多核CPU中，每个核的自己的缓存中，关于同一个数据的缓存内容可能不一致。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/23/interview/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%9D%A2%E8%AF%95%E9%A2%98/">展开全文 >></a>
         </p>
       
 
@@ -1136,7 +1197,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/5/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/7/">Next &amp;raquo;</a>
     </nav>
   
 
@@ -1150,11 +1211,6 @@
     	<div class="footer-left">
     		&copy; 2022 Elfred 
         <!-- 《网站备案号 -->
-        
-                <img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png" title="备案管理系统">
-                <a href="http://www.beian.miit.gov.cn/" style="color:#f72b07" target="_blank" title="备案号">
-                    皖ICP备20005183号
-                </a>
         
         <!-- 网站备案号》 -->
     	</div>
@@ -1262,10 +1318,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
@@ -1286,6 +1338,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">框架</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
@@ -1294,15 +1350,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">框架</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1310,7 +1366,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1319,10 +1375,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
              
               <li class="article-tag-list-item">

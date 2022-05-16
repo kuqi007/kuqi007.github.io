@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://blog.elfred.top">
   <title>Redis常见面试题 | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Redis线程模型Redis单线程的理解，Redis 为什么早期版本选择单线程？官方解释因为 Redis 是基于内存的操作，CPU 不是 Redis 的瓶颈，Redis 的瓶颈最有可能是 机器内存的大小 或者 网络带宽。既然单线程容易实现，而且 CPU 不会成为瓶颈，那就顺理成章地采用单线程的方案了。  首先，我们需要明白，多线程解决的问题。当一个线程处理的任务是I/O密集型的，而I/O传输数据">
-<meta name="keywords" content="面经">
+  <meta name="description" content="Redis线程模型Redis单线程的理解，Redis 为什么早期版本选择单线程？官方解释因为 Redis 是基于内存的操作，CPU 不是 Redis 的瓶颈，Redis 的瓶颈最有可能是 机器内存的大小 或者 网络带宽。既然单线程容易实现，而且 CPU 不会成为瓶颈，那就顺理成章地采用单线程的方案了。  首先，我们需要明白，多线程解决的问题。当一个线程处理的任务是I&#x2F;O密集型的，而I&amp;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis常见面试题">
-<meta property="og:url" content="https://blog.elfred.top/2021/01/23/interview/Redis常见面试题/index.html">
+<meta property="og:url" content="https://blog.elfred.top/2021/01/23/interview/Redis%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="Redis线程模型Redis单线程的理解，Redis 为什么早期版本选择单线程？官方解释因为 Redis 是基于内存的操作，CPU 不是 Redis 的瓶颈，Redis 的瓶颈最有可能是 机器内存的大小 或者 网络带宽。既然单线程容易实现，而且 CPU 不会成为瓶颈，那就顺理成章地采用单线程的方案了。  首先，我们需要明白，多线程解决的问题。当一个线程处理的任务是I/O密集型的，而I/O传输数据">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:description" content="Redis线程模型Redis单线程的理解，Redis 为什么早期版本选择单线程？官方解释因为 Redis 是基于内存的操作，CPU 不是 Redis 的瓶颈，Redis 的瓶颈最有可能是 机器内存的大小 或者 网络带宽。既然单线程容易实现，而且 CPU 不会成为瓶颈，那就顺理成章地采用单线程的方案了。  首先，我们需要明白，多线程解决的问题。当一个线程处理的任务是I&#x2F;O密集型的，而I&amp;">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210228212624.webp">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210509211524.webp">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210119165016.png">
-<meta property="og:updated_time" content="2021-05-10T14:37:45.938Z">
+<meta property="article:published_time" content="2021-01-23T08:24:00.000Z">
+<meta property="article:modified_time" content="2021-05-10T14:37:45.938Z">
+<meta property="article:author" content="Elfred">
+<meta property="article:tag" content="面经">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Redis常见面试题">
-<meta name="twitter:description" content="Redis线程模型Redis单线程的理解，Redis 为什么早期版本选择单线程？官方解释因为 Redis 是基于内存的操作，CPU 不是 Redis 的瓶颈，Redis 的瓶颈最有可能是 机器内存的大小 或者 网络带宽。既然单线程容易实现，而且 CPU 不会成为瓶颈，那就顺理成章地采用单线程的方案了。  首先，我们需要明白，多线程解决的问题。当一个线程处理的任务是I/O密集型的，而I/O传输数据">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210228212624.webp">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
@@ -41,8 +41,8 @@
 
   
 
-</head>
-</html>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -55,10 +55,8 @@
 			<img src="/images/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">Elfred</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">上善若水</p>
 		
 
 		<nav class="header-menu">
@@ -109,10 +107,8 @@
 				<img src="/images/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">Elfred</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>上善若水<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -167,7 +163,7 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2021/01/23/interview/Redis常见面试题/" class="archive-article-date">
+<a href="/2021/01/23/interview/Redis%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/" class="archive-article-date">
   	<time datetime="2021-01-23T08:24:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-23</time>
 </a>
 
@@ -179,27 +175,27 @@
         <hr>
 <h2 id="Redis线程模型"><a href="#Redis线程模型" class="headerlink" title="Redis线程模型"></a>Redis线程模型</h2><h3 id="Redis单线程的理解，Redis-为什么早期版本选择单线程？"><a href="#Redis单线程的理解，Redis-为什么早期版本选择单线程？" class="headerlink" title="Redis单线程的理解，Redis 为什么早期版本选择单线程？"></a>Redis单线程的理解，Redis 为什么早期版本选择单线程？</h3><h4 id="官方解释"><a href="#官方解释" class="headerlink" title="官方解释"></a>官方解释</h4><p>因为 Redis 是基于内存的操作，<strong>CPU 不是 Redis 的瓶颈</strong>，Redis 的瓶颈最有可能是 <strong>机器内存的大小</strong> 或者 <strong>网络带宽</strong>。既然单线程容易实现，而且 CPU 不会成为瓶颈，那就顺理成章地采用单线程的方案了。</p>
 <blockquote>
-<p>首先，我们需要明白，多线程解决的问题。当一个线程处理的任务是I/O密集型的，而I/O传输数据很慢，因此线程总是处于等待数据传输，从而造成CPU资源的浪费。这时我们可以开辟多个线程，当一个线程在等待I/O传输时，调度其他线程进行任务处理。<br>然而，redis所有的数据都存储在内存中，此时并不需要I/O操作。而多线程调度还会造成额外的开销且实现复杂。<br>最终，选用单线程即可。</p>
+<p>首先，我们需要明白，多线程解决的问题。当一个线程处理的任务是I&#x2F;O密集型的，而I&#x2F;O传输数据很慢，因此线程总是处于等待数据传输，从而造成CPU资源的浪费。这时我们可以开辟多个线程，当一个线程在等待I&#x2F;O传输时，调度其他线程进行任务处理。<br>然而，redis所有的数据都存储在内存中，此时并不需要I&#x2F;O操作。而多线程调度还会造成额外的开销且实现复杂。<br>最终，选用单线程即可。</p>
 </blockquote>
 <p>一种解释：</p>
 <p>因为Redis是基于内存的操作，CPU不是Redis的瓶颈，Redis的瓶颈最有可能是机器内存的大小或者网络带宽。既然单线程容易实现，而且CPU不会成为瓶颈，那就顺理成章地采用单线程的方案了。</p>
 <h4 id="简单总结一下"><a href="#简单总结一下" class="headerlink" title="简单总结一下"></a>简单总结一下</h4><ol>
 <li>使用单线程模型能带来更好的 <strong>可维护性</strong>，方便开发和调试；</li>
-<li>使用单线程模型也能 <strong>并发</strong> 的处理客户端的请求(I/O 多路复用机制epoll)；</li>
+<li>使用单线程模型也能 <strong>并发</strong> 的处理客户端的请求(I&#x2F;O 多路复用机制epoll)；</li>
 <li>Redis 服务中运行的绝大多数操作的 <strong>性能瓶颈都不是 CPU</strong>；</li>
 </ol>
 <h3 id="Redis为什么这么快？"><a href="#Redis为什么这么快？" class="headerlink" title="Redis为什么这么快？"></a>Redis为什么这么快？</h3><p>简单总结：</p>
 <ol>
-<li><strong>纯内存操作</strong>：读取不需要进行磁盘 I/O，所以比传统数据库要快上不少；<em>(但不要有误区说磁盘就一定慢，例如 Kafka 就是使用磁盘顺序读取但仍然较快)</em></li>
+<li><strong>纯内存操作</strong>：读取不需要进行磁盘 I&#x2F;O，所以比传统数据库要快上不少；*(但不要有误区说磁盘就一定慢，例如 Kafka 就是使用磁盘顺序读取但仍然较快)*</li>
 <li><strong>单线程，无锁竞争</strong>：这保证了没有线程的上下文切换，不会因为多线程的一些操作而降低性能；</li>
-<li><strong>多路 I/O 复用模型，非阻塞 I/O</strong>：采用多路 I/O 复用技术可以让单个线程高效的处理多个网络连接请求（尽量减少网络 IO 的时间消耗）；</li>
+<li><strong>多路 I&#x2F;O 复用模型，非阻塞 I&#x2F;O</strong>：采用多路 I&#x2F;O 复用技术可以让单个线程高效的处理多个网络连接请求（尽量减少网络 IO 的时间消耗）；</li>
 <li><strong>高效的数据结构，加上底层做了大量优化</strong>：Redis 对于底层的数据结构和内存占用做了大量的优化，例如不同长度的字符串使用不同的结构体表示，HyperLogLog 的密集型存储结构等等..</li>
 </ol>
 <h2 id="Redis数据结构"><a href="#Redis数据结构" class="headerlink" title="Redis数据结构"></a>Redis数据结构</h2><h3 id="Redis-的-SDS-和-C-中字符串相比有什么优势？"><a href="#Redis-的-SDS-和-C-中字符串相比有什么优势？" class="headerlink" title="Redis 的 SDS 和 C 中字符串相比有什么优势？"></a>Redis 的 SDS 和 C 中字符串相比有什么优势？</h3><h4 id="先简单总结一下"><a href="#先简单总结一下" class="headerlink" title="先简单总结一下"></a>先简单总结一下</h4><p>C 语言使用了一个长度为 <code>N+1</code> 的字符数组来表示长度为 <code>N</code> 的字符串，并且字符数组最后一个元素总是 <code>\0</code>，这种简单的字符串表示方式 <strong>不符合 Redis 对字符串在安全性、效率以及功能方面的要求</strong>。</p>
 <h4 id="再来说-C-语言字符串的问题"><a href="#再来说-C-语言字符串的问题" class="headerlink" title="再来说 C 语言字符串的问题"></a>再来说 C 语言字符串的问题</h4><p>这样简单的数据结构可能会造成以下一些问题：</p>
 <ul>
 <li><strong>获取字符串长度为 O(N) 级别的操作</strong> → 因为 C 不保存数组的长度，每次都需要遍历一遍整个数组；</li>
-<li>不能很好的杜绝 <strong>缓冲区溢出/内存泄漏</strong> 的问题 → 跟上述问题原因一样，如果执行拼接 or 缩短字符串的操作，如果操作不当就很容易造成上述问题；</li>
+<li>不能很好的杜绝 <strong>缓冲区溢出&#x2F;内存泄漏</strong> 的问题 → 跟上述问题原因一样，如果执行拼接 or 缩短字符串的操作，如果操作不当就很容易造成上述问题；</li>
 <li>C 字符串 <strong>只能保存文本数据</strong> → 因为 C 语言中的字符串必须符合某种编码（比如 ASCII），例如中间出现的 <code>&#39;\0&#39;</code> 可能会被判定为提前结束的字符串而识别不了；</li>
 </ul>
 <h4 id="Redis-如何解决的-SDS-的优势"><a href="#Redis-如何解决的-SDS-的优势" class="headerlink" title="Redis 如何解决的 | SDS 的优势"></a>Redis 如何解决的 | SDS 的优势</h4><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210228212624.webp" alt="图片"></p>
@@ -210,11 +206,11 @@
 <li><strong>有效降低内存分配次数</strong>：C 字符串在涉及增加或者清除操作时会改变底层数组的大小造成重新分配，SDS 使用了 <strong>空间预分配</strong> 和 <strong>惰性空间释放</strong> 机制，简单理解就是每次在扩展时是成倍的多分配的，在缩容是也是先留着并不正式归还给 OS；</li>
 <li><strong>二进制安全</strong>：C 语言字符串只能保存 <code>ascii</code> 码，对于图片、音频等信息无法保存，SDS 是二进制安全的，写入什么读取就是什么，不做任何过滤和限制；</li>
 </ol>
-<h3 id="字典是如何实现的？Rehash-了解吗？"><a href="#字典是如何实现的？Rehash-了解吗？" class="headerlink" title="字典是如何实现的？Rehash 了解吗？"></a>字典是如何实现的？Rehash 了解吗？</h3><h4 id="先总体聊一下-Redis-中的字典"><a href="#先总体聊一下-Redis-中的字典" class="headerlink" title="先总体聊一下 Redis 中的字典"></a>先总体聊一下 Redis 中的字典</h4><p>字典是 Redis 服务器中出现最为频繁的复合型数据结构。除了 <strong>hash</strong> 结构的数据会用到字典外，整个 Redis 数据库的所有 <code>key</code> 和 <code>value</code> 也组成了一个 <strong>全局字典</strong>，还有带过期时间的 <code>key</code> 也是一个字典。<em>(存储在 RedisDb 数据结构中)</em></p>
+<h3 id="字典是如何实现的？Rehash-了解吗？"><a href="#字典是如何实现的？Rehash-了解吗？" class="headerlink" title="字典是如何实现的？Rehash 了解吗？"></a>字典是如何实现的？Rehash 了解吗？</h3><h4 id="先总体聊一下-Redis-中的字典"><a href="#先总体聊一下-Redis-中的字典" class="headerlink" title="先总体聊一下 Redis 中的字典"></a>先总体聊一下 Redis 中的字典</h4><p>字典是 Redis 服务器中出现最为频繁的复合型数据结构。除了 <strong>hash</strong> 结构的数据会用到字典外，整个 Redis 数据库的所有 <code>key</code> 和 <code>value</code> 也组成了一个 <strong>全局字典</strong>，还有带过期时间的 <code>key</code> 也是一个字典。*(存储在 RedisDb 数据结构中)*</p>
 <h4 id="说明字典内部结构和-rehash"><a href="#说明字典内部结构和-rehash" class="headerlink" title="说明字典内部结构和 rehash"></a>说明字典内部结构和 rehash</h4><p><strong>Redis</strong> 中的字典相当于 Java 中的 <strong>HashMap</strong>，内部实现也差不多类似，都是通过 <strong>“数组 + 链表”</strong> 的 <strong>链地址法</strong> 来解决部分 哈希冲突，同时这样的结构也吸收了两种不同数据结构的优点。</p>
-<p>字典结构内部包含 <strong>两个 hashtable</strong>，通常情况下只有一个 <code>hashtable</code> 有值，但是在字典扩容缩容时，需要分配新的 <code>hashtable</code>，然后进行 <strong>渐进式搬迁</strong> <em>(rehash)</em>，这时候两个 <code>hashtable</code> 分别存储旧的和新的 <code>hashtable</code>，待搬迁结束后，旧的将被删除，新的 <code>hashtable</code> 取而代之。</p>
+<p>字典结构内部包含 <strong>两个 hashtable</strong>，通常情况下只有一个 <code>hashtable</code> 有值，但是在字典扩容缩容时，需要分配新的 <code>hashtable</code>，然后进行 <strong>渐进式搬迁</strong> *(rehash)*，这时候两个 <code>hashtable</code> 分别存储旧的和新的 <code>hashtable</code>，待搬迁结束后，旧的将被删除，新的 <code>hashtable</code> 取而代之。</p>
 <h4 id="扩缩容的条件"><a href="#扩缩容的条件" class="headerlink" title="扩缩容的条件"></a>扩缩容的条件</h4><p>正常情况下，当 hash 表中 <strong>元素的个数等于第一维数组的长度时</strong>，就会开始扩容，扩容的新数组是 <strong>原数组大小的 2 倍</strong>。不过如果 Redis 正在做 <code>bgsave(持久化命令)</code>，为了减少内存也得过多分离，Redis 尽量不去扩容，但是如果 hash 表非常满了，<strong>达到了第一维数组长度的 5 倍了</strong>，这个时候就会 <strong>强制扩容</strong>。</p>
-<p>当 hash 表因为元素逐渐被删除变得越来越稀疏时，Redis 会对 hash 表进行缩容来减少 hash 表的第一维数组空间占用。所用的条件是 <strong>元素个数低于数组长度的 10%</strong>，缩容不会考虑 Redis 是否在做 <code>bgsave</code>。</p>
+<p>当 hash 表因为元素逐渐被删除变得越来越稀疏时，Redis 会对 hash 表进行缩容来减少 hash 表的第一维数组空间占用。所用的条件是 **元素个数低于数组长度的 10%**，缩容不会考虑 Redis 是否在做 <code>bgsave</code>。</p>
 <h3 id="跳跃表"><a href="#跳跃表" class="headerlink" title="跳跃表"></a>跳跃表</h3><h2 id="Redis高可用"><a href="#Redis高可用" class="headerlink" title="Redis高可用"></a>Redis高可用</h2><h3 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h3><h4 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h4><p><strong>Redis 快照</strong> 是最简单的 Redis 持久性模式。当满足特定条件时，它将生成数据集的时间点快照，例如，如果先前的快照是在 2 分钟前创建的，并且现在已经至少有 <code>100</code> 次新写入，则将创建一个新的快照。此条件可以由用户配置 Redis 实例来控制，也可以在运行时修改而无需重新启动服务器。快照作为包含整个数据集的单个 <code>.rdb</code> 文件生成。</p>
 <h4 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h4><p><strong>快照不是很持久</strong>。如果运行 Redis 的计算机停止运行，电源线出现故障或者您 <code>kill -9</code> 的实例意外发生，则写入 Redis 的最新数据将丢失。尽管这对于某些应用程序可能不是什么大问题，但有些使用案例具有充分的耐用性，在这些情况下，快照并不是可行的选择。</p>
 <p><strong>AOF(Append Only File - 仅追加文件)</strong> 它的工作方式非常简单：每次执行 <strong>修改内存</strong> 中数据集的写操作时，都会 <strong>记录</strong> 该操作。假设 AOF 日志记录了自 Redis 实例创建以来 <strong>所有的修改性指令序列</strong>，那么就可以通过对一个空的 Redis 实例 <strong>顺序执行所有的指令</strong>，也就是 <strong>「重放」</strong>，来恢复 Redis 当前实例的内存数据结构的状态。</p>
@@ -265,7 +261,7 @@
 <p> 如果根据 host+ip 定位 master node，是不靠谱的，如果 master node 重启或者数据出现了变化，那么 slave node 应该根据不同的 run id 区分。</p>
 </blockquote>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
-<li><a href="https://mp.weixin.qq.com/s?__biz=Mzg5MzU2NDgyNw==&mid=2247487138&idx=1&sn=0e580a60cf28707b012f7c2068ca2bbc&source=41#wechat_redirect" target="_blank" rel="noopener">妈妈再也不担心我面试被Redis问得脸都绿了</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg5MzU2NDgyNw==&mid=2247487138&idx=1&sn=0e580a60cf28707b012f7c2068ca2bbc&source=41#wechat_redirect">妈妈再也不担心我面试被Redis问得脸都绿了</a></li>
 </ol>
 
       
@@ -336,7 +332,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/2021/01/23/interview/Redis常见面试题/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/2021/01/23/interview/Redis%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -350,7 +346,7 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/01/30/interview/计算机基础/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/01/30/interview/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
@@ -360,7 +356,7 @@
     </a>
   
   
-    <a href="/2021/01/23/interview/JVM面试题/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2021/01/23/interview/JVM%E9%9D%A2%E8%AF%95%E9%A2%98/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">JVM面试题</div>
       <i class="icon-circle-right"></i>
     </a>
@@ -442,11 +438,6 @@
     	<div class="footer-left">
     		&copy; 2022 Elfred 
         <!-- 《网站备案号 -->
-        
-                <img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png" title="备案管理系统">
-                <a href="http://www.beian.miit.gov.cn/" style="color:#f72b07" target="_blank" title="备案号">
-                    皖ICP备20005183号
-                </a>
         
         <!-- 网站备案号》 -->
     	</div>
@@ -554,10 +545,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
@@ -578,6 +565,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">框架</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
@@ -586,15 +577,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">框架</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -602,7 +593,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -611,10 +602,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
              
               <li class="article-tag-list-item">

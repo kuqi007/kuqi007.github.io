@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://blog.elfred.top">
   <title>Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="面试结果：基础知识较扎实，对Nginx、ES没用过，T5 面试基准：T5 1.Map有哪些实现？哪些是线程安全的？HashTable、ConcurrentHashMap都是现程安全的，它们的实现方式有什么区别：—-可以；    1、HashMap、TreeMap、LinkedHashMap    2、 HashTable、ConcurrentHashMap都是现程安全的        Hashta">
-<meta name="keywords" content="前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Elfred&#39;s Blog">
-<meta property="og:url" content="https://blog.elfred.top/private/参考面经/京东面经.html">
+<meta property="og:url" content="https://blog.elfred.top/private/%E5%8F%82%E8%80%83%E9%9D%A2%E7%BB%8F/%E4%BA%AC%E4%B8%9C%E9%9D%A2%E7%BB%8F.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
 <meta property="og:description" content="面试结果：基础知识较扎实，对Nginx、ES没用过，T5 面试基准：T5 1.Map有哪些实现？哪些是线程安全的？HashTable、ConcurrentHashMap都是现程安全的，它们的实现方式有什么区别：—-可以；    1、HashMap、TreeMap、LinkedHashMap    2、 HashTable、ConcurrentHashMap都是现程安全的        Hashta">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-03-04T13:37:44.310Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-06T11:59:24.067Z">
+<meta property="article:modified_time" content="2021-03-04T13:37:44.310Z">
+<meta property="article:author" content="Elfred">
+<meta property="article:tag" content="前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Elfred&#39;s Blog">
-<meta name="twitter:description" content="面试结果：基础知识较扎实，对Nginx、ES没用过，T5 面试基准：T5 1.Map有哪些实现？哪些是线程安全的？HashTable、ConcurrentHashMap都是现程安全的，它们的实现方式有什么区别：—-可以；    1、HashMap、TreeMap、LinkedHashMap    2、 HashTable、ConcurrentHashMap都是现程安全的        Hashta">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -37,8 +37,8 @@
 
   
 
-</head>
-</html>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -51,10 +51,8 @@
 			<img src="/images/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">Elfred</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">上善若水</p>
 		
 
 		<nav class="header-menu">
@@ -105,10 +103,8 @@
 				<img src="/images/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">Elfred</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>上善若水<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -152,7 +148,7 @@
       
         <p>面试结果：基础知识较扎实，对Nginx、ES没用过，T5</p>
 <p>面试基准：T5</p>
-<p>1.Map有哪些实现？哪些是线程安全的？HashTable、ConcurrentHashMap都是现程安全的，它们的实现方式有什么区别：—-可以；<br>    1、HashMap、TreeMap、LinkedHashMap<br>    2、 HashTable、ConcurrentHashMap都是现程安全的<br>        Hashtable的synchronized是针对整张Hash表的，即每次锁住整张表让线程独占，<br>        ConcurrentHashMap 允许多个修改操作并发进行，其关键在于使用了锁分离技术。<br>2.HashMap 1.7或1.8的数据结构，默认初始容量是多少，在什么情况下扩容。<br>1.8后增加了红黑树，默认什么情况下会将链表转为红黑树？<br>红黑树是一种什么样的树，在这里用它有什么优点？<br>HashMap操作时间复杂度，最好情况、最坏情况：—-红黑树的原理未讲述清楚；<br>    jdk1.7 初始化容量是16  负载因子为0.75 当hashmap中元素个数超过16<em>0.75=12的时候，就把数组的大小扩展为2</em>16=32，<br>    jdk1.8  初始化容量是16  负载因子为0.75  采用数组+链表+红黑树实现，<br>    hash table的长度也就是HashMap的capacity(不是size)大于于64 且链表长度超过阈值（8）时，将链表转换为红黑树</p>
+<p>1.Map有哪些实现？哪些是线程安全的？HashTable、ConcurrentHashMap都是现程安全的，它们的实现方式有什么区别：—-可以；<br>    1、HashMap、TreeMap、LinkedHashMap<br>    2、 HashTable、ConcurrentHashMap都是现程安全的<br>        Hashtable的synchronized是针对整张Hash表的，即每次锁住整张表让线程独占，<br>        ConcurrentHashMap 允许多个修改操作并发进行，其关键在于使用了锁分离技术。<br>2.HashMap 1.7或1.8的数据结构，默认初始容量是多少，在什么情况下扩容。<br>1.8后增加了红黑树，默认什么情况下会将链表转为红黑树？<br>红黑树是一种什么样的树，在这里用它有什么优点？<br>HashMap操作时间复杂度，最好情况、最坏情况：—-红黑树的原理未讲述清楚；<br>    jdk1.7 初始化容量是16  负载因子为0.75 当hashmap中元素个数超过16<em>0.75&#x3D;12的时候，就把数组的大小扩展为2</em>16&#x3D;32，<br>    jdk1.8  初始化容量是16  负载因子为0.75  采用数组+链表+红黑树实现，<br>    hash table的长度也就是HashMap的capacity(不是size)大于于64 且链表长度超过阈值（8）时，将链表转换为红黑树</p>
 <p>【红黑树】</p>
 <ol>
 <li>节点是红色或者黑色</li>
@@ -171,23 +167,23 @@
 1、通配符
 （1）通配符：?，未知类型。不明确类型时，可以用?来表示，意味着什么类型都可以传入
 （2）运行时，参数中的泛型<>只要有一个类型具备了，里面就都是统一类型
-2、<t>与<?>的区别<br>（1）<t>：如果有指定<t>，就意味着<t>能代表一个具体类型，并能被操作（<t>可以被接收）<br>（2）&lt;?&gt;：仅在不明确类型，且不对返回值类型进行操作时，用?来表示。调用的是Object中的方法 – 用得较多</t></t></t></t></t></泛型标签></泛型标签></p>
-<p>【相关文章】<br>    <a href="https://blog.csdn.net/ruyu00/article/details/82380649" target="_blank" rel="noopener">https://blog.csdn.net/ruyu00/article/details/82380649</a></p>
+2、<T>与<?>的区别<br>（1）<T>：如果有指定<T>，就意味着<T>能代表一个具体类型，并能被操作（<T>可以被接收）<br>（2）&lt;?&gt;：仅在不明确类型，且不对返回值类型进行操作时，用?来表示。调用的是Object中的方法 – 用得较多</p>
+<p>【相关文章】<br>    <a target="_blank" rel="noopener" href="https://blog.csdn.net/ruyu00/article/details/82380649">https://blog.csdn.net/ruyu00/article/details/82380649</a></p>
 <p>6.做到线程安全的手段：—-讲出两种，synchronized与lock锁<br>    1、synchronized锁（偏向锁，轻量级锁，重量级锁）<br>    2、volatile锁，只能保证线程之间的可见性，但不能保证数据的原子性<br>    3、jdk1.5并发包中提供的Atomic原子类<br>    4、Lock锁</p>
 <p>7.volatile的实现机制：—- 回答不清楚</p>
-<p>8.各种序列化技术的比较：—-回答hession与protostuff，能答出protostuff的性能最快.<br>    hession    支持    跨语言,序列化后体积小,速度较快<br>    protostuff    支持    跨语言,序列化后体积小,速度快,但是需要Schema,可以动态生成<br>    jackson    支持    跨语言,序列化后体积小,速度较快,且具有不确定性<br>    fastjson    支持    跨语言支持较困难,序列化后体积小,速度较快,只支持java,c#<br>    kryo    支持    跨语言支持较困难,序列化后体积小,速度较快<br>    fst    不支持    跨语言支持较困难,序列化后体积小,速度较快，兼容jdk<br>    jdk    不支持    序列化后体积很大,速度快|<br>     序列化综合性能比较好的是protostuff和kryo<br>    jdk的序列化速度比较快,就是序列体积较大.<br>    所以当我们的需要开发一套rpc服务时,可以采用kryo来序列化对象,提高传输效率<br>       <a href="https://blog.csdn.net/qq_19734597/article/details/81456216" target="_blank" rel="noopener">https://blog.csdn.net/qq_19734597/article/details/81456216</a></p>
+<p>8.各种序列化技术的比较：—-回答hession与protostuff，能答出protostuff的性能最快.<br>    hession	支持	跨语言,序列化后体积小,速度较快<br>    protostuff	支持	跨语言,序列化后体积小,速度快,但是需要Schema,可以动态生成<br>    jackson	支持	跨语言,序列化后体积小,速度较快,且具有不确定性<br>    fastjson	支持	跨语言支持较困难,序列化后体积小,速度较快,只支持java,c#<br>    kryo	支持	跨语言支持较困难,序列化后体积小,速度较快<br>    fst	不支持	跨语言支持较困难,序列化后体积小,速度较快，兼容jdk<br>    jdk	不支持	序列化后体积很大,速度快|<br>     序列化综合性能比较好的是protostuff和kryo<br>    jdk的序列化速度比较快,就是序列体积较大.<br>    所以当我们的需要开发一套rpc服务时,可以采用kryo来序列化对象,提高传输效率<br>       <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_19734597/article/details/81456216">https://blog.csdn.net/qq_19734597/article/details/81456216</a></p>
 <p>9.ConcurrentHashMap的实现？<br>jdk1.7(Segment分段锁，这种方式最大支持多少线程同时写入)<br>或者jdk1.8(CAS自旋锁，能写一下自旋锁的实现吗)？：—8分，自旋锁未答清</p>
 <p>10.Executor，Executors，ExecutorService的区别：—可以<br>    1.ExecutorService 接口继承了Executor 接口，是Executor 的子接口。<br>　　2.Executor接口中定义了execute()方法，用来接收一个Runnable接口的对象，<br>　　  　　 而ExecutorService接口中定义的submit()方法可以接收Runnable和Callable接口对象。<br>　　3.Executor接口中execute()方法不返回任何结果，而ExecutorService接口中submit()方法可以通过一个 Future 对象返回运算结果。<br>　　4.Executor和ExecutorService除了允许客户端提交一个任务，ExecutorService 还提供用来控制线程池的方法。<br>　　   　　比如：调用 shutDown() 方法终止线程池。<br>　　5.Executors 类提供工厂方法用来创建不同类型的线程池。比如:<br>　　 　Executors.newSingleThreadExecutor() 创建一个只有一个线程的线程池，<br>　　　 Executors.newFixedThreadPool(int numOfThreads)来创建固定线程数的线程池，<br>　　   Executors.newCachedThreadPool()创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。<br>　　   Executors.newScheduledThreadPool(int corePoolSize) 创建一个线程池，它可安排在给定延迟后运行命令或者定期地执行。</p>
-<p>11.类加载器的加载层级：—可以<br>【引导类加载器】（bootstrap class loader）<br>    用来加载java的核心库（JAVA_HOME/jre/lib/rt.jar,或sun.boot.class.path路径下的内容），是用原生代码来实现的（C实现的），并不继承自java.lang.ClassLoader。<br>    加载扩展类和应用程序类加载器，并指定它们的父类加载器。<br>【扩展类加载器】（extensions class loader）<br>    用来加载java的扩展库（JAVA_HOME/jre/lib/ext/*.jar,或java.ext.dirs路径下的内容）java虚拟机的实现会提供一个扩展库目录。该类加载器在此目录里面查找并加载java类。<br>    有sun.miscLauncher$ExtClassLoader实现，继承自java.lang.ClassLoader<br>【应用程序类加载器】（application class loader）<br>    它根据java应用的类路径（classpath，java.class.path路径）来加载指定路径的类，一般来说，java应用的类都是由它来完成加载的<br>由sun.misc.Launcher$AppClassLoader实现，继承自java.lang.ClassLoader<br>【自定义类加载器】<br>    开发人员可以通过继承java.lang.ClassLoader类的方式实现自己的类加载器，以满足一些特殊的需求。<br>说明：在java中由于类的加载采用的是双亲委托机制，上面几种类加载器是父子关系，其中引导类加载器为基础。</p>
+<p>11.类加载器的加载层级：—可以<br>【引导类加载器】（bootstrap class loader）<br>    用来加载java的核心库（JAVA_HOME&#x2F;jre&#x2F;lib&#x2F;rt.jar,或sun.boot.class.path路径下的内容），是用原生代码来实现的（C实现的），并不继承自java.lang.ClassLoader。<br>    加载扩展类和应用程序类加载器，并指定它们的父类加载器。<br>【扩展类加载器】（extensions class loader）<br>    用来加载java的扩展库（JAVA_HOME&#x2F;jre&#x2F;lib&#x2F;ext&#x2F;*.jar,或java.ext.dirs路径下的内容）java虚拟机的实现会提供一个扩展库目录。该类加载器在此目录里面查找并加载java类。<br>    有sun.miscLauncher$ExtClassLoader实现，继承自java.lang.ClassLoader<br>【应用程序类加载器】（application class loader）<br>    它根据java应用的类路径（classpath，java.class.path路径）来加载指定路径的类，一般来说，java应用的类都是由它来完成加载的<br>由sun.misc.Launcher$AppClassLoader实现，继承自java.lang.ClassLoader<br>【自定义类加载器】<br>    开发人员可以通过继承java.lang.ClassLoader类的方式实现自己的类加载器，以满足一些特殊的需求。<br>说明：在java中由于类的加载采用的是双亲委托机制，上面几种类加载器是父子关系，其中引导类加载器为基础。</p>
 <p>12.对Stream分组和分区：—-现场解决问题，两个list操作，只答出嵌套循环方式</p>
 <p>13.是否自定义过注解？简单说一下如何实现：—没有写过注解</p>
 <p>14.垃圾回收算法：—能打个7分</p>
 <p>15.OOM异常产生及如何追踪定位：—可以</p>
 <p>16.描述Spring Bean的生命周期：<br>    1、Spring启动，查找并加载需要被Spring管理的bean，进行Bean的实例化<br>    2、Bean实例化后对将Bean的引入和值注入到Bean的属性中<br>    3、如果Bean实现了BeanNameAware接口的话，Spring将Bean的Id传递给setBeanName()方法<br>    4、如果Bean实现了BeanFactoryAware接口的话，Spring将调用setBeanFactory()方法，将BeanFactory容器实例传入<br>    5、如果Bean实现了ApplicationContextAware接口的话，Spring将调用Bean的setApplicationContext()方法，将bean所在应用上下文引用传入进来<br>    6、如果Bean实现了BeanPostProcessor接口，Spring就将调用他们的postProcessBeforeInitialization()方法。<br>    7、如果Bean 实现了InitializingBean接口，Spring将调用他们的afterPropertiesSet()方法。类似的，如果bean使用init-method声明了初始化方法，该方法也会被调用<br>    8、如果Bean 实现了BeanPostProcessor接口，Spring就将调用他们的postProcessAfterInitialization()方法。<br>    9、此时，Bean已经准备就绪，可以被应用程序使用了。他们将一直驻留在应用上下文中，直到应用上下文被销毁。<br>    10、如果bean实现了DisposableBean接口，Spring将调用它的destory()接口方法，同样，如果bean使用了destory-method 声明销毁方法，该方法也会被调用。</p>
-<p>17.@Component、@Controller、@Service、@Repository区别：—-可以<br>    1、@controller 控制器（注入服务）用于标注控制层，相当于struts中的action层<br>    2、@service 服务（注入dao）用于标注服务层，主要用来进行业务的逻辑处理<br>    3、@repository（实现dao访问）用于标注数据访问层，也可以说用于标注数据访问组件，即DAO组件.<br>    4、@component （把普通pojo实例化到spring容器中，相当于配置文件中的 <bean id class>）<br>        泛指各种组件，就是说当我们的类不属于各种归类的时候（不属于@Controller、@Services等的时候），我们就可以使用@Component来标注这个类。</bean></p>
+<p>17.@Component、@Controller、@Service、@Repository区别：—-可以<br>    1、@controller 控制器（注入服务）用于标注控制层，相当于struts中的action层<br>    2、@service 服务（注入dao）用于标注服务层，主要用来进行业务的逻辑处理<br>    3、@repository（实现dao访问）用于标注数据访问层，也可以说用于标注数据访问组件，即DAO组件.<br>    4、@component （把普通pojo实例化到spring容器中，相当于配置文件中的 <bean id="" class=""/>）<br>        泛指各种组件，就是说当我们的类不属于各种归类的时候（不属于@Controller、@Services等的时候），我们就可以使用@Component来标注这个类。</p>
 <p>18.Spring解决循环依赖的思路：—-讲不清楚<br>     循环依赖也就是循环引用，指两个或多个对象互相持有对方的引用。<br>     通俗地说，假设在Spring中有3个Service Bean，分别为ServiceA、ServiceB和ServiceC，<br>     如果ServiceA引用了ServiceB，ServiceB引用了ServiceC，<br>     而ServiceC又引用了ServiceA，最终形成可一个环，这样就出现了循环依赖。<br>对Spring来说循环依赖，有以下几种：<br>    1、Prototype类型Bean的循环依赖<br>    2、构造器循环依赖<br>    3、setter循环依赖<br>Spring的循环依赖解决思路基本描述完成。可以看到，整体的处理方式还是很巧妙的。主要流程总结如下：<br>    1、创建Bean过程中，将beanName放入singletonsCurrentlyInCreation正在创建池中，并创建对应的ObjectFactory放入对象工厂缓存池。<br>    2、解析Bean依赖过程中，如果发现存在了循环依赖，则直接引用ObjectFactory所创建的提前暴露的Bean。<br>    3、Bean的创建结束后，将其从singletonsCurrentlyInCreation中移除，并删除对应的ObjectFactory。</p>
 <p>19.singleton scope中依赖了一个prototype scope的问题：—-答错</p>
-<p>20.AOP / Spring AOP/AspectJ 区别与联系。为什么JDK动态代理不能基于继承？：—-未答出JDK动态代理不能基于继承原因</p>
+<p>20.AOP &#x2F; Spring AOP&#x2F;AspectJ 区别与联系。为什么JDK动态代理不能基于继承？：—-未答出JDK动态代理不能基于继承原因</p>
 <p>21.指定bean实例化顺序【非依赖关系】：—答错</p>
 <p>22.常用的设计模式有哪些：—说出三种，单例，工厂，代理，估计用的不多<br>    单例、工厂、门面、构建者</p>
 <p>23.redis支持哪些数据类型；redis常见的性能问题都有哪些，如何解决；—–性能问题未答清</p>
@@ -206,7 +202,7 @@
 <p>36.幂等性：—可以</p>
 <p>37.nginx 如何做动静分离，如何做反向代理：—-未做过</p>
 <p>38.https的请求过程：—可以</p>
-<p>39.Netty与普通NIO的比较；粘包/拆包—-比较讲的比较模糊，粘包/拆包 可以</p>
+<p>39.Netty与普通NIO的比较；粘包&#x2F;拆包—-比较讲的比较模糊，粘包&#x2F;拆包 可以</p>
 <p>40.基于Zookeeper的分布式锁；：—-模糊</p>
 <p>41.分布式事务有哪些类型，如何使用；二段式和三段式的区别：—-可以</p>
 <p>42.ES的使用、查询过程、倒排索引等：—-未用过</p>
@@ -269,7 +265,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/private/参考面经/京东面经.html" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/private/%E5%8F%82%E8%80%83%E9%9D%A2%E7%BB%8F/%E4%BA%AC%E4%B8%9C%E9%9D%A2%E7%BB%8F.html" alt="微信分享二维码">
     </div>
 </div>
 
@@ -356,11 +352,6 @@
     	<div class="footer-left">
     		&copy; 2022 Elfred 
         <!-- 《网站备案号 -->
-        
-                <img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png" title="备案管理系统">
-                <a href="http://www.beian.miit.gov.cn/" style="color:#f72b07" target="_blank" title="备案号">
-                    皖ICP备20005183号
-                </a>
         
         <!-- 网站备案号》 -->
     	</div>
@@ -468,10 +459,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
@@ -492,6 +479,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">框架</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
@@ -500,15 +491,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">框架</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -516,7 +507,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -525,10 +516,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://blog.elfred.top">
   <title>10讲 | Elfred&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="10 | 递归：如何用三行代码找到“最终推荐人”？递归需要满足的三个条件1. 一个问题的解可以分解为几个子问题的解何为子问题？子问题就是数据规模更小的问题。比如，前面讲的电影院的例子，你要知道，“自己在哪一排”的问题，可以分解为“前一排的人在哪一排”这样一个子问题。 2.  这个问题与分解之后的子问题，除了数据规模不同，求解思路完全一样比如电影院那个例子，你求解“自己在哪一排”的思路，和前面一排">
-<meta name="keywords" content="学习笔记,数据结构与算法之美">
 <meta property="og:type" content="article">
 <meta property="og:title" content="10讲">
-<meta property="og:url" content="https://blog.elfred.top/2021/04/24/study/数据结构与算法之美/学习笔记/10讲/index.html">
+<meta property="og:url" content="https://blog.elfred.top/2021/04/24/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/10%E8%AE%B2/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
 <meta property="og:description" content="10 | 递归：如何用三行代码找到“最终推荐人”？递归需要满足的三个条件1. 一个问题的解可以分解为几个子问题的解何为子问题？子问题就是数据规模更小的问题。比如，前面讲的电影院的例子，你要知道，“自己在哪一排”的问题，可以分解为“前一排的人在哪一排”这样一个子问题。 2.  这个问题与分解之后的子问题，除了数据规模不同，求解思路完全一样比如电影院那个例子，你求解“自己在哪一排”的思路，和前面一排">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210424195819.jpeg">
-<meta property="og:updated_time" content="2021-04-24T12:14:07.285Z">
+<meta property="article:published_time" content="2021-04-24T11:20:00.000Z">
+<meta property="article:modified_time" content="2021-04-24T12:14:07.285Z">
+<meta property="article:author" content="Elfred">
+<meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="数据结构与算法之美">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="10讲">
-<meta name="twitter:description" content="10 | 递归：如何用三行代码找到“最终推荐人”？递归需要满足的三个条件1. 一个问题的解可以分解为几个子问题的解何为子问题？子问题就是数据规模更小的问题。比如，前面讲的电影院的例子，你要知道，“自己在哪一排”的问题，可以分解为“前一排的人在哪一排”这样一个子问题。 2.  这个问题与分解之后的子问题，除了数据规模不同，求解思路完全一样比如电影院那个例子，你求解“自己在哪一排”的思路，和前面一排">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210424195819.jpeg">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
@@ -39,8 +40,8 @@
 
   
 
-</head>
-</html>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -53,10 +54,8 @@
 			<img src="/images/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">Elfred</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">上善若水</p>
 		
 
 		<nav class="header-menu">
@@ -107,10 +106,8 @@
 				<img src="/images/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">Elfred</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>上善若水<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -165,7 +162,7 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2021/04/24/study/数据结构与算法之美/学习笔记/10讲/" class="archive-article-date">
+<a href="/2021/04/24/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/10%E8%AE%B2/" class="archive-article-date">
   	<time datetime="2021-04-24T11:20:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-24</time>
 </a>
 
@@ -177,24 +174,24 @@
         <hr>
 <h1 id="10-递归：如何用三行代码找到“最终推荐人”？"><a href="#10-递归：如何用三行代码找到“最终推荐人”？" class="headerlink" title="10 | 递归：如何用三行代码找到“最终推荐人”？"></a>10 | 递归：如何用三行代码找到“最终推荐人”？</h1><h2 id="递归需要满足的三个条件"><a href="#递归需要满足的三个条件" class="headerlink" title="递归需要满足的三个条件"></a>递归需要满足的三个条件</h2><h3 id="1-一个问题的解可以分解为几个子问题的解"><a href="#1-一个问题的解可以分解为几个子问题的解" class="headerlink" title="1. 一个问题的解可以分解为几个子问题的解"></a>1. 一个问题的解可以分解为几个子问题的解</h3><p>何为子问题？子问题就是数据规模更小的问题。比如，前面讲的电影院的例子，你要知道，“自己在哪一排”的问题，可以分解为“前一排的人在哪一排”这样一个子问题。</p>
 <h3 id="2-这个问题与分解之后的子问题，除了数据规模不同，求解思路完全一样"><a href="#2-这个问题与分解之后的子问题，除了数据规模不同，求解思路完全一样" class="headerlink" title="2.  这个问题与分解之后的子问题，除了数据规模不同，求解思路完全一样"></a>2.  这个问题与分解之后的子问题，除了数据规模不同，求解思路完全一样</h3><p>比如电影院那个例子，你求解“自己在哪一排”的思路，和前面一排人求解“自己在哪一排”的思路，是一模一样的。</p>
-<h3 id="3-存在递归终止条件"><a href="#3-存在递归终止条件" class="headerlink" title="3. 存在递归终止条件"></a>3. 存在递归终止条件</h3><p>把问题分解为子问题，把子问题再分解为子子问题，一层一层分解下去，不能存在无限循环，这就需要有终止条件。还是电影院的例子，第一排的人不需要再继续询问任何人，就知道自己在哪一排，也就是 f(1)=1，这就是递归的终止条件。</p>
+<h3 id="3-存在递归终止条件"><a href="#3-存在递归终止条件" class="headerlink" title="3. 存在递归终止条件"></a>3. 存在递归终止条件</h3><p>把问题分解为子问题，把子问题再分解为子子问题，一层一层分解下去，不能存在无限循环，这就需要有终止条件。还是电影院的例子，第一排的人不需要再继续询问任何人，就知道自己在哪一排，也就是 f(1)&#x3D;1，这就是递归的终止条件。</p>
 <h2 id="如何编写递归代码？"><a href="#如何编写递归代码？" class="headerlink" title="如何编写递归代码？"></a>如何编写递归代码？</h2><p>写递归代码最关键的是<strong>写出递推公式，找到终止条件</strong>，剩下将递推公式转化为代码就很简单了。</p>
 <p>你先记住这个理论。我举一个例子，带你一步一步实现一个递归代码，帮你理解。</p>
 <p>假如这里有 n 个台阶，每次你可以跨 1 个台阶或者 2 个台阶，请问走这 n 个台阶有多少种走法？如果有 7 个台阶，你可以 2，2，2，1 这样子上去，也可以 1，2，1，1，2 这样子上去，总之走法有很多，那如何用编程求得总共有多少种走法呢？</p>
 <p>我们仔细想下，实际上，可以根据第一步的走法把所有走法分为两类，第一类是第一步走了 1 个台阶，另一类是第一步走了 2 个台阶。所以 n 个台阶的走法就等于先走 1 阶后，n-1 个台阶的走法 加上先走 2 阶后，n-2 个台阶的走法。用公式表示就是：</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f(<span class="name">n</span>) = f(<span class="name">n-1</span>)+f(<span class="name">n-2</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">f</span><span class="params">(n)</span></span> = <span class="built_in">f</span>(n-<span class="number">1</span>)+<span class="built_in">f</span>(n-<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p>这里其实就是斐波那契数列，或者你自己在本子上画一下就知道了，第一阶有1种走法，第二阶有2种走法，第三阶有3种走法，第四阶有5种走法，第五阶有8种走法，这个走法的规律正好符合斐波那契数列1(这个1在此例子省略了)、1、2、3、5、8、13、21….不管哪个数都是前两个数的和，那么想象每个数下面都有一个类似数组一样的下标，那么第n个数就等于第n-1位置的数加上第n-2位置的数也就是F(n) = F(n-1) + F(n-2)</p>
+<p>这里其实就是斐波那契数列，或者你自己在本子上画一下就知道了，第一阶有1种走法，第二阶有2种走法，第三阶有3种走法，第四阶有5种走法，第五阶有8种走法，这个走法的规律正好符合斐波那契数列1(这个1在此例子省略了)、1、2、3、5、8、13、21….不管哪个数都是前两个数的和，那么想象每个数下面都有一个类似数组一样的下标，那么第n个数就等于第n-1位置的数加上第n-2位置的数也就是F(n) &#x3D; F(n-1) + F(n-2)</p>
 </blockquote>
-<p>有了递推公式，递归代码基本上就完成了一半。我们再来看下终止条件。当有一个台阶时，我们不需要再继续递归，就只有一种走法。所以 f(1)=1。这个递归终止条件足够吗？我们可以用 n=2，n=3 这样比较小的数试验一下。</p>
-<p>n=2 时，f(2)=f(1)+f(0)。如果递归终止条件只有一个 f(1)=1，那 f(2) 就无法求解了。所以除了 f(1)=1 这一个递归终止条件外，还要有 f(0)=1，表示走 0 个台阶有一种走法，不过这样子看起来就不符合正常的逻辑思维了。所以，我们可以把 f(2)=2 作为一种终止条件，表示走 2 个台阶，有两种走法，一步走完或者分两步来走。</p>
-<p>所以，递归终止条件就是 f(1)=1，f(2)=2。这个时候，你可以再拿 n=3，n=4 来验证一下，这个终止条件是否足够并且正确。</p>
+<p>有了递推公式，递归代码基本上就完成了一半。我们再来看下终止条件。当有一个台阶时，我们不需要再继续递归，就只有一种走法。所以 f(1)&#x3D;1。这个递归终止条件足够吗？我们可以用 n&#x3D;2，n&#x3D;3 这样比较小的数试验一下。</p>
+<p>n&#x3D;2 时，f(2)&#x3D;f(1)+f(0)。如果递归终止条件只有一个 f(1)&#x3D;1，那 f(2) 就无法求解了。所以除了 f(1)&#x3D;1 这一个递归终止条件外，还要有 f(0)&#x3D;1，表示走 0 个台阶有一种走法，不过这样子看起来就不符合正常的逻辑思维了。所以，我们可以把 f(2)&#x3D;2 作为一种终止条件，表示走 2 个台阶，有两种走法，一步走完或者分两步来走。</p>
+<p>所以，递归终止条件就是 f(1)&#x3D;1，f(2)&#x3D;2。这个时候，你可以再拿 n&#x3D;3，n&#x3D;4 来验证一下，这个终止条件是否足够并且正确。</p>
 <p>我们把递归终止条件和刚刚得到的递推公式放到一起就是这样的：</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f(<span class="number">1</span>) = <span class="number">1</span><span class="comment">;</span></span><br><span class="line">f(<span class="number">2</span>) = <span class="number">2</span><span class="comment">;</span></span><br><span class="line">f(<span class="name">n</span>) = f(<span class="name">n-1</span>)+f(<span class="name">n-2</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">f</span>(<span class="number">1</span>) = <span class="number">1</span>;</span><br><span class="line"><span class="attribute">f</span>(<span class="number">2</span>) = <span class="number">2</span>;</span><br><span class="line"><span class="attribute">f</span>(n) = f(n-<span class="number">1</span>)+f(n-<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
 
 <p>有了这个公式，我们转化成递归代码就简单多了。最终的递归代码是这样的：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">2</span>) <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">return</span> f(n<span class="number">-1</span>) + f(n<span class="number">-2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">f</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">2</span>) <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">return</span> f(n<span class="number">-1</span>) + f(n<span class="number">-2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>我总结一下，<strong>写递归代码的关键就是找到如何将大问题分解为小问题的规律，并且基于此写出递推公式，然后再推敲终止条件，最后将递推公式和终止条件翻译成代码</strong>。</p>
 <p>虽然我讲了这么多方法，但是作为初学者的你，现在是不是还是有种想不太清楚的感觉呢？实际上，我刚学递归的时候，也有这种感觉，这也是文章开头我说递归代码比较难理解的地方。</p>
@@ -210,7 +207,7 @@
 <p>从图中，我们可以直观地看到，想要计算 f(5)，需要先计算 f(4) 和 f(3)，而计算 f(4) 还需要计算 f(3)，因此，f(3) 就被计算了很多次，这就是重复计算问题。</p>
 <p>为了避免重复计算，我们可以通过一个数据结构（比如散列表）来保存已经求解过的 f(k)。当递归调用到 f(k) 时，先看下是否已经求解过了。如果是，则直接从散列表中取值返回，不需要重复计算，这样就能避免刚讲的问题了。</p>
 <p>按照上面的思路，我们来改造一下刚才的代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">2</span>) <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// hasSolvedList可以理解成一个Map，key是n，value是f(n)</span></span><br><span class="line">  <span class="keyword">if</span> (hasSolvedList.containsKey(n)) &#123;</span><br><span class="line">    <span class="keyword">return</span> hasSolvedList.get(n);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">int</span> ret = f(n-<span class="number">1</span>) + f(n-<span class="number">2</span>);</span><br><span class="line">  hasSolvedList.put(n, ret);</span><br><span class="line">  <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">f</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">2</span>) <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// hasSolvedList可以理解成一个Map，key是n，value是f(n)</span></span><br><span class="line">  <span class="keyword">if</span> (hasSolvedList.containsKey(n)) &#123;</span><br><span class="line">    <span class="keyword">return</span> hasSolvedList.get(n);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="type">int</span> <span class="variable">ret</span> <span class="operator">=</span> f(n-<span class="number">1</span>) + f(n-<span class="number">2</span>);</span><br><span class="line">  hasSolvedList.put(n, ret);</span><br><span class="line">  <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>除了堆栈溢出、重复计算这两个常见的问题。递归代码还有很多别的问题。在时间效率上，递归代码里多了很多函数调用，当这些函数调用的数量较大时，就会积聚成一个可观的时间成本。在空间复杂度上，因为递归调用一次就会在内存栈中保存一次现场数据，所以在分析递归代码空间复杂度时，需要额外考虑这部分的开销，比如我们前面讲到的电影院递归代码，空间复杂度并不是 O(1)，而是 O(n)。</p>
 <h2 id="课后思考"><a href="#课后思考" class="headerlink" title="课后思考"></a>课后思考</h2><p>我们平时调试代码喜欢使用 IDE 的单步跟踪功能，像规模比较大、递归层次很深的递归代码，几乎无法使用这种调试方式。对于递归代码，你有什么好的调试方法呢？</p>
@@ -290,7 +287,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/2021/04/24/study/数据结构与算法之美/学习笔记/10讲/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://blog.elfred.top/2021/04/24/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/10%E8%AE%B2/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -304,7 +301,7 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/04/24/study/数据结构与算法之美/每周打卡/7/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/04/24/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E6%AF%8F%E5%91%A8%E6%89%93%E5%8D%A1/7/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
@@ -314,7 +311,7 @@
     </a>
   
   
-    <a href="/2021/04/22/interview/领域驱动设计DDD/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2021/04/22/interview/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1DDD/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">领域驱动设计DDD</div>
       <i class="icon-circle-right"></i>
     </a>
@@ -396,11 +393,6 @@
     	<div class="footer-left">
     		&copy; 2022 Elfred 
         <!-- 《网站备案号 -->
-        
-                <img src="https://static.dy208.cn/o_1dfilp8ruo521thr1hvf18ji17soa.png" title="备案管理系统">
-                <a href="http://www.beian.miit.gov.cn/" style="color:#f72b07" target="_blank" title="备案号">
-                    皖ICP备20005183号
-                </a>
         
         <!-- 网站备案号》 -->
     	</div>
@@ -508,10 +500,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
@@ -532,6 +520,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">框架</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
@@ -540,15 +532,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">框架</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -556,7 +548,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -565,10 +557,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
              
               <li class="article-tag-list-item">
