@@ -46,31 +46,6 @@
   
   <entry>
     <title>28讲</title>
-    <link href="https://blog.elfred.top/2021/08/23/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/29%E8%AE%B2/"/>
-    <id>https://blog.elfred.top/2021/08/23/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/29%E8%AE%B2/</id>
-    <published>2021-08-23T00:30:00.000Z</published>
-    <updated>2021-10-25T01:32:34.465Z</updated>
-    
-    <content type="html"><![CDATA[<hr><h1 id="29-堆的应用：如何快速获取到Top-10最热门的搜索关键词？"><a href="#29-堆的应用：如何快速获取到Top-10最热门的搜索关键词？" class="headerlink" title="29 | 堆的应用：如何快速获取到Top 10最热门的搜索关键词？"></a>29 | 堆的应用：如何快速获取到Top 10最热门的搜索关键词？</h1><h2 id="堆的应用一：优先级队列"><a href="#堆的应用一：优先级队列" class="headerlink" title="堆的应用一：优先级队列"></a>堆的应用一：优先级队列</h2><h3 id="1-合并有序小文件"><a href="#1-合并有序小文件" class="headerlink" title="1. 合并有序小文件"></a>1. 合并有序小文件</h3><p>假设我们有 100 个小文件，每个文件的大小是 100MB，每个文件中存储的都是有序的字符串。我们希望将这些 100 个小文件合并成一个有序的大文件。这里就会用到优先级队列。</p><p>整体思路有点像归并排序中的合并函数。我们从这 100 个文件中，各取第一个字符串，放入数组中，然后比较大小，把最小的那个字符串放入合并后的大文件中，并从数组中删除。</p><p>假设，这个最小的字符串来自于 13.txt 这个小文件，我们就再从这个小文件取下一个字符串，放到数组中，重新比较大小，并且选择最小的放入合并后的大文件，将它从数组中删除。依次类推，直到所有的文件中的数据都放入到大文件为止。</p><p>这里我们用数组这种数据结构，来存储从小文件中取出来的字符串。每次从数组中取最小字符串，都需要循环遍历整个数组，显然，这不是很高效。有没有更加高效方法呢？</p><p>这里就可以用到优先级队列，也可以说是堆。我们将从小文件中取出来的字符串放入到小顶堆中，那堆顶的元素，也就是优先级队列队首的元素，就是最小的字符串。我们将这个字符串放入到大文件中，并将其从堆中删除。然后再从小文件中取出下一个字符串，放入到堆中。循环这个过程，就可以将 100 个小文件中的数据依次放入到大文件中。</p><p>我们知道，删除堆顶数据和往堆中插入数据的时间复杂度都是 O(logn)，n 表示堆中的数据个数，这里就是 100。是不是比原来数组存储的方式高效了很多呢？</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;hr&gt;
-&lt;h1 id=&quot;29-堆的应用：如何快速获取到Top-10最热门的搜索关键词？&quot;&gt;&lt;a href=&quot;#29-堆的应用：如何快速获取到Top-10最热门的搜索关键词？&quot; class=&quot;headerlink&quot; title=&quot;29 | 堆的应用：如何快速获取到Top 10最热</summary>
-      
-    
-    
-    
-    
-    <category term="学习笔记" scheme="https://blog.elfred.top/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="数据结构与算法之美" scheme="https://blog.elfred.top/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>28讲</title>
     <link href="https://blog.elfred.top/2021/08/23/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/28%E8%AE%B2/"/>
     <id>https://blog.elfred.top/2021/08/23/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/28%E8%AE%B2/</id>
     <published>2021-08-23T00:30:00.000Z</published>
@@ -83,6 +58,31 @@
       
     <summary type="html">&lt;hr&gt;
 &lt;h1 id=&quot;28-堆和堆排序：为什么说堆排序没有快速排序快？&quot;&gt;&lt;a href=&quot;#28-堆和堆排序：为什么说堆排序没有快速排序快？&quot; class=&quot;headerlink&quot; title=&quot;28 | 堆和堆排序：为什么说堆排序没有快速排序快？&quot;&gt;&lt;/a&gt;28 | 堆和</summary>
+      
+    
+    
+    
+    
+    <category term="学习笔记" scheme="https://blog.elfred.top/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="数据结构与算法之美" scheme="https://blog.elfred.top/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>29讲</title>
+    <link href="https://blog.elfred.top/2021/08/23/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/29%E8%AE%B2/"/>
+    <id>https://blog.elfred.top/2021/08/23/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/29%E8%AE%B2/</id>
+    <published>2021-08-23T00:30:00.000Z</published>
+    <updated>2022-05-17T11:53:04.167Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h1 id="29-堆的应用：如何快速获取到Top-10最热门的搜索关键词？"><a href="#29-堆的应用：如何快速获取到Top-10最热门的搜索关键词？" class="headerlink" title="29 | 堆的应用：如何快速获取到Top 10最热门的搜索关键词？"></a>29 | 堆的应用：如何快速获取到Top 10最热门的搜索关键词？</h1><h2 id="堆的应用一：优先级队列"><a href="#堆的应用一：优先级队列" class="headerlink" title="堆的应用一：优先级队列"></a>堆的应用一：优先级队列</h2><h3 id="1-合并有序小文件"><a href="#1-合并有序小文件" class="headerlink" title="1. 合并有序小文件"></a>1. 合并有序小文件</h3><p>假设我们有 100 个小文件，每个文件的大小是 100MB，每个文件中存储的都是有序的字符串。我们希望将这些 100 个小文件合并成一个有序的大文件。这里就会用到优先级队列。</p><p>整体思路有点像归并排序中的合并函数。我们从这 100 个文件中，各取第一个字符串，放入数组中，然后比较大小，把最小的那个字符串放入合并后的大文件中，并从数组中删除。</p><p>假设，这个最小的字符串来自于 13.txt 这个小文件，我们就再从这个小文件取下一个字符串，放到数组中，重新比较大小，并且选择最小的放入合并后的大文件，将它从数组中删除。依次类推，直到所有的文件中的数据都放入到大文件为止。</p><p>这里我们用数组这种数据结构，来存储从小文件中取出来的字符串。每次从数组中取最小字符串，都需要循环遍历整个数组，显然，这不是很高效。有没有更加高效方法呢？</p><p>这里就可以用到优先级队列，也可以说是堆。我们将从小文件中取出来的字符串放入到小顶堆中，那堆顶的元素，也就是优先级队列队首的元素，就是最小的字符串。我们将这个字符串放入到大文件中，并将其从堆中删除。然后再从小文件中取出下一个字符串，放入到堆中。循环这个过程，就可以将 100 个小文件中的数据依次放入到大文件中。</p><p>我们知道，删除堆顶数据和往堆中插入数据的时间复杂度都是 O(logn)，n 表示堆中的数据个数，这里就是 100。是不是比原来数组存储的方式高效了很多呢？</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;hr&gt;
+&lt;h1 id=&quot;29-堆的应用：如何快速获取到Top-10最热门的搜索关键词？&quot;&gt;&lt;a href=&quot;#29-堆的应用：如何快速获取到Top-10最热门的搜索关键词？&quot; class=&quot;headerlink&quot; title=&quot;29 | 堆的应用：如何快速获取到Top 10最热</summary>
       
     
     
