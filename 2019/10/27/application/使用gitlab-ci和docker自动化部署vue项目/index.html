@@ -50,6 +50,9 @@
 
 
   
+    <script src="/lib/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+  
 
 </head>
 
@@ -60,7 +63,7 @@
       
 
 
-<div class="overlay" style="background: #4d4d4d;"></div>
+<div class="overlay" style="background: #4d4d4d;background: url('/img/biubiubiu.gif') no-repeat ;"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
@@ -76,11 +79,9 @@
 		<nav class="header-menu">
 			<ul>
 			
-				<li><a href="/" target="_blank">主页</a></li>
+				<li><a href="/" >主页</a></li>
 			
-				<li><a href="https://github.com/kuqi007" target="_blank">技术笔记</a></li>
-			
-				<li><a href="/tags/%E9%9A%8F%E7%AC%94/" target="_blank">随笔</a></li>
+				<li><a href="/tags/%E9%9D%A2%E7%BB%8F/" >面经</a></li>
 			
 			</ul>
 		</nav>
@@ -103,26 +104,28 @@
 			<div class="social">
 				
 					
-						<a class="github" href="#" 
+						<a class="github" href="https://github.com/kuqi007" 
 												title="GitHub" target="_blank"><i class="icon-github"></i></a>
 					
 				
 					
-						<a class="github" href="#" 
-												title="GitHub" target="_blank"><i class="icon-github"></i></a>
-					
-				
-					
-						<a class="gitee" href="#" 
-												title="码云" target="_blank"><i class="icon-gitee"></i></a>
-					
-				
-					
-						<a class="jianshu" href="#" 
-												title="简书" target="_blank"><i class="icon-jianshu"></i></a>
+						<a class="mail" href="mailto:elfred2096@outlook.com" 
+												title="邮件联系" target="_blank"><i class="icon-mail"></i></a>
 					
 				
 			</div>
+		
+			
+			
+			
+			
+			<div>
+				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="86" src="//music.163.com/outchain/player?type=2&id=435305771&auto=1&height=66"></iframe>
+			</div>
+			
+				
+				<p style="font-size: 12px;">这似乎是首纯音乐，请尽情的欣赏它吧！<p>
+			
 		
 		</nav>
 	</header>		
@@ -162,8 +165,6 @@
 			
 				
 			
-				
-			
 			
 			
 			<nav class="header-nav">
@@ -171,36 +172,24 @@
 					
 						
 						<a class="github" target="_blank" 
-							href="#" title="GitHub"><i class="icon-github"></i></a>
+							href="https://github.com/kuqi007" title="GitHub"><i class="icon-github"></i></a>
 						
 					
 						
-						<a class="github" target="_blank" 
-							href="#" title="GitHub"><i class="icon-github"></i></a>
-						
-					
-						
-						<a class="gitee" target="_blank" 
-							href="#" title="码云"><i class="icon-gitee"></i></a>
-						
-					
-						
-						<a class="jianshu" target="_blank" 
-							href="#" title="简书"><i class="icon-jianshu"></i></a>
+						<a class="mail" target="_blank" 
+							href="mailto:elfred2096@outlook.com" title="邮件联系"><i class="icon-mail"></i></a>
 						
 					
 				</div>
 			</nav>
 
 			<nav class="header-menu js-header-menu">
-				<ul style="width: 70%">
+				<ul style="width: 50%">
 				
 				
-					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+					<li style="width: 50%"><a href="/">主页</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a target="_blank" rel="noopener" href="https://github.com/kuqi007">技术笔记</a></li>
-		        
-					<li style="width: 33.333333333333336%"><a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a></li>
+					<li style="width: 50%"><a href="/tags/%E9%9D%A2%E7%BB%8F/">面经</a></li>
 		        
 				</ul>
 			</nav>
@@ -274,9 +263,9 @@
 
 <h3 id="一、安装gitlab-runner，在runner机器上安装git等"><a href="#一、安装gitlab-runner，在runner机器上安装git等" class="headerlink" title="一、安装gitlab-runner，在runner机器上安装git等"></a>一、安装gitlab-runner，在runner机器上安装git等</h3><p>由于公司gitlab版本是8.x，比较老，只能安装1.x版本的gialab-runner，这里比较注意的是，一般runner和gitlab会分别安装到两台服务器上，具体安装步骤可以<a target="_blank" rel="noopener" href="http://muchstudy.com/2018/07/13/Gitlab-8-x-runner%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/">参考这篇文章</a>。安装好之后创建两个runner：一个<code>docker</code>类型runner，打上CI标签；一个<code>shell</code>类型runner，打上CD标签。因为会使用到shell的runner，所以需要安装git，安装过程不再赘述，当然如果你runner不是这样用，可能还需要安装nodejs等环境。</p>
 <h3 id="二、编写Dockerfile"><a href="#二、编写Dockerfile" class="headerlink" title="二、编写Dockerfile"></a>二、编写Dockerfile</h3><p>在项目根目录下新建docker目录，编写Dockerfile，注意相对路径问题：</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置基础镜像</span></span><br><span class="line"><span class="keyword">FROM</span> nginx</span><br><span class="line"><span class="comment">#设置CTS时区</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">cp</span> /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &amp;&amp; <span class="built_in">echo</span> <span class="string">&#x27;Asia/Shanghai&#x27;</span> &gt;/etc/timezone</span></span><br><span class="line"><span class="comment"># 将dist文件中的内容复制到 /usr/share/nginx/html/ 这个目录下面</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> ./dist /usr/share/nginx/html/</span></span><br><span class="line"><span class="comment">#用本地的 default.conf 配置来替换nginx镜像里的默认配置</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> docker/default.conf /etc/nginx/conf.d/default.conf</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;nginx&quot;</span>,<span class="string">&quot;-g&quot;</span>,<span class="string">&quot;daemon off;&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 设置基础镜像</span><br><span class="line">FROM nginx</span><br><span class="line">#设置CTS时区</span><br><span class="line">RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &amp;&amp; echo &#x27;Asia/Shanghai&#x27; &gt;/etc/timezone</span><br><span class="line"># 将dist文件中的内容复制到 /usr/share/nginx/html/ 这个目录下面</span><br><span class="line">COPY ./dist /usr/share/nginx/html/</span><br><span class="line">#用本地的 default.conf 配置来替换nginx镜像里的默认配置</span><br><span class="line">COPY docker/default.conf /etc/nginx/conf.d/default.conf</span><br><span class="line">EXPOSE 80</span><br><span class="line">CMD [&quot;nginx&quot;,&quot;-g&quot;,&quot;daemon off;&quot;]</span><br></pre></td></tr></table></figure>
 <p>同样在docker目录下新增Nginx配置文件default.conf：</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen       <span class="number">80</span>;</span><br><span class="line">    server_name  localhost;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#charset koi8-r;</span></span><br><span class="line">    access_log  <span class="regexp">/var/</span>log<span class="regexp">/nginx/</span>host.access.log  main;</span><br><span class="line">    error_log  <span class="regexp">/var/</span>log<span class="regexp">/nginx/</span>error.log  error;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        root   <span class="regexp">/usr/</span>share<span class="regexp">/nginx/</span>html;</span><br><span class="line">        index  index.html index.htm;</span><br><span class="line">        try_files <span class="variable">$uri</span> <span class="variable">$uri</span><span class="regexp">/ /i</span>ndex.html;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#error_page  404              /404.html;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># redirect server error pages to the static page /50x.html</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    error_page   <span class="number">500</span> <span class="number">502</span> <span class="number">503</span> <span class="number">504</span>  /<span class="number">50</span>x.html;</span><br><span class="line">    location = /<span class="number">50</span>x.html &#123;</span><br><span class="line">        root   <span class="regexp">/usr/</span>share<span class="regexp">/nginx/</span>html;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen       80;</span><br><span class="line">    server_name  localhost;</span><br><span class="line"></span><br><span class="line">    #charset koi8-r;</span><br><span class="line">    access_log  /var/log/nginx/host.access.log  main;</span><br><span class="line">    error_log  /var/log/nginx/error.log  error;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        root   /usr/share/nginx/html;</span><br><span class="line">        index  index.html index.htm;</span><br><span class="line">        try_files $uri $uri/ /index.html;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    #error_page  404              /404.html;</span><br><span class="line"></span><br><span class="line">    # redirect server error pages to the static page /50x.html</span><br><span class="line">    #</span><br><span class="line">    error_page   500 502 503 504  /50x.html;</span><br><span class="line">    location = /50x.html &#123;</span><br><span class="line">        root   /usr/share/nginx/html;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -284,14 +273,14 @@
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job-build:</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">node:alpine</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">build</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="comment"># ci是docker类型的runner</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">ci</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">install</span> <span class="string">-g</span> <span class="string">cnpm</span> <span class="string">--registry=https://registry.npm.taobao.org</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">cnpm</span> <span class="string">install</span> <span class="string">--progress=false</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">cnpm</span> <span class="string">run</span> <span class="string">build</span></span><br><span class="line">  <span class="attr">artifacts:</span></span><br><span class="line">    <span class="attr">expire_in:</span> <span class="number">1</span> <span class="string">week</span></span><br><span class="line">    <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">dist</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">docker</span></span><br><span class="line"></span><br><span class="line"><span class="attr">job-release:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line">  <span class="attr">dependencies:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">job-build</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="comment"># cd是shell类型的runner</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">cd</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">docker</span> <span class="string">build</span> <span class="string">-f</span> <span class="string">docker/Dockerfile</span> <span class="string">-t</span> <span class="string">ngnix/app:v1.0.0</span> <span class="string">.</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">if</span> [ <span class="string">$(docker</span> <span class="string">ps</span> <span class="string">-aq</span> <span class="string">--filter</span> <span class="string">name=app-test)</span> ]<span class="string">;</span> <span class="string">then</span> <span class="string">docker</span> <span class="string">rm</span> <span class="string">-f</span> <span class="string">rhea-cms;fi</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">docker</span> <span class="string">run</span> <span class="string">-p</span> <span class="number">80</span><span class="string">:80</span> <span class="string">--name</span> <span class="string">app-test</span> <span class="string">-d</span> <span class="string">ngnix/app:v1.0.0</span></span><br></pre></td></tr></table></figure>
 <p>这里使用到了gitlab的artifacts功能，感兴趣的可以去看官方文档，类似缓存的作用，第二步发布的时候就无需拉取代码编译直接使用上一步归档的dist和docker文件夹。提交所有更改之后所有master分支的提交就会触发一系列编译部署操作了。</p>
 <h4 id="遇到的问题："><a href="#遇到的问题：" class="headerlink" title="遇到的问题："></a>遇到的问题：</h4><p>1.gitlab-runner执行docker命令的时候遇到一个问题，因为使用的是gitlab-runner用户权限不够，结果按照网上教程和更改用户分组都没用。</p>
-<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Got permission denied <span class="keyword">while</span> trying <span class="built_in">to</span> connect <span class="built_in">to</span> <span class="keyword">the</span> Docker daemon <span class="built_in">socket</span> <span class="keyword">at</span> unix:<span class="comment">///var/run/docker.sock</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock</span><br></pre></td></tr></table></figure>
 <p>后来找到一个解决方案：</p>
-<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">usermod -aG docker gitlab-runner</span></span><br><span class="line"><span class="attribute">sudo service docker restart</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">usermod -aG docker gitlab-runner</span><br><span class="line">sudo service docker restart</span><br></pre></td></tr></table></figure>
 <p>完美解决。</p>
 <p>2.使用gitlab-ci runner拉取git代码遇到这个问题，重新编译安装git都没用</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fatal: unable <span class="keyword">to</span> <span class="built_in">find</span> remote helper <span class="keyword">for</span> <span class="string">&#x27;http&#x27;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fatal: unable to find remote helper for &#x27;http&#x27;</span><br></pre></td></tr></table></figure>
 <p>后来发现是编译安装git的时候缺少了curl-devel的lib依赖，yum安装依赖再重新编译安装git就可以了。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">yum install curl-devel</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="comment"># cd to wherever the source for git is</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> /usr/local/src/git-1.7.9</span>  </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">./configure</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">make</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">make install</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ yum install curl-devel</span><br><span class="line">$ # cd to wherever the source for git is</span><br><span class="line">$ cd /usr/local/src/git-1.7.9  </span><br><span class="line">$ ./configure</span><br><span class="line">$ make</span><br><span class="line">$ make install</span><br></pre></td></tr></table></figure>
     
 
     
@@ -328,26 +317,6 @@
     </div>
     
 
-    
-    <div class="declare"> 
-      <ul class="post-copyright">
-        <li>
-          <strong>本文作者：</strong>
-          Elfred
-        </li>
-        <li>
-          <strong>本文链接：</strong>
-          <a href="https://blog.elfred.top/2019/10/27/application/使用gitlab-ci和docker自动化部署vue项目/" title="使用gitlab-ci和docker自动化部署vue项目" target="_blank">https://blog.elfred.top/2019/10/27/application/使用gitlab-ci和docker自动化部署vue项目/</a>
-        </li>
-        
-        <li>
-          <strong>版权声明： </strong>
-          
-          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
-        </li>
-        
-      </ul>
-    </div>
     
 
   </div>
@@ -450,6 +419,19 @@
         </div>
         
         
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%AE%89%E8%A3%85gitlab-runner%EF%BC%8C%E5%9C%A8runner%E6%9C%BA%E5%99%A8%E4%B8%8A%E5%AE%89%E8%A3%85git%E7%AD%89"><span class="toc-number">2.</span> <span class="toc-text">一、安装gitlab-runner，在runner机器上安装git等</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%BC%96%E5%86%99Dockerfile"><span class="toc-number">3.</span> <span class="toc-text">二、编写Dockerfile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%9C%A8gitlab%E4%B8%8A%E6%B7%BB%E5%8A%A0%E5%B7%B2%E6%9C%89runner%EF%BC%8C%E5%88%9B%E5%BB%BA-gitlab-ci-yml%E6%96%87%E4%BB%B6"><span class="toc-number">4.</span> <span class="toc-text">三、在gitlab上添加已有runner，创建.gitlab-ci.yml文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="toc-number">4.1.</span> <span class="toc-text">遇到的问题：</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
     </div>
 </aside>
 
@@ -473,7 +455,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018-2022 <a href="https://blog.elfred.top/" target="_blank">Elfred</a>
+    		&copy; 2020-2022 <a href="https://blog.elfred.top/" target="_blank">Elfred</a>
     	</div>
       	<div class="footer-right">
 			
@@ -713,60 +695,6 @@
     
     	<section class="tools-section tools-section-friends" q-show="friends">
   		
-        <ul class="search-ul">
-          
-            <li class="search-li">
-              <a href="https://github.com/kuqi007" target="_blank" 
-                class="search-title" title="记录工作和学习过程中的笔记：Java、前端开发、Hexo博客、聚合支付、Linux笔记、ElasticSearch、ELK日志分析">
-                
-                  <img src="https://zhousiwei.gitee.io/ibooks/favicon.ico">
-                
-                技术笔记
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://github.com/kuqi007" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                GitHub
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://github.com/kuqi007" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                码云
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://github.com/kuqi007" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                简书
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://github.com/kuqi007" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                CSDN
-              </a>
-            </li>
-          
-        </ul>
-  		
     	</section>
     
 
@@ -774,7 +702,7 @@
     	<section class="tools-section tools-section-me" q-show="aboutme">
         
           
-  	  		<div class="aboutme-wrap" id="aboutme">主要涉及技术：<br>Java后端开发、聚合支付、<br>公众号开发、开源爱好者、Linux<br><br>联系QQ:2434387555<br><br>很惭愧<br><br>只做了一点微小的工作<br>谢谢大家</div>
+  	  		<div class="aboutme-wrap" id="aboutme">nothing here</div>
   	  	
     	</section>
     
@@ -861,6 +789,56 @@
   
   <!-- <script async type="text/javascript" size="90" alpha="0.2" zIndex="0" src="/plugins/ribbon.js/ribbon.min.js"></script> -->
   
+  
+    <script type="text/javascript" src="/plugins/live2d-widget.js/L2Dwidget.min.js"></script>
+<script type="text/javascript">
+  /**
+   * 完整配置请参考：https://l2dwidget.js.org/docs/class/src/index.js~L2Dwidget.html#instance-method-init
+   */
+  var pluginModelPath = "assets/", // 模型的文件路径，无需更改
+    pluginRootPath = "/live2d_models/"; // 插件的路径，无需更改
+  //特定的模型json文件名称
+  var modelPathJson = {
+    "epsilon2_1": "Epsilon2.1",
+    "gf": "Gantzert_Felixander",
+    "haru/01": "haru01",
+    "haru/02": "haru02",
+    "nietzsche": "nietzche"
+  }
+
+  
+    var modelName = "hibiki";
+  
+
+  var modelJsonPath = "";
+  if (modelPathJson[modelName]) {
+    modelJsonPath = pluginRootPath + modelName + "/" + pluginModelPath + modelPathJson[modelName] +
+      ".model.json";
+  } else {
+    modelJsonPath = pluginRootPath + modelName + "/" + pluginModelPath + modelName + ".model.json";
+  }
+  L2Dwidget.init({
+    model: {
+      jsonPath: modelJsonPath
+    },
+    display: {
+       position: "right", 
+       width: 145, 
+       height: 315, 
+       hOffset: 50, 
+      
+    },
+    mobile: {
+      
+       scale: 0.6 
+    },
+    react: {
+       opacity: 0.8 
+    }
+  })
+
+</script>
+
   
   
 </body>

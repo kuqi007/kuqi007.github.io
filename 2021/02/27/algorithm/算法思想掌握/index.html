@@ -56,6 +56,9 @@
 
 
   
+    <script src="/lib/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+  
 
 </head>
 
@@ -66,7 +69,7 @@
       
 
 
-<div class="overlay" style="background: #4d4d4d;"></div>
+<div class="overlay" style="background: #4d4d4d;background: url('/img/biubiubiu.gif') no-repeat ;"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
@@ -82,11 +85,9 @@
 		<nav class="header-menu">
 			<ul>
 			
-				<li><a href="/" target="_blank">主页</a></li>
+				<li><a href="/" >主页</a></li>
 			
-				<li><a href="https://github.com/kuqi007" target="_blank">技术笔记</a></li>
-			
-				<li><a href="/tags/%E9%9A%8F%E7%AC%94/" target="_blank">随笔</a></li>
+				<li><a href="/tags/%E9%9D%A2%E7%BB%8F/" >面经</a></li>
 			
 			</ul>
 		</nav>
@@ -109,26 +110,28 @@
 			<div class="social">
 				
 					
-						<a class="github" href="#" 
+						<a class="github" href="https://github.com/kuqi007" 
 												title="GitHub" target="_blank"><i class="icon-github"></i></a>
 					
 				
 					
-						<a class="github" href="#" 
-												title="GitHub" target="_blank"><i class="icon-github"></i></a>
-					
-				
-					
-						<a class="gitee" href="#" 
-												title="码云" target="_blank"><i class="icon-gitee"></i></a>
-					
-				
-					
-						<a class="jianshu" href="#" 
-												title="简书" target="_blank"><i class="icon-jianshu"></i></a>
+						<a class="mail" href="mailto:elfred2096@outlook.com" 
+												title="邮件联系" target="_blank"><i class="icon-mail"></i></a>
 					
 				
 			</div>
+		
+			
+			
+			
+			
+			<div>
+				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="86" src="//music.163.com/outchain/player?type=2&id=435305771&auto=1&height=66"></iframe>
+			</div>
+			
+				
+				<p style="font-size: 12px;">这似乎是首纯音乐，请尽情的欣赏它吧！<p>
+			
 		
 		</nav>
 	</header>		
@@ -168,8 +171,6 @@
 			
 				
 			
-				
-			
 			
 			
 			<nav class="header-nav">
@@ -177,36 +178,24 @@
 					
 						
 						<a class="github" target="_blank" 
-							href="#" title="GitHub"><i class="icon-github"></i></a>
+							href="https://github.com/kuqi007" title="GitHub"><i class="icon-github"></i></a>
 						
 					
 						
-						<a class="github" target="_blank" 
-							href="#" title="GitHub"><i class="icon-github"></i></a>
-						
-					
-						
-						<a class="gitee" target="_blank" 
-							href="#" title="码云"><i class="icon-gitee"></i></a>
-						
-					
-						
-						<a class="jianshu" target="_blank" 
-							href="#" title="简书"><i class="icon-jianshu"></i></a>
+						<a class="mail" target="_blank" 
+							href="mailto:elfred2096@outlook.com" title="邮件联系"><i class="icon-mail"></i></a>
 						
 					
 				</div>
 			</nav>
 
 			<nav class="header-menu js-header-menu">
-				<ul style="width: 70%">
+				<ul style="width: 50%">
 				
 				
-					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+					<li style="width: 50%"><a href="/">主页</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a target="_blank" rel="noopener" href="https://github.com/kuqi007">技术笔记</a></li>
-		        
-					<li style="width: 33.333333333333336%"><a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a></li>
+					<li style="width: 50%"><a href="/tags/%E9%9D%A2%E7%BB%8F/">面经</a></li>
 		        
 				</ul>
 			</nav>
@@ -278,10 +267,10 @@
     <hr>
 <h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><h3 id="395-至少有K个重复字符的最长子串"><a href="#395-至少有K个重复字符的最长子串" class="headerlink" title="395. 至少有K个重复字符的最长子串"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/longest-substring-with-at-least-k-repeating-characters/">395. 至少有K个重复字符的最长子串</a></h3><p>给你一个字符串 <code>s</code> 和一个整数 <code>k</code> ，请你找出 <code>s</code> 中的最长子串， 要求该子串中的每一字符出现次数都不少于 <code>k</code> 。返回这一子串的长度。</p>
 <p><strong>示例 1：</strong></p>
-<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;aaabb&quot;</span>, k = <span class="number">3</span></span><br><span class="line">输出：<span class="number">3</span></span><br><span class="line">解释：最长子串为 <span class="string">&quot;aaa&quot;</span> ，其中 &#x27;a&#x27; 重复了 <span class="number">3</span> 次。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = &quot;aaabb&quot;, k = 3</span><br><span class="line">输出：3</span><br><span class="line">解释：最长子串为 &quot;aaa&quot; ，其中 &#x27;a&#x27; 重复了 3 次。</span><br></pre></td></tr></table></figure>
 
 <p><strong>示例 2：</strong></p>
-<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;ababbc&quot;</span>, k = <span class="number">2</span></span><br><span class="line">输出：<span class="number">5</span></span><br><span class="line">解释：最长子串为 <span class="string">&quot;ababb&quot;</span> ，其中 &#x27;a&#x27; 重复了 <span class="number">2</span> 次， &#x27;b&#x27; 重复了 <span class="number">3</span> 次。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = &quot;ababbc&quot;, k = 2</span><br><span class="line">输出：5</span><br><span class="line">解释：最长子串为 &quot;ababb&quot; ，其中 &#x27;a&#x27; 重复了 2 次， &#x27;b&#x27; 重复了 3 次。</span><br></pre></td></tr></table></figure>
 
 <p> <strong>提示：</strong></p>
 <ul>
@@ -310,11 +299,11 @@
 <p>返回同样按升序排列的结果链表。</p>
 <p> <strong>示例 1：</strong></p>
 <p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210326100625.jpeg" alt="img"></p>
-<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：head = <span class="comment">[1,2,3,3,4,4,5]</span></span><br><span class="line">输出：<span class="comment">[1,2,5]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：head = [1,2,3,3,4,4,5]</span><br><span class="line">输出：[1,2,5]</span><br></pre></td></tr></table></figure>
 
 <p><strong>示例 2：</strong></p>
 <p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210326100625.jpeg" alt="img"></p>
-<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：head = <span class="comment">[1,1,1,2,3]</span></span><br><span class="line">输出：<span class="comment">[2,3]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：head = [1,1,1,2,3]</span><br><span class="line">输出：[2,3]</span><br></pre></td></tr></table></figure>
 
 <p><strong>提示：</strong></p>
 <ul>
@@ -354,7 +343,7 @@
 <li>int sumRange(int i, int j) 返回数组 nums 从索引 i 到 j（i ≤ j）范围内元素的总和，包含 i、j 两点（也就是 sum(nums[i], nums[i + 1], … , nums[j])）</li>
 </ul>
 <p>示例：</p>
-<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">输入：</span><br><span class="line">[&quot;NumArray&quot;, &quot;sumRange&quot;, &quot;sumRange&quot;, &quot;sumRange&quot;]</span><br><span class="line">[[[<span class="string">-2</span>, 0, 3, <span class="string">-5</span>, 2, <span class="string">-1</span>]], [0, 2], [2, 5], [0, 5]]</span><br><span class="line">输出：</span><br><span class="line">[null, 1, <span class="string">-1</span>, <span class="string">-3</span>]</span><br><span class="line"></span><br><span class="line">解释：</span><br><span class="line">NumArray numArray = new NumArray([<span class="string">-2</span>, 0, 3, <span class="string">-5</span>, 2, <span class="string">-1</span>]);</span><br><span class="line">numArray.sumRange(0, 2); // return 1 ((<span class="string">-2</span>) + 0 + 3)</span><br><span class="line">numArray.sumRange(2, 5); // return <span class="string">-1</span> (3 + (<span class="string">-5</span>) + 2 + (<span class="string">-1</span>)) </span><br><span class="line">numArray.sumRange(0, 5); // return <span class="string">-3</span> ((<span class="string">-2</span>) + 0 + 3 + (<span class="string">-5</span>) + 2 + (<span class="string">-1</span>))</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">输入：</span><br><span class="line">[&quot;NumArray&quot;, &quot;sumRange&quot;, &quot;sumRange&quot;, &quot;sumRange&quot;]</span><br><span class="line">[[[-2, 0, 3, -5, 2, -1]], [0, 2], [2, 5], [0, 5]]</span><br><span class="line">输出：</span><br><span class="line">[null, 1, -1, -3]</span><br><span class="line"></span><br><span class="line">解释：</span><br><span class="line">NumArray numArray = new NumArray([-2, 0, 3, -5, 2, -1]);</span><br><span class="line">numArray.sumRange(0, 2); // return 1 ((-2) + 0 + 3)</span><br><span class="line">numArray.sumRange(2, 5); // return -1 (3 + (-5) + 2 + (-1)) </span><br><span class="line">numArray.sumRange(0, 5); // return -3 ((-2) + 0 + 3 + (-5) + 2 + (-1))</span><br></pre></td></tr></table></figure>
 
 
 <p>提示：</p>
@@ -384,7 +373,7 @@
 </ul>
 <h2 id="单调栈-Monotonic-Stack"><a href="#单调栈-Monotonic-Stack" class="headerlink" title="单调栈 Monotonic Stack"></a>单调栈 Monotonic Stack</h2><h3 id="503-下一个更大元素-II"><a href="#503-下一个更大元素-II" class="headerlink" title="503. 下一个更大元素 II"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/next-greater-element-ii/">503. 下一个更大元素 II</a></h3><p>给定一个循环数组（最后一个元素的下一个元素是数组的第一个元素），输出每个元素的下一个更大元素。数字 x 的下一个更大的元素是按数组遍历顺序，这个数字之后的第一个比它更大的数，这意味着你应该循环地搜索它的下一个更大的数。如果不存在，则输出 -1。</p>
 <p><strong>示例 1:</strong></p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">输入: [1,2,1]</span></span><br><span class="line"><span class="section">输出: [2,-1,2]</span></span><br><span class="line"><span class="section">解释: 第一个 1 的下一个更大的数是 2；</span></span><br><span class="line">数字 2 找不到下一个更大的数； </span><br><span class="line">第二个 1 的下一个最大的数需要循环搜索，结果也是 2。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入: [1,2,1]</span><br><span class="line">输出: [2,-1,2]</span><br><span class="line">解释: 第一个 1 的下一个更大的数是 2；</span><br><span class="line">数字 2 找不到下一个更大的数； </span><br><span class="line">第二个 1 的下一个最大的数需要循环搜索，结果也是 2。</span><br></pre></td></tr></table></figure>
 
 <p><strong>注意:</strong> 输入数组的长度不会超过 10000。</p>
 <h3 id="解题思路-3"><a href="#解题思路-3" class="headerlink" title="解题思路"></a>解题思路</h3><p>今天题目的两个重点：</p>
@@ -421,7 +410,7 @@
 <li>空间复杂度：*O(N)*，使用了额外空间「单调栈」，最坏情况下，栈内会保存数组的所有元素。</li>
 </ul>
 <h2 id="寻找下一个更大的元素需要移动的步数"><a href="#寻找下一个更大的元素需要移动的步数" class="headerlink" title="寻找下一个更大的元素需要移动的步数"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/26465701">寻找下一个更大的元素需要移动的步数</a></h2><p>给定一个数组，返回长度相同的数组。返回的数组的第i个位置的值应当是，对于原数组中的第i个元素，至少往右走多少步，才能遇到一个比自己大的元素（如果之后没有比自己大的元素，或者已经是最后一个元素，则在返回数组的对应位置放上-1）。</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">输入: [5,3,1,2,4]</span></span><br><span class="line"><span class="section">输出: [-1,3,1,1,-1]</span></span><br><span class="line"><span class="section">解释: 5找不到比它更大的所以是-1，3移动3位找到第一个比它大的4，以此类推</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: [5,3,1,2,4]</span><br><span class="line">输出: [-1,3,1,1,-1]</span><br><span class="line">解释: 5找不到比它更大的所以是-1，3移动3位找到第一个比它大的4，以此类推</span><br></pre></td></tr></table></figure>
 
 <h3 id="解题思路-4"><a href="#解题思路-4" class="headerlink" title="解题思路"></a>解题思路</h3><p>我们维护这样一个单调递减的stack，stack内部存的是原数组的每个index。每当我们遇到一个比当前栈顶所对应的数（就是nums[stack.peek()]）大的数的时候，我们就遇到了一个“大数“。这个”大数“比它之前多少个数大我们不知道，但是至少比当前栈顶所对应的数大。我们弹出栈内所有对应数比这个数小的栈内元素，并更新它们在返回数组中对应位置的值。因为这个栈本身的单调性，当我们栈顶元素所对应的数比这个元素大的时候，我们可以保证，栈内所有元素都比这个元素大。对于每一个元素，当它出栈的时候，说明它遇到了自己的next greater element，我们也就要更新return数组中的对应位置的值。如果一个元素一直不曾出栈，那么说明不存在next greater element，我们也就不用更新return数组了。</p>
 <h3 id="代码-4"><a href="#代码-4" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span>[] nextExceed(<span class="type">int</span>[] nums) &#123;</span><br><span class="line">     <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> nums.length;</span><br><span class="line">     <span class="type">int</span>[] res = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">     <span class="comment">// 填充-1</span></span><br><span class="line">     Arrays.fill(res, -<span class="number">1</span>);</span><br><span class="line">     Deque&lt;Integer&gt; stack = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br><span class="line">     <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">         <span class="comment">// 如果栈不为空并且当前元素大于栈顶元素</span></span><br><span class="line">         <span class="comment">// 弹出栈中比当前小的元素，并更新它们在返回数组中对应位置的值（移动的步数）</span></span><br><span class="line">         <span class="comment">// 栈里面需要保存元素在数组中的下标，而不是具体的数字。因为需要根据下标修改结果数组</span></span><br><span class="line">         <span class="keyword">while</span> (!stack.isEmpty() &amp;&amp; nums[i] &gt; nums[stack.peek()]) &#123;          </span><br><span class="line">             res[stack.peek()] = i - stack.peek();</span><br><span class="line">             stack.pop();</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="comment">// 下标入栈</span></span><br><span class="line">         stack.push(i);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> res;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
@@ -463,26 +452,6 @@
     </div>
     
 
-    
-    <div class="declare"> 
-      <ul class="post-copyright">
-        <li>
-          <strong>本文作者：</strong>
-          Elfred
-        </li>
-        <li>
-          <strong>本文链接：</strong>
-          <a href="https://blog.elfred.top/2021/02/27/algorithm/算法思想掌握/" title="算法思想掌握" target="_blank">https://blog.elfred.top/2021/02/27/algorithm/算法思想掌握/</a>
-        </li>
-        
-        <li>
-          <strong>版权声明： </strong>
-          
-          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
-        </li>
-        
-      </ul>
-    </div>
     
 
   </div>
@@ -607,6 +576,19 @@
         </div>
         
         
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%92%E5%BD%92"><span class="toc-number">1.</span> <span class="toc-text">递归</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#395-%E8%87%B3%E5%B0%91%E6%9C%89K%E4%B8%AA%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2"><span class="toc-number">1.1.</span> <span class="toc-text">395. 至少有K个重复字符的最长子串</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="toc-number">1.1.1.</span> <span class="toc-text">解题思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-number">1.1.2.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#82-%E5%88%A0%E9%99%A4%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0-II"><span class="toc-number">1.2.</span> <span class="toc-text">82. 删除排序链表中的重复元素 II</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">解题思路</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">1. 递归函数定义</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E9%80%92%E5%BD%92%E7%BB%88%E6%AD%A2%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">2. 递归终止条件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-%E9%80%92%E5%BD%92%E8%B0%83%E7%94%A8"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">3. 递归调用</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C"><span class="toc-number">1.2.1.4.</span> <span class="toc-text">4. 返回结果</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="toc-number">1.2.2.</span> <span class="toc-text">代码</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BC%80%E5%92%8C"><span class="toc-number">2.</span> <span class="toc-text">前缀和</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#303-%E5%8C%BA%E5%9F%9F%E5%92%8C%E6%A3%80%E7%B4%A2-%E6%95%B0%E7%BB%84%E4%B8%8D%E5%8F%AF%E5%8F%98"><span class="toc-number">2.1.</span> <span class="toc-text">303. 区域和检索 - 数组不可变</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF-2"><span class="toc-number">2.1.1.</span> <span class="toc-text">解题思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81-2"><span class="toc-number">2.1.2.</span> <span class="toc-text">代码</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E8%B0%83%E6%A0%88-Monotonic-Stack"><span class="toc-number">3.</span> <span class="toc-text">单调栈 Monotonic Stack</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#503-%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%9B%B4%E5%A4%A7%E5%85%83%E7%B4%A0-II"><span class="toc-number">3.1.</span> <span class="toc-text">503. 下一个更大元素 II</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF-3"><span class="toc-number">3.2.</span> <span class="toc-text">解题思路</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E5%A6%82%E4%BD%95%E6%B1%82%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%9B%B4%E5%A4%A7%E7%9A%84%E5%85%83%E7%B4%A0"><span class="toc-number">3.2.0.1.</span> <span class="toc-text">1. 如何求下一个更大的元素</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%BE%AA%E7%8E%AF%E6%95%B0%E7%BB%84"><span class="toc-number">3.2.0.2.</span> <span class="toc-text">2. 如何实现循环数组</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81-3"><span class="toc-number">3.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BB%E6%89%BE%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%9B%B4%E5%A4%A7%E7%9A%84%E5%85%83%E7%B4%A0%E9%9C%80%E8%A6%81%E7%A7%BB%E5%8A%A8%E7%9A%84%E6%AD%A5%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">寻找下一个更大的元素需要移动的步数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF-4"><span class="toc-number">4.1.</span> <span class="toc-text">解题思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81-4"><span class="toc-number">4.2.</span> <span class="toc-text">代码</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
     </div>
 </aside>
 
@@ -630,7 +612,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018-2022 <a href="https://blog.elfred.top/" target="_blank">Elfred</a>
+    		&copy; 2020-2022 <a href="https://blog.elfred.top/" target="_blank">Elfred</a>
     	</div>
       	<div class="footer-right">
 			
@@ -870,60 +852,6 @@
     
     	<section class="tools-section tools-section-friends" q-show="friends">
   		
-        <ul class="search-ul">
-          
-            <li class="search-li">
-              <a href="https://github.com/kuqi007" target="_blank" 
-                class="search-title" title="记录工作和学习过程中的笔记：Java、前端开发、Hexo博客、聚合支付、Linux笔记、ElasticSearch、ELK日志分析">
-                
-                  <img src="https://zhousiwei.gitee.io/ibooks/favicon.ico">
-                
-                技术笔记
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://github.com/kuqi007" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                GitHub
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://github.com/kuqi007" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                码云
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://github.com/kuqi007" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                简书
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://github.com/kuqi007" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                CSDN
-              </a>
-            </li>
-          
-        </ul>
-  		
     	</section>
     
 
@@ -931,7 +859,7 @@
     	<section class="tools-section tools-section-me" q-show="aboutme">
         
           
-  	  		<div class="aboutme-wrap" id="aboutme">主要涉及技术：<br>Java后端开发、聚合支付、<br>公众号开发、开源爱好者、Linux<br><br>联系QQ:2434387555<br><br>很惭愧<br><br>只做了一点微小的工作<br>谢谢大家</div>
+  	  		<div class="aboutme-wrap" id="aboutme">nothing here</div>
   	  	
     	</section>
     
@@ -1018,6 +946,56 @@
   
   <!-- <script async type="text/javascript" size="90" alpha="0.2" zIndex="0" src="/plugins/ribbon.js/ribbon.min.js"></script> -->
   
+  
+    <script type="text/javascript" src="/plugins/live2d-widget.js/L2Dwidget.min.js"></script>
+<script type="text/javascript">
+  /**
+   * 完整配置请参考：https://l2dwidget.js.org/docs/class/src/index.js~L2Dwidget.html#instance-method-init
+   */
+  var pluginModelPath = "assets/", // 模型的文件路径，无需更改
+    pluginRootPath = "/live2d_models/"; // 插件的路径，无需更改
+  //特定的模型json文件名称
+  var modelPathJson = {
+    "epsilon2_1": "Epsilon2.1",
+    "gf": "Gantzert_Felixander",
+    "haru/01": "haru01",
+    "haru/02": "haru02",
+    "nietzsche": "nietzche"
+  }
+
+  
+    var modelName = "hibiki";
+  
+
+  var modelJsonPath = "";
+  if (modelPathJson[modelName]) {
+    modelJsonPath = pluginRootPath + modelName + "/" + pluginModelPath + modelPathJson[modelName] +
+      ".model.json";
+  } else {
+    modelJsonPath = pluginRootPath + modelName + "/" + pluginModelPath + modelName + ".model.json";
+  }
+  L2Dwidget.init({
+    model: {
+      jsonPath: modelJsonPath
+    },
+    display: {
+       position: "right", 
+       width: 145, 
+       height: 315, 
+       hOffset: 50, 
+      
+    },
+    mobile: {
+      
+       scale: 0.6 
+    },
+    react: {
+       opacity: 0.8 
+    }
+  })
+
+</script>
+
   
   
 </body>

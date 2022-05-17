@@ -53,6 +53,9 @@
 
 
   
+    <script src="/lib/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+  
 
 </head>
 
@@ -63,7 +66,7 @@
       
 
 
-<div class="overlay" style="background: #4d4d4d;"></div>
+<div class="overlay" style="background: #4d4d4d;background: url('/img/biubiubiu.gif') no-repeat ;"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
@@ -79,11 +82,9 @@
 		<nav class="header-menu">
 			<ul>
 			
-				<li><a href="/" target="_blank">主页</a></li>
+				<li><a href="/" >主页</a></li>
 			
-				<li><a href="https://github.com/kuqi007" target="_blank">技术笔记</a></li>
-			
-				<li><a href="/tags/%E9%9A%8F%E7%AC%94/" target="_blank">随笔</a></li>
+				<li><a href="/tags/%E9%9D%A2%E7%BB%8F/" >面经</a></li>
 			
 			</ul>
 		</nav>
@@ -106,26 +107,28 @@
 			<div class="social">
 				
 					
-						<a class="github" href="#" 
+						<a class="github" href="https://github.com/kuqi007" 
 												title="GitHub" target="_blank"><i class="icon-github"></i></a>
 					
 				
 					
-						<a class="github" href="#" 
-												title="GitHub" target="_blank"><i class="icon-github"></i></a>
-					
-				
-					
-						<a class="gitee" href="#" 
-												title="码云" target="_blank"><i class="icon-gitee"></i></a>
-					
-				
-					
-						<a class="jianshu" href="#" 
-												title="简书" target="_blank"><i class="icon-jianshu"></i></a>
+						<a class="mail" href="mailto:elfred2096@outlook.com" 
+												title="邮件联系" target="_blank"><i class="icon-mail"></i></a>
 					
 				
 			</div>
+		
+			
+			
+			
+			
+			<div>
+				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="86" src="//music.163.com/outchain/player?type=2&id=435305771&auto=1&height=66"></iframe>
+			</div>
+			
+				
+				<p style="font-size: 12px;">这似乎是首纯音乐，请尽情的欣赏它吧！<p>
+			
 		
 		</nav>
 	</header>		
@@ -165,8 +168,6 @@
 			
 				
 			
-				
-			
 			
 			
 			<nav class="header-nav">
@@ -174,36 +175,24 @@
 					
 						
 						<a class="github" target="_blank" 
-							href="#" title="GitHub"><i class="icon-github"></i></a>
+							href="https://github.com/kuqi007" title="GitHub"><i class="icon-github"></i></a>
 						
 					
 						
-						<a class="github" target="_blank" 
-							href="#" title="GitHub"><i class="icon-github"></i></a>
-						
-					
-						
-						<a class="gitee" target="_blank" 
-							href="#" title="码云"><i class="icon-gitee"></i></a>
-						
-					
-						
-						<a class="jianshu" target="_blank" 
-							href="#" title="简书"><i class="icon-jianshu"></i></a>
+						<a class="mail" target="_blank" 
+							href="mailto:elfred2096@outlook.com" title="邮件联系"><i class="icon-mail"></i></a>
 						
 					
 				</div>
 			</nav>
 
 			<nav class="header-menu js-header-menu">
-				<ul style="width: 70%">
+				<ul style="width: 50%">
 				
 				
-					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+					<li style="width: 50%"><a href="/">主页</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a target="_blank" rel="noopener" href="https://github.com/kuqi007">技术笔记</a></li>
-		        
-					<li style="width: 33.333333333333336%"><a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a></li>
+					<li style="width: 50%"><a href="/tags/%E9%9D%A2%E7%BB%8F/">面经</a></li>
 		        
 				</ul>
 			</nav>
@@ -346,11 +335,11 @@
 <h3 id="MySql为什么使用B-Tree作为索引而不是其他二叉查找树（比如红黑树等）？"><a href="#MySql为什么使用B-Tree作为索引而不是其他二叉查找树（比如红黑树等）？" class="headerlink" title="MySql为什么使用B-Tree作为索引而不是其他二叉查找树（比如红黑树等）？"></a>MySql为什么使用B-Tree作为索引而不是其他二叉查找树（比如红黑树等）？</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/aspirant/p/9214485.html">https://www.cnblogs.com/aspirant/p/9214485.html</a><br>平衡二叉树不适合作为索引。那么什么才适合作为索引——B树。</p>
 <p>平衡二叉树没能充分利用磁盘预读功能，而B树是为了充分利用磁盘预读功能来而创建的一种数据结构，也就是说B树就是为了作为索引才被发明出来的的。</p>
 <p>来看看关于“局部性原理与磁盘预读”的知识： </p>
-<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">局部性原理与磁盘预读：</span><br><span class="line"></span><br><span class="line">由于存储介质的特性，磁盘本身存取就比主存慢很多，再加上机械运动耗费，磁盘的存取速度往往是主存的几百分分之一，因此为了提高效率，要尽量减少磁盘<span class="built_in">I</span><span class="operator">/</span><span class="built_in">O</span>。为了达到这个目的，磁盘往往不是严格按需读取，而是每次都会预读，即使只需要一个字节，磁盘也会从这个位置开始，顺序向后读取一定长度的数据放入内存。这样做的理论依据是计算机科学中著名的局部性原理： </span><br><span class="line">当一个数据被用到时，其附近的数据也通常会马上被使用。 </span><br><span class="line">程序运行期间所需要的数据通常比较集中。 </span><br><span class="line">由于磁盘顺序读取的效率很高（不需要寻道时间，只需很少的旋转时间），因此对于具有局部性的程序来说，预读可以提高<span class="built_in">I</span><span class="operator">/</span><span class="built_in">O</span>效率。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">局部性原理与磁盘预读：</span><br><span class="line"></span><br><span class="line">由于存储介质的特性，磁盘本身存取就比主存慢很多，再加上机械运动耗费，磁盘的存取速度往往是主存的几百分分之一，因此为了提高效率，要尽量减少磁盘I/O。为了达到这个目的，磁盘往往不是严格按需读取，而是每次都会预读，即使只需要一个字节，磁盘也会从这个位置开始，顺序向后读取一定长度的数据放入内存。这样做的理论依据是计算机科学中著名的局部性原理： </span><br><span class="line">当一个数据被用到时，其附近的数据也通常会马上被使用。 </span><br><span class="line">程序运行期间所需要的数据通常比较集中。 </span><br><span class="line">由于磁盘顺序读取的效率很高（不需要寻道时间，只需很少的旋转时间），因此对于具有局部性的程序来说，预读可以提高I/O效率。</span><br></pre></td></tr></table></figure>
 
 <p>搞清楚上面的意思。磁盘预读是具体实现，其理论依据是局部性原理。</p>
 <p>为什么说红黑树没能充分利用磁盘预读功能，引用一篇博文的一段话： </p>
-<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">红黑树这种结构，<span class="variable">h</span>明显要深的多。由于逻辑上很近的节点（父子）物理上可能很远，无法利用局部性，所以红黑树的<span class="built_in">I</span><span class="operator">/</span><span class="built_in">O</span>渐进复杂度也为<span class="built_in">O</span><span class="punctuation">(</span><span class="variable">h</span><span class="punctuation">)</span>，效率明显比<span class="variable">B</span><span class="operator">-</span><span class="variable">Tree</span>差很多。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">红黑树这种结构，h明显要深的多。由于逻辑上很近的节点（父子）物理上可能很远，无法利用局部性，所以红黑树的I/O渐进复杂度也为O(h)，效率明显比B-Tree差很多。</span><br></pre></td></tr></table></figure>
 
 <p>也就是说，使用红黑树（平衡二叉树）结构的话，每次磁盘预读中的很多数据是用不上的数据。因此，它没能利用好磁盘预读的提供的数据。然后又由于深度大（较B树而言），所以进行的磁盘IO操作更多。</p>
 <p>B树的每个节点可以存储多个关键字，它将节点大小设置为磁盘页的大小，充分利用了磁盘预读的功能。每次读取磁盘页时就会读取一整个节点。也正因每个节点存储着非常多个关键字，树的深度就会非常的小。进而要执行的磁盘读取操作次数就会非常少，更多的是在内存中对读取进来的数据进行查找。</p>
@@ -359,7 +348,7 @@
 <p>B树：有序数组+平衡多叉树；<br>B+树：有序数组链表+平衡多叉树；</p>
 <p>B+树的关键字全部存放在叶子节点中，非叶子节点用来做索引，而叶子节点中有一个指针指向一下个叶子节点。做这个优化的目的是为了提高区间访问的性能。而正是这个特性决定了B+树更适合用来存储外部数据。</p>
 <p>引用一段话： </p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">走进搜索引擎的作者梁斌老师针对<span class="selector-tag">B</span>树、<span class="selector-tag">B</span>+树给出了他的意见（为了真实性，特引用其原话，未作任何改动）： “<span class="selector-tag">B</span>+树还有一个最大的好处，方便扫库，<span class="selector-tag">B</span>树必须用中序遍历的方法按序扫库，而<span class="selector-tag">B</span>+树直接从叶子结点挨个扫一遍就完了，<span class="selector-tag">B</span>+树支持range-query非常方便，而<span class="selector-tag">B</span>树不支持。这是数据库选用<span class="selector-tag">B</span>+树的最主要原因。 </span><br><span class="line">比如要查 <span class="number">5</span>-<span class="number">10</span>之间的，<span class="selector-tag">B</span>+树一把到<span class="number">5</span>这个标记，再一把到<span class="number">10</span>，然后串起来就行了，<span class="selector-tag">B</span>树就非常麻烦。<span class="selector-tag">B</span>树的好处，就是成功查询特别有利，因为树的高度总体要比<span class="selector-tag">B</span>+树矮。不成功的情况下，<span class="selector-tag">B</span>树也比<span class="selector-tag">B</span>+树稍稍占一点点便宜。 </span><br><span class="line"><span class="selector-tag">B</span>树比如你的例子中查，<span class="number">17</span>的话，一把就得到结果了， </span><br><span class="line">有很多基于频率的搜索是选用<span class="selector-tag">B</span>树，越频繁query的结点越往根上走，前提是需要对query做统计，而且要对key做一些变化。 </span><br><span class="line">另外<span class="selector-tag">B</span>树也好<span class="selector-tag">B</span>+树也好，根或者上面几层因为被反复query，所以这几块基本都在内存中，不会出现读磁盘IO，一般已启动的时候，就会主动换入内存。”</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">走进搜索引擎的作者梁斌老师针对B树、B+树给出了他的意见（为了真实性，特引用其原话，未作任何改动）： “B+树还有一个最大的好处，方便扫库，B树必须用中序遍历的方法按序扫库，而B+树直接从叶子结点挨个扫一遍就完了，B+树支持range-query非常方便，而B树不支持。这是数据库选用B+树的最主要原因。 </span><br><span class="line">比如要查 5-10之间的，B+树一把到5这个标记，再一把到10，然后串起来就行了，B树就非常麻烦。B树的好处，就是成功查询特别有利，因为树的高度总体要比B+树矮。不成功的情况下，B树也比B+树稍稍占一点点便宜。 </span><br><span class="line">B树比如你的例子中查，17的话，一把就得到结果了， </span><br><span class="line">有很多基于频率的搜索是选用B树，越频繁query的结点越往根上走，前提是需要对query做统计，而且要对key做一些变化。 </span><br><span class="line">另外B树也好B+树也好，根或者上面几层因为被反复query，所以这几块基本都在内存中，不会出现读磁盘IO，一般已启动的时候，就会主动换入内存。”</span><br></pre></td></tr></table></figure>
 
 
 <p>举个例子来对比。<br>B树： </p>
@@ -508,26 +497,6 @@
     
 
     
-    <div class="declare"> 
-      <ul class="post-copyright">
-        <li>
-          <strong>本文作者：</strong>
-          Elfred
-        </li>
-        <li>
-          <strong>本文链接：</strong>
-          <a href="https://blog.elfred.top/2021/04/27/interview/MySQL常见面试题/" title="MySQL常见面试题" target="_blank">https://blog.elfred.top/2021/04/27/interview/MySQL常见面试题/</a>
-        </li>
-        
-        <li>
-          <strong>版权声明： </strong>
-          
-          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
-        </li>
-        
-      </ul>
-    </div>
-    
 
   </div>
   <div class="article-info article-info-index">
@@ -644,6 +613,19 @@
         </div>
         
         
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BC%98%E5%8C%96%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">数据库优化：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88%E7%9A%84%E5%9C%BA%E6%99%AF%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">索引失效的场景：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.2.</span> <span class="toc-text">索引使用注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95%E6%9C%80%E5%B7%A6%E5%8C%B9%E9%85%8D%E5%8E%9F%E5%88%99"><span class="toc-number">1.3.</span> <span class="toc-text">联合索引最左匹配原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%91%E4%BB%AC%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BD%93%E4%B8%AD%E5%A6%82%E4%BD%95%E5%81%9A%E7%9A%84%E4%BC%98%E5%8C%96"><span class="toc-number">1.4.</span> <span class="toc-text">我们的数据库当中如何做的优化?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E8%A1%A8%E6%9F%A5%E8%AF%A2%E5%92%8C%E7%B4%A2%E5%BC%95%E8%A6%86%E7%9B%96%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.5.</span> <span class="toc-text">回表查询和索引覆盖是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Select-from-table-where-a-x3D-%E2%80%981%E2%80%99-and-b-gt-%E2%80%982%E2%80%99-and-c-x3D-%E2%80%993%E2%80%99-%E7%B4%A2%E5%BC%95-a-b-c-%E6%98%AF%E5%90%A6%E8%B5%B0%E7%B4%A2%E5%BC%95"><span class="toc-number">1.6.</span> <span class="toc-text">Select * from table where a &#x3D; ‘1’ and b &gt; ‘2’ and c&#x3D;’3’ 索引(a,b,c)是否走索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%B0%E5%9C%A8%E4%B8%80%E5%BC%A0%E8%A1%A8table%EF%BC%8C%E6%9C%89a-b-c%E4%B8%89%E4%B8%AA%E7%B4%A2%E5%BC%95%EF%BC%8Cselect-from-table-where-a-x3D-1-and-b-x3D-2-order-by-c%EF%BC%8C%E8%BF%99%E4%BA%9B%E5%AD%97%E6%AE%B5%E6%98%AF%E5%90%A6%E9%83%BD%E8%83%BD%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%EF%BC%9F%E5%A6%82%E6%9E%9C%E4%B8%8D%E8%83%BD%E6%80%8E%E4%B9%88%E4%BC%98%E5%8C%96"><span class="toc-number">1.7.</span> <span class="toc-text">现在一张表table，有a,b,c三个索引，select * from table where a &#x3D; 1 and b &#x3D; 2 order by c，这些字段是否都能使用索引？如果不能怎么优化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">索引底层数据结构：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MySql%E4%B8%ADInnoDB%E8%A1%A8%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%BB%BA%E8%AE%AE%E7%94%A8%E8%87%AA%E5%A2%9E%E5%88%97%E5%81%9A%E4%B8%BB%E9%94%AE"><span class="toc-number">2.1.</span> <span class="toc-text">MySql中InnoDB表为什么要建议用自增列做主键</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySql%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8B-Tree%E4%BD%9C%E4%B8%BA%E7%B4%A2%E5%BC%95%E8%80%8C%E4%B8%8D%E6%98%AF%E5%85%B6%E4%BB%96%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91%EF%BC%88%E6%AF%94%E5%A6%82%E7%BA%A2%E9%BB%91%E6%A0%91%E7%AD%89%EF%BC%89%EF%BC%9F"><span class="toc-number">2.2.</span> <span class="toc-text">MySql为什么使用B-Tree作为索引而不是其他二叉查找树（比如红黑树等）？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8B-Tree%E4%BD%9C%E4%B8%BA%E7%B4%A2%E5%BC%95%E8%80%8C%E4%B8%8D%E6%98%AFB-Tree"><span class="toc-number">2.3.</span> <span class="toc-text">为什么用B+-Tree作为索引而不是B-Tree</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-%E6%A0%91%E5%92%8C-B-%E6%A0%91%E5%9C%A8%E6%9E%84%E9%80%A0%E5%92%8C%E6%9F%A5%E8%AF%A2%E6%80%A7%E8%83%BD%E4%B8%8A%E6%9C%89%E4%BB%80%E4%B9%88%E5%B7%AE%E5%BC%82%E5%91%A2%EF%BC%9F"><span class="toc-number">2.4.</span> <span class="toc-text">B+ 树和 B 树在构造和查询性能上有什么差异呢？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E9%80%82%E7%94%A8%E7%94%A8%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9A"><span class="toc-number">2.5.</span> <span class="toc-text">数据库索引，为什么不适用用二叉树：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E9%94%81"><span class="toc-number">3.</span> <span class="toc-text">数据库锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MySql%E6%82%B2%E8%A7%82%E9%94%81%E5%92%8C%E4%B9%90%E8%A7%82%E9%94%81%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.1.</span> <span class="toc-text">MySql悲观锁和乐观锁如何实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-number">4.</span> <span class="toc-text">其他知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Mysql%E4%B8%ADutf-8%E5%92%8Cutf8mb4%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B8%8E%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">4.1.</span> <span class="toc-text">Mysql中utf-8和utf8mb4的区别与使用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySql-Innodb%E5%BC%95%E6%93%8E%E5%92%8CMyIASM%E5%BC%95%E6%93%8E%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">4.2.</span> <span class="toc-text">MySql Innodb引擎和MyIASM引擎的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Innodb%E5%BC%95%E6%93%8E"><span class="toc-number">4.2.1.</span> <span class="toc-text">Innodb引擎</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MyIASM%E5%BC%95%E6%93%8E"><span class="toc-number">4.2.2.</span> <span class="toc-text">MyIASM引擎</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E5%8C%BA%E5%88%AB%EF%BC%9A"><span class="toc-number">4.2.3.</span> <span class="toc-text">主要区别：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%9A"><span class="toc-number">4.2.4.</span> <span class="toc-text">应用场景：</span></a></li></ol></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
     </div>
 </aside>
 
@@ -667,7 +649,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018-2022 <a href="https://blog.elfred.top/" target="_blank">Elfred</a>
+    		&copy; 2020-2022 <a href="https://blog.elfred.top/" target="_blank">Elfred</a>
     	</div>
       	<div class="footer-right">
 			
@@ -907,60 +889,6 @@
     
     	<section class="tools-section tools-section-friends" q-show="friends">
   		
-        <ul class="search-ul">
-          
-            <li class="search-li">
-              <a href="https://github.com/kuqi007" target="_blank" 
-                class="search-title" title="记录工作和学习过程中的笔记：Java、前端开发、Hexo博客、聚合支付、Linux笔记、ElasticSearch、ELK日志分析">
-                
-                  <img src="https://zhousiwei.gitee.io/ibooks/favicon.ico">
-                
-                技术笔记
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://github.com/kuqi007" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                GitHub
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://github.com/kuqi007" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                码云
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://github.com/kuqi007" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                简书
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://github.com/kuqi007" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                CSDN
-              </a>
-            </li>
-          
-        </ul>
-  		
     	</section>
     
 
@@ -968,7 +896,7 @@
     	<section class="tools-section tools-section-me" q-show="aboutme">
         
           
-  	  		<div class="aboutme-wrap" id="aboutme">主要涉及技术：<br>Java后端开发、聚合支付、<br>公众号开发、开源爱好者、Linux<br><br>联系QQ:2434387555<br><br>很惭愧<br><br>只做了一点微小的工作<br>谢谢大家</div>
+  	  		<div class="aboutme-wrap" id="aboutme">nothing here</div>
   	  	
     	</section>
     
@@ -1055,6 +983,56 @@
   
   <!-- <script async type="text/javascript" size="90" alpha="0.2" zIndex="0" src="/plugins/ribbon.js/ribbon.min.js"></script> -->
   
+  
+    <script type="text/javascript" src="/plugins/live2d-widget.js/L2Dwidget.min.js"></script>
+<script type="text/javascript">
+  /**
+   * 完整配置请参考：https://l2dwidget.js.org/docs/class/src/index.js~L2Dwidget.html#instance-method-init
+   */
+  var pluginModelPath = "assets/", // 模型的文件路径，无需更改
+    pluginRootPath = "/live2d_models/"; // 插件的路径，无需更改
+  //特定的模型json文件名称
+  var modelPathJson = {
+    "epsilon2_1": "Epsilon2.1",
+    "gf": "Gantzert_Felixander",
+    "haru/01": "haru01",
+    "haru/02": "haru02",
+    "nietzsche": "nietzche"
+  }
+
+  
+    var modelName = "hibiki";
+  
+
+  var modelJsonPath = "";
+  if (modelPathJson[modelName]) {
+    modelJsonPath = pluginRootPath + modelName + "/" + pluginModelPath + modelPathJson[modelName] +
+      ".model.json";
+  } else {
+    modelJsonPath = pluginRootPath + modelName + "/" + pluginModelPath + modelName + ".model.json";
+  }
+  L2Dwidget.init({
+    model: {
+      jsonPath: modelJsonPath
+    },
+    display: {
+       position: "right", 
+       width: 145, 
+       height: 315, 
+       hOffset: 50, 
+      
+    },
+    mobile: {
+      
+       scale: 0.6 
+    },
+    react: {
+       opacity: 0.8 
+    }
+  })
+
+</script>
+
   
   
 </body>

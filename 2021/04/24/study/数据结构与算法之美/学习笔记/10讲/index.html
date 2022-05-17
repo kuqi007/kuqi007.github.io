@@ -53,6 +53,9 @@
 
 
   
+    <script src="/lib/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+  
 
 </head>
 
@@ -63,7 +66,7 @@
       
 
 
-<div class="overlay" style="background: #4d4d4d;"></div>
+<div class="overlay" style="background: #4d4d4d;background: url('/img/biubiubiu.gif') no-repeat ;"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
@@ -79,11 +82,9 @@
 		<nav class="header-menu">
 			<ul>
 			
-				<li><a href="/" target="_blank">主页</a></li>
+				<li><a href="/" >主页</a></li>
 			
-				<li><a href="https://github.com/kuqi007" target="_blank">技术笔记</a></li>
-			
-				<li><a href="/tags/%E9%9A%8F%E7%AC%94/" target="_blank">随笔</a></li>
+				<li><a href="/tags/%E9%9D%A2%E7%BB%8F/" >面经</a></li>
 			
 			</ul>
 		</nav>
@@ -106,26 +107,28 @@
 			<div class="social">
 				
 					
-						<a class="github" href="#" 
+						<a class="github" href="https://github.com/kuqi007" 
 												title="GitHub" target="_blank"><i class="icon-github"></i></a>
 					
 				
 					
-						<a class="github" href="#" 
-												title="GitHub" target="_blank"><i class="icon-github"></i></a>
-					
-				
-					
-						<a class="gitee" href="#" 
-												title="码云" target="_blank"><i class="icon-gitee"></i></a>
-					
-				
-					
-						<a class="jianshu" href="#" 
-												title="简书" target="_blank"><i class="icon-jianshu"></i></a>
+						<a class="mail" href="mailto:elfred2096@outlook.com" 
+												title="邮件联系" target="_blank"><i class="icon-mail"></i></a>
 					
 				
 			</div>
+		
+			
+			
+			
+			
+			<div>
+				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="86" src="//music.163.com/outchain/player?type=2&id=435305771&auto=1&height=66"></iframe>
+			</div>
+			
+				
+				<p style="font-size: 12px;">这似乎是首纯音乐，请尽情的欣赏它吧！<p>
+			
 		
 		</nav>
 	</header>		
@@ -165,8 +168,6 @@
 			
 				
 			
-				
-			
 			
 			
 			<nav class="header-nav">
@@ -174,36 +175,24 @@
 					
 						
 						<a class="github" target="_blank" 
-							href="#" title="GitHub"><i class="icon-github"></i></a>
+							href="https://github.com/kuqi007" title="GitHub"><i class="icon-github"></i></a>
 						
 					
 						
-						<a class="github" target="_blank" 
-							href="#" title="GitHub"><i class="icon-github"></i></a>
-						
-					
-						
-						<a class="gitee" target="_blank" 
-							href="#" title="码云"><i class="icon-gitee"></i></a>
-						
-					
-						
-						<a class="jianshu" target="_blank" 
-							href="#" title="简书"><i class="icon-jianshu"></i></a>
+						<a class="mail" target="_blank" 
+							href="mailto:elfred2096@outlook.com" title="邮件联系"><i class="icon-mail"></i></a>
 						
 					
 				</div>
 			</nav>
 
 			<nav class="header-menu js-header-menu">
-				<ul style="width: 70%">
+				<ul style="width: 50%">
 				
 				
-					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+					<li style="width: 50%"><a href="/">主页</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a target="_blank" rel="noopener" href="https://github.com/kuqi007">技术笔记</a></li>
-		        
-					<li style="width: 33.333333333333336%"><a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a></li>
+					<li style="width: 50%"><a href="/tags/%E9%9D%A2%E7%BB%8F/">面经</a></li>
 		        
 				</ul>
 			</nav>
@@ -280,7 +269,7 @@
 <p>你先记住这个理论。我举一个例子，带你一步一步实现一个递归代码，帮你理解。</p>
 <p>假如这里有 n 个台阶，每次你可以跨 1 个台阶或者 2 个台阶，请问走这 n 个台阶有多少种走法？如果有 7 个台阶，你可以 2，2，2，1 这样子上去，也可以 1，2，1，1，2 这样子上去，总之走法有很多，那如何用编程求得总共有多少种走法呢？</p>
 <p>我们仔细想下，实际上，可以根据第一步的走法把所有走法分为两类，第一类是第一步走了 1 个台阶，另一类是第一步走了 2 个台阶。所以 n 个台阶的走法就等于先走 1 阶后，n-1 个台阶的走法 加上先走 2 阶后，n-2 个台阶的走法。用公式表示就是：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">f</span><span class="params">(n)</span></span> = <span class="built_in">f</span>(n-<span class="number">1</span>)+<span class="built_in">f</span>(n-<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f(n) = f(n-1)+f(n-2)</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>这里其实就是斐波那契数列，或者你自己在本子上画一下就知道了，第一阶有1种走法，第二阶有2种走法，第三阶有3种走法，第四阶有5种走法，第五阶有8种走法，这个走法的规律正好符合斐波那契数列1(这个1在此例子省略了)、1、2、3、5、8、13、21….不管哪个数都是前两个数的和，那么想象每个数下面都有一个类似数组一样的下标，那么第n个数就等于第n-1位置的数加上第n-2位置的数也就是F(n) &#x3D; F(n-1) + F(n-2)</p>
@@ -289,7 +278,7 @@
 <p>n&#x3D;2 时，f(2)&#x3D;f(1)+f(0)。如果递归终止条件只有一个 f(1)&#x3D;1，那 f(2) 就无法求解了。所以除了 f(1)&#x3D;1 这一个递归终止条件外，还要有 f(0)&#x3D;1，表示走 0 个台阶有一种走法，不过这样子看起来就不符合正常的逻辑思维了。所以，我们可以把 f(2)&#x3D;2 作为一种终止条件，表示走 2 个台阶，有两种走法，一步走完或者分两步来走。</p>
 <p>所以，递归终止条件就是 f(1)&#x3D;1，f(2)&#x3D;2。这个时候，你可以再拿 n&#x3D;3，n&#x3D;4 来验证一下，这个终止条件是否足够并且正确。</p>
 <p>我们把递归终止条件和刚刚得到的递推公式放到一起就是这样的：</p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">f</span>(<span class="number">1</span>) = <span class="number">1</span>;</span><br><span class="line"><span class="attribute">f</span>(<span class="number">2</span>) = <span class="number">2</span>;</span><br><span class="line"><span class="attribute">f</span>(n) = f(n-<span class="number">1</span>)+f(n-<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f(1) = 1;</span><br><span class="line">f(2) = 2;</span><br><span class="line">f(n) = f(n-1)+f(n-2)</span><br></pre></td></tr></table></figure>
 
 <p>有了这个公式，我们转化成递归代码就简单多了。最终的递归代码是这样的：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">f</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">2</span>) <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">return</span> f(n<span class="number">-1</span>) + f(n<span class="number">-2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -352,26 +341,6 @@
     </div>
     
 
-    
-    <div class="declare"> 
-      <ul class="post-copyright">
-        <li>
-          <strong>本文作者：</strong>
-          Elfred
-        </li>
-        <li>
-          <strong>本文链接：</strong>
-          <a href="https://blog.elfred.top/2021/04/24/study/数据结构与算法之美/学习笔记/10讲/" title="10讲" target="_blank">https://blog.elfred.top/2021/04/24/study/数据结构与算法之美/学习笔记/10讲/</a>
-        </li>
-        
-        <li>
-          <strong>版权声明： </strong>
-          
-          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
-        </li>
-        
-      </ul>
-    </div>
     
 
   </div>
@@ -489,6 +458,19 @@
         </div>
         
         
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#10-%E9%80%92%E5%BD%92%EF%BC%9A%E5%A6%82%E4%BD%95%E7%94%A8%E4%B8%89%E8%A1%8C%E4%BB%A3%E7%A0%81%E6%89%BE%E5%88%B0%E2%80%9C%E6%9C%80%E7%BB%88%E6%8E%A8%E8%8D%90%E4%BA%BA%E2%80%9D%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">10 | 递归：如何用三行代码找到“最终推荐人”？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E9%9C%80%E8%A6%81%E6%BB%A1%E8%B6%B3%E7%9A%84%E4%B8%89%E4%B8%AA%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.1.</span> <span class="toc-text">递归需要满足的三个条件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%8F%AF%E4%BB%A5%E5%88%86%E8%A7%A3%E4%B8%BA%E5%87%A0%E4%B8%AA%E5%AD%90%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3"><span class="toc-number">1.1.1.</span> <span class="toc-text">1. 一个问题的解可以分解为几个子问题的解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%BF%99%E4%B8%AA%E9%97%AE%E9%A2%98%E4%B8%8E%E5%88%86%E8%A7%A3%E4%B9%8B%E5%90%8E%E7%9A%84%E5%AD%90%E9%97%AE%E9%A2%98%EF%BC%8C%E9%99%A4%E4%BA%86%E6%95%B0%E6%8D%AE%E8%A7%84%E6%A8%A1%E4%B8%8D%E5%90%8C%EF%BC%8C%E6%B1%82%E8%A7%A3%E6%80%9D%E8%B7%AF%E5%AE%8C%E5%85%A8%E4%B8%80%E6%A0%B7"><span class="toc-number">1.1.2.</span> <span class="toc-text">2.  这个问题与分解之后的子问题，除了数据规模不同，求解思路完全一样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%AD%98%E5%9C%A8%E9%80%92%E5%BD%92%E7%BB%88%E6%AD%A2%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.1.3.</span> <span class="toc-text">3. 存在递归终止条件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E9%80%92%E5%BD%92%E4%BB%A3%E7%A0%81%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">如何编写递归代码？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E4%BB%A3%E7%A0%81%E8%A6%81%E8%AD%A6%E6%83%95%E9%87%8D%E5%A4%8D%E8%AE%A1%E7%AE%97"><span class="toc-number">1.3.</span> <span class="toc-text">递归代码要警惕重复计算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83"><span class="toc-number">1.4.</span> <span class="toc-text">课后思考</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
     </div>
 </aside>
 
@@ -512,7 +494,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018-2022 <a href="https://blog.elfred.top/" target="_blank">Elfred</a>
+    		&copy; 2020-2022 <a href="https://blog.elfred.top/" target="_blank">Elfred</a>
     	</div>
       	<div class="footer-right">
 			
@@ -752,60 +734,6 @@
     
     	<section class="tools-section tools-section-friends" q-show="friends">
   		
-        <ul class="search-ul">
-          
-            <li class="search-li">
-              <a href="https://github.com/kuqi007" target="_blank" 
-                class="search-title" title="记录工作和学习过程中的笔记：Java、前端开发、Hexo博客、聚合支付、Linux笔记、ElasticSearch、ELK日志分析">
-                
-                  <img src="https://zhousiwei.gitee.io/ibooks/favicon.ico">
-                
-                技术笔记
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://github.com/kuqi007" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                GitHub
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://github.com/kuqi007" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                码云
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://github.com/kuqi007" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                简书
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://github.com/kuqi007" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                CSDN
-              </a>
-            </li>
-          
-        </ul>
-  		
     	</section>
     
 
@@ -813,7 +741,7 @@
     	<section class="tools-section tools-section-me" q-show="aboutme">
         
           
-  	  		<div class="aboutme-wrap" id="aboutme">主要涉及技术：<br>Java后端开发、聚合支付、<br>公众号开发、开源爱好者、Linux<br><br>联系QQ:2434387555<br><br>很惭愧<br><br>只做了一点微小的工作<br>谢谢大家</div>
+  	  		<div class="aboutme-wrap" id="aboutme">nothing here</div>
   	  	
     	</section>
     
@@ -900,6 +828,56 @@
   
   <!-- <script async type="text/javascript" size="90" alpha="0.2" zIndex="0" src="/plugins/ribbon.js/ribbon.min.js"></script> -->
   
+  
+    <script type="text/javascript" src="/plugins/live2d-widget.js/L2Dwidget.min.js"></script>
+<script type="text/javascript">
+  /**
+   * 完整配置请参考：https://l2dwidget.js.org/docs/class/src/index.js~L2Dwidget.html#instance-method-init
+   */
+  var pluginModelPath = "assets/", // 模型的文件路径，无需更改
+    pluginRootPath = "/live2d_models/"; // 插件的路径，无需更改
+  //特定的模型json文件名称
+  var modelPathJson = {
+    "epsilon2_1": "Epsilon2.1",
+    "gf": "Gantzert_Felixander",
+    "haru/01": "haru01",
+    "haru/02": "haru02",
+    "nietzsche": "nietzche"
+  }
+
+  
+    var modelName = "hibiki";
+  
+
+  var modelJsonPath = "";
+  if (modelPathJson[modelName]) {
+    modelJsonPath = pluginRootPath + modelName + "/" + pluginModelPath + modelPathJson[modelName] +
+      ".model.json";
+  } else {
+    modelJsonPath = pluginRootPath + modelName + "/" + pluginModelPath + modelName + ".model.json";
+  }
+  L2Dwidget.init({
+    model: {
+      jsonPath: modelJsonPath
+    },
+    display: {
+       position: "right", 
+       width: 145, 
+       height: 315, 
+       hOffset: 50, 
+      
+    },
+    mobile: {
+      
+       scale: 0.6 
+    },
+    react: {
+       opacity: 0.8 
+    }
+  })
+
+</script>
+
   
   
 </body>
