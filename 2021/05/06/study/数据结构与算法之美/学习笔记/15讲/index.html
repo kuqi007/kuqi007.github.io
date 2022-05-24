@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://blog.elfred.top">
-  <title>15讲 | Elfred&#39;s Blog</title>
+  <title>15讲 | 二分查找（上） | Elfred&#39;s Blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta name="description" content="15 | 二分查找（上）：如何用最省内存的方式实现快速查找功能？无处不在的二分思想二分查找针对的是一个有序的数据集合，查找思想有点类似分治思想。每次都通过跟区间的中间元素对比，将待查找的区间缩小为之前的一半，直到找到要查找的元素，或者区间被缩小为 0。 二分查找的递归与非递归实现最简单的情况就是有序数组中不存在重复元素，我们在其中用二分查找值等于给定值的数据。我用 Java 代码实现了一个最简单">
 <meta property="og:type" content="article">
-<meta property="og:title" content="15讲">
+<meta property="og:title" content="15讲 | 二分查找（上）">
 <meta property="og:url" content="https://blog.elfred.top/2021/05/06/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/15%E8%AE%B2/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
 <meta property="og:description" content="15 | 二分查找（上）：如何用最省内存的方式实现快速查找功能？无处不在的二分思想二分查找针对的是一个有序的数据集合，查找思想有点类似分治思想。每次都通过跟区间的中间元素对比，将待查找的区间缩小为之前的一半，直到找到要查找的元素，或者区间被缩小为 0。 二分查找的递归与非递归实现最简单的情况就是有序数组中不存在重复元素，我们在其中用二分查找值等于给定值的数据。我用 Java 代码实现了一个最简单">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-05-05T23:57:00.000Z">
-<meta property="article:modified_time" content="2021-05-07T00:59:12.455Z">
+<meta property="article:modified_time" content="2022-05-24T09:25:21.149Z">
 <meta property="article:author" content="Elfred">
 <meta property="article:tag" content="学习笔记">
 <meta property="article:tag" content="数据结构与算法之美">
@@ -210,7 +210,7 @@
   
   
     <h1 class="article-title" itemprop="name">
-      15讲
+      15讲 | 二分查找（上）
     </h1>
   
 
@@ -236,7 +236,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">2.5k字</span>
+      <span class="post-count">2.6k字</span>
     </span>
   </span>
 
@@ -245,7 +245,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">8分</span>
+      <span class="post-count">9分</span>
     </span>
   </span>
 </div>
@@ -291,8 +291,9 @@
 <p>二分查找虽然性能比较优秀，但应用场景也比较有限。底层必须依赖数组，并且还要求数据是有序的。对于较小规模的数据查找，我们直接使用顺序遍历就可以了，二分查找的优势并不明显。二分查找更适合处理静态数据，也就是没有频繁的数据插入、删除操作。</p>
 <h2 id="课后思考"><a href="#课后思考" class="headerlink" title="课后思考"></a>课后思考</h2><ol>
 <li><p>如何编程实现“求一个数的平方根”？要求精确到小数点后 6 位。</p>
-<blockquote>
-</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Sqrt</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Sqrt</span> <span class="variable">sqrt</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Sqrt</span>();</span><br><span class="line">        <span class="type">double</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">1000</span>;</span><br><span class="line">        <span class="type">double</span> <span class="variable">num</span> <span class="operator">=</span> sqrt.sqrt(a, <span class="number">0.000001</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;算法结果：&quot;</span> + num);</span><br><span class="line">        System.out.println(<span class="string">&quot;实际结果：&quot;</span> + Math.sqrt(a));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">double</span> <span class="title function_">sqrt</span><span class="params">(<span class="type">double</span> a, <span class="type">double</span> precision)</span> &#123;</span><br><span class="line">        <span class="type">double</span> low, high, mid, tmp;</span><br><span class="line">        <span class="keyword">if</span> (a &gt; <span class="number">1</span>) &#123;</span><br><span class="line">            low = <span class="number">1</span>;</span><br><span class="line">            high = a;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            low = a;</span><br><span class="line">            high = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">            mid = (low + high) / <span class="number">2.000</span>;</span><br><span class="line">            tmp = mid * mid;</span><br><span class="line">            <span class="comment">// 如果当前求得的平方根在target+0.000001和target-0.000001之间，那么返回mid</span></span><br><span class="line">            <span class="keyword">if</span> (tmp &lt; a + precision &amp;&amp; tmp &gt;= a - precision) &#123;</span><br><span class="line">                <span class="keyword">return</span> mid;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (tmp &gt; a) &#123;</span><br><span class="line">                high = mid;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                low = mid;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1.000</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
 </li>
 <li><p>我刚才说了，如果数据使用链表存储，二分查找的时间复杂就会变得很高，那查找的时间复杂度究竟是多少呢？如果你自己推导一下，你就会深刻地认识到，为何我们会选择用数组而不是链表来实现二分查找了。</p>
 <blockquote>
@@ -430,7 +431,7 @@
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          16讲
+          16讲 | 二分查找（下）
         
       </div>
     </a>
@@ -660,11 +661,23 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">kafka</a>
+                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">redis集群</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">架构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
               <li class="article-tag-list-item">
