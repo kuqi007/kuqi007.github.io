@@ -39,7 +39,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d2f7100013d8503780236.jpg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d2f8200019e2805120246.jpg">
 <meta property="article:published_time" content="2022-05-24T12:52:00.000Z">
-<meta property="article:modified_time" content="2022-05-24T12:56:35.598Z">
+<meta property="article:modified_time" content="2022-05-25T11:37:18.007Z">
 <meta property="article:author" content="Elfred">
 <meta property="article:tag" content="面经">
 <meta property="article:tag" content="redis">
@@ -314,7 +314,7 @@
 <p>每个master node每秒会执行 10 次 ping，每次会选择 5 个最久没有通信的其它节点。</p>
 <p>定时检查全部节点，如果发现某个节点通信延时达到了 cluster_node_timeout &#x2F; 2，那么立即发送 ping，避免数据交换延时过长。</p>
 <h3 id="3-3-增加新节点"><a href="#3-3-增加新节点" class="headerlink" title="3.3 增加新节点"></a>3.3 增加新节点</h3><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d297100012b8303820732.jpg"></p>
-<p>命令 CLUSTER MEET <ip> <port> </p>
+<p>命令 <code>CLUSTER MEET &lt;ip&gt; &lt;port&gt; </code></p>
 <p>向一个节点 node 发送 CLUSTER MEET 命令，可以让 node 节点与 ip 和 port 所指定的节点进行握手（handshake），当握手成功时，node 节点就会将 ip 和 port 所指定的节点添加到 node 节点当前所在的集群中。</p>
 <p>按照gossip协议，广播meet消息，全部节点接收新节点。</p>
 <p>重新hash(node)，分配和转移相应的slot给到新节点。</p>
@@ -583,6 +583,15 @@
 
 <nav id="article-nav">
   
+    <a href="/2022/05/26/interview/%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%8D%97/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
   
     <a href="/2022/05/21/internet/DESIGN/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">系统设计面试题</div>
@@ -760,14 +769,6 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面经</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
@@ -800,15 +801,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
+                <a href="javascript:void(0)" class="js-tag color3">面经</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -824,6 +817,10 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
@@ -832,11 +829,23 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">限流算法原理及实现</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DDD</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
