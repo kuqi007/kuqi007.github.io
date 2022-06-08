@@ -832,7 +832,7 @@
 <p>乐观锁：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> eb_sku <span class="keyword">set</span> stock <span class="operator">=</span> <span class="number">100</span><span class="operator">-</span>$&#123;quantity&#125;, version <span class="operator">=</span> $&#123;version&#125;<span class="operator">+</span><span class="number">1</span> <span class="keyword">where</span> sku_id <span class="operator">=</span> $&#123;sku_id&#125; <span class="keyword">and</span> version<span class="operator">=</span>$&#123;version&#125; <span class="keyword">and</span> stock <span class="operator">&gt;</span> $&#123;quantity&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
-<h3 id="行锁、表锁"><a href="#行锁、表锁" class="headerlink" title="行锁、表锁"></a>行锁、表锁</h3><h3 id="间隙锁、临键锁"><a href="#间隙锁、临键锁" class="headerlink" title="间隙锁、临键锁"></a>间隙锁、临键锁</h3><h2 id="其他知识点"><a href="#其他知识点" class="headerlink" title="其他知识点"></a>其他知识点</h2><h3 id="Mysql中utf-8和utf8mb4的区别与使用场景"><a href="#Mysql中utf-8和utf8mb4的区别与使用场景" class="headerlink" title="Mysql中utf-8和utf8mb4的区别与使用场景"></a>Mysql中utf-8和utf8mb4的区别与使用场景</h3><p>MySQL中的<strong>utf8</strong>编码只支持最大3字节每字符，<strong>utf8mb4</strong>才是 真正意义上的“UTF-8”，utf8mb4支持4字节每字符，支持存储emoji，而utf8不支持。</p>
+<h3 id="行锁、表锁"><a href="#行锁、表锁" class="headerlink" title="行锁、表锁"></a>行锁、表锁</h3><h3 id="间隙锁、临键锁"><a href="#间隙锁、临键锁" class="headerlink" title="间隙锁、临键锁"></a>间隙锁、临键锁</h3><h2 id="分库分表"><a href="#分库分表" class="headerlink" title="分库分表"></a>分库分表</h2><h3 id="为什么要分库分表"><a href="#为什么要分库分表" class="headerlink" title="为什么要分库分表"></a>为什么要分库分表</h3><h3 id="按照什么逻辑分库分表"><a href="#按照什么逻辑分库分表" class="headerlink" title="按照什么逻辑分库分表"></a>按照什么逻辑分库分表</h3><h3 id="分库分表如何扩容"><a href="#分库分表如何扩容" class="headerlink" title="分库分表如何扩容"></a>分库分表如何扩容</h3><h2 id="其他知识点"><a href="#其他知识点" class="headerlink" title="其他知识点"></a>其他知识点</h2><h3 id="Mysql中utf-8和utf8mb4的区别与使用场景"><a href="#Mysql中utf-8和utf8mb4的区别与使用场景" class="headerlink" title="Mysql中utf-8和utf8mb4的区别与使用场景"></a>Mysql中utf-8和utf8mb4的区别与使用场景</h3><p>MySQL中的<strong>utf8</strong>编码只支持最大3字节每字符，<strong>utf8mb4</strong>才是 真正意义上的“UTF-8”，utf8mb4支持4字节每字符，支持存储emoji，而utf8不支持。</p>
 <h3 id="MySql-Innodb引擎和MyIASM引擎的区别"><a href="#MySql-Innodb引擎和MyIASM引擎的区别" class="headerlink" title="MySql Innodb引擎和MyIASM引擎的区别"></a>MySql Innodb引擎和MyIASM引擎的区别</h3><h4 id="Innodb引擎"><a href="#Innodb引擎" class="headerlink" title="Innodb引擎"></a>Innodb引擎</h4><ul>
 <li>Innodb引擎提供了对数据库ACID事务的支持，并且实现了SQL标准的四种隔离级别。</li>
 <li>该引擎还提供了行级锁和外键约束</li>
@@ -1986,14 +1986,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
@@ -2003,6 +1995,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">架构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2034,15 +2034,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MySQL实战45讲</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
              
               <li class="article-tag-list-item">
