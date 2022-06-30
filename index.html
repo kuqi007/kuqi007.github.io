@@ -733,6 +733,575 @@
 
 
   
+    <article id="post-interview/2022面经" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2022/05/12/interview/2022%E9%9D%A2%E7%BB%8F/" target="_blank">2022面经</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2022/05/12/interview/2022%E9%9D%A2%E7%BB%8F/" class="archive-article-date">
+        <time datetime="2022-05-12T12:02:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-12</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <hr>
+<h2 id="高仙一面"><a href="#高仙一面" class="headerlink" title="高仙一面"></a>高仙一面</h2><ul>
+<li><p>对象一定是在堆上分配的吗？</p>
+<blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021202205122013107.png" alt="在这里插入图片描述"></p>
+</blockquote>
+</li>
+<li><p>G1和CMS垃圾回收器的区别？</p>
+</li>
+<li><p>线程有几种状态</p>
+</li>
+<li><p>加了synchronized的代码块一定会加锁吗？</p>
+</li>
+<li><p>Thread.sleep(0)有什么用？</p>
+</li>
+<li><p>分布式锁怎么实现？</p>
+</li>
+<li><p>不停机如何迁移数据？</p>
+</li>
+<li><p>如何保证数据库和缓存的一致性？</p>
+</li>
+</ul>
+<h2 id="一知智能"><a href="#一知智能" class="headerlink" title="一知智能"></a>一知智能</h2><ul>
+<li><p>MySQL的锁：排它锁、共享锁，适用场景</p>
+<blockquote>
+<p>排它锁、共享锁，什么时候</p>
+</blockquote>
+</li>
+<li><p>MySQL行锁和表锁，update是行锁还是表锁</p>
+</li>
+<li><p>MySQL主从架构容灾机制，机器挂掉了是怎么处理，主从延迟了怎么处理</p>
+</li>
+<li><p>线上问题排查</p>
+<blockquote>
+<p>CPU、内存过高，死循环，内存泄漏等等</p>
+</blockquote>
+</li>
+<li><p>Java锁的种类：悲观锁和乐观锁，以及使用场景</p>
+</li>
+<li><p>synchronized的原理</p>
+</li>
+<li><p>可重入锁的原理</p>
+</li>
+</ul>
+<h2 id="探迹科技"><a href="#探迹科技" class="headerlink" title="探迹科技"></a>探迹科技</h2><ul>
+<li><p>创建线程池的方式</p>
+</li>
+<li><p>Jdk9、11新特性</p>
+<blockquote>
+<p>JDK9默认G1垃圾回收器；新引入ZGC</p>
+</blockquote>
+</li>
+<li><p>Java内存模型</p>
+</li>
+<li><p>MQ如何设计能保证消息不丢失</p>
+<blockquote>
+<p>从发送端（buffer）、服务端（acks机制、ISR机制）、消费端（关闭自动提交）</p>
+</blockquote>
+</li>
+<li><p>集群选举算法</p>
+<blockquote>
+<p>RAFT协议、PAXOS协议、Zookeeper的FastLeaderElection算法</p>
+</blockquote>
+</li>
+<li><p>Redis选主用的什么算法？</p>
+<blockquote>
+<p>Raft算法</p>
+</blockquote>
+</li>
+<li><p>订单表如何分库分表</p>
+</li>
+<li><p>限流算法有哪些</p>
+<blockquote>
+<p>固定滑动窗口、动态滑动窗口、漏桶限流、令牌桶限流</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="探迹二面"><a href="#探迹二面" class="headerlink" title="探迹二面"></a>探迹二面</h2><ul>
+<li>DDD和传统开发的区别</li>
+<li>场景题：用户下单，下单成功会扣除余额和红包，如果失败了，如何保证数据一致性</li>
+<li>对称加密和非对称加密的区别</li>
+</ul>
+<h2 id="茄子科技"><a href="#茄子科技" class="headerlink" title="茄子科技"></a>茄子科技</h2><ul>
+<li><p>服务可用性</p>
+</li>
+<li><p>redis使用什么集群，多少台机器；集群模式原理（CRC16）</p>
+</li>
+<li><p>500台机器有什么问题</p>
+<blockquote>
+<p>实例之间通讯会有很大的开销，因为集群中每个节点都保存所有哈希槽与节点对应关系（Slot 映射到节点的表），以及自身的状态信息。</p>
+<p>gossip协议广播方式，节点越多，广播风暴对于网络以及服务器压力也就越大。</p>
+<p>虽然可以设置广播消息同步的超时时间，但是节点增多、超时时间变长之后，数据一致性的消息同步延时也会更大，出现元数据不一致的可能性也会增加。</p>
+<p>redis 官方给的 Redis Cluster 的规模上限是 1000 个实例。</p>
+<p>批量操作（例如mget等）成本变大</p>
+</blockquote>
+</li>
+<li><p>redis集群批量操作（如mget）会有什么问题？</p>
+<blockquote>
+<p>遍历slot-node关系，依次执行，比较浪费性能<br><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000040550883">浅谈Redis集群下mget的性能问题 - SegmentFault 思否</a></p>
+</blockquote>
+</li>
+<li><p>redis client和集群通讯过程</p>
+<blockquote>
+<p>crc16(key)  -&gt; crc64</p>
+</blockquote>
+</li>
+<li><p>redis使用的哈希算法</p>
+<blockquote>
+<p>hash slot</p>
+</blockquote>
+</li>
+<li><p>redis内存满了写入时会怎么样，默认淘汰策略是啥</p>
+</li>
+<li><p>redis宕机对服务有什么影响，如何解决</p>
+<blockquote>
+<p>本地缓存+限流(hystrix)，防止数据库被打爆</p>
+</blockquote>
+</li>
+<li><p>本地缓存和redis的一致性如何保证</p>
+<blockquote>
+<p>etcd广播</p>
+</blockquote>
+</li>
+<li><p>redis如何通讯的，cluster模式</p>
+</li>
+<li><p>zookeeper和etcd的区别</p>
+</li>
+<li><p>如何保证服务可用度99.99%</p>
+</li>
+<li><p>mysql mvcc原理</p>
+</li>
+<li><p>为什么高并发时候推荐使用小事务</p>
+<blockquote>
+<p>undolog占用；死锁</p>
+</blockquote>
+</li>
+<li><p>spring事务失效</p>
+<blockquote>
+<p>aop失效、异步线程事务失效</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="仁弥科技"><a href="#仁弥科技" class="headerlink" title="仁弥科技"></a>仁弥科技</h2><ul>
+<li><p>分库分表问题，什么时候分库分表，怎么分</p>
+</li>
+<li><p>微服务数据一致性</p>
+<blockquote>
+<p>强一致性；最终一致性</p>
+</blockquote>
+</li>
+<li><p>redis集群模式，缓存较多的话？cluster单个节点可以做主从吗</p>
+</li>
+<li><p>MySQL ACID是如何保证的</p>
+</li>
+<li><p>MySQL的锁</p>
+<blockquote>
+<p>共享锁、独占锁；表锁、行锁；间隙锁</p>
+</blockquote>
+</li>
+<li><p>Dubbo SPI机制</p>
+</li>
+</ul>
+<h2 id="心灵壹点零"><a href="#心灵壹点零" class="headerlink" title="心灵壹点零"></a>心灵壹点零</h2><ul>
+<li><p>DDD的使用场景</p>
+</li>
+<li><p>DDD如何划分业务领域的</p>
+</li>
+<li><p>设计模式几大原则</p>
+</li>
+<li><p>访问者模式</p>
+</li>
+<li><p>JVM调优</p>
+</li>
+<li><p>大数据吞吐适合什么垃圾回收器？</p>
+</li>
+<li><p>JVM 1S能产生多少对象</p>
+<blockquote>
+<p>单核，1S能产生亿万级，垃圾回收器1s能回收80%</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="天翼云"><a href="#天翼云" class="headerlink" title="天翼云"></a>天翼云</h2><ul>
+<li><p>生成分布式id的几种方式</p>
+</li>
+<li><p>分布式场景如何保证数据安全（分布式锁，分布式锁如何防止过期、如何续期、如果续期失败怎么办）</p>
+</li>
+<li><p>Java本地锁，如何实现一个生产者和消费者模式，如果生产速度和消费者速度不对等怎么办</p>
+</li>
+<li><p>频繁创建大对象的场景如何优化</p>
+<blockquote>
+<p>内存复用，怎么才能直接管理内存，不让直接内存管理</p>
+</blockquote>
+</li>
+<li><p>信号量是干嘛的，适用场景</p>
+</li>
+<li><p>CountDownLatch设置为1和悲观锁有啥区别</p>
+</li>
+<li><p>网络字节序列，大端，小端</p>
+</li>
+<li><p>TCP和IP是哪一层的</p>
+</li>
+<li><p>IP协议是干嘛的</p>
+</li>
+<li><p>生成n个1-n的随机数，如何生成效率最高</p>
+</li>
+</ul>
+<h2 id="米哈游"><a href="#米哈游" class="headerlink" title="米哈游"></a>米哈游</h2><ul>
+<li><p>Dubbo默认通信协议，还支持哪些通信协议</p>
+</li>
+<li><p>Dubbo默认序列化协议</p>
+</li>
+<li><p>Dubbo广播调用</p>
+</li>
+<li><p>注册中心有哪些，zk，eurka、nacos都有啥区别</p>
+</li>
+<li><p>分布式锁zk和redis的区别</p>
+</li>
+<li><p>zk分布式锁的原理</p>
+</li>
+<li><p>redis集群通信协议，节点之间如何通信</p>
+</li>
+<li><p>select、poll、epoll区别，为什么要有epoll</p>
+</li>
+<li><p>redlock算法</p>
+</li>
+<li><p>redis数据结构</p>
+</li>
+<li><p>mysql默认事务隔离级别</p>
+</li>
+<li><p>mysql间隙锁解决了什么问题</p>
+</li>
+<li><p>ICP是干嘛的</p>
+</li>
+<li><p>InnoDB聚簇索引和非聚簇索引区别</p>
+</li>
+<li><p>索引优化</p>
+</li>
+<li><p>mysql高可用部署方案</p>
+</li>
+<li><p>kafka架构</p>
+</li>
+<li><p>多消费者消费原理</p>
+</li>
+<li><p>partion默认几个</p>
+<blockquote>
+<p>kafka自动创建topic时设置默认的分区和副本数：</p>
+<p>在<code>server.properties</code>中配置：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 自动创建主题</span></span><br><span class="line"><span class="attr">auto.create.topics.enable</span>=<span class="string">true</span></span><br><span class="line"><span class="comment"># 默认主题的分区数</span></span><br><span class="line"><span class="attr">num.partitions</span>=<span class="string">8</span></span><br><span class="line"><span class="comment"># 默认分区副本</span></span><br><span class="line"><span class="attr">default.replication.factor</span>=<span class="string">3</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：<br><code>default.replication.factor</code>：默认分区副本数不得超过kafka节点数（你想，副本数如果一个节点放2份，意义就没了）</p>
+<p>每个节点都需要配置，然后重启即可。</p>
+</blockquote>
+</li>
+<li><p>system gc和runtime gc区别</p>
+</li>
+<li><p>system gc时机（safepoint和安全区域）</p>
+</li>
+<li><p>cms作为老年代垃圾回收器，为什么会扫描新生代</p>
+</li>
+<li><p>新生代垃圾回收期有啥，有只扫描老年代的垃圾回收器吗</p>
+</li>
+</ul>
+<h2 id="蔚来NIO"><a href="#蔚来NIO" class="headerlink" title="蔚来NIO"></a>蔚来NIO</h2><ul>
+<li><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/search-in-rotated-sorted-array/">33. 搜索旋转排序数组</a></p>
+</li>
+<li><p>G1垃圾回收器的原理，如何回收垃圾，如何分region</p>
+</li>
+<li><p>synchronized锁的原理</p>
+<blockquote>
+<p>底层是使用monitor_enter以及monitor_exit字节码</p>
+</blockquote>
+</li>
+<li><p>hashmap为什么要用红黑树</p>
+</li>
+<li><p>ConcurrentHashMap是如何扩容的，如果两个线程同时put，正好遇到扩容临界点，会同时触发吗？</p>
+</li>
+<li><p>CompletableFuture异步原理，future.get自旋的话会不会太消耗性能</p>
+<blockquote>
+</blockquote>
+</li>
+<li><p>ThreaLocal是干嘛的，为什么用完一定要remove掉，不remove会有什么问题</p>
+<blockquote>
+<p>内存泄漏，线程池数据污染</p>
+</blockquote>
+</li>
+<li><p>redis hash结构，如何扩容的（异步还是同步），如果数据量较大，是怎么保证主线程不堵塞的</p>
+<blockquote>
+<p>同步扩容，渐进式迁移</p>
+</blockquote>
+</li>
+<li><p>zset跳表的原理</p>
+</li>
+<li><p>redis LRU淘汰策略是如何实现的</p>
+</li>
+<li><p>redis过期key是如何删除的（惰性删除和定时删除），定时删除如何实现的</p>
+<blockquote>
+<p>定时删除策略：Redis 默认会每秒进行十次过期扫描，过期扫描不会遍历过期字典中所有的 key，而是采用了一种简单的贪心策略。</p>
+<ol>
+<li>从过期字典中随机 20 个 key；</li>
+<li>删除这 20 个 key 中已经过期的 key；</li>
+<li>如果过期的 key 比率超过 1&#x2F;4，那就重复步骤 1；</li>
+</ol>
+<p>同时，为了保证过期扫描不会出现循环过度，导致线程卡死现象，算法还增加了扫描时<br>间的上限，默认不会超过 25ms。</p>
+</blockquote>
+</li>
+<li><p>redis cluster：一个key是如何找到在哪台机器上的；批量操作的原理</p>
+</li>
+<li><p>redis CAP中AP是通过什么协议保证的</p>
+</li>
+<li><p>kafka CP是通过什么协议保证的</p>
+</li>
+<li><p>延迟消息的原理</p>
+</li>
+<li><p>数据库为什么推荐用自增id</p>
+</li>
+<li><p>innoDB行锁是怎么加锁的</p>
+</li>
+<li><p>秒杀系统设计</p>
+</li>
+<li><p>限流算法</p>
+</li>
+<li><p>sentinel限流策略</p>
+</li>
+</ul>
+<h2 id="网易"><a href="#网易" class="headerlink" title="网易"></a>网易</h2><ul>
+<li><p>金额类的数据如何迁移</p>
+</li>
+<li><p>dubbo服务提供者的线程模型，I&#x2F;O线程是基于线程池的吗</p>
+</li>
+<li><p>dubbo注册中心不可用，如果本地请求到了不可用的机器，这时候如何保证可用性</p>
+</li>
+<li><p>dubbo服务注册和bean初始化的先后顺序？会不会出现bean没有加载完，服务已经暴露出去的情况</p>
+</li>
+<li><p>kafka同一个topic的数据是放在不同broker上的吗，是怎么选取partition的</p>
+</li>
+<li><p>kafka发送一条消息，如何通知消费者去消费的（消费者如何知道是否可以消费的）</p>
+</li>
+<li><p>kafka的offset是如何维护的（offset的topic），不同的topic是放在同一个offset topic的吗</p>
+<blockquote>
+<p>只有一个_consumer_offset主题，key是Consumer Group, topic, partition，Payload存了Offset, metadata, timestamp</p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904016212656141">https://juejin.cn/post/6844904016212656141</a></p>
+</blockquote>
+</li>
+<li><p>kafka一个topic，5个partion，3个消费者，消费者如何分配</p>
+</li>
+<li><p>下面代码会发生资源竞争吗（试了：不会）</p>
+<blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SyncTest</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title function_">a</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">        Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title function_">b</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;b&quot;</span>);</span><br><span class="line">        Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;</span><br><span class="line">            <span class="type">SyncTest</span> <span class="variable">syncTest</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SyncTest</span>();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                syncTest.a();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                b();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+<li><p>事务失效场景，下面代码应该是不生效的，<a target="_blank" rel="noopener" href="https://blog.csdn.net/dl962454/article/details/118275335">https://blog.csdn.net/dl962454/article/details/118275335</a></p>
+<blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TransactionServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">TransactionService</span> &#123;</span><br><span class="line">	<span class="comment">//注入dao层对象</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> IUserDao iUserDao;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testA</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">int</span> num=iUserDao.updatePWDByUserName(<span class="string">&quot;hu&quot;</span>, <span class="string">&quot;3333&quot;</span>);</span><br><span class="line">        testB(<span class="string">&quot;ding&quot;</span>,<span class="string">&quot;3333&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Transactional</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">testB</span><span class="params">(String username, String newPassword)</span>  &#123;</span><br><span class="line">    </span><br><span class="line">        <span class="type">int</span> num=iUserDao.updatePWDByUserName(username, newPassword);</span><br><span class="line">        <span class="type">int</span> i=<span class="number">1</span>/<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在同一个类中的不同方法调用中，A方法调用B方法，A中无事务，B中有事务，此时事务不会生效。Spring采用动态代理（AOP）实现对bean的管理和切片，它为每个class都会生成一个代理对象。只有在代理对象之间调用时，可以触发切面逻辑。而同一个class中，方法A调用方法B，且方法A无事务，调用的是原对象的方法，而不是通过代理对象，因此Spring无法切换到这次调用，也就无法通过注解保证事务性了。</p>
+</blockquote>
+</li>
+<li><p>gc.log里面都有啥内容</p>
+</li>
+<li><p>ygc会STW吗</p>
+<blockquote>
+<p>根据收集器来的吧，目前年轻代所有收集器都会发生stw，从最开始的serial收集器，到现在的cms收集器，虽然现在虚拟机厂商对收集器做了优化，但是stw还是无法完全避免，对目前来说cms的停顿时间是可以接受的，如果程序stw时间过程，还是需要从其他方面考虑，例如程序是否存在内存泄漏等；</p>
+</blockquote>
+</li>
+<li><p>项目可以优化的地方</p>
+</li>
+</ul>
+<h2 id="蔚来NIO二面"><a href="#蔚来NIO二面" class="headerlink" title="蔚来NIO二面"></a>蔚来NIO二面</h2><ul>
+<li><p>nacos原理</p>
+</li>
+<li><p>http2.0新特性<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903984524705800">https://juejin.cn/post/6844903984524705800</a></p>
+<blockquote>
+<p>http1.0和http1.1的主要区别如下：</p>
+<ol>
+<li>缓存处理：1.1添加更多的缓存控制策略（如：Entity tag，If-Match）</li>
+<li>网络连接的优化：1.1支持断点续传</li>
+<li>错误状态码的增多：1.1新增了24个错误状态响应码，丰富的错误码更加明确各个状态</li>
+<li>Host头处理：支持Host头域，不在以IP为请求方标志</li>
+<li>长连接：减少了建立和关闭连接的消耗和延迟。</li>
+</ol>
+<p>http1.1和http2.0的主要区别：</p>
+<ol>
+<li>新的传输格式：2.0使用二进制格式，1.0依然使用基于文本格式</li>
+<li>多路复用：连接共享，不同的request可以使用同一个连接传输（最后根据每个request上的id号组合<br>成正常的请求）</li>
+<li>header压缩：由于1.X中header带有大量的信息，并且得重复传输，2.0使用encoder来减少需要传输<br>的hearder大小</li>
+<li>服务端推送：同google的SPDUY（1.0的一种升级）一样</li>
+</ol>
+</blockquote>
+</li>
+<li><p>浏览器输入一个URL，具体发生了什么？</p>
+<blockquote>
+<p><strong>过程：</strong>DNS解析、TCP连接、发送HTTP请求、服务器处理请求并返回HTTP报文、浏览器渲染、结束</p>
+<table>
+<thead>
+<tr>
+<th>过程</th>
+<th>使用的协议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1、浏览器查找域名DNS的IP地址<br />DNS查找过程（浏览器缓存、路由器缓存、DNS缓存）</td>
+<td>DNS：获取域名对应的ip</td>
+</tr>
+<tr>
+<td>2、根据ip建立TCP连接</td>
+<td>TCP：与服务器建立连接</td>
+</tr>
+<tr>
+<td>3、浏览器向服务器发送HTTP请求</td>
+<td>HTTP：发送请求</td>
+</tr>
+<tr>
+<td>4、服务器响应HTTP响应</td>
+<td>HTTP</td>
+</tr>
+<tr>
+<td>5、浏览器进行渲染</td>
+<td></td>
+</tr>
+</tbody></table>
+</blockquote>
+</li>
+<li><p>HTTPS原理</p>
+<blockquote>
+<p>1.首先客户端先给服务器发送一个请求<br>2.服务器发送一个SSL证书给客户端，内容包括：证书的发布机构、有效期、所有者、签名以及公钥<br>3.客户端对发来的公钥进行真伪校验，校验为真则使用公钥对对称加密算法以及对称密钥进行加密<br>4.服务器端使用私钥进行解密并使用对称密钥加密确认信息发送给客户端<br>5.随后客户端和服务端就使用对称密钥进行信息传输</p>
+</blockquote>
+</li>
+<li><p>非对称加密和对称加密的原理</p>
+<blockquote>
+<p><strong>对称加密算法：</strong><br>双方持有相同的密钥，且加密速度快，典型对称加密算法：DES、AES</p>
+<p><strong>非对称加密算法：</strong><br>密钥成对出现（私钥、公钥），私钥只有自己知道，不在网络中传输；而公钥可以公开。相比对称加密<br>速度较慢，典型的非对称加密算法有：RSA、DSA</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="古茗"><a href="#古茗" class="headerlink" title="古茗"></a>古茗</h2><ul>
+<li>caffine和guava区别</li>
+<li>事务消息的原理</li>
+<li>etcd和MQ广播有什么区别</li>
+</ul>
+<h2 id="花旗金融"><a href="#花旗金融" class="headerlink" title="花旗金融"></a>花旗金融</h2><ul>
+<li><p>求x的n次方，不使用数学公式</p>
+</li>
+<li><p>取模操作性能最好的</p>
+<blockquote>
+<p>x &amp; (n-1) </p>
+</blockquote>
+</li>
+<li><p>泛型基类，如何自动寻找实现类</p>
+</li>
+</ul>
+<h2 id="智己汽车"><a href="#智己汽车" class="headerlink" title="智己汽车"></a>智己汽车</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-path-sum">64. 最小路径和</a></li>
+<li>堆外内存泄漏如何排查</li>
+<li>K8s排查oom kill</li>
+<li>k8s pod无限重启如何排查</li>
+<li>tcp time_wait 连接过多排查</li>
+<li>redis bitmap使用场景、优势、原理</li>
+</ul>
+<h2 id="众安一面"><a href="#众安一面" class="headerlink" title="众安一面"></a>众安一面</h2><ul>
+<li><p>本地缓存和redis一致性</p>
+</li>
+<li><p>docker虚拟机，springboot应用内存缓慢升高，流量正常，可能是什么原因导致的</p>
+<blockquote>
+<p>jvm内存溢出或者堆外内存溢出</p>
+</blockquote>
+</li>
+<li><p>附近的人技术实现</p>
+</li>
+<li><p>kafka错误配置导致内存泄漏</p>
+</li>
+<li><p>给一亿用户发送优惠券，保证速度最快，如何读取如此大的用户量</p>
+</li>
+</ul>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/面经//" class="article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2022/05/12/interview/2022%E9%9D%A2%E7%BB%8F/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-study/数据结构与算法之美/学习笔记/29讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1185,101 +1754,6 @@
 
 
   
-    <article id="post-study/数据结构与算法之美/学习笔记/11讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/06/13/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/11%E8%AE%B2/" target="_blank">11讲</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2021/06/13/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/11%E8%AE%B2/" class="archive-article-date">
-        <time datetime="2021-06-13T07:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-13</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <hr>
-<h1 id="11-排序（上）：为什么插入排序比冒泡排序更受欢迎？"><a href="#11-排序（上）：为什么插入排序比冒泡排序更受欢迎？" class="headerlink" title="11 | 排序（上）：为什么插入排序比冒泡排序更受欢迎？"></a>11 | 排序（上）：为什么插入排序比冒泡排序更受欢迎？</h1><p>排序算法太多了，有很多可能你连名字都没听说过，比如猴子排序、睡眠排序、面条排序等。我只讲众多排序算法中的一小撮，也是最经典的、最常用的：冒泡排序、插入排序、选择排序、归并排序、快速排序、计数排序、基数排序、桶排序。我按照时间复杂度把它们分成了三类，分三节课来讲解。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210613203106.jpeg" alt="img"></p>
-<p>带着问题去学习，是最有效的学习方法。所以按照惯例，我还是先给你出一个思考题：<strong>插入排序和冒泡排序的时间复杂度相同，都是 O(n^2)，在实际的软件开发里，为什么我们更倾向于使用插入排序算法而不是冒泡排序算法呢？</strong></p>
-    
-    <a class="article-more-a" href="/2021/06/13/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/11%E8%AE%B2/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/06/13/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/11%E8%AE%B2/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1413,6 +1887,14 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面经</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
@@ -1437,10 +1919,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面经</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
@@ -1449,7 +1927,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1465,15 +1947,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1505,15 +1979,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MySQL实战45讲</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
              
               <li class="article-tag-list-item">
