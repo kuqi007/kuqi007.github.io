@@ -18,8 +18,8 @@
   
   <entry>
     <title>Why you should stop apologising for your poor English</title>
-    <link href="https://blog.elfred.top/2022/06/30/enligsh/Why%20you%20should%20stop%20apologising%20for%20your%20poor%20English%20/"/>
-    <id>https://blog.elfred.top/2022/06/30/enligsh/Why%20you%20should%20stop%20apologising%20for%20your%20poor%20English%20/</id>
+    <link href="https://blog.elfred.top/2022/06/30/enligsh/Stop%20apologising%20for%20your%20poor%20English/"/>
+    <id>https://blog.elfred.top/2022/06/30/enligsh/Stop%20apologising%20for%20your%20poor%20English/</id>
     <published>2022-06-30T07:27:00.000Z</published>
     <updated>2022-06-30T07:32:30.193Z</updated>
     
@@ -584,31 +584,6 @@
   </entry>
   
   <entry>
-    <title>20讲</title>
-    <link href="https://blog.elfred.top/2021/05/05/study/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/20%E8%AE%B2/"/>
-    <id>https://blog.elfred.top/2021/05/05/study/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/20%E8%AE%B2/</id>
-    <published>2021-05-05T05:20:00.000Z</published>
-    <updated>2021-05-05T13:12:21.162Z</updated>
-    
-    <content type="html"><![CDATA[<hr><h1 id="20-幻读是什么，幻读有什么问题？"><a href="#20-幻读是什么，幻读有什么问题？" class="headerlink" title="20 | 幻读是什么，幻读有什么问题？"></a>20 | 幻读是什么，幻读有什么问题？</h1><p>为了便于说明问题，这一篇文章，我们就先使用一个小一点儿的表。建表和初始化语句如下：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `t` (</span><br><span class="line">  `id` int(11) NOT NULL,</span><br><span class="line">  `c` int(11) DEFAULT NULL,</span><br><span class="line">  `d` int(11) DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`id`),</span><br><span class="line">  KEY `c` (`c`)</span><br><span class="line">) ENGINE=InnoDB;</span><br><span class="line"></span><br><span class="line">insert into t values(0,0,0),(5,5,5),</span><br><span class="line">(10,10,10),(15,15,15),(20,20,20),(25,25,25);</span><br></pre></td></tr></table></figure><h2 id="幻读是什么？"><a href="#幻读是什么？" class="headerlink" title="幻读是什么？"></a>幻读是什么？</h2>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;hr&gt;
-&lt;h1 id=&quot;20-幻读是什么，幻读有什么问题？&quot;&gt;&lt;a href=&quot;#20-幻读是什么，幻读有什么问题？&quot; class=&quot;headerlink&quot; title=&quot;20 | 幻读是什么，幻读有什么问题？&quot;&gt;&lt;/a&gt;20 | 幻读是什么，幻读有什么问题？&lt;/h1&gt;&lt;p&gt;为</summary>
-      
-    
-    
-    
-    
-    <category term="MySQL实战45讲" scheme="https://blog.elfred.top/tags/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/"/>
-    
-    <category term="学习笔记" scheme="https://blog.elfred.top/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
     <title>02讲</title>
     <link href="https://blog.elfred.top/2021/05/05/study/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/21%E8%AE%B2/"/>
     <id>https://blog.elfred.top/2021/05/05/study/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/21%E8%AE%B2/</id>
@@ -622,6 +597,31 @@
       
     <summary type="html">&lt;hr&gt;
 &lt;h1 id=&quot;21-为什么我只改一行的语句，锁这么多？&quot;&gt;&lt;a href=&quot;#21-为什么我只改一行的语句，锁这么多？&quot; class=&quot;headerlink&quot; title=&quot;21 | 为什么我只改一行的语句，锁这么多？&quot;&gt;&lt;/a&gt;21 | 为什么我只改一行的语句，锁这</summary>
+      
+    
+    
+    
+    
+    <category term="MySQL实战45讲" scheme="https://blog.elfred.top/tags/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/"/>
+    
+    <category term="学习笔记" scheme="https://blog.elfred.top/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>20讲</title>
+    <link href="https://blog.elfred.top/2021/05/05/study/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/20%E8%AE%B2/"/>
+    <id>https://blog.elfred.top/2021/05/05/study/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/20%E8%AE%B2/</id>
+    <published>2021-05-05T05:20:00.000Z</published>
+    <updated>2021-05-05T13:12:21.162Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h1 id="20-幻读是什么，幻读有什么问题？"><a href="#20-幻读是什么，幻读有什么问题？" class="headerlink" title="20 | 幻读是什么，幻读有什么问题？"></a>20 | 幻读是什么，幻读有什么问题？</h1><p>为了便于说明问题，这一篇文章，我们就先使用一个小一点儿的表。建表和初始化语句如下：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `t` (</span><br><span class="line">  `id` int(11) NOT NULL,</span><br><span class="line">  `c` int(11) DEFAULT NULL,</span><br><span class="line">  `d` int(11) DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`id`),</span><br><span class="line">  KEY `c` (`c`)</span><br><span class="line">) ENGINE=InnoDB;</span><br><span class="line"></span><br><span class="line">insert into t values(0,0,0),(5,5,5),</span><br><span class="line">(10,10,10),(15,15,15),(20,20,20),(25,25,25);</span><br></pre></td></tr></table></figure><h2 id="幻读是什么？"><a href="#幻读是什么？" class="headerlink" title="幻读是什么？"></a>幻读是什么？</h2>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;hr&gt;
+&lt;h1 id=&quot;20-幻读是什么，幻读有什么问题？&quot;&gt;&lt;a href=&quot;#20-幻读是什么，幻读有什么问题？&quot; class=&quot;headerlink&quot; title=&quot;20 | 幻读是什么，幻读有什么问题？&quot;&gt;&lt;/a&gt;20 | 幻读是什么，幻读有什么问题？&lt;/h1&gt;&lt;p&gt;为</summary>
       
     
     
