@@ -6,22 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://blog.elfred.top">
-  <title>Elfred&#39;s Blog</title>
+  <title>Spring常见面试题 | Elfred&#39;s Blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="2019年末投了几个简历，20年初收到了杭州阿里和北京美团的面邀 接下来的面经将合并两场面试的问题，如果有都问到的会在问题后面标记（double） # 多线程死锁的条件，如何打破 JMM 如何创建线程池，队列都有哪些？拒绝策略都有哪些？任务过多时都是如何处理的（double） 线程生命周期 synchronized原理（double） jdk对synchronized做了哪些优化 Reentran">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Elfred&#39;s Blog">
-<meta property="og:url" content="https://blog.elfred.top/private/%E5%8F%82%E8%80%83%E9%9D%A2%E7%BB%8F/%E5%8F%82%E8%80%83%E5%88%AB%E4%BA%BA%E9%9D%A2%E7%BB%8F%E6%95%B4%E7%90%86.html">
+  <meta name="description" content="基本思想IOC控制反转AOP动态代理AOP的原理是什么？JDK动态代理和CGLIB动态代理在实现上有什么区别？各有什么优劣流程以及Bean生命周期工作流程SpringMVC工作流程 用户向服务端发送一次请求，这个请求会先到前端控制器DispatcherServlet(也叫中央控制器)。 DispatcherServlet接收到请求后会调用HandlerMapping处理器映射器。由此得知，该请求">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring常见面试题">
+<meta property="og:url" content="https://blog.elfred.top/2022/05/21/interview/Spring%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="2019年末投了几个简历，20年初收到了杭州阿里和北京美团的面邀 接下来的面经将合并两场面试的问题，如果有都问到的会在问题后面标记（double） # 多线程死锁的条件，如何打破 JMM 如何创建线程池，队列都有哪些？拒绝策略都有哪些？任务过多时都是如何处理的（double） 线程生命周期 synchronized原理（double） jdk对synchronized做了哪些优化 Reentran">
+<meta property="og:description" content="基本思想IOC控制反转AOP动态代理AOP的原理是什么？JDK动态代理和CGLIB动态代理在实现上有什么区别？各有什么优劣流程以及Bean生命周期工作流程SpringMVC工作流程 用户向服务端发送一次请求，这个请求会先到前端控制器DispatcherServlet(也叫中央控制器)。 DispatcherServlet接收到请求后会调用HandlerMapping处理器映射器。由此得知，该请求">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-03-04T13:38:06.811Z">
-<meta property="article:modified_time" content="2021-01-08T14:37:27.412Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2022/202207042134792.webp">
+<meta property="article:published_time" content="2022-05-21T14:32:00.000Z">
+<meta property="article:modified_time" content="2022-07-04T13:53:49.597Z">
 <meta property="article:author" content="Elfred">
-<meta property="article:tag" content="前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
+<meta property="article:tag" content="面经">
+<meta property="article:tag" content="Spring">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2022/202207042134792.webp">
   
     <link rel="alternative" href="/atom.xml" title="Elfred&#39;s Blog" type="application/atom+xml">
   
@@ -202,72 +205,127 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="page-" class="article article-type-page " itemscope itemprop="blogPost">
+            <article id="post-interview/Spring常见面试题" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+  
+  
+    <h1 class="article-title" itemprop="name">
+      Spring常见面试题
+    </h1>
+  
+
+
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2022/05/21/interview/Spring%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/" class="archive-article-date">
+        <time datetime="2022-05-21T14:32:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-21</time>
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">1.4k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">5分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
   <div class="article-entry" itemprop="articleBody">
     
-    <p>2019年末投了几个简历，20年初收到了杭州阿里和北京美团的面邀</p>
-<p>接下来的面经将合并两场面试的问题，如果有都问到的会在问题后面标记（double）</p>
-<h2 id="多线程"><a href="#多线程" class="headerlink" title="# 多线程"></a><a target="_blank" rel="noopener" href="http://shiyujun.cn/posts/%E6%88%91%E7%9A%84%E9%A6%96%E6%AC%A1%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F-%E9%98%BF%E9%87%8C%E5%92%8C%E7%BE%8E%E5%9B%A2.html#%E5%A4%9A%E7%BA%BF%E7%A8%8B">#</a> 多线程</h2><p>死锁的条件，如何打破</p>
-<p>JMM</p>
-<p>如何创建线程池，队列都有哪些？拒绝策略都有哪些？任务过多时都是如何处理的（double）</p>
-<p>线程生命周期</p>
-<p>synchronized原理（double）</p>
-<p>jdk对synchronized做了哪些优化</p>
-<p>ReentrantLock</p>
-<p>CAS、ABA问题（double）</p>
-<h2 id="集合"><a href="#集合" class="headerlink" title="# 集合"></a><a target="_blank" rel="noopener" href="http://shiyujun.cn/posts/%E6%88%91%E7%9A%84%E9%A6%96%E6%AC%A1%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F-%E9%98%BF%E9%87%8C%E5%92%8C%E7%BE%8E%E5%9B%A2.html#%E9%9B%86%E5%90%88">#</a> 集合</h2><p>ArrayList和LinkedList</p>
-<p>什么是fail—fast？</p>
-<p>HashMap的put、扩容原理，1.7和1.8的数据结构（double）</p>
-<h2 id="网络"><a href="#网络" class="headerlink" title="# 网络"></a><a target="_blank" rel="noopener" href="http://shiyujun.cn/posts/%E6%88%91%E7%9A%84%E9%A6%96%E6%AC%A1%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F-%E9%98%BF%E9%87%8C%E5%92%8C%E7%BE%8E%E5%9B%A2.html#%E7%BD%91%E7%BB%9C">#</a> 网络</h2><p>TCP粘包，为什么出现，如何解决？</p>
-<p>TCP如何实现消息可靠性、滑动窗口</p>
-<p>TCP三次握手四次挥手</p>
-<p>DNS</p>
-<p>https原理、可以被攻击么？（double）</p>
-<h2 id="数据库事务"><a href="#数据库事务" class="headerlink" title="# 数据库事务"></a><a target="_blank" rel="noopener" href="http://shiyujun.cn/posts/%E6%88%91%E7%9A%84%E9%A6%96%E6%AC%A1%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F-%E9%98%BF%E9%87%8C%E5%92%8C%E7%BE%8E%E5%9B%A2.html#%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1">#</a> 数据库事务</h2><p>事务的隔离级别、mysql和oracle默认是什么，都解决了什么问题（double）</p>
-<p>事务的特性（double）</p>
-<p>快照读和当前读</p>
-<p>乐观锁、悲观锁、间隙锁、行锁、表锁的使用场景</p>
-<p>B+树、聚簇索引和非聚簇索引（double）</p>
-<p>mvcc（double）</p>
-<p>redolog、undolog、binlog</p>
-<p>一个表没有索引的结构类型</p>
-<p>索引失效的场景</p>
-<p>mysql都有哪些组件</p>
-<h2 id="中间件"><a href="#中间件" class="headerlink" title="# 中间件"></a><a target="_blank" rel="noopener" href="http://shiyujun.cn/posts/%E6%88%91%E7%9A%84%E9%A6%96%E6%AC%A1%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F-%E9%98%BF%E9%87%8C%E5%92%8C%E7%BE%8E%E5%9B%A2.html#%E4%B8%AD%E9%97%B4%E4%BB%B6">#</a> 中间件</h2><p>RabbitMQ和kafka的架构（double）</p>
-<p>如何保证消息的顺序性</p>
-<p>为什么使用这个中间件（double）</p>
-<p>Redis数据类型，底层数据结构（double）</p>
-<p>缓存淘汰算法</p>
-<p>缓存穿透、缓存击穿</p>
-<p>缓存数据库双写（double）</p>
-<h2 id="Spring"><a href="#Spring" class="headerlink" title="# Spring"></a><a target="_blank" rel="noopener" href="http://shiyujun.cn/posts/%E6%88%91%E7%9A%84%E9%A6%96%E6%AC%A1%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F-%E9%98%BF%E9%87%8C%E5%92%8C%E7%BE%8E%E5%9B%A2.html#spring">#</a> Spring</h2><p>IOC和AOP的理解及原理（double）</p>
-<p>Bean的生命周期（double）</p>
-<p>自动注入方式有哪些，两个注解的区别</p>
-<p>Spring MVC流程</p>
-<h2 id="微服务"><a href="#微服务" class="headerlink" title="# 微服务"></a><a target="_blank" rel="noopener" href="http://shiyujun.cn/posts/%E6%88%91%E7%9A%84%E9%A6%96%E6%AC%A1%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F-%E9%98%BF%E9%87%8C%E5%92%8C%E7%BE%8E%E5%9B%A2.html#%E5%BE%AE%E6%9C%8D%E5%8A%A1">#</a> 微服务</h2><p>分布式事务怎么做的（double）</p>
-<p>CAP、BASE理论</p>
-<p>如何实现一个RPC框架</p>
-<p>服务熔断如何做的</p>
-<p>令牌桶、漏桶算法</p>
-<p>分布式id如何生成（double）</p>
-<h2 id="JVM"><a href="#JVM" class="headerlink" title="# JVM"></a><a target="_blank" rel="noopener" href="http://shiyujun.cn/posts/%E6%88%91%E7%9A%84%E9%A6%96%E6%AC%A1%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F-%E9%98%BF%E9%87%8C%E5%92%8C%E7%BE%8E%E5%9B%A2.html#jvm">#</a> JVM</h2><p>各个区域的内容（double）</p>
-<p>常见OOM（double）</p>
-<p>垃圾收集器、算法</p>
-<p>类加载机制（double）</p>
-<p>内存分配并发问题</p>
-<p>新生代默认多少次晋升老年代</p>
-<p>反射</p>
-<h2 id="算法"><a href="#算法" class="headerlink" title="# 算法"></a><a target="_blank" rel="noopener" href="http://shiyujun.cn/posts/%E6%88%91%E7%9A%84%E9%A6%96%E6%AC%A1%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F-%E9%98%BF%E9%87%8C%E5%92%8C%E7%BE%8E%E5%9B%A2.html#%E7%AE%97%E6%B3%95">#</a> 算法</h2><p>都是一个力扣简单级一个中等级，只不过美团上现场白纸写，阿里是伯乐系统在线做</p>
-<h2 id="项目"><a href="#项目" class="headerlink" title="# 项目"></a><a target="_blank" rel="noopener" href="http://shiyujun.cn/posts/%E6%88%91%E7%9A%84%E9%A6%96%E6%AC%A1%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F-%E9%98%BF%E9%87%8C%E5%92%8C%E7%BE%8E%E5%9B%A2.html#%E9%A1%B9%E7%9B%AE">#</a> 项目</h2><p>项目中出现各种场景的解决方案</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="# 总结"></a><a target="_blank" rel="noopener" href="http://shiyujun.cn/posts/%E6%88%91%E7%9A%84%E9%A6%96%E6%AC%A1%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F-%E9%98%BF%E9%87%8C%E5%92%8C%E7%BE%8E%E5%9B%A2.html#%E6%80%BB%E7%BB%93">#</a> 总结</h2><p>大厂的面试官都很nice，遇到你不会的问题会去引导</p>
-<p>简历上写的东西都会被问到</p>
-<p>基础很重要，一定要重视</p>
-<p>没有问docker和k8s猜测可能是大厂职责划分比较详细，拧螺丝不需要😂</p>
-<p>算法一定要提前捋好思路，跟面试官沟通完再写代码，尤其是白纸上，一不容易就容易涂涂画画</p>
-<p>自己学历和经验都还不足，继续努力</p>
-<p>总的面试体验超好，给几位面试官点赞😄</p>
+    <hr>
+<h2 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h2><h3 id="IOC控制反转"><a href="#IOC控制反转" class="headerlink" title="IOC控制反转"></a>IOC控制反转</h3><h3 id="AOP动态代理"><a href="#AOP动态代理" class="headerlink" title="AOP动态代理"></a>AOP动态代理</h3><h4 id="AOP的原理是什么？"><a href="#AOP的原理是什么？" class="headerlink" title="AOP的原理是什么？"></a>AOP的原理是什么？</h4><h4 id="JDK动态代理和CGLIB动态代理在实现上有什么区别？各有什么优劣"><a href="#JDK动态代理和CGLIB动态代理在实现上有什么区别？各有什么优劣" class="headerlink" title="JDK动态代理和CGLIB动态代理在实现上有什么区别？各有什么优劣"></a>JDK动态代理和CGLIB动态代理在实现上有什么区别？各有什么优劣</h4><h4 id=""><a href="#" class="headerlink" title=""></a></h4><h2 id="流程以及Bean生命周期"><a href="#流程以及Bean生命周期" class="headerlink" title="流程以及Bean生命周期"></a>流程以及Bean生命周期</h2><h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><h4 id="SpringMVC工作流程"><a href="#SpringMVC工作流程" class="headerlink" title="SpringMVC工作流程"></a>SpringMVC工作流程</h4><ol>
+<li>用户向服务端发送一次请求，这个请求会先到前端控制器DispatcherServlet(也叫中央控制器)。</li>
+<li>DispatcherServlet接收到请求后会调用HandlerMapping处理器映射器。由此得知，该请求该由哪个Controller来处理（并未调用Controller，只是得知）</li>
+<li>DispatcherServlet调用HandlerAdapter处理器适配器，告诉处理器适配器应该要去执行哪个Controller</li>
+<li>HandlerAdapter处理器适配器去执行Controller并得到ModelAndView(数据和视图)，并层层返回给DispatcherServlet</li>
+<li>DispatcherServlet将ModelAndView交给ViewReslover视图解析器解析，然后返回真正的视图。</li>
+<li>DispatcherServlet将模型数据填充到视图中</li>
+<li>DispatcherServlet将结果响应给用户</li>
+</ol>
+<h3 id="Bean生命周期"><a href="#Bean生命周期" class="headerlink" title="Bean生命周期"></a>Bean生命周期</h3><h4 id="Spring-Bean-的完整生命周期"><a href="#Spring-Bean-的完整生命周期" class="headerlink" title="Spring Bean 的完整生命周期"></a>Spring Bean 的完整生命周期</h4><ol>
+<li><p>Bean容器&#x2F;BeanFactory 通过对象的构造器或工厂方法先实例化 Bean；</p>
+</li>
+<li><p>再根据 Resource 中的信息再通过设定好的方法（典型的有setter，统称为BeanWrapper）对 Bean 设置属性值，得到 BeanDefintion 对象，然后 put 到 beanDefinitionMap 中，调用 getBean 的时候，从  beanDefinitionMap 里，拿出 Class 对象进行注入，同时，如果有依赖关系，将递归调用 getBean 方法，即依赖注入的过程。 </p>
+</li>
+<li><p>检查 xxxAware 相关接口，比如 BeanNameAware，BeanClassLoaderAware，ApplicationContextAware（ BeanFactoryAware）等等，如果有就调用相应的 setxxx 方法把所需要的xxx传入到 Bean 中。<br> <strong>补充</strong>：关于 Aware ，Aware 就是感知的意思， Aware 的目的是为了让Bean获得Spring容器的服务。 实现了这类接口的 bean 会存在“意识感”，从而让容器调用 setxxx 方法把所需要的 xxx 传到 Bean 中。</p>
+</li>
+<li><p>此时检查是否存在有于 Bean 关联的任何  BeanPostProcessors， 执行 postProcessBeforeInitialization() 方法（前置处理器）。</p>
+</li>
+<li><p>如果 Bean 实现了InitializingBean接口（正在初始化的 Bean），执行 afterPropertiesSet() 方法。</p>
+</li>
+<li><p>检查是否配置了自定义的 init-method 方法，如果有就调用。</p>
+</li>
+<li><p>此时检查是否存在有于 Bean 关联的任何  BeanPostProcessors， 执行 postProcessAfterInitialization() 方法（后置处理器）。返回 wrapperBean（包装后的 Bean）。</p>
+</li>
+<li><p>这时就可以开始使用 Bean 了，当容器关闭时，会检查 Bean 是否实现了 DisposableBean 接口，如果有就调用 destory() 方法。</p>
+</li>
+<li><p>如果 Bean 配置文件中的定义包含 destroy-method 属性，执行指定的方法。</p>
+</li>
+</ol>
+<h4 id="Spring-是如何解决循环依赖的"><a href="#Spring-是如何解决循环依赖的" class="headerlink" title="Spring 是如何解决循环依赖的"></a>Spring 是如何解决循环依赖的</h4><p>三级缓存</p>
+<h2 id="Spring注解"><a href="#Spring注解" class="headerlink" title="Spring注解"></a>Spring注解</h2><h4 id="Resource和-Autowired注解有什么区别"><a href="#Resource和-Autowired注解有什么区别" class="headerlink" title="@Resource和@Autowired注解有什么区别"></a>@Resource和@Autowired注解有什么区别</h4><p>一、@Autowired有个required属性，可以配置为false，这种情况下如果没有找到对应的bean是不会抛异常的。@Inject和@Resource没有提供对应的配置，所以必须找到否则会抛异常。</p>
+<p>二、 @Autowired和@Inject基本是一样的，因为两者都是使用AutowiredAnnotationBeanPostProcessor来处理依赖注入。但是@Resource是个例外，它使用的是CommonAnnotationBeanPostProcessor来处理依赖注入。当然，两者都是BeanPostProcessor。</p>
+<p>@Autowired和@Inject</p>
+<ul>
+<li>默认 autowired by type</li>
+<li>可以 通过@Qualifier 显式指定 autowired by qualifier name。</li>
+<li>如果 autowired by type 失败（找不到或者找到多个实现），则退化为autowired by field name</li>
+</ul>
+<p>@Resource</p>
+<ul>
+<li>默认 autowired by field name</li>
+<li>如果 autowired by field name失败，会退化为 autowired by type</li>
+<li>可以 通过@Qualifier 显式指定 autowired by qualifier name</li>
+<li>如果 autowired by qualifier name失败，会退化为 autowired by field name。但是这时候如果 autowired by field name失败，就不会再退化为autowired by type了。</li>
+</ul>
+<h2 id="Spring组件"><a href="#Spring组件" class="headerlink" title="Spring组件"></a>Spring组件</h2><h3 id="Filter和Interceptor的区别"><a href="#Filter和Interceptor的区别" class="headerlink" title="Filter和Interceptor的区别"></a>Filter和Interceptor的区别</h3><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2022/202207042134792.webp" alt="mvc"></p>
+<h4 id="Interceptor"><a href="#Interceptor" class="headerlink" title="Interceptor"></a>Interceptor</h4><p>主要作用：拦截用户请求，进行处理，比如判断用户登录情况、权限验证，只要针对Controller请求进行处理，是通过<code>HandlerInterceptor</code>。</p>
+<p>Interceptor分两种情况，一种是对会话的拦截，实现spring的HandlerInterceptor接口并注册到mvc的拦截队列中，其中<code>preHandle()</code>方法在调用Handler之前进行拦截(上图步骤③)，<code>postHandle()</code>方法在视图渲染之前调用(上图步骤⑤)，<code>afterCompletion()</code>方法在返回相应之前执行；另一种是对方法的拦截，需要使用<code>@Aspect</code>注解，在每次调用指定方法的前、后进行拦截。</p>
+<h4 id="Filter"><a href="#Filter" class="headerlink" title="Filter"></a>Filter</h4><p>主要作用：过滤字符编码、做一些业务逻辑判断，主要用于对用户请求进行预处理，同时也可进行逻辑判断。</p>
+<p>Filter在请求进入servlet容器执行service()方法之前就会经过filter过滤（上图步骤①），不像Intreceptor一样依赖于SpringMVC框架，只需要依赖于servlet。Filter启动是随WEB应用的启动而启动，只需要初始化一次，以后都可以进行拦截。</p>
+<p>Filter有如下几个种类：</p>
+<ul>
+<li>用户授权Filter：检查用户请求，根据请求过滤用户非法请求；</li>
+<li>日志Filter：记录某些特殊的用户请求；</li>
+<li>解码Filter：对非标准编码的请求解码。</li>
+</ul>
+<h4 id="Filter和Interceptor的区别-1"><a href="#Filter和Interceptor的区别-1" class="headerlink" title="Filter和Interceptor的区别"></a>Filter和Interceptor的区别</h4><ol>
+<li>Filter是基于函数回调（doFilter()方法）的，而Interceptor则是基于Java反射的（AOP思想）。</li>
+<li>Filter依赖于Servlet容器，而Interceptor不依赖于Servlet容器。</li>
+<li>Filter对几乎所有的请求起作用，而Interceptor只能对action请求起作用。</li>
+<li>Interceptor可以访问Action的上下文，值栈里的对象，而Filter不能。</li>
+<li>在action的生命周期里，Interceptor可以被多次调用，而Filter只能在容器初始化时调用一次。</li>
+<li>Filter在过滤是只能对request和response进行操作，而interceptor可以对request、response、handler、modelAndView、exception进行操作。</li>
+</ol>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903811874553869">Filter和Interceptor的区别</a></li>
+</ul>
 
     
 
@@ -311,6 +369,21 @@
   <div class="article-info article-info-index">
     
     
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
     
 
     
@@ -361,7 +434,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://blog.elfred.top/private/%E5%8F%82%E8%80%83%E9%9D%A2%E7%BB%8F/%E5%8F%82%E8%80%83%E5%88%AB%E4%BA%BA%E9%9D%A2%E7%BB%8F%E6%95%B4%E7%90%86.html" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://blog.elfred.top/2022/05/21/interview/Spring%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -373,6 +446,25 @@
   </div>
 </article>
 
+
+<nav id="article-nav">
+  
+    <a href="/2022/05/24/internet/redis%E9%9B%86%E7%BE%A4%E7%9A%84%E6%9E%B6%E6%9E%84%E3%80%81%E9%97%AE%E9%A2%98/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          redis集群的架构、问题，附脑洞
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/05/21/internet/DESIGN/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">系统设计面试题</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
 
 <aside class="wrap-side-operation">
@@ -395,7 +487,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text"> 多线程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E5%90%88"><span class="toc-number">2.</span> <span class="toc-text"> 集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C"><span class="toc-number">3.</span> <span class="toc-text"> 网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1"><span class="toc-number">4.</span> <span class="toc-text"> 数据库事务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text"> 中间件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring"><span class="toc-number">6.</span> <span class="toc-text"> Spring</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="toc-number">7.</span> <span class="toc-text"> 微服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM"><span class="toc-number">8.</span> <span class="toc-text"> JVM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95"><span class="toc-number">9.</span> <span class="toc-text"> 算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE"><span class="toc-number">10.</span> <span class="toc-text"> 项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">11.</span> <span class="toc-text"> 总结</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-number">1.</span> <span class="toc-text">基本思想</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IOC%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC"><span class="toc-number">1.1.</span> <span class="toc-text">IOC控制反转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AOP%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86"><span class="toc-number">1.2.</span> <span class="toc-text">AOP动态代理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AOP%E7%9A%84%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.2.1.</span> <span class="toc-text">AOP的原理是什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%92%8CCGLIB%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%9C%A8%E5%AE%9E%E7%8E%B0%E4%B8%8A%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F%E5%90%84%E6%9C%89%E4%BB%80%E4%B9%88%E4%BC%98%E5%8A%A3"><span class="toc-number">1.2.2.</span> <span class="toc-text">JDK动态代理和CGLIB动态代理在实现上有什么区别？各有什么优劣</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">1.2.3.</span> <span class="toc-text"></span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B%E4%BB%A5%E5%8F%8ABean%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">2.</span> <span class="toc-text">流程以及Bean生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">2.1.</span> <span class="toc-text">工作流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SpringMVC%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">2.1.1.</span> <span class="toc-text">SpringMVC工作流程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bean%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">2.2.</span> <span class="toc-text">Bean生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Spring-Bean-%E7%9A%84%E5%AE%8C%E6%95%B4%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">2.2.1.</span> <span class="toc-text">Spring Bean 的完整生命周期</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Spring-%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84"><span class="toc-number">2.2.2.</span> <span class="toc-text">Spring 是如何解决循环依赖的</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring%E6%B3%A8%E8%A7%A3"><span class="toc-number">3.</span> <span class="toc-text">Spring注解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Resource%E5%92%8C-Autowired%E6%B3%A8%E8%A7%A3%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="toc-number">3.0.1.</span> <span class="toc-text">@Resource和@Autowired注解有什么区别</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring%E7%BB%84%E4%BB%B6"><span class="toc-number">4.</span> <span class="toc-text">Spring组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Filter%E5%92%8CInterceptor%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">4.1.</span> <span class="toc-text">Filter和Interceptor的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Interceptor"><span class="toc-number">4.1.1.</span> <span class="toc-text">Interceptor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Filter"><span class="toc-number">4.1.2.</span> <span class="toc-text">Filter</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Filter%E5%92%8CInterceptor%E7%9A%84%E5%8C%BA%E5%88%AB-1"><span class="toc-number">4.1.3.</span> <span class="toc-text">Filter和Interceptor的区别</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">5.</span> <span class="toc-text">参考</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -455,7 +547,7 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

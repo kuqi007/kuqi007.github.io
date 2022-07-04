@@ -207,6 +207,88 @@
             
 
   
+    <article id="post-application/SpringBoot打包时复制指定配置文件到指定目录，并剔除jar包内所有配置文件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2020/02/24/application/SpringBoot%E6%89%93%E5%8C%85%E6%97%B6%E5%A4%8D%E5%88%B6%E6%8C%87%E5%AE%9A%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%88%B0%E6%8C%87%E5%AE%9A%E7%9B%AE%E5%BD%95%EF%BC%8C%E5%B9%B6%E5%89%94%E9%99%A4jar%E5%8C%85%E5%86%85%E6%89%80%E6%9C%89%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/" target="_blank">SpringBoot打包时复制指定配置文件到指定目录，并剔除jar包内所有配置文件</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2020/02/24/application/SpringBoot%E6%89%93%E5%8C%85%E6%97%B6%E5%A4%8D%E5%88%B6%E6%8C%87%E5%AE%9A%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%88%B0%E6%8C%87%E5%AE%9A%E7%9B%AE%E5%BD%95%EF%BC%8C%E5%B9%B6%E5%89%94%E9%99%A4jar%E5%8C%85%E5%86%85%E6%89%80%E6%9C%89%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/" class="archive-article-date">
+        <time datetime="2020-02-24T03:04:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-24</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>最近遇到一个需求，把SpringBoot项目的配置文件放到Jar包外面，Jar包内不包含多余配置文件，Jar包运行时指定外部配置文件启动。我的配置文件放在src&#x2F;main&#x2F;resources&#x2F;config下，打包时拷贝到Jar包同级config目录下（SpringBoot默认支持读取Jar包同级config文件夹中的配置），具体解决方案如下：</p>
+<ul>
+<li><p>使用maven-jar-plugin插件移除配置文件将其不打包进jar包中</p>
+</li>
+<li><p>使用maven-resources-plugin插件将需要复制的文件复制到指定路径（例：将配置文件提取到指定路径）</p>
+<p>Maven配置如下：</p>
+    
+    <a class="article-more-a" href="/2020/02/24/application/SpringBoot%E6%89%93%E5%8C%85%E6%97%B6%E5%A4%8D%E5%88%B6%E6%8C%87%E5%AE%9A%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%88%B0%E6%8C%87%E5%AE%9A%E7%9B%AE%E5%BD%95%EF%BC%8C%E5%B9%B6%E5%89%94%E9%99%A4jar%E5%8C%85%E5%86%85%E6%89%80%E6%9C%89%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2020/02/24/application/SpringBoot%E6%89%93%E5%8C%85%E6%97%B6%E5%A4%8D%E5%88%B6%E6%8C%87%E5%AE%9A%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%88%B0%E6%8C%87%E5%AE%9A%E7%9B%AE%E5%BD%95%EF%BC%8C%E5%B9%B6%E5%89%94%E9%99%A4jar%E5%8C%85%E5%86%85%E6%89%80%E6%9C%89%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-application/使用gitlab-ci和docker自动化部署vue项目" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1165,6 +1247,14 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面经</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
@@ -1205,10 +1295,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面经</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
@@ -1245,6 +1331,10 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">redis集群</a>
               </li>
              
@@ -1253,7 +1343,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1266,14 +1356,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">数据结构与算法之美</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">

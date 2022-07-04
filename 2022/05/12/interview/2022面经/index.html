@@ -17,7 +17,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021202205122013107.png">
 <meta property="article:published_time" content="2022-05-12T12:02:00.000Z">
-<meta property="article:modified_time" content="2022-06-30T07:16:56.883Z">
+<meta property="article:modified_time" content="2022-07-04T13:25:07.372Z">
 <meta property="article:author" content="Elfred">
 <meta property="article:tag" content="面经">
 <meta name="twitter:card" content="summary">
@@ -235,7 +235,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">3.6k字</span>
+      <span class="post-count">3.8k字</span>
     </span>
   </span>
 
@@ -244,7 +244,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">13分</span>
+      <span class="post-count">14分</span>
     </span>
   </span>
 </div>
@@ -580,51 +580,8 @@
 </li>
 <li><p>sentinel限流策略</p>
 </li>
-</ul>
-<h2 id="网易"><a href="#网易" class="headerlink" title="网易"></a>网易</h2><ul>
-<li><p>金额类的数据如何迁移</p>
+<li><p>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
 </li>
-<li><p>dubbo服务提供者的线程模型，I&#x2F;O线程是基于线程池的吗</p>
-</li>
-<li><p>dubbo注册中心不可用，如果本地请求到了不可用的机器，这时候如何保证可用性</p>
-</li>
-<li><p>dubbo服务注册和bean初始化的先后顺序？会不会出现bean没有加载完，服务已经暴露出去的情况</p>
-</li>
-<li><p>kafka同一个topic的数据是放在不同broker上的吗，是怎么选取partition的</p>
-</li>
-<li><p>kafka发送一条消息，如何通知消费者去消费的（消费者如何知道是否可以消费的）</p>
-</li>
-<li><p>kafka的offset是如何维护的（offset的topic），不同的topic是放在同一个offset topic的吗</p>
-<blockquote>
-<p>只有一个_consumer_offset主题，key是Consumer Group, topic, partition，Payload存了Offset, metadata, timestamp</p>
-<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904016212656141">https://juejin.cn/post/6844904016212656141</a></p>
-</blockquote>
-</li>
-<li><p>kafka一个topic，5个partion，3个消费者，消费者如何分配</p>
-</li>
-<li><p>下面代码会发生资源竞争吗（试了：不会）</p>
-<blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SyncTest</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title function_">a</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">        Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title function_">b</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;b&quot;</span>);</span><br><span class="line">        Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;</span><br><span class="line">            <span class="type">SyncTest</span> <span class="variable">syncTest</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SyncTest</span>();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                syncTest.a();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                b();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</blockquote>
-</li>
-<li><p>事务失效场景，下面代码应该是不生效的，<a target="_blank" rel="noopener" href="https://blog.csdn.net/dl962454/article/details/118275335">https://blog.csdn.net/dl962454/article/details/118275335</a></p>
-<blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TransactionServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">TransactionService</span> &#123;</span><br><span class="line">	<span class="comment">//注入dao层对象</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> IUserDao iUserDao;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testA</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">int</span> num=iUserDao.updatePWDByUserName(<span class="string">&quot;hu&quot;</span>, <span class="string">&quot;3333&quot;</span>);</span><br><span class="line">        testB(<span class="string">&quot;ding&quot;</span>,<span class="string">&quot;3333&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Transactional</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">testB</span><span class="params">(String username, String newPassword)</span>  &#123;</span><br><span class="line">    </span><br><span class="line">        <span class="type">int</span> num=iUserDao.updatePWDByUserName(username, newPassword);</span><br><span class="line">        <span class="type">int</span> i=<span class="number">1</span>/<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在同一个类中的不同方法调用中，A方法调用B方法，A中无事务，B中有事务，此时事务不会生效。Spring采用动态代理（AOP）实现对bean的管理和切片，它为每个class都会生成一个代理对象。只有在代理对象之间调用时，可以触发切面逻辑。而同一个class中，方法A调用方法B，且方法A无事务，调用的是原对象的方法，而不是通过代理对象，因此Spring无法切换到这次调用，也就无法通过注解保证事务性了。</p>
-</blockquote>
-</li>
-<li><p>gc.log里面都有啥内容</p>
-</li>
-<li><p>ygc会STW吗</p>
-<blockquote>
-<p>根据收集器来的吧，目前年轻代所有收集器都会发生stw，从最开始的serial收集器，到现在的cms收集器，虽然现在虚拟机厂商对收集器做了优化，但是stw还是无法完全避免，对目前来说cms的停顿时间是可以接受的，如果程序stw时间过程，还是需要从其他方面考虑，例如程序是否存在内存泄漏等；</p>
-</blockquote>
-</li>
-<li><p>项目可以优化的地方</p>
-</li>
-</ul>
-<h2 id="蔚来NIO二面"><a href="#蔚来NIO二面" class="headerlink" title="蔚来NIO二面"></a>蔚来NIO二面</h2><ul>
 <li><p>nacos原理</p>
 </li>
 <li><p>http2.0新特性<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903984524705800">https://juejin.cn/post/6844903984524705800</a></p>
@@ -691,6 +648,49 @@
 </blockquote>
 </li>
 </ul>
+<h2 id="网易"><a href="#网易" class="headerlink" title="网易"></a>网易</h2><ul>
+<li><p>金额类的数据如何迁移</p>
+</li>
+<li><p>dubbo服务提供者的线程模型，I&#x2F;O线程是基于线程池的吗</p>
+</li>
+<li><p>dubbo注册中心不可用，如果本地请求到了不可用的机器，这时候如何保证可用性</p>
+</li>
+<li><p>dubbo服务注册和bean初始化的先后顺序？会不会出现bean没有加载完，服务已经暴露出去的情况</p>
+</li>
+<li><p>kafka同一个topic的数据是放在不同broker上的吗，是怎么选取partition的</p>
+</li>
+<li><p>kafka发送一条消息，如何通知消费者去消费的（消费者如何知道是否可以消费的）</p>
+</li>
+<li><p>kafka的offset是如何维护的（offset的topic），不同的topic是放在同一个offset topic的吗</p>
+<blockquote>
+<p>只有一个_consumer_offset主题，key是Consumer Group, topic, partition，Payload存了Offset, metadata, timestamp</p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904016212656141">https://juejin.cn/post/6844904016212656141</a></p>
+</blockquote>
+</li>
+<li><p>kafka一个topic，5个partion，3个消费者，消费者如何分配</p>
+</li>
+<li><p>下面代码会发生资源竞争吗（试了：不会）</p>
+<blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SyncTest</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title function_">a</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">        Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title function_">b</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;b&quot;</span>);</span><br><span class="line">        Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;</span><br><span class="line">            <span class="type">SyncTest</span> <span class="variable">syncTest</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SyncTest</span>();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                syncTest.a();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                b();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+<li><p>事务失效场景，下面代码应该是不生效的，<a target="_blank" rel="noopener" href="https://blog.csdn.net/dl962454/article/details/118275335">https://blog.csdn.net/dl962454/article/details/118275335</a></p>
+<blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TransactionServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">TransactionService</span> &#123;</span><br><span class="line">	<span class="comment">//注入dao层对象</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> IUserDao iUserDao;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testA</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">int</span> num=iUserDao.updatePWDByUserName(<span class="string">&quot;hu&quot;</span>, <span class="string">&quot;3333&quot;</span>);</span><br><span class="line">        testB(<span class="string">&quot;ding&quot;</span>,<span class="string">&quot;3333&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Transactional</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">testB</span><span class="params">(String username, String newPassword)</span>  &#123;</span><br><span class="line">    </span><br><span class="line">        <span class="type">int</span> num=iUserDao.updatePWDByUserName(username, newPassword);</span><br><span class="line">        <span class="type">int</span> i=<span class="number">1</span>/<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在同一个类中的不同方法调用中，A方法调用B方法，A中无事务，B中有事务，此时事务不会生效。Spring采用动态代理（AOP）实现对bean的管理和切片，它为每个class都会生成一个代理对象。只有在代理对象之间调用时，可以触发切面逻辑。而同一个class中，方法A调用方法B，且方法A无事务，调用的是原对象的方法，而不是通过代理对象，因此Spring无法切换到这次调用，也就无法通过注解保证事务性了。</p>
+</blockquote>
+</li>
+<li><p>gc.log里面都有啥内容</p>
+</li>
+<li><p>ygc会STW吗</p>
+<blockquote>
+<p>根据收集器来的吧，目前年轻代所有收集器都会发生stw，从最开始的serial收集器，到现在的cms收集器，虽然现在虚拟机厂商对收集器做了优化，但是stw还是无法完全避免，对目前来说cms的停顿时间是可以接受的，如果程序stw时间过程，还是需要从其他方面考虑，例如程序是否存在内存泄漏等；</p>
+</blockquote>
+</li>
+<li><p>项目可以优化的地方</p>
+</li>
+</ul>
 <h2 id="古茗"><a href="#古茗" class="headerlink" title="古茗"></a>古茗</h2><ul>
 <li>caffine和guava区别</li>
 <li>事务消息的原理</li>
@@ -728,6 +728,52 @@
 <li><p>kafka错误配置导致内存泄漏</p>
 </li>
 <li><p>给一亿用户发送优惠券，保证速度最快，如何读取如此大的用户量</p>
+</li>
+</ul>
+<h2 id="阿维塔"><a href="#阿维塔" class="headerlink" title="阿维塔"></a>阿维塔</h2><ul>
+<li><p>一个请求从前端到数据库的完整链路</p>
+</li>
+<li><p>dubbo的优缺点</p>
+</li>
+<li><p>如何设计一个注册中心</p>
+</li>
+<li><p>ThreadLocal原理</p>
+</li>
+<li><p>java如何停止一个线程</p>
+<blockquote>
+<p>interrupt</p>
+</blockquote>
+</li>
+<li><p>线程在阻塞状态下如何停止</p>
+<blockquote>
+<p>线程外面interrupt + 线程内部判断Thread.isInterrupted()来处理</p>
+</blockquote>
+</li>
+<li><p>ReentrantLock如何做到可重入的</p>
+</li>
+<li><p>List、Set等集合底层实现</p>
+</li>
+<li><p>二叉树的作用</p>
+</li>
+<li><p>SpringBoot默认作用域（单例），什么时候会用到多例</p>
+</li>
+<li><p>Spring filter和intercepter区别，以及常见应用</p>
+<blockquote>
+</blockquote>
+</li>
+<li><p>用数组实现一个栈，出栈后这个元素会被gc回收掉吗？为什么</p>
+</li>
+<li><p>mysql字段什么时候用char，什么时候用varchar，varchar索引如何建立</p>
+</li>
+<li><p>redis zset</p>
+</li>
+<li><p>moogodb应用场景</p>
+</li>
+<li><p>开发中常用的设计模式，责任链一般是干嘛的</p>
+</li>
+<li><p>单元测试@before和@beforeClass区别</p>
+</li>
+<li><p>JVM如何设置参数尽可能创建更多的线程</p>
 </li>
 </ul>
 
@@ -898,7 +944,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E4%BB%99%E4%B8%80%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">高仙一面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E7%9F%A5%E6%99%BA%E8%83%BD"><span class="toc-number">2.</span> <span class="toc-text">一知智能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A2%E8%BF%B9%E7%A7%91%E6%8A%80"><span class="toc-number">3.</span> <span class="toc-text">探迹科技</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A2%E8%BF%B9%E4%BA%8C%E9%9D%A2"><span class="toc-number">4.</span> <span class="toc-text">探迹二面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8C%84%E5%AD%90%E7%A7%91%E6%8A%80"><span class="toc-number">5.</span> <span class="toc-text">茄子科技</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%81%E5%BC%A5%E7%A7%91%E6%8A%80"><span class="toc-number">6.</span> <span class="toc-text">仁弥科技</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%83%E7%81%B5%E5%A3%B9%E7%82%B9%E9%9B%B6"><span class="toc-number">7.</span> <span class="toc-text">心灵壹点零</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%A9%E7%BF%BC%E4%BA%91"><span class="toc-number">8.</span> <span class="toc-text">天翼云</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%B3%E5%93%88%E6%B8%B8"><span class="toc-number">9.</span> <span class="toc-text">米哈游</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%94%9A%E6%9D%A5NIO"><span class="toc-number">10.</span> <span class="toc-text">蔚来NIO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E6%98%93"><span class="toc-number">11.</span> <span class="toc-text">网易</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%94%9A%E6%9D%A5NIO%E4%BA%8C%E9%9D%A2"><span class="toc-number">12.</span> <span class="toc-text">蔚来NIO二面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%A4%E8%8C%97"><span class="toc-number">13.</span> <span class="toc-text">古茗</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8A%B1%E6%97%97%E9%87%91%E8%9E%8D"><span class="toc-number">14.</span> <span class="toc-text">花旗金融</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%99%BA%E5%B7%B1%E6%B1%BD%E8%BD%A6"><span class="toc-number">15.</span> <span class="toc-text">智己汽车</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%97%E5%AE%89%E4%B8%80%E9%9D%A2"><span class="toc-number">16.</span> <span class="toc-text">众安一面</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E4%BB%99%E4%B8%80%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">高仙一面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E7%9F%A5%E6%99%BA%E8%83%BD"><span class="toc-number">2.</span> <span class="toc-text">一知智能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A2%E8%BF%B9%E7%A7%91%E6%8A%80"><span class="toc-number">3.</span> <span class="toc-text">探迹科技</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A2%E8%BF%B9%E4%BA%8C%E9%9D%A2"><span class="toc-number">4.</span> <span class="toc-text">探迹二面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8C%84%E5%AD%90%E7%A7%91%E6%8A%80"><span class="toc-number">5.</span> <span class="toc-text">茄子科技</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%81%E5%BC%A5%E7%A7%91%E6%8A%80"><span class="toc-number">6.</span> <span class="toc-text">仁弥科技</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%83%E7%81%B5%E5%A3%B9%E7%82%B9%E9%9B%B6"><span class="toc-number">7.</span> <span class="toc-text">心灵壹点零</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%A9%E7%BF%BC%E4%BA%91"><span class="toc-number">8.</span> <span class="toc-text">天翼云</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%B3%E5%93%88%E6%B8%B8"><span class="toc-number">9.</span> <span class="toc-text">米哈游</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%94%9A%E6%9D%A5NIO"><span class="toc-number">10.</span> <span class="toc-text">蔚来NIO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E6%98%93"><span class="toc-number">11.</span> <span class="toc-text">网易</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%A4%E8%8C%97"><span class="toc-number">12.</span> <span class="toc-text">古茗</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8A%B1%E6%97%97%E9%87%91%E8%9E%8D"><span class="toc-number">13.</span> <span class="toc-text">花旗金融</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%99%BA%E5%B7%B1%E6%B1%BD%E8%BD%A6"><span class="toc-number">14.</span> <span class="toc-text">智己汽车</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%97%E5%AE%89%E4%B8%80%E9%9D%A2"><span class="toc-number">15.</span> <span class="toc-text">众安一面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%BF%E7%BB%B4%E5%A1%94"><span class="toc-number">16.</span> <span class="toc-text">阿维塔</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -1046,6 +1092,14 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面经</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
@@ -1086,10 +1140,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面经</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
@@ -1126,6 +1176,10 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">redis集群</a>
               </li>
              
@@ -1134,7 +1188,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1147,14 +1201,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">数据结构与算法之美</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">
