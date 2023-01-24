@@ -17,7 +17,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021202205122013107.png">
 <meta property="article:published_time" content="2022-05-12T12:02:00.000Z">
-<meta property="article:modified_time" content="2022-07-04T13:25:07.372Z">
+<meta property="article:modified_time" content="2022-07-07T12:20:37.274Z">
 <meta property="article:author" content="Elfred">
 <meta property="article:tag" content="面经">
 <meta name="twitter:card" content="summary">
@@ -235,7 +235,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">3.8k字</span>
+      <span class="post-count">4.1k字</span>
     </span>
   </span>
 
@@ -244,7 +244,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">14分</span>
+      <span class="post-count">15分</span>
     </span>
   </span>
 </div>
@@ -580,7 +580,7 @@
 </li>
 <li><p>sentinel限流策略</p>
 </li>
-<li><p>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
+<li><p>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
 </li>
 <li><p>nacos原理</p>
 </li>
@@ -763,7 +763,9 @@
 </li>
 <li><p>用数组实现一个栈，出栈后这个元素会被gc回收掉吗？为什么</p>
 </li>
-<li><p>mysql字段什么时候用char，什么时候用varchar，varchar索引如何建立</p>
+<li><p>mysql字段什么时候用char，什么时候用varchar，字符串字段如何加索引</p>
+<blockquote>
+</blockquote>
 </li>
 <li><p>redis zset</p>
 </li>
@@ -774,6 +776,45 @@
 <li><p>单元测试@before和@beforeClass区别</p>
 </li>
 <li><p>JVM如何设置参数尽可能创建更多的线程</p>
+</li>
+<li><p>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
+</li>
+<li><p>redis跳表原理，查找和修改是如何操作的，为什么用跳表，不用二叉树</p>
+</li>
+<li><p>生产redis越来越慢，如何排查</p>
+</li>
+<li><p>redis bigkey如何治理，中间件层面</p>
+</li>
+<li><p>redis cluster寻址过程</p>
+</li>
+<li><p>redis cluster为什么是65535个槽位</p>
+</li>
+<li><p>redis cluster如果hash冲突了怎么办</p>
+</li>
+<li><p>redis innodb引擎是如何解决幻读的</p>
+<blockquote>
+<p>快照读，mvcc undolog</p>
+</blockquote>
+</li>
+<li><p>mysql行记录上有哪些隐藏字段</p>
+<blockquote>
+<ul>
+<li>trx_id：每次事务对某条聚簇索引记录进行改动时候，都会把该事务的事务id赋值给trx_id列</li>
+<li>roll_pointer：每次修改完，都会把旧版本写到undo_log里，这个隐藏列相当于一个指正，可以通过它来找到记录修改前的信息。</li>
+</ul>
+</blockquote>
+</li>
+<li><p>当前度如何实现（加锁），临键锁和间隙锁有什么区别</p>
+</li>
+<li><p>binlog好redolog都是干啥的</p>
+</li>
+<li><p>sync和lock有什么区别，哪个性能好</p>
+</li>
+<li><p>锁升级的过程</p>
+</li>
+<li><p>聊一下比较好的代码或者设计</p>
+</li>
+<li><p>遇到的线上问题</p>
 </li>
 </ul>
 
@@ -973,7 +1014,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020-2022 <a href="https://blog.elfred.top/" target="_blank">Elfred</a>
+    		&copy; 2020-2023 <a href="https://blog.elfred.top/" target="_blank">Elfred</a>
     	</div>
       	<div class="footer-right">
 			
@@ -1100,10 +1141,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
@@ -1136,7 +1173,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">enligsh learning</a>
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1149,10 +1190,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">架构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1184,11 +1221,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">限流算法原理及实现</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
+                <a href="javascript:void(0)" class="js-tag color2">enligsh learning</a>
               </li>
              
               <li class="article-tag-list-item">
