@@ -454,31 +454,6 @@
   </entry>
   
   <entry>
-    <title>23讲 | 二叉树基础（上）</title>
-    <link href="https://blog.elfred.top/2021/05/15/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/23%E8%AE%B2-%E4%BA%8C%E5%8F%89%E6%A0%91%E5%9F%BA%E7%A1%80_%E4%B8%8A/"/>
-    <id>https://blog.elfred.top/2021/05/15/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/23%E8%AE%B2-%E4%BA%8C%E5%8F%89%E6%A0%91%E5%9F%BA%E7%A1%80_%E4%B8%8A/</id>
-    <published>2021-05-15T14:00:00.000Z</published>
-    <updated>2022-07-05T03:15:51.094Z</updated>
-    
-    <content type="html"><![CDATA[<hr><h1 id="23-二叉树基础（上）：什么样的二叉树适合用数组来存储？"><a href="#23-二叉树基础（上）：什么样的二叉树适合用数组来存储？" class="headerlink" title="23 | 二叉树基础（上）：什么样的二叉树适合用数组来存储？"></a>23 | 二叉树基础（上）：什么样的二叉树适合用数组来存储？</h1><h2 id="树（Tree）"><a href="#树（Tree）" class="headerlink" title="树（Tree）"></a>树（Tree）</h2><p>我们首先来看，什么是“树”？再完备的定义，都没有图直观。所以我在图中画了几棵“树”。你来看看，这些“树”都有什么特征？</p><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515215731.jpeg" alt="img"></p><p>你有没有发现，“树”这种数据结构真的很像我们现实生活中的“树”，这里面每个元素我们叫做“节点”；用来连接相邻节点之间的关系，我们叫做“父子关系”。</p><p>比如下面这幅图，A 节点就是 B 节点的<strong>父节点</strong>，B 节点是 A 节点的<strong>子节点</strong>。B、C、D 这三个节点的父节点是同一个节点，所以它们之间互称为<strong>兄弟节点。</strong>我们把没有父节点的节点叫做<strong>根节点</strong>，也就是图中的节点 E。我们把没有子节点的节点叫做<strong>叶子节点</strong>或者<strong>叶节点</strong>，比如图中的 G、H、I、J、K、L 都是叶子节点。</p><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515215750.jpeg" alt="img"></p><p>除此之外，关于“树”，还有三个比较相似的概念：<strong>高度</strong>（Height）、<strong>深度</strong>（Depth）、<strong>层</strong>（Level）。它们的定义是这样的：</p><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515215851.jpeg" alt="img"></p><p>这三个概念的定义比较容易混淆，描述起来也比较空洞。我举个例子说明一下，你一看应该就能明白。</p><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515215915.jpeg" alt="img"></p><p>记这几个概念，我还有一个小窍门，就是类比“高度”“深度”“层”这几个名词在生活中的含义。</p><p>在我们的生活中，“高度”这个概念，其实就是从下往上度量，比如我们要度量第 10 层楼的高度、第 13 层楼的高度，起点都是地面。所以，树这种数据结构的高度也是一样，从最底层开始计数，并且计数的起点是 0。</p><p>“深度”这个概念在生活中是从上往下度量的，比如水中鱼的深度，是从水平面开始度量的。所以，树这种数据结构的深度也是类似的，从根结点开始度量，并且计数起点也是 0。</p><p>“层数”跟深度的计算类似，不过，计数起点是 1，也就是说根节点位于第 1 层。</p><h2 id="二叉树（Binary-Tree）"><a href="#二叉树（Binary-Tree）" class="headerlink" title="二叉树（Binary Tree）"></a>二叉树（Binary Tree）</h2><p>树结构多种多样，不过我们最常用还是二叉树。</p><p>二叉树，顾名思义，每个节点最多有两个“叉”，也就是两个子节点，分别是左子节点和右子节点。不过，二叉树并不要求每个节点都有两个子节点，有的节点只有左子节点，有的节点只有右子节点。我画的这几个都是二叉树。以此类推，你可以想象一下四叉树、八叉树长什么样子。</p><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515213800.jpeg" alt="img"></p><p>这个图里面，有两个比较特殊的二叉树，分别是编号 2 和编号 3 这两个。</p><p>其中，编号 2 的二叉树中，叶子节点全都在最底层，除了叶子节点之外，每个节点都有左右两个子节点，这种二叉树就叫做满二叉树。</p><p>编号 3 的二叉树中，叶子节点都在最底下两层，最后一层的叶子节点都靠左排列，并且除了最后一层，其他层的节点个数都要达到最大，这种二叉树叫做完全二叉树。</p><p>满二叉树很好理解，也很好识别，但是完全二叉树，有的人可能就分不清了。我画了几个完全二叉树和非完全二叉树的例子，你可以对比着看看。</p><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515213820.jpeg" alt="img"></p><p>你可能会说，满二叉树的特征非常明显，我们把它单独拎出来讲，这个可以理解。但是完全二叉树的特征不怎么明显啊，单从长相上来看，完全二叉树并没有特别特殊的地方啊，更像是“芸芸众树”中的一种。</p><p>那我们为什么还要特意把它拎出来讲呢？为什么偏偏把最后一层的叶子节点靠左排列的叫完全二叉树？如果靠右排列就不能叫完全二叉树了吗？这个定义的由来或者说目的在哪里？</p><p>要理解完全二叉树定义的由来，我们需要先了解，<strong>如何表示（或者存储）一棵二叉树</strong>？</p><p>想要存储一棵二叉树，我们有两种方法，一种是基于指针或者引用的二叉链式存储法，一种是基于数组的顺序存储法。</p><p>我们先来看比较简单、直观的<strong>链式存储法</strong>。从图中你应该可以很清楚地看到，每个节点有三个字段，其中一个存储数据，另外两个是指向左右子节点的指针。我们只要拎住根节点，就可以通过左右子节点的指针，把整棵树都串起来。这种存储方式我们比较常用。大部分二叉树代码都是通过这种结构来实现的。</p><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515213921.jpeg" alt="img"></p><p>我们再来看，基于数组的<strong>顺序存储法</strong>。我们把根节点存储在下标 i &#x3D; 1 的位置，那左子节点存储在下标 2 * i &#x3D; 2 的位置，右子节点存储在 2 * i + 1 &#x3D; 3 的位置。以此类推，B 节点的左子节点存储在 2 * i &#x3D; 2 * 2 &#x3D; 4 的位置，右子节点存储在 2 * i + 1 &#x3D; 2 * 2 + 1 &#x3D; 5 的位置。</p><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515214026.jpeg" alt="img"></p><p>我来总结一下，如果节点 X 存储在数组中下标为 i 的位置，下标为 2 * i 的位置存储的就是左子节点，下标为 2 * i + 1 的位置存储的就是右子节点。反过来，下标为 i&#x2F;2 的位置存储就是它的父节点。通过这种方式，我们只要知道根节点存储的位置（一般情况下，为了方便计算子节点，根节点会存储在下标为 1 的位置），这样就可以通过下标计算，把整棵树都串起来。</p><p>不过，我刚刚举的例子是一棵完全二叉树，所以仅仅“浪费”了一个下标为 0 的存储位置。如果是非完全二叉树，其实会浪费比较多的数组存储空间。你可以看我举的下面这个例子。</p><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515214223.jpeg" alt="img"></p><p>所以，如果某棵二叉树是一棵完全二叉树，那用数组存储无疑是最节省内存的一种方式。因为数组的存储方式并不需要像链式存储法那样，要存储额外的左右子节点的指针。这也是为什么完全二叉树会单独拎出来的原因，也是为什么完全二叉树要求最后一层的子节点都靠左的原因。</p><p>当我们讲到堆和堆排序的时候，你会发现，堆其实就是一种完全二叉树，最常用的存储方式就是数组。</p><h2 id="二叉树的遍历"><a href="#二叉树的遍历" class="headerlink" title="二叉树的遍历"></a>二叉树的遍历</h2><p>前面我讲了二叉树的基本定义和存储方法，现在我们来看二叉树中非常重要的操作，二叉树的遍历。这也是非常常见的面试题。</p><p>如何将所有节点都遍历打印出来呢？经典的方法有三种，<strong>前序遍历</strong>、<strong>中序遍历</strong>和<strong>后序遍历</strong>。其中，前、中、后序，表示的是节点与它的左右子树节点遍历打印的先后顺序。</p><ul><li>前序遍历是指，对于树中的任意节点来说，先打印这个节点，然后再打印它的左子树，最后打印它的右子树。</li><li>中序遍历是指，对于树中的任意节点来说，先打印它的左子树，然后再打印它本身，最后打印它的右子树。</li><li>后序遍历是指，对于树中的任意节点来说，先打印它的左子树，然后再打印它的右子树，最后打印这个节点本身。</li></ul><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515220044.jpeg" alt="img"></p><p><strong>实际上，二叉树的前、中、后序遍历就是一个递归的过程</strong>。比如，前序遍历，其实就是先打印根节点，然后再递归地打印左子树，最后递归地打印右子树。</p><p>写递归代码的关键，就是看能不能写出递推公式，而写递推公式的关键就是，如果要解决问题 A，就假设子问题 B、C 已经解决，然后再来看如何利用 B、C 来解决 A。所以，我们可以把前、中、后序遍历的递推公式都写出来。</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">前序遍历的递推公式：</span><br><span class="line">preOrder(r) = <span class="built_in">print</span> r-&gt;preOrder(r-&gt;left)-&gt;preOrder(r-&gt;right)</span><br><span class="line"></span><br><span class="line">中序遍历的递推公式：</span><br><span class="line">inOrder(r) = inOrder(r-&gt;left)-&gt;<span class="built_in">print</span> r-&gt;inOrder(r-&gt;right)</span><br><span class="line"></span><br><span class="line">后序遍历的递推公式：</span><br><span class="line">postOrder(r) = postOrder(r-&gt;left)-&gt;postOrder(r-&gt;right)-&gt;<span class="built_in">print</span> r</span><br></pre></td></tr></table></figure><p>有了递推公式，代码写起来就简单多了。这三种遍历方式的代码，我都写出来了，你可以看看。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">preOrder</span><span class="params">(Node* root)</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (root == <span class="literal">null</span>) <span class="keyword">return</span>;</span><br><span class="line">  print root <span class="comment">// 此处为伪代码，表示打印root节点</span></span><br><span class="line">  preOrder(root-&gt;left);</span><br><span class="line">  preOrder(root-&gt;right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">inOrder</span><span class="params">(Node* root)</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (root == <span class="literal">null</span>) <span class="keyword">return</span>;</span><br><span class="line">  inOrder(root-&gt;left);</span><br><span class="line">  print root <span class="comment">// 此处为伪代码，表示打印root节点</span></span><br><span class="line">  inOrder(root-&gt;right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">postOrder</span><span class="params">(Node* root)</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (root == <span class="literal">null</span>) <span class="keyword">return</span>;</span><br><span class="line">  postOrder(root-&gt;left);</span><br><span class="line">  postOrder(root-&gt;right);</span><br><span class="line">  print root <span class="comment">// 此处为伪代码，表示打印root节点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>二叉树的前、中、后序遍历的递归实现是不是很简单？你知道二叉树遍历的时间复杂度是多少吗？我们一起来看看。</p><p>从我前面画的前、中、后序遍历的顺序图，可以看出来，每个节点最多会被访问两次，所以遍历操作的时间复杂度，跟节点的个数 n 成正比，也就是说二叉树遍历的时间复杂度是 O(n)。</p><h2 id="课后思考"><a href="#课后思考" class="headerlink" title="课后思考"></a>课后思考</h2><ol><li><p>给定一组数据，比如 1，3，5，6，9，10。你来算算，可以构建出多少种不同的二叉树？</p><blockquote><p>是卡特兰数，是C[n,2n] &#x2F; (n+1)种形状，c是组合数，节点的不同又是一个全排列，一共就是n!*C[n,2n] &#x2F; (n+1)个二叉树。可以通过数学归纳法推导得出。</p></blockquote></li><li><p>我们讲了三种二叉树的遍历方式，前、中、后序。实际上，还有另外一种遍历方式，也就是按层遍历，你知道如何实现吗？(队列)</p></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;hr&gt;
-&lt;h1 id=&quot;23-二叉树基础（上）：什么样的二叉树适合用数组来存储？&quot;&gt;&lt;a href=&quot;#23-二叉树基础（上）：什么样的二叉树适合用数组来存储？&quot; class=&quot;headerlink&quot; title=&quot;23 | 二叉树基础（上）：什么样的二叉树适合用数组来存储？&quot;</summary>
-      
-    
-    
-    
-    
-    <category term="学习笔记" scheme="https://blog.elfred.top/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="数据结构与算法之美" scheme="https://blog.elfred.top/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/"/>
-    
-  </entry>
-  
-  <entry>
     <title>24讲 | 二叉树基础（下）</title>
     <link href="https://blog.elfred.top/2021/05/15/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/24%E8%AE%B2-%E4%BA%8C%E5%8F%89%E6%A0%91%E5%9F%BA%E7%A1%80_%E4%B8%8B/"/>
     <id>https://blog.elfred.top/2021/05/15/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/24%E8%AE%B2-%E4%BA%8C%E5%8F%89%E6%A0%91%E5%9F%BA%E7%A1%80_%E4%B8%8B/</id>
@@ -492,6 +467,31 @@
       
     <summary type="html">&lt;hr&gt;
 &lt;h1 id=&quot;24-二叉树基础（下）：有了如此高效的散列表，为什么还需要二叉树？&quot;&gt;&lt;a href=&quot;#24-二叉树基础（下）：有了如此高效的散列表，为什么还需要二叉树？&quot; class=&quot;headerlink&quot; title=&quot;24 | 二叉树基础（下）：有了如此高效的</summary>
+      
+    
+    
+    
+    
+    <category term="学习笔记" scheme="https://blog.elfred.top/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="数据结构与算法之美" scheme="https://blog.elfred.top/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>23讲 | 二叉树基础（上）</title>
+    <link href="https://blog.elfred.top/2021/05/15/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/23%E8%AE%B2-%E4%BA%8C%E5%8F%89%E6%A0%91%E5%9F%BA%E7%A1%80_%E4%B8%8A/"/>
+    <id>https://blog.elfred.top/2021/05/15/study/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/23%E8%AE%B2-%E4%BA%8C%E5%8F%89%E6%A0%91%E5%9F%BA%E7%A1%80_%E4%B8%8A/</id>
+    <published>2021-05-15T14:00:00.000Z</published>
+    <updated>2022-07-05T03:15:51.094Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h1 id="23-二叉树基础（上）：什么样的二叉树适合用数组来存储？"><a href="#23-二叉树基础（上）：什么样的二叉树适合用数组来存储？" class="headerlink" title="23 | 二叉树基础（上）：什么样的二叉树适合用数组来存储？"></a>23 | 二叉树基础（上）：什么样的二叉树适合用数组来存储？</h1><h2 id="树（Tree）"><a href="#树（Tree）" class="headerlink" title="树（Tree）"></a>树（Tree）</h2><p>我们首先来看，什么是“树”？再完备的定义，都没有图直观。所以我在图中画了几棵“树”。你来看看，这些“树”都有什么特征？</p><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515215731.jpeg" alt="img"></p><p>你有没有发现，“树”这种数据结构真的很像我们现实生活中的“树”，这里面每个元素我们叫做“节点”；用来连接相邻节点之间的关系，我们叫做“父子关系”。</p><p>比如下面这幅图，A 节点就是 B 节点的<strong>父节点</strong>，B 节点是 A 节点的<strong>子节点</strong>。B、C、D 这三个节点的父节点是同一个节点，所以它们之间互称为<strong>兄弟节点。</strong>我们把没有父节点的节点叫做<strong>根节点</strong>，也就是图中的节点 E。我们把没有子节点的节点叫做<strong>叶子节点</strong>或者<strong>叶节点</strong>，比如图中的 G、H、I、J、K、L 都是叶子节点。</p><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515215750.jpeg" alt="img"></p><p>除此之外，关于“树”，还有三个比较相似的概念：<strong>高度</strong>（Height）、<strong>深度</strong>（Depth）、<strong>层</strong>（Level）。它们的定义是这样的：</p><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515215851.jpeg" alt="img"></p><p>这三个概念的定义比较容易混淆，描述起来也比较空洞。我举个例子说明一下，你一看应该就能明白。</p><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515215915.jpeg" alt="img"></p><p>记这几个概念，我还有一个小窍门，就是类比“高度”“深度”“层”这几个名词在生活中的含义。</p><p>在我们的生活中，“高度”这个概念，其实就是从下往上度量，比如我们要度量第 10 层楼的高度、第 13 层楼的高度，起点都是地面。所以，树这种数据结构的高度也是一样，从最底层开始计数，并且计数的起点是 0。</p><p>“深度”这个概念在生活中是从上往下度量的，比如水中鱼的深度，是从水平面开始度量的。所以，树这种数据结构的深度也是类似的，从根结点开始度量，并且计数起点也是 0。</p><p>“层数”跟深度的计算类似，不过，计数起点是 1，也就是说根节点位于第 1 层。</p><h2 id="二叉树（Binary-Tree）"><a href="#二叉树（Binary-Tree）" class="headerlink" title="二叉树（Binary Tree）"></a>二叉树（Binary Tree）</h2><p>树结构多种多样，不过我们最常用还是二叉树。</p><p>二叉树，顾名思义，每个节点最多有两个“叉”，也就是两个子节点，分别是左子节点和右子节点。不过，二叉树并不要求每个节点都有两个子节点，有的节点只有左子节点，有的节点只有右子节点。我画的这几个都是二叉树。以此类推，你可以想象一下四叉树、八叉树长什么样子。</p><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515213800.jpeg" alt="img"></p><p>这个图里面，有两个比较特殊的二叉树，分别是编号 2 和编号 3 这两个。</p><p>其中，编号 2 的二叉树中，叶子节点全都在最底层，除了叶子节点之外，每个节点都有左右两个子节点，这种二叉树就叫做满二叉树。</p><p>编号 3 的二叉树中，叶子节点都在最底下两层，最后一层的叶子节点都靠左排列，并且除了最后一层，其他层的节点个数都要达到最大，这种二叉树叫做完全二叉树。</p><p>满二叉树很好理解，也很好识别，但是完全二叉树，有的人可能就分不清了。我画了几个完全二叉树和非完全二叉树的例子，你可以对比着看看。</p><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515213820.jpeg" alt="img"></p><p>你可能会说，满二叉树的特征非常明显，我们把它单独拎出来讲，这个可以理解。但是完全二叉树的特征不怎么明显啊，单从长相上来看，完全二叉树并没有特别特殊的地方啊，更像是“芸芸众树”中的一种。</p><p>那我们为什么还要特意把它拎出来讲呢？为什么偏偏把最后一层的叶子节点靠左排列的叫完全二叉树？如果靠右排列就不能叫完全二叉树了吗？这个定义的由来或者说目的在哪里？</p><p>要理解完全二叉树定义的由来，我们需要先了解，<strong>如何表示（或者存储）一棵二叉树</strong>？</p><p>想要存储一棵二叉树，我们有两种方法，一种是基于指针或者引用的二叉链式存储法，一种是基于数组的顺序存储法。</p><p>我们先来看比较简单、直观的<strong>链式存储法</strong>。从图中你应该可以很清楚地看到，每个节点有三个字段，其中一个存储数据，另外两个是指向左右子节点的指针。我们只要拎住根节点，就可以通过左右子节点的指针，把整棵树都串起来。这种存储方式我们比较常用。大部分二叉树代码都是通过这种结构来实现的。</p><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515213921.jpeg" alt="img"></p><p>我们再来看，基于数组的<strong>顺序存储法</strong>。我们把根节点存储在下标 i &#x3D; 1 的位置，那左子节点存储在下标 2 * i &#x3D; 2 的位置，右子节点存储在 2 * i + 1 &#x3D; 3 的位置。以此类推，B 节点的左子节点存储在 2 * i &#x3D; 2 * 2 &#x3D; 4 的位置，右子节点存储在 2 * i + 1 &#x3D; 2 * 2 + 1 &#x3D; 5 的位置。</p><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515214026.jpeg" alt="img"></p><p>我来总结一下，如果节点 X 存储在数组中下标为 i 的位置，下标为 2 * i 的位置存储的就是左子节点，下标为 2 * i + 1 的位置存储的就是右子节点。反过来，下标为 i&#x2F;2 的位置存储就是它的父节点。通过这种方式，我们只要知道根节点存储的位置（一般情况下，为了方便计算子节点，根节点会存储在下标为 1 的位置），这样就可以通过下标计算，把整棵树都串起来。</p><p>不过，我刚刚举的例子是一棵完全二叉树，所以仅仅“浪费”了一个下标为 0 的存储位置。如果是非完全二叉树，其实会浪费比较多的数组存储空间。你可以看我举的下面这个例子。</p><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515214223.jpeg" alt="img"></p><p>所以，如果某棵二叉树是一棵完全二叉树，那用数组存储无疑是最节省内存的一种方式。因为数组的存储方式并不需要像链式存储法那样，要存储额外的左右子节点的指针。这也是为什么完全二叉树会单独拎出来的原因，也是为什么完全二叉树要求最后一层的子节点都靠左的原因。</p><p>当我们讲到堆和堆排序的时候，你会发现，堆其实就是一种完全二叉树，最常用的存储方式就是数组。</p><h2 id="二叉树的遍历"><a href="#二叉树的遍历" class="headerlink" title="二叉树的遍历"></a>二叉树的遍历</h2><p>前面我讲了二叉树的基本定义和存储方法，现在我们来看二叉树中非常重要的操作，二叉树的遍历。这也是非常常见的面试题。</p><p>如何将所有节点都遍历打印出来呢？经典的方法有三种，<strong>前序遍历</strong>、<strong>中序遍历</strong>和<strong>后序遍历</strong>。其中，前、中、后序，表示的是节点与它的左右子树节点遍历打印的先后顺序。</p><ul><li>前序遍历是指，对于树中的任意节点来说，先打印这个节点，然后再打印它的左子树，最后打印它的右子树。</li><li>中序遍历是指，对于树中的任意节点来说，先打印它的左子树，然后再打印它本身，最后打印它的右子树。</li><li>后序遍历是指，对于树中的任意节点来说，先打印它的左子树，然后再打印它的右子树，最后打印这个节点本身。</li></ul><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210515220044.jpeg" alt="img"></p><p><strong>实际上，二叉树的前、中、后序遍历就是一个递归的过程</strong>。比如，前序遍历，其实就是先打印根节点，然后再递归地打印左子树，最后递归地打印右子树。</p><p>写递归代码的关键，就是看能不能写出递推公式，而写递推公式的关键就是，如果要解决问题 A，就假设子问题 B、C 已经解决，然后再来看如何利用 B、C 来解决 A。所以，我们可以把前、中、后序遍历的递推公式都写出来。</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">前序遍历的递推公式：</span><br><span class="line">preOrder(r) = <span class="built_in">print</span> r-&gt;preOrder(r-&gt;left)-&gt;preOrder(r-&gt;right)</span><br><span class="line"></span><br><span class="line">中序遍历的递推公式：</span><br><span class="line">inOrder(r) = inOrder(r-&gt;left)-&gt;<span class="built_in">print</span> r-&gt;inOrder(r-&gt;right)</span><br><span class="line"></span><br><span class="line">后序遍历的递推公式：</span><br><span class="line">postOrder(r) = postOrder(r-&gt;left)-&gt;postOrder(r-&gt;right)-&gt;<span class="built_in">print</span> r</span><br></pre></td></tr></table></figure><p>有了递推公式，代码写起来就简单多了。这三种遍历方式的代码，我都写出来了，你可以看看。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">preOrder</span><span class="params">(Node* root)</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (root == <span class="literal">null</span>) <span class="keyword">return</span>;</span><br><span class="line">  print root <span class="comment">// 此处为伪代码，表示打印root节点</span></span><br><span class="line">  preOrder(root-&gt;left);</span><br><span class="line">  preOrder(root-&gt;right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">inOrder</span><span class="params">(Node* root)</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (root == <span class="literal">null</span>) <span class="keyword">return</span>;</span><br><span class="line">  inOrder(root-&gt;left);</span><br><span class="line">  print root <span class="comment">// 此处为伪代码，表示打印root节点</span></span><br><span class="line">  inOrder(root-&gt;right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">postOrder</span><span class="params">(Node* root)</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (root == <span class="literal">null</span>) <span class="keyword">return</span>;</span><br><span class="line">  postOrder(root-&gt;left);</span><br><span class="line">  postOrder(root-&gt;right);</span><br><span class="line">  print root <span class="comment">// 此处为伪代码，表示打印root节点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>二叉树的前、中、后序遍历的递归实现是不是很简单？你知道二叉树遍历的时间复杂度是多少吗？我们一起来看看。</p><p>从我前面画的前、中、后序遍历的顺序图，可以看出来，每个节点最多会被访问两次，所以遍历操作的时间复杂度，跟节点的个数 n 成正比，也就是说二叉树遍历的时间复杂度是 O(n)。</p><h2 id="课后思考"><a href="#课后思考" class="headerlink" title="课后思考"></a>课后思考</h2><ol><li><p>给定一组数据，比如 1，3，5，6，9，10。你来算算，可以构建出多少种不同的二叉树？</p><blockquote><p>是卡特兰数，是C[n,2n] &#x2F; (n+1)种形状，c是组合数，节点的不同又是一个全排列，一共就是n!*C[n,2n] &#x2F; (n+1)个二叉树。可以通过数学归纳法推导得出。</p></blockquote></li><li><p>我们讲了三种二叉树的遍历方式，前、中、后序。实际上，还有另外一种遍历方式，也就是按层遍历，你知道如何实现吗？(队列)</p></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;hr&gt;
+&lt;h1 id=&quot;23-二叉树基础（上）：什么样的二叉树适合用数组来存储？&quot;&gt;&lt;a href=&quot;#23-二叉树基础（上）：什么样的二叉树适合用数组来存储？&quot; class=&quot;headerlink&quot; title=&quot;23 | 二叉树基础（上）：什么样的二叉树适合用数组来存储？&quot;</summary>
       
     
     
@@ -605,31 +605,6 @@
   </entry>
   
   <entry>
-    <title>20讲</title>
-    <link href="https://blog.elfred.top/2021/05/05/study/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/20%E8%AE%B2/"/>
-    <id>https://blog.elfred.top/2021/05/05/study/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/20%E8%AE%B2/</id>
-    <published>2021-05-05T05:20:00.000Z</published>
-    <updated>2022-07-05T03:15:51.092Z</updated>
-    
-    <content type="html"><![CDATA[<hr><h1 id="20-幻读是什么，幻读有什么问题？"><a href="#20-幻读是什么，幻读有什么问题？" class="headerlink" title="20 | 幻读是什么，幻读有什么问题？"></a>20 | 幻读是什么，幻读有什么问题？</h1><p>为了便于说明问题，这一篇文章，我们就先使用一个小一点儿的表。建表和初始化语句如下：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `t` (</span><br><span class="line">  `id` int(11) NOT NULL,</span><br><span class="line">  `c` int(11) DEFAULT NULL,</span><br><span class="line">  `d` int(11) DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`id`),</span><br><span class="line">  KEY `c` (`c`)</span><br><span class="line">) ENGINE=InnoDB;</span><br><span class="line"></span><br><span class="line">insert into t values(0,0,0),(5,5,5),</span><br><span class="line">(10,10,10),(15,15,15),(20,20,20),(25,25,25);</span><br></pre></td></tr></table></figure><h2 id="幻读是什么？"><a href="#幻读是什么？" class="headerlink" title="幻读是什么？"></a>幻读是什么？</h2>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;hr&gt;
-&lt;h1 id=&quot;20-幻读是什么，幻读有什么问题？&quot;&gt;&lt;a href=&quot;#20-幻读是什么，幻读有什么问题？&quot; class=&quot;headerlink&quot; title=&quot;20 | 幻读是什么，幻读有什么问题？&quot;&gt;&lt;/a&gt;20 | 幻读是什么，幻读有什么问题？&lt;/h1&gt;&lt;p&gt;为</summary>
-      
-    
-    
-    
-    
-    <category term="MySQL实战45讲" scheme="https://blog.elfred.top/tags/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/"/>
-    
-    <category term="学习笔记" scheme="https://blog.elfred.top/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
     <title>02讲</title>
     <link href="https://blog.elfred.top/2021/05/05/study/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/21%E8%AE%B2/"/>
     <id>https://blog.elfred.top/2021/05/05/study/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/21%E8%AE%B2/</id>
@@ -643,6 +618,31 @@
       
     <summary type="html">&lt;hr&gt;
 &lt;h1 id=&quot;21-为什么我只改一行的语句，锁这么多？&quot;&gt;&lt;a href=&quot;#21-为什么我只改一行的语句，锁这么多？&quot; class=&quot;headerlink&quot; title=&quot;21 | 为什么我只改一行的语句，锁这么多？&quot;&gt;&lt;/a&gt;21 | 为什么我只改一行的语句，锁这</summary>
+      
+    
+    
+    
+    
+    <category term="MySQL实战45讲" scheme="https://blog.elfred.top/tags/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/"/>
+    
+    <category term="学习笔记" scheme="https://blog.elfred.top/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>20讲</title>
+    <link href="https://blog.elfred.top/2021/05/05/study/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/20%E8%AE%B2/"/>
+    <id>https://blog.elfred.top/2021/05/05/study/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/20%E8%AE%B2/</id>
+    <published>2021-05-05T05:20:00.000Z</published>
+    <updated>2022-07-05T03:15:51.092Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h1 id="20-幻读是什么，幻读有什么问题？"><a href="#20-幻读是什么，幻读有什么问题？" class="headerlink" title="20 | 幻读是什么，幻读有什么问题？"></a>20 | 幻读是什么，幻读有什么问题？</h1><p>为了便于说明问题，这一篇文章，我们就先使用一个小一点儿的表。建表和初始化语句如下：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `t` (</span><br><span class="line">  `id` int(11) NOT NULL,</span><br><span class="line">  `c` int(11) DEFAULT NULL,</span><br><span class="line">  `d` int(11) DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`id`),</span><br><span class="line">  KEY `c` (`c`)</span><br><span class="line">) ENGINE=InnoDB;</span><br><span class="line"></span><br><span class="line">insert into t values(0,0,0),(5,5,5),</span><br><span class="line">(10,10,10),(15,15,15),(20,20,20),(25,25,25);</span><br></pre></td></tr></table></figure><h2 id="幻读是什么？"><a href="#幻读是什么？" class="headerlink" title="幻读是什么？"></a>幻读是什么？</h2>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;hr&gt;
+&lt;h1 id=&quot;20-幻读是什么，幻读有什么问题？&quot;&gt;&lt;a href=&quot;#20-幻读是什么，幻读有什么问题？&quot; class=&quot;headerlink&quot; title=&quot;20 | 幻读是什么，幻读有什么问题？&quot;&gt;&lt;/a&gt;20 | 幻读是什么，幻读有什么问题？&lt;/h1&gt;&lt;p&gt;为</summary>
       
     
     
