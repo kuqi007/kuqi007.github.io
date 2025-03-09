@@ -229,6 +229,101 @@
             
 
   
+    <article id="post-application/面试遇到的简单多线程编程题：线程交替打印的升级版" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/575b225b.html" target="_blank">面试遇到的简单多线程编程题：线程交替打印的升级版</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/575b225b.html" class="archive-article-date">
+        <time datetime="2020-03-26T07:34:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-26</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近面试遇到一道简单的多线程编码题，线程交替打印的升级版，我们来研究下这道题怎么解决。  </p>
+<h3 id="题目介绍："><a href="#题目介绍：" class="headerlink" title="题目介绍："></a>题目介绍：</h3><blockquote>
+<p>线程A每次处理只能输出一个A<br>线程B每次输出只能输出一个B<br>主线程不能输出A或B<br>请尽可能不使用封装好的工具方法或类来调度线程，然后输出以下内容：<br>ABBBBABBBBABBBBABBBB….<br>加分项：增加线程B1，行为和B一样，要求B和B1负载均衡</p>
+</blockquote>
+    
+    <a class="article-more-a" href="/posts/575b225b.html#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">面试题</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/575b225b.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-application/Spring、SpringMvc、SpringBoot和SpringCloud的联系与区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1016,116 +1111,6 @@
 
 
   
-    <article id="post-application/为什么要用Spring" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/cf4d9cf.html" target="_blank">为什么要用Spring</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/cf4d9cf.html" class="archive-article-date">
-        <time datetime="2019-10-04T12:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-04</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="Spring-IOC"><a href="#Spring-IOC" class="headerlink" title="Spring IOC"></a>Spring IOC</h3><h4 id="依赖注入能做什么"><a href="#依赖注入能做什么" class="headerlink" title="依赖注入能做什么"></a>依赖注入能做什么</h4><ul>
-<li>为什么要使用依赖注入<ul>
-<li>传统的代码，每个对象负责管理与自己需要依赖的对象，导致如果需要切换依赖对象的实现类时，需要修改多处地方。同时，过度耦合也使得对象难以进行单元测试。</li>
-<li>依赖注入把对象的创造交给外部去管理,很好的解决了代码紧耦合（tight couple）的问题，是一种让代码实现松耦合（loose couple）的机制。</li>
-<li>松耦合让代码更具灵活性，能更好地应对需求变动，以及方便单元测试。</li>
-</ul>
-</li>
-</ul>
-<h4 id="什么是IOC容器"><a href="#什么是IOC容器" class="headerlink" title="什么是IOC容器"></a>什么是IOC容器</h4><h4 id="COC是什么"><a href="#COC是什么" class="headerlink" title="COC是什么"></a>COC是什么</h4><p>Convention over Configuration 约定优于配置</p>
-<h4 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h4><h3 id="Spring特点"><a href="#Spring特点" class="headerlink" title="Spring特点"></a>Spring特点</h3><h5 id="1-方便解耦，简化开发"><a href="#1-方便解耦，简化开发" class="headerlink" title="1. 方便解耦，简化开发"></a>1. 方便解耦，简化开发</h5><p>　　通过Spring提供的IoC容器，我们可以将对象之间的依赖关系交由Spring进行控制，避免硬编码所造成的过度程序耦合。有了Spring，用户不必再为单实例模式类、属性文件解析等这些很底层的需求编写代码，可以更专注于上层的应用。</p>
-<h5 id="2-AOP编程的支持"><a href="#2-AOP编程的支持" class="headerlink" title="2. AOP编程的支持"></a>2. AOP编程的支持</h5><p>通过Spring提供的AOP功能，方便进行面向切面的编程，许多不容易用传统OOP实现的功能可以通过AOP轻松应付。</p>
-<h5 id="3-声明式事务的支持"><a href="#3-声明式事务的支持" class="headerlink" title="3. 声明式事务的支持"></a>3. 声明式事务的支持</h5><p>　　在Spring中，我们可以从单调烦闷的事务管理代码中解脱出来，通过声明式方式灵活地进行事务的管理，提高开发效率和质量。</p>
-<h5 id="4-方便程序的测试"><a href="#4-方便程序的测试" class="headerlink" title="4. 方便程序的测试"></a>4. 方便程序的测试</h5><p>　　可以用非容器依赖的编程方式进行几乎所有的测试工作，在Spring里，测试不再是昂贵的操作，而是随手可做的事情。例如：Spring对Junit4支持，可以通过注解方便的测试Spring程序。</p>
-<h5 id="5-方便集成各种优秀框架"><a href="#5-方便集成各种优秀框架" class="headerlink" title="5. 方便集成各种优秀框架"></a>5. 方便集成各种优秀框架</h5><p>　　Spring不排斥各种优秀的开源框架，相反，Spring可以降低各种框架的使用难度，Spring提供了对各种优秀框架（如Struts,Hibernate、Hessian、Quartz）等的直接支持。</p>
-<h5 id="6-降低Java-EE-API的使用难度"><a href="#6-降低Java-EE-API的使用难度" class="headerlink" title="6. 降低Java EE API的使用难度"></a>6. 降低Java EE API的使用难度</h5><p>　　Spring对很多难用的Java EE API（如JDBC，JavaMail，远程调用等）提供了一个薄薄的封装层，通过Spring的简易封装，这些Java EE API的使用难度大为降低。</p>
-<h5 id="7-Java-源码是经典学习范例"><a href="#7-Java-源码是经典学习范例" class="headerlink" title="7. Java 源码是经典学习范例"></a>7. Java 源码是经典学习范例</h5><p>　　Spring的源码设计精妙、结构清晰、匠心独运，处处体现着大师对Java设计模式灵活运用以及对Java技术的高深造诣。Spring框架源码无疑是Java技术的最佳实践范例。如果想在短时间内迅速提高自己的Java技术水平和应用开发水平，学习和研究Spring源码将会使你收到意想不到的效果。
-　　</p>
-<h3 id="好处"><a href="#好处" class="headerlink" title="好处"></a>好处</h3><h4 id="总结起来，使用Spring有如下优点："><a href="#总结起来，使用Spring有如下优点：" class="headerlink" title="总结起来，使用Spring有如下优点："></a>总结起来，使用Spring有如下优点：</h4><ol>
-<li>低侵入式设计，代码污染极低</li>
-<li>独立于各种应用服务器，基于Spring框架的应用，可以真正实现Write Once,Run Anywhere的承诺</li>
-<li>Spring的DI机制降低了业务对象替换的复杂性，提高了组件之间的解耦</li>
-<li>Spring的AOP支持允许将一些通用任务如安全、事务、日志等进行集中式管理，从而提供了更好的复用</li>
-<li>Spring的ORM和DAO提供了与第三方持久层框架的良好整合，并简化了底层的数据库访问</li>
-<li>Spring并不强制应用完全依赖于Spring，开发者可自由选用Spring框架的部分或全部</li>
-</ol>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/cf4d9cf.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
@@ -1271,10 +1256,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -1284,6 +1265,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MapStruct</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1307,14 +1292,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">盈透开户</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">美股券商</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
@@ -1327,7 +1304,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
+                <a href="javascript:void(0)" class="js-tag color5">盈透开户</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">美股券商</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">盈立证券</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">美股开户</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">kafka</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1343,19 +1344,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">kafka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">快速复习指南</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">限流算法原理及实现</a>
+                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1367,19 +1360,19 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">限流算法原理及实现</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">数据结构与算法之美</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
               </li>
             
             <div class="clearfix"></div>
