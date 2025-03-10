@@ -229,6 +229,131 @@
             
 
   
+    <article id="post-study/数据结构与算法之美/学习笔记/05讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/12ec85d7.html" target="_blank">05讲</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/12ec85d7.html" class="archive-article-date">
+        <time datetime="2021-03-25T12:57:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-25</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <hr>
+<h1 id="数组：为什么很多编程语言中数组都从0开始编号？"><a href="#数组：为什么很多编程语言中数组都从0开始编号？" class="headerlink" title="数组：为什么很多编程语言中数组都从0开始编号？"></a>数组：为什么很多编程语言中数组都从0开始编号？</h1><h2 id="数组如何实现随机访问？"><a href="#数组如何实现随机访问？" class="headerlink" title="数组如何实现随机访问？"></a>数组如何实现随机访问？</h2><h3 id="什么是数组？"><a href="#什么是数组？" class="headerlink" title="什么是数组？"></a>什么是数组？</h3><p><strong>数组（Array）是一种线性表数据结构。它用一组连续的内存空间，来存储一组具有相同类型的数据</strong>。</p>
+<h3 id="数组是如何实现根据下标随机访问数组元素的吗？"><a href="#数组是如何实现根据下标随机访问数组元素的吗？" class="headerlink" title="数组是如何实现根据下标随机访问数组元素的吗？"></a>数组是如何实现根据下标随机访问数组元素的吗？</h3><p>我们拿一个长度为 10 的 int 类型的数组 int[] a &#x3D; new int[10]来举例。在我画的这个图中，计算机给数组 a[10]，分配了一块连续内存空间 1000～1039，其中，内存块的首地址为 base_address &#x3D; 1000。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210324230955.jpeg" alt="img"></p>
+<p>我们知道，计算机会给每个内存单元分配一个地址，计算机通过地址来访问内存中的数据。当计算机需要随机访问数组中的某个元素时，它会首先通过下面的寻址公式，计算出该元素存储的内存地址：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a[i]_address = base_address + i * data_type_size</span><br></pre></td></tr></table></figure>
+
+<p>其中 data_type_size 表示数组中每个元素的大小。我们举的这个例子里，数组中存储的是 int 类型数据，所以 data_type_size 就为 4 个字节。</p>
+<h2 id="容器和数组该如何选择？"><a href="#容器和数组该如何选择？" class="headerlink" title="容器和数组该如何选择？"></a>容器和数组该如何选择？</h2><ol>
+<li>Java ArrayList 无法存储基本类型，比如 int、long，需要封装为 Integer、Long 类，而 Autoboxing、Unboxing 则有一定的性能消耗，所以如果特别关注性能，或者希望使用基本类型，就可以选用数组。</li>
+<li>如果数据大小事先已知，并且对数据的操作非常简单，用不到 ArrayList 提供的大部分方法，也可以直接使用数组。</li>
+<li>还有一个是我个人的喜好，当要表示多维数组时，用数组往往会更加直观。比如 Object[][] array；而用容器的话则需要这样定义：ArrayList&lt;ArrayList&lt;object&gt;&gt; array。</li>
+</ol>
+<p>总结一下，对于业务开发，直接使用容器就足够了，省时省力。毕竟损耗一丢丢性能，完全不会影响到系统整体的性能。但如果你是做一些非常底层的开发，比如开发网络框架，性能的优化需要做到极致，这个时候数组就会优于容器，成为首选。</p>
+<h2 id="为什么数组要从-0-开始编号？"><a href="#为什么数组要从-0-开始编号？" class="headerlink" title="为什么数组要从 0 开始编号？"></a>为什么数组要从 0 开始编号？</h2><p>从数组存储的内存模型上来看，“下标”最确切的定义应该是“偏移（offset）”。前面也讲到，如果用 a 来表示数组的首地址，a[0]就是偏移为 0 的位置，也就是首地址，a[k]就表示偏移 k 个 type_size 的位置，所以计算 a[k]的内存地址只需要用这个公式：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a[k]_address = base_address + k * type_size</span><br></pre></td></tr></table></figure>
+
+<p>但是，如果数组从 1 开始计数，那我们计算数组元素 a[k]的内存地址就会变为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a[k]_address = base_address + (k<span class="number">-1</span>) * type_size</span><br></pre></td></tr></table></figure>
+
+<p>对比两个公式，我们不难发现，从 1 开始编号，每次随机访问数组元素都多了一次减法运算，对于 CPU 来说，就是多了一次减法指令。</p>
+<p>数组作为非常基础的数据结构，通过下标随机访问数组元素又是其非常基础的编程操作，效率的优化就要尽可能做到极致。所以为了减少一次减法操作，数组选择了从 0 开始编号，而不是从 1 开始。</p>
+<p>不过我认为，上面解释得再多其实都算不上压倒性的证明，说数组起始编号非 0 开始不可。所以我觉得最主要的原因可能是历史原因。</p>
+<p>C 语言设计者用 0 开始计数数组下标，之后的 Java、JavaScript 等高级语言都效仿了 C 语言，或者说，为了在一定程度上减少 C 语言程序员学习 Java 的学习成本，因此继续沿用了从 0 开始计数的习惯。实际上，很多语言中数组也并不是从 0 开始计数的，比如 Matlab。甚至还有一些语言支持负数下标，比如 Python。</p>
+<h2 id="课后思考"><a href="#课后思考" class="headerlink" title="课后思考"></a>课后思考</h2><p>1.前面我基于数组的原理引出 JVM 的标记清除垃圾回收算法的核心理念。我不知道你是否使用 Java 语言，理解 JVM，如果你熟悉，可以在评论区回顾下你理解的标记清除垃圾回收算法。</p>
+<blockquote>
+<p>分为“标记”和“清除”两个阶段：首先标记出所有需要回收的对象，在标记完成后，统一回收掉所有被标记的对象，也可以反过来，标记存活的对象，统一回收所有未被标记的对象。</p>
+<p>大多数主流虚拟机采用可达性分析算法来判断对象是否存活，在标记阶段，会遍历所有 GC ROOTS，将所有 GC ROOTS 可达的对象标记为存活。</p>
+<p>缺点主要有两个：1. 执行效率不稳定，如果Java堆中包含大量对象，而且其中大部分是需要被回收的，这时必须进行大量标记和清除的动作，导致标记和清除两个过程的执行效率都随对象数量增长而降低；2. 内存碎片化问题，标记、清除之后会产生大量不连续的内存碎片，空间碎片太多可能会导致当以后在程序运行过程中需要分配较大对象时无法找到足够的连续内存而不得不提前触发一次垃圾回收动作。</p>
+</blockquote>
+<p>2.前面我们讲到一维数组的内存寻址公式，那你可以思考一下，类比一下，二维数组的内存寻址公式是怎样的呢？</p>
+<blockquote>
+<p>二维数组内存寻址：</p>
+<p>对于 m * n 的数组，a [i][j] (i &lt; m, j &lt; n)的地址为：</p>
+<p><code>address = base_address + ( i * n + j) * type_size</code></p>
+</blockquote>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/12ec85d7.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-study/数据结构与算法之美/每周打卡/3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1236,130 +1361,6 @@
 
 
   
-    <article id="post-algorithm/你需要了解这 14 种编程面试模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/d9dc84f3.html" target="_blank">你需要了解这14种编程面试模式</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/d9dc84f3.html" class="archive-article-date">
-        <time datetime="2021-02-25T01:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-25</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <hr>
-<p>作者：Fahim ul Haq</p>
-<p>机器之心编译</p>
-<p>参与：Panda</p>
-<h1 id="解题套路"><a href="#解题套路" class="headerlink" title="解题套路"></a>解题套路</h1><p>咱们在面试程序员岗位时往往需要经历一个编程面试过程，雇主会借此考验面试者的技术实力。</p>
-<p>然而，这些技术问题有时候却和我们的实际工作并无太大关系，也由此可能给我们的编程面试准备阶段带来很大的压力。</p>
-<p>曾在 Facebook 和微软工作过的 Educative.io 创始人 Fahim ul Haq 近日发文总结了编程面试所遇到的问题的 14 种最常见的模式，也许能帮你看清各种编程面试问题「背后的真相」。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210225100733.png" alt="图片"></p>
-<p>对很多开发者来说，编程工作的面试准备很容易让人焦虑。面试要涉及的东西实在太多，其中很多还往往与开发者的日常工作无关，只会额外增添压力。</p>
-<p>这种现状导致了一个后果：现在的开发者往往需要花费数周时间在 LeetCode 等网站上了解综合数百个问题。</p>
-<p>与我谈过的开发者在面试前的一个常见焦虑问题是：<strong>我是否已经解决过足够多的实际问题？我本可以做到更多吗？</strong></p>
-<p>这就是我想要帮助开发者了解每个问题背后的底层模式的原因——这样他们就不必担忧解决数百个问题以及被 LeetCode 整得疲惫不堪了。</p>
-<p>如果你理解面试的通用模式，你就可以将其用作模板，从而解决各种层级的稍有不同的问题。</p>
-<p>这里我将列出最常见的 14 种模式，它们可被用于解决任何编程面试问题。</p>
-<p>另外我还会说明如何识别每种模式，并会为每种模式提供一些问题示例。</p>
-<p>这些内容都只是蜻蜓点水——<strong>我强烈建议你看看课程《Grokking the Coding Interview: Patterns for Coding Questions》，里面提供了全面的解释、示例和编程实践</strong>。</p>
-<p>下面的模式说明假设你已经知悉了数据结构。如果你还不了解，那需要补充一下知识点哦。</p>
-<p>我们今天将说明以下 14 种模式：</p>
-<blockquote>
-<ul>
-<li>1．滑动窗口</li>
-<li>2．二指针或迭代器</li>
-<li>3．快速和慢速指针或迭代器</li>
-<li>4．合并区间</li>
-<li>5．循环排序</li>
-<li>6．原地反转链表</li>
-<li>7．树的宽度优先搜索（Tree BFS）</li>
-<li>8．树的深度优先搜索（Tree DFS）</li>
-<li>9．Two Heaps</li>
-<li>10．子集</li>
-<li>11．经过修改的二叉搜索</li>
-<li>12．前 K 个元素</li>
-<li>13．K 路合并</li>
-<li>14．拓扑排序</li>
-</ul>
-</blockquote>
-<p>我们开始吧！</p>
-    
-    <a class="article-more-a" href="/posts/d9dc84f3.html#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/d9dc84f3.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
@@ -1525,11 +1526,31 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">面试题</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">enligsh learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">盈透开户</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">美港股开户</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">盈立证券</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1545,11 +1566,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">面试题</a>
+                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1558,14 +1579,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1589,15 +1602,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">盈立证券</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">美港股开户</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">盈透开户</a>
+                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1614,10 +1619,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
               </li>
             
             <div class="clearfix"></div>
