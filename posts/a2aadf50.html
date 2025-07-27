@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d28940001004e04560316.jpg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d28b100011c7a06470481.jpg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d28d90001c3c507320566.jpg">
-<meta property="og:image" content="https://img3.sycdn.imooc.com/618d28f90001dd9205030256.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1753618202.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d29440001b49909960994.jpg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d297100012b8303820732.jpg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d299700012be907320478.jpg">
@@ -47,10 +47,10 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d2ae90001d7d505120257.jpg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d2afc00015a1808000549.jpg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d2b1e0001dedc09140761.jpg">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d2f7100013d8503780236.jpg">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d2f8200019e2805120246.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1753618224.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1753618226.jpg">
 <meta property="article:published_time" content="2022-05-24T12:52:00.000Z">
-<meta property="article:modified_time" content="2025-03-08T14:46:55.113Z">
+<meta property="article:modified_time" content="2025-07-27T12:10:55.844Z">
 <meta property="article:author" content="Elfred">
 <meta property="article:tag" content="面经">
 <meta property="article:tag" content="redis">
@@ -323,7 +323,7 @@
 <p>一个 Redis Cluster包含16384（0~16383）个哈希槽，存储在Redis Cluster中的所有键都会被映射到这些slot中。</p>
 <p>集群中的每个键都属于这16384个哈希槽中的一个，集群使用公式slot&#x3D;CRC16（key）&#x2F;16384来计算key属于哪个槽，其中CRC16(key)语句用于计算key的CRC16 校验和。</p>
 <p>按照槽来进行分片，通过为每个节点指派不同数量的槽，可以控制不同节点负责的数据量和请求数。</p>
-<h2 id="3-集群元数据的一致性"><a href="#3-集群元数据的一致性" class="headerlink" title="3 集群元数据的一致性"></a>3 集群元数据的一致性</h2><h3 id="3-1-对比：集中式存储元数据"><a href="#3-1-对比：集中式存储元数据" class="headerlink" title="3.1 对比：集中式存储元数据"></a>3.1 对比：集中式存储元数据</h3><p><img src="https://img3.sycdn.imooc.com/618d28f90001dd9205030256.jpg" alt="https://img3.sycdn.imooc.com/618d28f90001dd9205030256.jpg"></p>
+<h2 id="3-集群元数据的一致性"><a href="#3-集群元数据的一致性" class="headerlink" title="3 集群元数据的一致性"></a>3 集群元数据的一致性</h2><h3 id="3-1-对比：集中式存储元数据"><a href="#3-1-对比：集中式存储元数据" class="headerlink" title="3.1 对比：集中式存储元数据"></a>3.1 对比：集中式存储元数据</h3><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1753618202.png" alt="yifan-online.com"></p>
 <p>依赖外部的集中式存储服务，比如：zookeeper, etcd等，会增加运维负担和系统复杂度。</p>
 <p>集中式的好处在于，元数据的读取和更新，时效性非常好，一旦元数据出现了变更，就立即更新到集中式的存储中，其它节点读取的时候就可以感知到；不好在于，所有的元数据的更新压力全部集中在一个地方，可能会导致元数据的存储有压力。</p>
 <h3 id="3-2-gossip-协议来广播自己的状态以及自己对整个集群认知的改变"><a href="#3-2-gossip-协议来广播自己的状态以及自己对整个集群认知的改变" class="headerlink" title="3.2 gossip 协议来广播自己的状态以及自己对整个集群认知的改变"></a>3.2 gossip 协议来广播自己的状态以及自己对整个集群认知的改变</h3><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d29440001b49909960994.jpg"></p>
@@ -435,9 +435,9 @@
 <p>这个选择的方法也特别简单，但是需要开发一套系统来支持。</p>
 <p>那么这套系统的开发工作就落在了地球人最聪明的程序员你的头上。</p>
 <p>开发好了可以让自己以及家人获得豁免权而生存下来，开发的不好，直接咔嚓。</p>
-<h3 id="这个选择的描述如下"><a href="#这个选择的描述如下" class="headerlink" title="这个选择的描述如下"></a>这个选择的描述如下</h3><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d2f7100013d8503780236.jpg" alt="https://img3.sycdn.imooc.com/618d2f7100013d8503780236.jpg"></p>
+<h3 id="这个选择的描述如下"><a href="#这个选择的描述如下" class="headerlink" title="这个选择的描述如下"></a>这个选择的描述如下</h3><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1753618224.jpg" alt="https://img3.sycdn.imooc.com/618d2f7100013d8503780236.jpg"></p>
 <p>全球有一个三体人的灯球，默认是熄灭状态。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d2f8200019e2805120246.jpg" alt="https://img3.sycdn.imooc.com/618d2f8200019e2805120246.jpg"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1753618226.jpg" alt="https://img3.sycdn.imooc.com/618d2f8200019e2805120246.jpg"></p>
 <p>每个人会有一个三体人的开关，上面会显示当前灯球的状态(熄灭或者亮起)，有两个操作按钮，分别是控制灯球的熄灭和亮起。每个人只有一次选择机会，两个按钮只能选择一个按钮，按一次。如果一个按钮都不选择，不按的话，无论灯球最终状态如何，都是要被消灭。小孩子或者老人、残疾人，可以由监护人来辅助其完成选择。</p>
 <h3 id="系统实现的前提条件和需求"><a href="#系统实现的前提条件和需求" class="headerlink" title="系统实现的前提条件和需求"></a>系统实现的前提条件和需求</h3><p><strong>前提条件说明</strong></p>
 <p>1 全球80亿人口，必须同时在1分钟时间内完成选择（三体人的开关，全球实时状态同步，无时间偏差，无时延），规定时间范围之外无法操作；</p>
@@ -787,11 +787,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面经</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -807,19 +803,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">面试题</a>
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -827,11 +811,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
+                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+                <a href="javascript:void(0)" class="js-tag color4">面试题</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面经</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -847,15 +835,19 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">快速复习指南</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -871,7 +863,23 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">快速复习指南</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">限流算法原理及实现</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -883,19 +891,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">数据结构与算法之美</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
               </li>
             
             <div class="clearfix"></div>

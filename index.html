@@ -220,6 +220,204 @@
             
 
   
+    <article id="post-internet/对比MySQL索引跟ES倒排索引" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>在<strong>大量模糊查询</strong>的场景下（尤其是中缀模糊匹配如 <code>%搜索词%</code>），传统数据库索引（如B+树）通常<strong>力不从心</strong>，而<strong>倒排索引</strong>（或其升级版）是更优的选择。以下是详细分析和解决方案：</p>
+<hr>
+<h3 id="一、数据库索引的模糊匹配能力"><a href="#一、数据库索引的模糊匹配能力" class="headerlink" title="一、数据库索引的模糊匹配能力"></a>一、数据库索引的模糊匹配能力</h3><h4 id="1-支持的模糊查询类型"><a href="#1-支持的模糊查询类型" class="headerlink" title="1. 支持的模糊查询类型"></a>1. <strong>支持的模糊查询类型</strong></h4><table>
+<thead>
+<tr>
+<th>查询模式</th>
+<th>B+树索引是否高效</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>前缀搜索</code></td>
+<td>✅ 高效</td>
+<td><code>张%</code> 可利用索引有序性</td>
+</tr>
+<tr>
+<td><code>后缀搜索</code></td>
+<td>❌ 低效</td>
+<td><code>%明</code> 需全表扫描</td>
+</tr>
+<tr>
+<td><code>中缀模糊匹配</code></td>
+<td>❌ 极低效</td>
+<td><code>%搜%引%</code> 全表逐行匹配</td>
+</tr>
+<tr>
+<td><code>固定长度模糊匹配</code></td>
+<td>⚠️ 部分有效</td>
+<td><code>张_明</code> 可用索引但限制大</td>
+</tr>
+</tbody></table>
+<h4 id="2-性能陷阱示例"><a href="#2-性能陷阱示例" class="headerlink" title="2. 性能陷阱示例"></a>2. <strong>性能陷阱示例</strong></h4>   <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 即使有name索引，以下查询仍触发全表扫描（耗时&gt;10秒，百万数据）</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> name <span class="keyword">LIKE</span> <span class="string">&#x27;%小明%&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="二、高性能模糊搜索方案推荐"><a href="#二、高性能模糊搜索方案推荐" class="headerlink" title="二、高性能模糊搜索方案推荐"></a>二、高性能模糊搜索方案推荐</h3><h4 id="✅-首选方案：倒排索引搜索引擎"><a href="#✅-首选方案：倒排索引搜索引擎" class="headerlink" title="✅ 首选方案：倒排索引搜索引擎"></a>✅ <strong>首选方案：倒排索引搜索引擎</strong></h4><ul>
+<li><strong>代表技术</strong>：Elasticsearch &#x2F; Apache Solr</li>
+<li><strong>核心优势</strong>：<ul>
+<li><strong>通配符优化</strong>：内部将 <code>*搜索*</code> 转化为多词组合查询</li>
+<li><strong>边缘N-Gram分词</strong>：自动生成 <code>搜 -&gt; 搜索 -&gt; 索引</code> 等变体</li>
+<li><strong>BM25排序</strong>：相关度智能排序</li>
+</ul>
+</li>
+</ul>
+<p><strong>性能对比</strong>（百万数据）：</p>
+<table>
+<thead>
+<tr>
+<th>查询类型</th>
+<th>MySQL耗时</th>
+<th>Elasticsearch耗时</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>%数据库%</code></td>
+<td>4200ms</td>
+<td>23ms</td>
+</tr>
+<tr>
+<td><code>张%</code></td>
+<td>8ms</td>
+<td>5ms</td>
+</tr>
+<tr>
+<td><code>%工程师</code></td>
+<td>3800ms</td>
+<td>28ms</td>
+</tr>
+</tbody></table>
+<h4 id="✅-次选方案：数据库专用索引"><a href="#✅-次选方案：数据库专用索引" class="headerlink" title="✅ 次选方案：数据库专用索引"></a>✅ <strong>次选方案：数据库专用索引</strong></h4><ul>
+<li><strong>适用场景</strong>：轻度模糊查询，且无法引入新组件</li>
+<li><strong>技术手段</strong>：<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- PostgreSQL的trigram扩展</span></span><br><span class="line"><span class="keyword">CREATE</span> EXTENSION pg_trgm;</span><br><span class="line"><span class="keyword">CREATE</span> INDEX idx_name_trgm <span class="keyword">ON</span> users <span class="keyword">USING</span> gin(name gin_trgm_ops);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查询优化</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> name <span class="keyword">LIKE</span> <span class="string">&#x27;%小明%&#x27;</span>; <span class="comment">-- 命中索引</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>限制</strong>：<ul>
+<li>索引体积膨胀3-5倍</li>
+<li>仅支持 <code>LIKE</code>，不支持正则表达式等高级搜索</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="三、决策树：如何选择技术方案？"><a href="#三、决策树：如何选择技术方案？" class="headerlink" title="三、决策树：如何选择技术方案？"></a>三、决策树：如何选择技术方案？</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    A[是否高频中缀模糊查询？] --&gt;|是| B[是否接受新组件？]</span><br><span class="line">    A --&gt;|否| C[数据库前缀索引]</span><br><span class="line">    B --&gt;|是| D[Elasticsearch/Solr]</span><br><span class="line">    B --&gt;|否| E[数据库专用索引&lt;br&gt;(pg_trgm/Full-Text)]</span><br><span class="line">    D --&gt; F[支持：通配符/正则/语义搜索]</span><br><span class="line">    E --&gt; G[支持：基本LIKE/分词搜索]</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="四、极端场景下的黑科技"><a href="#四、极端场景下的黑科技" class="headerlink" title="四、极端场景下的黑科技"></a>四、极端场景下的黑科技</h3><ol>
+<li><p><strong>向量化模糊搜索（SIMD优化）</strong></p>
+<ul>
+<li><strong>原理</strong>：用AVX512指令并行比较64字节文本块</li>
+<li><strong>开源实现</strong>：<a target="_blank" rel="noopener" href="https://github.com/simdjson/simdjson%EF%BC%88JSON%E8%A7%A3%E6%9E%90%E4%B8%AD%E7%9A%84%E6%A8%A1%E7%B3%8A%E5%8C%B9%E9%85%8D%E5%8A%A0%E9%80%9F%EF%BC%89">https://github.com/simdjson/simdjson（JSON解析中的模糊匹配加速）</a></li>
+</ul>
+</li>
+<li><p><strong>确定性有穷自动机（DFA）</strong></p>
+<ul>
+<li><strong>适用场景</strong>：固定模式模糊匹配（如<code>139****1234</code>）</li>
+<li><strong>实现代码</strong>：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ahocorasick</span><br><span class="line">automaton = ahocorasick.Automaton()</span><br><span class="line"><span class="keyword">for</span> pattern <span class="keyword">in</span> [<span class="string">&#x27;%apple%&#x27;</span>, <span class="string">&#x27;%banana%&#x27;</span>]:</span><br><span class="line">    automaton.add_word(pattern.strip(<span class="string">&#x27;%&#x27;</span>), pattern)</span><br><span class="line">automaton.make_automaton()</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="五、各方案成本对比"><a href="#五、各方案成本对比" class="headerlink" title="五、各方案成本对比"></a>五、各方案成本对比</h3><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>开发成本</th>
+<th>维护成本</th>
+<th>硬件消耗</th>
+<th>查询延迟</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据库LIKE全扫</td>
+<td>★☆☆</td>
+<td>★☆☆</td>
+<td>★★★★</td>
+<td>秒级</td>
+</tr>
+<tr>
+<td>数据库trigram索引</td>
+<td>★★☆</td>
+<td>★★☆</td>
+<td>★★★☆</td>
+<td>10-100ms</td>
+</tr>
+<tr>
+<td>Elasticsearch</td>
+<td>★★★☆</td>
+<td>★★★☆</td>
+<td>★★☆</td>
+<td>5-50ms</td>
+</tr>
+<tr>
+<td>定制化DFA&#x2F;SIMD方案</td>
+<td>★★★★☆</td>
+<td>★★★★☆</td>
+<td>★☆☆</td>
+<td>&lt;1ms（内存中）</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="总结建议"><a href="#总结建议" class="headerlink" title="总结建议"></a>总结建议</h3><ol>
+<li><strong>高频复杂模糊查询</strong>：<strong>Elasticsearch&#x2F;Solr</strong>是生产环境首选，通配符性能是数据库的 <strong>100倍以上</strong></li>
+<li><strong>轻度模糊查询</strong>：<ul>
+<li>PostgreSQL用 <strong><code>pg_trgm</code></strong></li>
+<li>MySQL 8.0+ 用 <strong><code>ngram Full-Text</code>索引</strong></li>
+</ul>
+</li>
+<li><strong>超低延迟需求</strong>：开发 <strong>基于SIMD+DFA的定制化引擎</strong>（仅在内存充足时有效）</li>
+</ol>
+<blockquote>
+<p>📌 <strong>紧急避坑提示</strong>：<br><strong>切勿</strong>在数据库无索引时直接跑 <code>%xxx%</code>！<br><strong>切勿</strong>在ES中使用前导通配符 <code>*xxx</code>（性能杀手）！</p>
+</blockquote>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/0.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-interview/快速复习指南" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -505,11 +703,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
         		</li>
       		
 		</ul>
@@ -520,102 +718,6 @@
     
     <p class="article-more-link">
       <a class="article-more-a" href="/posts/5dd00982.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-internet/DESIGN" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/ec3caae2.html" target="_blank">系统设计面试题</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/ec3caae2.html" class="archive-article-date">
-        <time datetime="2022-05-21T03:24:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-21</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <hr>
-    
-    <a class="article-more-a" href="/posts/ec3caae2.html#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">系统设计</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">面试题</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/ec3caae2.html">展开全文 >></a>
     </p>
     
 
@@ -675,6 +777,7 @@
   <div class="article-entry" itemprop="articleBody">
     
     <hr>
+<!--fork from https://github.com/idaSmilence/javaDesign-->
     
     <a class="article-more-a" href="/posts/d64d980f.html#more">more >></a>
     
@@ -693,11 +796,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">面试题</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">面试题</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -712,6 +815,103 @@
     
     <p class="article-more-link">
       <a class="article-more-a" href="/posts/d64d980f.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-internet/DESIGN" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/ec3caae2.html" target="_blank">系统设计面试题</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/ec3caae2.html" class="archive-article-date">
+        <time datetime="2022-05-21T03:24:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-21</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <hr>
+<!--fork from https://github.com/idaSmilence/javaDesign-->
+    
+    <a class="article-more-a" href="/posts/ec3caae2.html#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">面试题</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">系统设计</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/ec3caae2.html">展开全文 >></a>
     </p>
     
 
@@ -1137,102 +1337,6 @@
 
 
   
-    <article id="post-study/数据结构与算法之美/学习笔记/13讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/ae7f3bb.html" target="_blank">13讲</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/ae7f3bb.html" class="archive-article-date">
-        <time datetime="2021-08-09T00:33:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-09</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <hr>
-<h1 id="13-线性排序：如何根据年龄给100万用户数据排序？"><a href="#13-线性排序：如何根据年龄给100万用户数据排序？" class="headerlink" title="13 | 线性排序：如何根据年龄给100万用户数据排序？"></a>13 | 线性排序：如何根据年龄给100万用户数据排序？</h1><h2 id="桶排序（Bucket-sort）"><a href="#桶排序（Bucket-sort）" class="headerlink" title="桶排序（Bucket sort）"></a>桶排序（Bucket sort）</h2><p>首先，我们来看桶排序。桶排序，顾名思义，会用到“桶”，核心思想是将要排序的数据分到几个有序的桶里，每个桶里的数据再单独进行排序。桶内排完序之后，再把每个桶里的数据按照顺序依次取出，组成的序列就是有序的了。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210809083534.jpeg" alt="img"></p>
-<p>桶排序的时间复杂度为什么是 O(n) 呢？我们一块儿来分析一下。</p>
-<p>如果要排序的数据有 n 个，我们把它们均匀地划分到 m 个桶内，每个桶里就有 k&#x3D;n&#x2F;m 个元素。每个桶内部使用快速排序，时间复杂度为 O(k * logk)。m 个桶排序的时间复杂度就是 O(m * k * logk)，因为 k&#x3D;n&#x2F;m，所以整个桶排序的时间复杂度就是 O(n*log(n&#x2F;m))。当桶的个数 m 接近数据个数 n 时，log(n&#x2F;m) 就是一个非常小的常量，这个时候桶排序的时间复杂度接近 O(n)。</p>
-    
-    <a class="article-more-a" href="/posts/ae7f3bb.html#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/ae7f3bb.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1366,11 +1470,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面经</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1386,19 +1486,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">面试题</a>
+                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1406,11 +1494,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
+                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+                <a href="javascript:void(0)" class="js-tag color4">面试题</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面经</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1426,15 +1518,19 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">快速复习指南</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1450,7 +1546,23 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">快速复习指南</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">限流算法原理及实现</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1462,19 +1574,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DDD</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">数据结构与算法之美</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">每周打卡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Jhipster</a>
               </li>
             
             <div class="clearfix"></div>
