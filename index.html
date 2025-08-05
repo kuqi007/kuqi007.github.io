@@ -220,158 +220,994 @@
             
 
   
-    <article id="post-internet/对比MySQL索引跟ES倒排索引" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-internet/再有人问你Java内存模型是什么，就把这篇文章发给他。" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
   <div class="article-entry" itemprop="articleBody">
     
-    <p>在<strong>大量模糊查询</strong>的场景下（尤其是中缀模糊匹配如 <code>%搜索词%</code>），传统数据库索引（如B+树）通常<strong>力不从心</strong>，而<strong>倒排索引</strong>（或其升级版）是更优的选择。以下是详细分析和解决方案：</p>
-<hr>
-<h3 id="一、数据库索引的模糊匹配能力"><a href="#一、数据库索引的模糊匹配能力" class="headerlink" title="一、数据库索引的模糊匹配能力"></a>一、数据库索引的模糊匹配能力</h3><h4 id="1-支持的模糊查询类型"><a href="#1-支持的模糊查询类型" class="headerlink" title="1. 支持的模糊查询类型"></a>1. <strong>支持的模糊查询类型</strong></h4><table>
-<thead>
-<tr>
-<th>查询模式</th>
-<th>B+树索引是否高效</th>
-<th>原因</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>前缀搜索</code></td>
-<td>✅ 高效</td>
-<td><code>张%</code> 可利用索引有序性</td>
-</tr>
-<tr>
-<td><code>后缀搜索</code></td>
-<td>❌ 低效</td>
-<td><code>%明</code> 需全表扫描</td>
-</tr>
-<tr>
-<td><code>中缀模糊匹配</code></td>
-<td>❌ 极低效</td>
-<td><code>%搜%引%</code> 全表逐行匹配</td>
-</tr>
-<tr>
-<td><code>固定长度模糊匹配</code></td>
-<td>⚠️ 部分有效</td>
-<td><code>张_明</code> 可用索引但限制大</td>
-</tr>
-</tbody></table>
-<h4 id="2-性能陷阱示例"><a href="#2-性能陷阱示例" class="headerlink" title="2. 性能陷阱示例"></a>2. <strong>性能陷阱示例</strong></h4>   <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 即使有name索引，以下查询仍触发全表扫描（耗时&gt;10秒，百万数据）</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> name <span class="keyword">LIKE</span> <span class="string">&#x27;%小明%&#x27;</span>;</span><br></pre></td></tr></table></figure>
+    <p>前几天，发了一篇文章，介绍了一下<a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzI3NzE0NjcwMg==&mid=2650121579&idx=1&sn=373fb812e6ff056b2e5b41cc46968cc9&chksm=f36bb84ac41c315cb7c3e9d7e99b68bee7b2ac2dc8a6ed7e4a5829c5f2434ffa08e9eb14d40f&scene=21#wechat_redirect">JVM内存结构、Java内存模型以及Java对象模型之间的区别</a>。有很多小伙伴反馈希望可以深入的讲解下每个知识点。Java内存模型，是这三个知识点当中最晦涩难懂的一个，而且涉及到很多背景知识和相关知识。</p>
+<p>网上有很多关于Java内存模型的文章，在《深入理解Java虚拟机》和《Java并发编程的艺术》等书中也都有关于这个知识点的介绍。但是，很多人读完之后还是搞不清楚，甚至有的人说自己更懵了。本文，就来整体的介绍一下Java内存模型，目的很简单，让你读完本文以后，就知道到底Java内存模型是什么，为什么要有Java内存模型，Java内存模型解决了什么问题等。</p>
+<p>本文中，有很多定义和说法，都是笔者自己理解后定义出来的。希望能够让读者可以对Java内存模型有更加清晰的认识。当然，如有偏颇，欢迎指正。</p>
+<h2 id="为什么要有内存模型"><a href="#为什么要有内存模型" class="headerlink" title="为什么要有内存模型"></a>为什么要有内存模型</h2><p>在介绍Java内存模型之前，先来看一下到底什么是计算机内存模型，然后再来看Java内存模型在计算机内存模型的基础上做了哪些事情。要说计算机的内存模型，就要说一下一段古老的历史，看一下为什么要有内存模型。</p>
+<p><strong>内存模型，英文名Memory Model，他是一个很老的老古董了。他是与计算机硬件有关的一个概念。那么我先给你介绍下他和硬件到底有啥关系。</strong></p>
+<h3 id="CPU和缓存一致性"><a href="#CPU和缓存一致性" class="headerlink" title="CPU和缓存一致性"></a>CPU和缓存一致性</h3><p>我们应该都知道，计算机在执行程序的时候，每条指令都是在CPU中执行的，而执行的时候，又免不了要和数据打交道。而计算机上面的数据，是存放在主存当中的，也就是计算机的物理内存啦。</p>
+<p>刚开始，还相安无事的，但是随着CPU技术的发展，CPU的执行速度越来越快。而由于内存的技术并没有太大的变化，所以从内存中读取和写入数据的过程和CPU的执行速度比起来差距就会越来越大,这就导致CPU每次操作内存都要耗费很多等待时间。</p>
+<blockquote>
+<p>这就像一家创业公司，刚开始，创始人和员工之间工作关系其乐融融，但是随着创始人的能力和野心越来越大，逐渐和员工之间出现了差距，普通员工原来越跟不上CEO的脚步。老板的每一个命令，传到到基层员工之后，由于基层员工的理解能力、执行能力的欠缺，就会耗费很多时间。这也就无形中拖慢了整家公司的工作效率。</p>
+</blockquote>
+<p>可是，不能因为内存的读写速度慢，就不发展CPU技术了吧，总不能让内存成为计算机处理的瓶颈吧。</p>
+<p>所以，人们想出来了一个好的办法，就是在CPU和内存之间增加高速缓存。缓存的概念大家都知道，就是保存一份数据拷贝。他的特点是速度快，内存小，并且昂贵。</p>
+<p>那么，程序的执行过程就变成了：</p>
+<p><strong>当程序在运行过程中，会将运算需要的数据从主存复制一份到CPU的高速缓存当中，那么CPU进行计算时就可以直接从它的高速缓存读取数据和向其中写入数据，当运算结束之后，再将高速缓存中的数据刷新到主存当中。</strong></p>
+<blockquote>
+<p>之后，这家公司开始设立中层管理人员，管理人员直接归CEO领导，领导有什么指示，直接告诉管理人员，然后就可以去做自己的事情了。管理人员负责去协调底层员工的工作。因为管理人员是了解手下的人员以及自己负责的事情的。所以，大多数时候，公司的各种决策，通知等，CEO只要和管理人员之间沟通就够了。</p>
+</blockquote>
+<p>而随着CPU能力的不断提升，一层缓存就慢慢的无法满足要求了，就逐渐的衍生出多级缓存。</p>
+<p>按照数据读取顺序和与CPU结合的紧密程度，CPU缓存可以分为一级缓存（L1），二级缓存（L3），部分高端CPU还具有三级缓存（L3），每一级缓存中所储存的全部数据都是下一级缓存的一部分。</p>
+<p>这三种缓存的技术难度和制造成本是相对递减的，所以其容量也是相对递增的。</p>
+<p>那么，在有了多级缓存之后，程序的执行就变成了：</p>
+<p><strong>当CPU要读取一个数据时，首先从一级缓存中查找，如果没有找到再从二级缓存中查找，如果还是没有就从三级缓存或内存中查找。</strong></p>
+<blockquote>
+<p>随着公司越来越大，老板要管的事情越来越多，公司的管理部门开始改革，开始出现高层，中层，底层等管理者。一级一级之间逐层管理。</p>
+</blockquote>
+<p>单核CPU只含有一套L1，L2，L3缓存；</p>
+<p>如果CPU含有多个核心，即多核CPU，则每个核心都含有一套L1（甚至和L2）缓存，而共享L3（或者和L2）缓存。</p>
+<blockquote>
+<p>公司也分很多种，有些公司只有一个大Boss，他一个人说了算。但是有些公司有比如联席总经理、合伙人等机制。</p>
+<p>单核CPU就像一家公司只有一个老板，所有命令都来自于他，那么就只需要一套管理班底就够了。</p>
+<p>多核CPU就像一家公司是由多个合伙人共同创办的，那么，就需要给每个合伙人都设立一套供自己直接领导的高层管理人员，多个合伙人共享使用的是公司的底层员工。</p>
+<p>还有的公司，不断壮大，开始差分出各个子公司。各个子公司就是多个CPU了，互相之前没有共用的资源。互不影响。</p>
+</blockquote>
+<p>下图为一个单CPU双核的缓存结构。</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/6fuT3emWI5L2ia8pMCBIIMcJS5mdJUl6qbVptr1SL2RchPZB8opYbGz1A465IJmufub0NCHo0Pa3koVDQAvqGtA/640?randomid=deza0d2h&tp=webp&wxfrom=5&wx_lazy=1" alt="图片"></p>
+<p>随着计算机能力不断提升，开始支持多线程。那么问题就来了。我们分别来分析下单线程、多线程在单核CPU、多核CPU中的影响。</p>
+<p><strong>单线程。</strong>cpu核心的缓存只被一个线程访问。缓存独占，不会出现访问冲突等问题。</p>
+<p><strong>单核CPU，多线程。</strong>进程中的多个线程会同时访问进程中的共享数据，CPU将某块内存加载到缓存后，不同线程在访问相同的物理地址的时候，都会映射到相同的缓存位置，这样即使发生线程的切换，缓存仍然不会失效。但由于任何时刻只能有一个线程在执行，因此不会出现缓存访问冲突。</p>
+<p><strong>多核CPU，多线程。</strong>每个核都至少有一个L1 缓存。多个线程访问进程中的某个共享内存，且这多个线程分别在不同的核心上执行，则每个核心都会在各自的caehe中保留一份共享内存的缓冲。由于多核是可以并行的，可能会出现多个线程同时写各自的缓存的情况，而各自的cache之间的数据就有可能不同。</p>
+<p>在CPU和主存之间增加缓存，在多线程场景下就可能存在<strong>缓存一致性问题</strong>，也就是说，在多核CPU中，每个核的自己的缓存中，关于同一个数据的缓存内容可能不一致。</p>
+<blockquote>
+<p>如果这家公司的命令都是串行下发的话，那么就没有任何问题。</p>
+<p>如果这家公司的命令都是并行下发的话，并且这些命令都是由同一个CEO下发的，这种机制是也没有什么问题。因为他的命令执行者只有一套管理体系。</p>
+<p>如果这家公司的命令都是并行下发的话，并且这些命令是由多个合伙人下发的，这就有问题了。因为每个合伙人只会把命令下达给自己直属的管理人员，而多个管理人员管理的底层员工可能是公用的。</p>
+<p>比如，合伙人1要辞退员工a，合伙人2要给员工a升职，升职后的话他再被辞退需要多个合伙人开会决议。两个合伙人分别把命令下发给了自己的管理人员。合伙人1命令下达后，管理人员a在辞退了员工后，他就知道这个员工被开除了。而合伙人2的管理人员2这时候在没得到消息之前，还认为员工a是在职的，他就欣然的接收了合伙人给他的升职a的命令。</p>
+</blockquote>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/6fuT3emWI5L2ia8pMCBIIMcJS5mdJUl6q0yeGmFNvrp5MmQicGwicCDVjQsE45SdqWk2T3qGVfgR4Sur5We04FJaA/640?randomid=sznp9a23&tp=webp&wxfrom=5&wx_lazy=1" alt="图片"></p>
+<h3 id="处理器优化和指令重排"><a href="#处理器优化和指令重排" class="headerlink" title="处理器优化和指令重排"></a>处理器优化和指令重排</h3><p>上面提到在在CPU和主存之间增加缓存，在多线程场景下会存在<strong>缓存一致性问题</strong>。除了这种情况，还有一种硬件问题也比较重要。那就是为了使处理器内部的运算单元能够尽量的被充分利用，处理器可能会对输入代码进行乱序执行处理。这就是<strong>处理器优化</strong>。</p>
+<p>除了现在很多流行的处理器会对代码进行优化乱序处理，很多编程语言的编译器也会有类似的优化，比如Java虚拟机的即时编译器（JIT）也会做<strong>指令重排</strong>。</p>
+<p>可想而知，如果任由处理器优化和编译器对指令重排的话，就可能导致各种各样的问题。</p>
+<blockquote>
+<p>关于员工组织调整的情况，如果允许人事部在接到多个命令后进行随意拆分乱序执行或者重排的话，那么对于这个员工以及这家公司的影响是非常大的。</p>
+</blockquote>
+<h2 id="并发编程的问题"><a href="#并发编程的问题" class="headerlink" title="并发编程的问题"></a>并发编程的问题</h2><p>前面说的和硬件有关的概念你可能听得有点蒙，还不知道他到底和软件有啥关系。但是关于并发编程的问题你应该有所了解，比如原子性问题，可见性问题和有序性问题。</p>
+<p>其实，原子性问题，可见性问题和有序性问题。是人们抽象定义出来的。而这个抽象的底层问题就是前面提到的缓存一致性问题、处理器优化问题和指令重排问题等。</p>
+<p>这里简单回顾下这三个问题，并不准备深入展开，感兴趣的读者可以自行学习。我们说，并发编程，为了保证数据的安全，需要满足以下三个特性：</p>
+<p><strong>原子性</strong>是指在一个操作中就是cpu不可以在中途暂停然后再调度，既不被中断操作，要不执行完成，要不就不执行。</p>
+<p><strong>可见性</strong>是指当多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立即看得到修改的值。</p>
+<p><strong>有序性</strong>即程序执行的顺序按照代码的先后顺序执行。</p>
+<p>有没有发现，<strong>缓存一致性问题</strong>其实就是<strong>可见性问题</strong>。而<strong>处理器优化</strong>是可以导致<strong>原子性问题</strong>的。<strong>指令重排</strong>即会导致<strong>有序性问题</strong>。所以，后文将不再提起硬件层面的那些概念，而是直接使用大家熟悉的原子性、可见性和有序性。</p>
+<h2 id="什么是内存模型"><a href="#什么是内存模型" class="headerlink" title="什么是内存模型"></a>什么是内存模型</h2><p>前面提到的，缓存一致性问题、处理器器优化的指令重排问题是硬件的不断升级导致的。那么，有没有什么机制可以很好的解决上面的这些问题呢？</p>
+<p>最简单直接的做法就是废除处理器和处理器的优化技术、废除CPU缓存，让CPU直接和主存交互。但是，这么做虽然可以保证多线程下的并发问题。但是，这就有点因噎废食了。</p>
+<p>所以，为了保证并发编程中可以满足原子性、可见性及有序性。有一个重要的概念，那就是——内存模型。</p>
+<p><strong>为了保证共享内存的正确性（可见性、有序性、原子性），内存模型定义了共享内存系统中多线程程序读写操作行为的规范。</strong>通过这些规则来规范对内存的读写操作，从而保证指令执行的正确性。它与处理器有关、与缓存有关、与并发有关、与编译器也有关。他解决了CPU多级缓存、处理器优化、指令重排等导致的内存访问问题，保证了并发场景下的一致性、原子性和有序性。</p>
+<p>内存模型解决并发问题主要采用两种方式：<strong>限制处理器优化</strong>和<strong>使用内存屏障</strong>。本文就不深入底层原理来展开介绍了，感兴趣的朋友可以自行学习。</p>
+<h2 id="什么是Java内存模型"><a href="#什么是Java内存模型" class="headerlink" title="什么是Java内存模型"></a>什么是Java内存模型</h2><p>前面介绍过了计算机内存模型，这是解决多线程场景下并发问题的一个重要规范。那么具体的实现是如何的呢，不同的编程语言，在实现上可能有所不同。</p>
+<p>我们知道，Java程序是需要运行在Java虚拟机上面的，<strong>Java内存模型（Java Memory Model ,JMM）就是一种符合内存模型规范的，屏蔽了各种硬件和操作系统的访问差异的，保证了Java程序在各种平台下对内存的访问都能保证效果一致的机制及规范。</strong></p>
+<p>提到Java内存模型，一般指的是JDK 5 开始使用的新的内存模型，主要由JSR-133: JavaTM Memory Model and Thread Specification 描述。感兴趣的可以参看下这份PDF文档（<a target="_blank" rel="noopener" href="http://www.cs.umd.edu/~pugh/java/memoryModel/jsr133.pdf%EF%BC%89">http://www.cs.umd.edu/~pugh/java/memoryModel/jsr133.pdf）</a></p>
+<p>Java内存模型规定了所有的变量都存储在主内存中，每条线程还有自己的工作内存，线程的工作内存中保存了该线程中是用到的变量的主内存副本拷贝，线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存。不同的线程之间也无法直接访问对方工作内存中的变量，线程间变量的传递均需要自己的工作内存和主存之间进行数据同步进行。</p>
+<p>而JMM就作用于工作内存和主存之间数据同步过程。他规定了如何做数据同步以及什么时候做数据同步。</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/6fuT3emWI5L2ia8pMCBIIMcJS5mdJUl6qPH8FLPQnoyYbQDM3VsSQIB0m7wrvsm7QgPBGyhaMRmoOHV1cSHqbCA/640?randomid=7b5l2yo5&tp=webp&wxfrom=5&wx_lazy=1" alt="图片"></p>
+<p>这里面提到的主内存和工作内存，读者可以简单的类比成计算机内存模型中的主存和缓存的概念。特别需要注意的是，主内存和工作内存与JVM内存结构中的Java堆、栈、方法区等并不是同一个层次的内存划分，无法直接类比。《深入理解Java虚拟机》中认为，如果一定要勉强对应起来的话，从变量、主内存、工作内存的定义来看，主内存主要对应于Java堆中的对象实例数据部分。工作内存则对应于虚拟机栈中的部分区域。</p>
+<p><strong>所以，再来总结下，JMM是一种规范，目的是解决由于多线程通过共享内存进行通信时，存在的本地内存数据不一致、编译器会对代码指令重排序、处理器会对代码乱序执行等带来的问题。目的是保证并发编程场景中的原子性、可见性和有序性。</strong></p>
+<h2 id="Java内存模型的实现"><a href="#Java内存模型的实现" class="headerlink" title="Java内存模型的实现"></a>Java内存模型的实现</h2><p>了解Java多线程的朋友都知道，在Java中提供了一系列和并发处理相关的关键字，比如<code>volatile</code>、<code>synchronized</code>、<code>final</code>、<code>concurren</code>包等。其实这些就是Java内存模型封装了底层的实现后提供给程序员使用的一些关键字。</p>
+<p>在开发多线程的代码的时候，我们可以直接使用<code>synchronized</code>等关键字来控制并发，从来就不需要关心底层的编译器优化、缓存一致性等问题。所以，<strong>Java内存模型，除了定义了一套规范，还提供了一系列原语，封装了底层实现后，供开发者直接使用。</strong></p>
+<p>本文并不准备把所有的关键字逐一介绍其用法，因为关于各个关键字的用法，网上有很多资料。读者可以自行学习。本文还有一个重点要介绍的就是，我们前面提到，并发编程要解决原子性、有序性和一致性的问题，我们就再来看下，在Java中，分别使用什么方式来保证。</p>
+<h3 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h3><p>在Java中，为了保证原子性，提供了两个高级的字节码指令<code>monitorenter</code>和<code>monitorexit</code>。在<a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzI3NzE0NjcwMg==&mid=2650120537&idx=1&sn=f56201217c0ca6fde45ee12965b56296&chksm=f36bbc78c41c356ee363367addcdc0b311afb2f9df86a7ee20d21348b3332fd64f273d6028ca&scene=21#wechat_redirect">synchronized的实现原理</a>文章中，介绍过，这两个字节码，在Java中对应的关键字就是<code>synchronized</code>。</p>
+<p>因此，在Java中可以使用<code>synchronized</code>来保证方法和代码块内的操作是原子性的。</p>
+<h3 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h3><p>Java内存模型是通过在变量修改后将新值同步回主内存，在变量读取前从主内存刷新变量值的这种依赖主内存作为传递媒介的方式来实现的。</p>
+<p>Java中的<code>volatile</code>关键字提供了一个功能，那就是被其修饰的变量在被修改后可以立即同步到主内存，被其修饰的变量在每次是用之前都从主内存刷新。因此，可以使用<code>volatile</code>来保证多线程操作时变量的可见性。</p>
+<p>除了<code>volatile</code>，Java中的<code>synchronized</code>和<code>final</code>两个关键字也可以实现可见性。只不过实现方式不同，这里不再展开了。</p>
+<h3 id="有序性"><a href="#有序性" class="headerlink" title="有序性"></a>有序性</h3><p>在Java中，可以使用<code>synchronized</code>和<code>volatile</code>来保证多线程之间操作的有序性。实现方式有所区别：</p>
+<p><code>volatile</code>关键字会禁止指令重排。<code>synchronized</code>关键字保证同一时刻只允许一条线程操作。</p>
+<p>好了，这里简单的介绍完了Java并发编程中解决原子性、可见性以及有序性可以使用的关键字。读者可能发现了，好像<code>synchronized</code>关键字是万能的，他可以同时满足以上三种特性，这其实也是很多人滥用<code>synchronized</code>的原因。</p>
+<p>但是<code>synchronized</code>是比较影响性能的，虽然编译器提供了很多锁优化技术，但是也不建议过度使用。</p>
 
-<hr>
-<h3 id="二、高性能模糊搜索方案推荐"><a href="#二、高性能模糊搜索方案推荐" class="headerlink" title="二、高性能模糊搜索方案推荐"></a>二、高性能模糊搜索方案推荐</h3><h4 id="✅-首选方案：倒排索引搜索引擎"><a href="#✅-首选方案：倒排索引搜索引擎" class="headerlink" title="✅ 首选方案：倒排索引搜索引擎"></a>✅ <strong>首选方案：倒排索引搜索引擎</strong></h4><ul>
-<li><strong>代表技术</strong>：Elasticsearch &#x2F; Apache Solr</li>
-<li><strong>核心优势</strong>：<ul>
-<li><strong>通配符优化</strong>：内部将 <code>*搜索*</code> 转化为多词组合查询</li>
-<li><strong>边缘N-Gram分词</strong>：自动生成 <code>搜 -&gt; 搜索 -&gt; 索引</code> 等变体</li>
-<li><strong>BM25排序</strong>：相关度智能排序</li>
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/0.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-internet/JVM垃圾回收中两次标记跟三色标记是一个东西吗" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>不是同一个概念，两者描述了垃圾回收中<strong>完全不同层面</strong>和<strong>目的</strong>的机制：</p>
+<ol>
+<li><p><strong>两次标记 (Two-Phase Marking for Finalization)：</strong></p>
+<ul>
+<li><strong>目的：</strong> 专门处理那些覆盖了 <code>finalize()</code> 方法的对象，给它们一个“临终遗言”的机会。</li>
+<li><strong>过程：</strong><ul>
+<li><strong>第一次标记：</strong> GC 进行可达性分析，标记出所有不可达的对象（即从 GC Roots 无法访问到的对象）。</li>
+<li><strong>筛选：</strong> 在第一次标记出的不可达对象中，<strong>筛选出覆盖了 <code>finalize()</code> 方法</strong> 且<strong>之前从未被放入过 F-Queue</strong> 的对象。</li>
+<li><strong>入队：</strong> 将这些筛选出来的对象放入一个名为 <strong>F-Queue</strong> 的特殊队列。</li>
+<li><strong>执行 Finalizer：</strong> JVM 会启动一个<strong>低优先级的 Finalizer 线程</strong>（注意：<strong>不是 GC 线程本身</strong>），去<strong>异步地、逐个地</strong>执行 F-Queue 中对象的 <code>finalize()</code> 方法。这个执行过程<strong>不受 GC 控制</strong>，执行时间不确定，甚至可能让对象重新被引用（“复活”）。</li>
+<li><strong>第二次标记：</strong> 在<strong>下一次 GC</strong> 发生时（可能是 Minor GC 或 Full GC），GC 会<strong>再次进行可达性分析</strong>。<ul>
+<li>对于 F-Queue 中的对象，这次分析会检查它们：<ul>
+<li>如果执行完 <code>finalize()</code> 后仍然不可达，则真正标记为可回收。</li>
+<li>如果在 <code>finalize()</code> 中被“复活”（重新与 GC Roots 建立引用链），则变成存活对象。</li>
+</ul>
+</li>
+<li>对于第一次标记就不可达且<strong>没有覆盖 <code>finalize()</code> 方法</strong> 的对象，或者<strong>已经执行过一次 <code>finalize()</code></strong> 的对象，这次标记会直接判定它们为可回收。</li>
 </ul>
 </li>
 </ul>
-<p><strong>性能对比</strong>（百万数据）：</p>
+</li>
+<li><strong>核心：</strong> 围绕 <code>finalize()</code> 方法展开，给特定对象一次“复活”的机会。是<strong>串行、分阶段</strong>的（第一次标记 -&gt; 执行 finalize -&gt; 第二次标记）。</li>
+</ul>
+</li>
+<li><p><strong>三色标记 (Tri-Color Marking)：</strong></p>
+<ul>
+<li><strong>目的：</strong> 一种<strong>支持并发标记</strong>的算法思想。它允许垃圾回收器在用户线程（Mutator）<strong>不暂停</strong>（或者只短暂暂停）的情况下，安全地遍历对象图并标记存活对象，解决并发扫描时对象引用关系变化带来的问题。</li>
+<li><strong>原理：</strong><ul>
+<li><strong>白色 (White):</strong> 表示对象<strong>尚未被垃圾回收器访问到</strong>。在标记开始时，所有对象都是白色。<strong>标记结束时仍为白色的对象就是垃圾（不可达）</strong>。</li>
+<li><strong>灰色 (Grey):</strong> 表示对象<strong>已被垃圾回收器访问到</strong>，但<strong>该对象引用的其他对象还没有被完全扫描完</strong>。灰色对象是标记过程中的“前沿”，GC 需要从这些对象出发继续扫描。</li>
+<li><strong>黑色 (Black):</strong> 表示对象<strong>已被垃圾回收器访问到</strong>，且<strong>该对象引用的所有其他对象也都被扫描过</strong>了。黑色对象被认为是存活对象，不会再被重新检查。</li>
+</ul>
+</li>
+<li><strong>过程 (并发标记阶段)：</strong><ul>
+<li>初始：GC Roots 直接引用的对象被标记为<strong>灰色</strong>，放入待处理队列。其他对象为<strong>白色</strong>。</li>
+<li>并发标记：GC 线程（与用户线程并发执行）从灰色队列取出对象：<ul>
+<li>将该对象标记为<strong>黑色</strong>。</li>
+<li>扫描该对象引用的所有其他对象：<ul>
+<li>如果被引用对象是<strong>白色</strong>，则将其标记为<strong>灰色</strong>并加入队列。</li>
+<li>如果被引用对象是灰色或黑色，则跳过（已处理或正在处理）。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>重复步骤 2 直到灰色队列为空。</li>
+</ul>
+</li>
+<li><strong>核心问题与解决方案（增量更新&#x2F;原始快照）：</strong> 在并发标记过程中，用户线程会修改对象的引用关系（赋值），可能导致：<ul>
+<li><strong>误标垃圾（浮动垃圾）：</strong> 可以接受，下次 GC 回收。</li>
+<li><strong>漏标存活（对象消失）：</strong> <strong>绝对不允许</strong>。三色标记通过<strong>写屏障 (Write Barrier)</strong> 技术配合两种策略解决：<ul>
+<li><strong>增量更新 (Incremental Update)：</strong> 关注<strong>插入引用</strong>（<code>a.field = newObj</code>，原来 a 是黑，newObj 是白）。当用户线程将黑色对象（a）的引用指向一个白色对象（newObj）时，写屏障会记录这个引用关系（例如将黑色对象 a 重新标记为灰色），强制 GC 重新扫描 a。</li>
+<li><strong>原始快照 (Snapshot At The Beginning - SATB)：</strong> 关注<strong>删除引用</strong>（<code>a.field = null</code> 或 <code>a.field = otherObj</code>）。GC 在开始时对整个对象图做一个逻辑快照。写屏障会记录被<strong>切断引用</strong>的旧对象（<code>a.field</code> 原来指向的 oldObj），确保在标记过程中，即使引用被删除，这个旧对象（oldObj）在本次 GC 中仍然被视为存活（至少是灰色），避免其因为引用删除而错误地被回收。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>核心：</strong> 一种<strong>并发标记算法</strong>，利用三色抽象和写屏障安全高效地在用户线程运行的同时完成对象图的标记。是<strong>并发、增量</strong>的。</li>
+</ul>
+</li>
+</ol>
+<p><strong>总结关键区别：</strong></p>
 <table>
 <thead>
 <tr>
-<th>查询类型</th>
-<th>MySQL耗时</th>
-<th>Elasticsearch耗时</th>
+<th align="left">特性</th>
+<th align="left">两次标记 (Finalization)</th>
+<th align="left">三色标记 (Concurrent Marking)</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>%数据库%</code></td>
-<td>4200ms</td>
-<td>23ms</td>
+<td align="left"><strong>主要目的</strong></td>
+<td align="left">处理 <code>finalize()</code> 方法，给对象“复活”机会</td>
+<td align="left"><strong>支持并发标记</strong>，减少 STW 停顿时间</td>
 </tr>
 <tr>
-<td><code>张%</code></td>
-<td>8ms</td>
-<td>5ms</td>
+<td align="left"><strong>核心机制</strong></td>
+<td align="left">分两次 GC 扫描，中间执行 <code>finalize()</code></td>
+<td align="left">三色状态抽象 (白&#x2F;灰&#x2F;黑) + 写屏障</td>
 </tr>
 <tr>
-<td><code>%工程师</code></td>
-<td>3800ms</td>
-<td>28ms</td>
+<td align="left"><strong>处理对象</strong></td>
+<td align="left">覆盖了 <code>finalize()</code> 的不可达对象</td>
+<td align="left"><strong>所有对象</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>并发性</strong></td>
+<td align="left">基本是串行的（Finalizer 线程异步但 GC 阶段需等待）</td>
+<td align="left"><strong>核心目标是并发</strong>，GC 标记线程与用户线程并行</td>
+</tr>
+<tr>
+<td align="left"><strong>GC 阶段</strong></td>
+<td align="left">发生在标记阶段（与可达性分析强相关）</td>
+<td align="left"><strong>本身就是标记阶段的核心算法</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>解决的问题</strong></td>
+<td align="left"><code>finalize()</code> 方法的特殊处理</td>
+<td align="left">并发标记期间对象图变化导致的对象消失问题</td>
+</tr>
+<tr>
+<td align="left"><strong>关联性</strong></td>
+<td align="left">三色标记的并发标记阶段完成后，那些不可达（白色）的对象，如果覆盖了 <code>finalize()</code>，后续的处理流程（入 F-Queue, 执行 finalize, 第二次标记）就是“两次标记”所描述的过程。</td>
+<td align="left"></td>
 </tr>
 </tbody></table>
-<h4 id="✅-次选方案：数据库专用索引"><a href="#✅-次选方案：数据库专用索引" class="headerlink" title="✅ 次选方案：数据库专用索引"></a>✅ <strong>次选方案：数据库专用索引</strong></h4><ul>
-<li><strong>适用场景</strong>：轻度模糊查询，且无法引入新组件</li>
-<li><strong>技术手段</strong>：<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- PostgreSQL的trigram扩展</span></span><br><span class="line"><span class="keyword">CREATE</span> EXTENSION pg_trgm;</span><br><span class="line"><span class="keyword">CREATE</span> INDEX idx_name_trgm <span class="keyword">ON</span> users <span class="keyword">USING</span> gin(name gin_trgm_ops);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查询优化</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> name <span class="keyword">LIKE</span> <span class="string">&#x27;%小明%&#x27;</span>; <span class="comment">-- 命中索引</span></span><br></pre></td></tr></table></figure></li>
-<li><strong>限制</strong>：<ul>
-<li>索引体积膨胀3-5倍</li>
-<li>仅支持 <code>LIKE</code>，不支持正则表达式等高级搜索</li>
+<p><strong>简单来说：</strong></p>
+<ul>
+<li><strong>两次标记</strong> 是关于 <code>finalize()</code> 方法如何影响对象回收命运的一个<strong>特定流程</strong>。</li>
+<li><strong>三色标记</strong> 是现代垃圾回收器（如 CMS, G1, Shenandoah, ZGC）在<strong>标记阶段</strong>使用的一种<strong>底层算法</strong>，目的是高效、并发地找出所有存活对象。标记完成后，那些被判定为不可达（白色）的对象，如果它们有 <code>finalize()</code> 方法，才会进入“两次标记”的流程。</li>
 </ul>
-</li>
-</ul>
-<hr>
-<h3 id="三、决策树：如何选择技术方案？"><a href="#三、决策树：如何选择技术方案？" class="headerlink" title="三、决策树：如何选择技术方案？"></a>三、决策树：如何选择技术方案？</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    A[是否高频中缀模糊查询？] --&gt;|是| B[是否接受新组件？]</span><br><span class="line">    A --&gt;|否| C[数据库前缀索引]</span><br><span class="line">    B --&gt;|是| D[Elasticsearch/Solr]</span><br><span class="line">    B --&gt;|否| E[数据库专用索引&lt;br&gt;(pg_trgm/Full-Text)]</span><br><span class="line">    D --&gt; F[支持：通配符/正则/语义搜索]</span><br><span class="line">    E --&gt; G[支持：基本LIKE/分词搜索]</span><br></pre></td></tr></table></figure>
+<p>因此，它们不是同一个东西，而是垃圾回收中不同层次、解决不同问题的机制。三色标记是更基础、更通用的并发标记技术，而两次标记是针对 <code>finalize()</code> 这个特殊特性的一个处理步骤。<strong>强烈建议避免使用 <code>finalize()</code>，因为它不可靠、性能差且可能导致问题。</strong></p>
 
-<hr>
-<h3 id="四、极端场景下的黑科技"><a href="#四、极端场景下的黑科技" class="headerlink" title="四、极端场景下的黑科技"></a>四、极端场景下的黑科技</h3><ol>
-<li><p><strong>向量化模糊搜索（SIMD优化）</strong></p>
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/0.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-internet/JVM线上故障排查" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h3 id="线上故障排查"><a href="#线上故障排查" class="headerlink" title="线上故障排查"></a>线上故障排查</h3><h4 id="1、硬件故障排查"><a href="#1、硬件故障排查" class="headerlink" title="1、硬件故障排查"></a>1、硬件故障排查</h4><p>如果一个实例发生了问题，根据情况选择，要不要着急去重启。如果出现的CPU、内存飙高或者日志里出现了OOM异常</p>
+<p><strong>第一步是隔离</strong>，第二步是<strong>保留现场</strong>，第三步才是<strong>问题排查</strong>。</p>
+<p><strong>隔离</strong></p>
+<p>就是把你的这台机器从请求列表里摘除，比如把 nginx 相关的权重设成零。</p>
+<p><strong>现场保留</strong></p>
+<p><strong>瞬时态和历史态</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1754216083.jpeg" alt="img"></p>
+<p>查看比如 CPU、系统内存等，通过历史状态可以体现一个趋势性问题，而这些信息的获取一般依靠监控系统的协作。           </p>
+<p><strong>保留信息</strong></p>
+<p>（1）<strong>系统当前网络连接</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ss -antp &gt; <span class="variable">$DUMP_DIR</span>/ss.dump 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+
+
+<p>使用 ss 命令而不是 netstat 的原因，是因为 netstat 在网络连接非常多的情况下，执行非常缓慢。</p>
+<p>后续的处理，可通过查看各种网络连接状态的梳理，来排查 TIME_WAIT 或者 CLOSE_WAIT，或者其他连接过高的问题，非常有用。</p>
+<p>（2）<strong>网络状态统计</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -s &gt; <span class="variable">$DUMP_DIR</span>/netstat-s.dump 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+
+
+<p>它能够按照各个协议进行统计输出，对把握当时整个网络状态，有非常大的作用。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sar -n DEV 1 2 &gt; <span class="variable">$DUMP_DIR</span>/sar-traffic.dump 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+
+
+<p>在一些速度非常高的模块上，比如 Redis、Kafka，就经常发生跑满网卡的情况。表现形式就是网络通信非常缓慢。</p>
+<p>（3）<strong>进程资源</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -p $PID &gt; $DUMP_DIR/lsof-$PID.dump</span><br></pre></td></tr></table></figure>
+
+
+<p>通过查看进程，能看到打开了哪些文件，可以以进程的维度来查看整个资源的使用情况，包括每条网络连接、每个打开的文件句柄。同时，也可以很容易的看到连接到了哪些服务器、使用了哪些资源。这个命令在资源非常多的情况下，输出稍慢，请耐心等待。</p>
+<p>（4）<strong>CPU 资源</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mpstat &gt; $DUMP_DIR/mpstat.dump 2&gt;&amp;1</span><br><span class="line">vmstat 1 3 &gt; $DUMP_DIR/vmstat.dump 2&gt;&amp;1</span><br><span class="line">sar -p ALL  &gt; $DUMP_DIR/sar-cpu.dump  2&gt;&amp;1</span><br><span class="line">uptime &gt; $DUMP_DIR/uptime.dump 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+
+<p>主要用于输出当前系统的 CPU 和负载，便于事后排查。</p>
+<p>（5）<strong>I&#x2F;O 资源</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iostat -x &gt; $DUMP_DIR/iostat.dump <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+
+<p>一般，以计算为主的服务节点，I&#x2F;O 资源会比较正常，但有时也会发生问题，比如<strong>日志输出过多，或者磁盘问题</strong>等。此命令可以输出每块磁盘的基本性能信息，用来排查 I&#x2F;O 问题。在第 8 课时介绍的 GC 日志分磁盘问题，就可以使用这个命令去发现。</p>
+<p>（6）<strong>内存问题</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">free -h &gt; $DUMP_DIR/free.dump <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+
+<p>free 命令能够大体展现操作系统的内存概况，这是故障排查中一个非常重要的点，比如 SWAP 影响了 GC，SLAB 区挤占了 JVM 的内存。</p>
+<p>（7）<strong>其他全局</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ps -ef &gt; $DUMP_DIR/ps.dump <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br><span class="line">dmesg &gt; $DUMP_DIR/dmesg.dump <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br><span class="line">sysctl -a &gt; $DUMP_DIR/sysctl.dump <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+
+<p>dmesg 是许多静悄悄死掉的服务留下的最后一点线索。当然，ps 作为执行频率最高的一个命令，由于内核的配置参数，会对系统和 JVM 产生影响，所以我们也输出了一份。</p>
+<p>（8）<strong>进程快照</strong>，最后的遗言（jinfo）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;JDK_BIN&#125;jinfo $PID &gt; $DUMP_DIR/jinfo.dump <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+
+<p>此命令将输出 Java 的基本进程信息，包括<strong>环境变量和参数配置</strong>，可以查看是否因为一些错误的配置造成了 JVM 问题。</p>
+<p><strong>（9）dump 堆信息</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$&#123;JDK_BIN&#125;jstat -gcutil $PID &gt; $DUMP_DIR/jstat-gcutil.dump <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br><span class="line">$&#123;JDK_BIN&#125;jstat -gccapacity $PID &gt; $DUMP_DIR/jstat-gccapacity.dump <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+
+<p>jstat 将输出当前的 gc 信息。一般，基本能大体看出一个端倪，如果不能，可将借助 jmap 来进行分析。</p>
+<p><strong>（10）堆信息</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$&#123;JDK_BIN&#125;jmap $PID &gt; $DUMP_DIR/jmap.dump <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br><span class="line">$&#123;JDK_BIN&#125;jmap -heap $PID &gt; $DUMP_DIR/jmap-heap.dump <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br><span class="line">$&#123;JDK_BIN&#125;jmap -histo $PID &gt; $DUMP_DIR/jmap-histo.dump <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br><span class="line">$&#123;JDK_BIN&#125;jmap -dump:format=b,file=$DUMP_DIR/heap.bin $PID &gt; /dev/<span class="literal">null</span>  <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+
+<p>jmap 将会得到当前 Java 进程的 dump 信息。如上所示，其实最有用的就是第 4 个命令，但是前面三个能够让你初步对系统概况进行大体判断。因为，第 4 个命令产生的文件，一般都非常的大。而且，需要下载下来，导入 MAT 这样的工具进行深入分析，才能获取结果。这是分析内存泄漏一个必经的过程。</p>
+<p><strong>（11）JVM 执行栈</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;JDK_BIN&#125;jstack $PID &gt; $DUMP_DIR/jstack.dump <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+
+<p>jstack 将会获取当时的执行栈。一般会多次取值，我们这里取一次即可。这些信息非常有用，能够还原 Java 进程中的线程情况。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">top -Hp $PID -b -n <span class="number">1</span> -c &gt;  $DUMP_DIR/top-$PID.dump <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+
+<p>为了能够得到更加精细的信息，我们使用 top 命令，来获取进程中所有线程的 CPU 信息，这样，就可以看到资源到底耗费在什么地方了。</p>
+<p><strong>（12）高级替补</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill -<span class="number">3</span> $PID</span><br></pre></td></tr></table></figure>
+
+
+<p>有时候，jstack 并不能够运行，有很多原因，比如 Java 进程几乎不响应了等之类的情况。我们会尝试向进程发送 kill -3 信号，这个信号将会打印 jstack 的 trace 信息到日志文件中，是 jstack 的一个替补方案。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcore -o $DUMP_DIR/core $PID</span><br></pre></td></tr></table></figure>
+
+
+<p>对于 jmap 无法执行的问题，也有替补，那就是 GDB 组件中的 gcore，将会生成一个 core 文件。我们可以使用如下的命令去生成 dump：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;JDK_BIN&#125;jhsdb jmap --exe $&#123;JDK&#125;java  --core $DUMP_DIR/core --binaryheap</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><strong>内存泄漏的现象</strong></li>
+</ol>
+<p>稍微提一下 jmap 命令，它在 9 版本里被干掉了，取而代之的是 jhsdb，你可以像下面的命令一样使用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jhsdb jmap  --heap --pid  <span class="number">37340</span></span><br><span class="line">jhsdb jmap  --pid  <span class="number">37288</span></span><br><span class="line">jhsdb jmap  --histo --pid  <span class="number">37340</span></span><br><span class="line">jhsdb jmap  --binaryheap --pid  <span class="number">37340</span></span><br></pre></td></tr></table></figure>
+
+<p>一般内存溢出，表现形式就是 Old 区的占用持续上升，即使经过了多轮 GC 也没有明显改善。比如ThreadLocal里面的GC Roots，内存泄漏的根本就是，这些对象并没有切断和 GC Roots 的关系，可通过一些工具，能够看到它们的联系。</p>
+<h4 id="2、报表异常-JVM调优"><a href="#2、报表异常-JVM调优" class="headerlink" title="2、报表异常 | JVM调优"></a>2、报表异常 | JVM调优</h4><p>有一个报表系统，频繁发生内存溢出，在高峰期间使用时，还会频繁的发生拒绝服务，由于大多数使用者是管理员角色，所以很快就反馈到研发这里。</p>
+<p>业务场景是由于有些结果集的字段不是太全，因此需要对结果集合进行循环，并通过 HttpClient 调用其他服务的接口进行数据填充。使用 Guava 做了 JVM 内缓存，但是响应时间依然很长。</p>
+<p>初步排查，JVM 的资源太少。接口 A 每次进行报表计算时，都要涉及几百兆的内存，而且在内存里驻留很长时间，有些计算又非常耗 CPU，特别的“吃”资源。而我们分配给 JVM 的内存只有 3 GB，在多人访问这些接口的时候，内存就不够用了，进而发生了 OOM。在这种情况下，没办法，只有升级机器。把机器配置升级到 4C8G，给 JVM 分配 6GB 的内存，这样 OOM 问题就消失了。但随之而来的是频繁的 GC 问题和超长的 GC 时间，平均 GC 时间竟然有 5 秒多。</p>
+<p>进一步，由于报表系统和高并发系统不太一样，它的对象，存活时长大得多，并不能仅仅通过增加年轻代来解决；而且，如果增加了年轻代，那么必然减少了老年代的大小，由于 CMS 的碎片和浮动垃圾问题，我们可用的空间就更少了。虽然服务能够满足目前的需求，但还有一些不太确定的风险。</p>
+<p>第一，了解到程序中有很多缓存数据和静态统计数据，为了减少 MinorGC 的次数，通过分析 GC 日志打印的对象年龄分布，把 MaxTenuringThreshold 参数调整到了 3（特殊场景特殊的配置）。这个参数是让年轻代的这些对象，赶紧回到老年代去，不要老呆在年轻代里。</p>
+<p>第二，我们的 GC 时间比较长，就一块开了参数 CMSScavengeBeforeRemark，使得在 CMS remark 前，先执行一次 Minor GC 将新生代清掉。同时配合上个参数，其效果还是比较好的，一方面，对象很快晋升到了老年代，另一方面，年轻代的对象在这种情况下是有限的，在整个 MajorGC 中占的时间也有限。</p>
+<p>第三，由于缓存的使用，有大量的弱引用，拿一次长达 10 秒的 GC 来说。我们发现在 GC 日志里，处理 weak refs 的时间较长，达到了 4.5 秒。这里可以加入参数 ParallelRefProcEnabled 来并行处理Reference，以加快处理速度，缩短耗时。</p>
+<p>优化之后，效果不错，但并不是特别明显。经过评估，针对高峰时期的情况进行调研，我们决定再次提升机器性能，改用 8core16g 的机器。但是，这带来另外一个问题。</p>
+<p><strong>高性能的机器带来了非常大的服务吞吐量</strong>，通过 jstat 进行监控，能够看到年轻代的分配速率明显提高，但随之而来的 MinorGC 时长却变的不可控，有时候会超过 1 秒。累积的请求造成了更加严重的后果。</p>
+<p>这是由于堆空间明显加大造成的回收时间加长。为了获取较小的停顿时间，我们在堆上<strong>改用了 G1 垃圾回收器</strong>，把它的目标设定在 200ms。G1 是一款非常优秀的垃圾收集器，不仅适合堆内存大的应用，同时也简化了调优的工作。通过主要的参数初始和最大堆空间、以及最大容忍的 GC 暂停目标，就能得到不错的性能。修改之后，虽然 GC 更加频繁了一些，但是停顿时间都比较小，应用的运行较为平滑。</p>
+<p>到目前为止，也只是勉强顶住了已有的业务，但是，这时候领导层面又发力，<strong>要求报表系统可以支持未来两年业务10到100倍的增长</strong>，并保持其可用性，但是这个“千疮百孔”的报表系统，稍微一压测，就宕机，那如何应对十倍百倍的压力呢 ? 硬件即使可以做到动态扩容，但是毕竟也有极限。</p>
+<p>使用 MAT 分析堆快照，发现很多地方可以通过代码优化，那些占用内存特别多的对象：</p>
+<p>1、select * 全量排查，只允许获取必须的数据</p>
+<p>2、报表系统中cache实际的命中率并不高，将Guava 的 Cache 引用级别改成弱引用（WeakKeys）</p>
+<p>3、限制报表导入文件大小，同时拆分用户超大范围查询导出请求。</p>
+<p>每一步操作都使得JVM使用变得更加可用，一系列优化以后，机器相同压测数据性能提升了数倍。</p>
+<h4 id="3、大屏异常-JUC调优"><a href="#3、大屏异常-JUC调优" class="headerlink" title="3、大屏异常 | JUC调优"></a>3、大屏异常 | JUC调优</h4><p>有些数据需要使用 HttpClient 来获取进行补全。提供数据的服务提供商有的响应时间可能会很长，也有可能会造成服务整体的阻塞。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1754216012.jpeg" alt="img"></p>
+<p>接口 A 通过 HttpClient 访问服务 2，响应 100ms 后返回；接口 B 访问服务 3，耗时 2 秒。HttpClient 本身是有一个最大连接数限制的，如果服务 3 迟迟不返回，就会造成 HttpClient 的连接数达到上限，<strong>概括来讲，就是同一服务，由于一个耗时非常长的接口，进而引起了整体的服务不可用</strong></p>
+<p>这个时候，通过 jstack 打印栈信息，会发现大多数竟然阻塞在了接口 A 上，而不是耗时更长的接口 B，这个现象起初十分具有迷惑性，不过经过分析后，我们猜想其实是因为接口 A 的速度比较快，在问题发生点进入了更多的请求，它们全部都阻塞住的同时被打印出来了。</p>
+<p>为了验证这个问题，我搭建了一个demo 工程，模拟了两个使用同一个 HttpClient 的接口。fast 接口用来访问百度，很快就能返回；slow 接口访问谷歌，由于众所周知的原因，会阻塞直到超时，大约 10 s。 利用ab对两个接口进行压测，同时使用 jstack 工具 dump 堆栈。首先使用 jps 命令找到进程号，然后把结果重定向到文件（可以参考 10271.jstack 文件）。</p>
+<p>过滤一下 nio 关键字，可以查看 tomcat 相关的线程，足足有 200 个，这和 Spring Boot 默认的 maxThreads 个数不谋而合。更要命的是，有大多数线程，都处于 BLOCKED 状态，说明线程等待资源超时。通过grep fast | wc -l 分析，确实200个中有150个都是blocked的fast的进程。</p>
+<p>问题找到了，解决方式就顺利成章了。</p>
+<p>1、fast和slow争抢连接资源，通过线程池限流或者熔断处理</p>
+<p>2、有时候slow的线程也不是一直slow，所以就得加入监控</p>
+<p>3、使用带countdownLaunch对线程的执行顺序逻辑进行控制</p>
+<h4 id="4、接口延迟-SWAP调优"><a href="#4、接口延迟-SWAP调优" class="headerlink" title="4、接口延迟 | SWAP调优"></a><strong>4、接口延迟 | SWAP调优</strong></h4><p>有一个关于服务的某个实例，经常发生服务卡顿。由于服务的并发量是比较高的，每多停顿 1 秒钟，几万用户的请求就会感到延迟。</p>
+<p>我们统计、类比了此服务其他实例的 CPU、内存、网络、I&#x2F;O 资源，区别并不是很大，所以一度怀疑是机器硬件的问题。</p>
+<p>接下来我们对比了节点的 GC 日志，发现无论是 Minor GC，还是 Major GC，这个节点所花费的时间，都比其他实例长得多。</p>
+<p>通过仔细观察，我们发现在 GC 发生的时候，vmstat 的 si、so 飙升的非常严重，这和其他实例有着明显的不同。</p>
+<p>使用 free 命令再次确认，发现 SWAP 分区，使用的比例非常高，引起的具体原因是什么呢？</p>
+<p>更详细的操作系统内存分布，从 &#x2F;proc&#x2F;meminfo 文件中可以看到具体的逻辑内存块大小，有多达 40 项的内存信息，这些信息都可以通过遍历 &#x2F;proc 目录的一些文件获取。我们注意到 slabtop 命令显示的有一些异常，dentry（目录高速缓冲）占用非常高。</p>
+<p>问题最终定位到是由于某个运维工程师删除日志时，定时执行了一句命令：</p>
+<p>find &#x2F; | grep “xxx.log”</p>
+<p>他是想找一个叫做 要被删除 的日志文件，看看在哪台服务器上，结果，这些老服务器由于文件太多，扫描后这些文件信息都缓存到了 slab 区上。而服务器开了 swap，操作系统发现物理内存占满后，并没有立即释放 cache，导致每次 GC 都要和硬盘打一次交道。</p>
+<p><strong>解决方式就是关闭 SWAP 分区。</strong></p>
+<p>swap 是很多性能场景的万恶之源，建议禁用。在高并发 SWAP 绝对能让你体验到它魔鬼性的一面：进程倒是死不了了，但 GC 时间长的却让人无法忍受。</p>
+<h4 id="5、内存溢出-Cache调优"><a href="#5、内存溢出-Cache调优" class="headerlink" title="5、内存溢出 | Cache调优"></a>5、<strong>内存溢出 | Cache调优</strong></h4><blockquote>
+<p>有一次线上遇到故障，重新启动后，使用 jstat 命令，发现 Old 区一直在增长。我使用 jmap 命令，导出了一份线上堆栈，然后使用 MAT 进行分析，通过对 GC Roots 的分析，发现了一个非常大的 HashMap 对象，这个原本是其他同事做缓存用的，但是做了一个无界缓存，没有设置超时时间或者 LRU 策略，在使用上又没有重写key类对象的hashcode和equals方法，对象无法取出也直接造成了堆内存占用一直上升，后来，将这个缓存改成 guava 的 Cache，并设置了弱引用，故障就消失了。</p>
+<p>关于文件处理器的应用，在读取或者写入一些文件之后，由于发生了一些异常，<strong>close 方法又没有放在 finally</strong> 块里面，造成了文件句柄的泄漏。由于文件处理十分频繁，产生了严重的内存泄漏问题。</p>
+</blockquote>
+<p>内存溢出是一个结果，而<strong>内存泄漏</strong>是一个原因。内存溢出的原因有<strong>内存空间不足、配置错误</strong>等因素。一些错误的编程方式，不再被使用的对象、没有被回收、没有及时切断与 GC Roots 的联系，这就是内存泄漏。</p>
+<p>举个例子，有团队使用了 HashMap 做缓存，但是并没有设置超时时间或者 LRU 策略，造成了放入 Map 对象的数据越来越多，而产生了内存泄漏。</p>
+<p>再来看一个经常发生的内存泄漏的例子，也是由于 HashMap 产生的。代码如下，由于没有重写 Key 类的 hashCode 和 equals 方法，造成了放入 HashMap 的所有对象都无法被取出来，它们和外界失联了。所以下面的代码结果是 null。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//leak example</span></span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HashMapLeakDemo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">Key</span> &#123;</span><br><span class="line">        String title;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Key</span><span class="params">(String title)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.title = title;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    Map&lt;Key, Integer&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">    map.put(<span class="keyword">new</span> <span class="title class_">Key</span>(<span class="string">&quot;1&quot;</span>), <span class="number">1</span>);</span><br><span class="line">    map.put(<span class="keyword">new</span> <span class="title class_">Key</span>(<span class="string">&quot;2&quot;</span>), <span class="number">2</span>);</span><br><span class="line">    map.put(<span class="keyword">new</span> <span class="title class_">Key</span>(<span class="string">&quot;3&quot;</span>), <span class="number">2</span>);</span><br><span class="line">    <span class="type">Integer</span> <span class="variable">integer</span> <span class="operator">=</span> map.get(<span class="keyword">new</span> <span class="title class_">Key</span>(<span class="string">&quot;2&quot;</span>));</span><br><span class="line">    System.out.println(integer);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>即使提供了 equals 方法和 hashCode 方法，也要非常小心，尽量避免使用自定义的对象作为 Key。</p>
+<p>再看一个例子，关于文件处理器的应用，在读取或者写入一些文件之后，由于发生了一些异常，<strong>close 方法又没有放在 finally</strong> 块里面，造成了文件句柄的泄漏。由于文件处理十分频繁，产生了严重的内存泄漏问题。</p>
+<h4 id="6：CPU飙高-死循环"><a href="#6：CPU飙高-死循环" class="headerlink" title="6：CPU飙高 | 死循环"></a>6：CPU飙高 | 死循环</h4><p>我们有个线上应用，单节点在运行一段时间后，CPU 的使用会飙升，一旦飙升，一般怀疑某个业务逻辑的计算量太大，或者是触发了死循环（比如著名的 HashMap 高并发引起的死循环），但排查到最后其实是 GC 的问题。        </p>
+<p>（1）使用 top 命令，查找到使用 CPU 最多的某个进程，记录它的 pid。使用 Shift + P 快捷键可以按 CPU 的使用率进行排序。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">top</span><br></pre></td></tr></table></figure>
+
+
+<p>（2）再次使用 top 命令，加 -H 参数，查看某个进程中使用 CPU 最多的某个线程，记录线程的 ID。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">top -Hp $pid</span><br></pre></td></tr></table></figure>
+
+
+<p>（3）使用 printf 函数，将十进制的 tid 转化成十六进制。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">printf %x $tid</span><br></pre></td></tr></table></figure>
+
+
+<p>（4）使用 jstack 命令，查看 Java 进程的线程栈。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstack $pid &gt;$pid.log</span><br></pre></td></tr></table></figure>
+
+
+<p>（5）使用 less 命令查看生成的文件，并查找刚才转化的十六进制 tid，找到发生问题的线程上下文。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">less $pid.log</span><br></pre></td></tr></table></figure>
+
+
+<p>我们在 jstack 日志搜关键字DEAD，以及中找到了 CPU 使用最多的几个线程id。</p>
+<p>可以看到问题发生的根源，是我们的堆已经满了，但是又没有发生 OOM，于是 GC 进程就一直在那里回收，回收的效果又非常一般，造成 CPU 升高应用假死。接下来的具体问题排查，就需要把内存 dump 一份下来，使用 MAT 等工具分析具体原因了。</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/0.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-internet/啥是三色标记算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p><strong>大家好，我是树哥。</strong></p>
+<p>最近和一个朋友聊天，他问了我 JVM 的三色标记算法。我脑袋一愣发现竟然完全不知道！于是我带着疑问去网上看了几天的资料，终于搞清楚啥事三色标记算法，它是用来干嘛的，以及它和 CMS 回收器和 G1 回收器的关系了。今天，就让树哥带着大家一起盘一盘它！</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1754212602.png" alt="文章思维导图"></p>
+<h2 id="根可达算法"><a href="#根可达算法" class="headerlink" title="根可达算法"></a>根可达算法</h2><p>我们要进行垃圾回收，就需要弄明白哪些对象是需要回收的，哪些对象是不需要回收的。针对这个问题，其实业界已经有几种常见的解决方法了。</p>
+<p>第一种是计数法，就是每个对象都有一个计数器，被引用了加一，移除引用减一。但这种方法比较麻烦，而且也会有循环依赖的问题，因此并不被广泛使用。第二种是根可达算法，即以 GCRoots 为基础去扫描整个引用链，从而找到所有的可达对象，那剩下的其他对象就是不可达的垃圾对象了。</p>
+<p><strong>现在被广泛使用的是第二种算法，即根可达算法。</strong></p>
+<p>那怎么去实现根可达算法呢？</p>
+<p><strong>最简单的一种实现方案是：从　GCRoots 节点开始，使用「标记-清除」算法去实现。</strong></p>
+<p>这种实现方案分为两个阶段，分别是：标记阶段、清除阶段。在标记阶段，它从 GCRoots 节点开始扫描整个引用链，找到所有可达的对象。在清除阶段，扫描整个引用链的不可达对象，然后将垃圾对象清除掉。整个算法实现过程如下图所示。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1754212617.jpg" alt="图片引用自维基百科"></p>
+<p><strong>但这种方式有一个很大的缺点：整个过程必须「Stop the World」。这就导致整个应用程序必须停止，不能做任何改变，这是非常不友好的。</strong> CMS 回收器出现之前的所有回收器，都是用这种方式实现的，因此 GC 停顿时间都比轿长。</p>
+<h2 id="三色标记算法"><a href="#三色标记算法" class="headerlink" title="三色标记算法"></a>三色标记算法</h2><p>为了解决上面「标记-清除」算法的问题，于是就出现了「三色标记算法」！</p>
+<p><strong>三色标记算法指的是将所有对象分为白色、黑色和灰色三种类型。黑色表示从 GCRoots 开始，已扫描过它全部引用的对象，灰色指的是扫描过对象本身，还没完全扫描过它全部引用的对象，白色指的是还没扫描过的对象。</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1754212619.jpg" alt="图片引用自维基百科"></p>
+<p>但仅仅将对象划分成三个颜色还不够，真正关键的是：<strong>实现根可达算法的时候，将整个过程拆分成了初始标记、并发标记、重新标记、并发清除四个阶段。</strong></p>
 <ul>
-<li><strong>原理</strong>：用AVX512指令并行比较64字节文本块</li>
-<li><strong>开源实现</strong>：<a target="_blank" rel="noopener" href="https://github.com/simdjson/simdjson%EF%BC%88JSON%E8%A7%A3%E6%9E%90%E4%B8%AD%E7%9A%84%E6%A8%A1%E7%B3%8A%E5%8C%B9%E9%85%8D%E5%8A%A0%E9%80%9F%EF%BC%89">https://github.com/simdjson/simdjson（JSON解析中的模糊匹配加速）</a></li>
+<li>初始标记阶段，指的是标记 GCRoots 直接引用的节点，将它们标记为灰色，这个阶段需要 「Stop the World」。</li>
+<li>并发标记阶段，指的是从灰色节点开始，去扫描整个引用链，然后将它们标记为黑色，这个阶段不需要「Stop the World」。</li>
+<li>重新标记阶段，指的是去校正并发标记阶段的错误，这个阶段需要「Stop the World」。</li>
+<li>并发清除，指的是将已经确定为垃圾的对象清除掉，这个阶段不需要「Stop the World」。</li>
+</ul>
+<p>对比一下「四阶段拆分」和「一段式」的实现方式，我们可以看出：<strong>通过将最耗时的引用链扫描剥离出来作为并发标记阶段，将其与用户线程并发执行，从而极大地降低了 GC 停顿时间。</strong> 但 GC 线程与用户线程并发执行，会带来新的问题：对象引用关系可能会发生变化，有可能发生多标和漏标问题。</p>
+<h2 id="多标与漏标问题"><a href="#多标与漏标问题" class="headerlink" title="多标与漏标问题"></a>多标与漏标问题</h2><p><strong>多标问题指的是原本应该回收的对象，被多余地标记为黑色存活对象，从而导致该垃圾对象没有被回收。</strong> 多标问题会出现，是因为在并发标记阶段，有可能之前已经被标记为存活的对象，其引用被删除，从而变成了不可达对象。例如下图中，假设我们现在遍历到了节点 E，此时应用执行了 <code>objD.fieldE = null;</code>。那么此刻之后，对象 E、F、G 应该是被回收的。但因为节点 E 已经是灰色的，那么 E、F、G 节点都会被标记为存活的黑色状态，并不会被回收。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1754212602.jpg" alt="图片来自网络"></p>
+<p>多标问题会导致内存产生浮动垃圾，但好在其可以再下次 GC 的时候被回收，因此问题还不算很严重。</p>
+<p><strong>漏标问题指的是原本应该被标记为存活的对象，被遗漏标记为黑色，从而导致该垃圾对象被错误回收。</strong> 例如下图中，假设我们现在遍历到了节点 E，此时应用执行如下代码。这时候因为 E 对象没有引用了 G 对象，因此扫描 E 对象的时候并不会将 G 对象标记为黑色存活状态。但由于用户线程的 D 对象引用了 G 对象，这时候 G 对象应该是存活的，应该标记为黑色。但由于 D 对象已经被扫描过了，不会再次扫描，因此 G 对象就被漏标了。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> G = objE.fieldG; </span><br><span class="line">objE.fieldG = <span class="literal">null</span>;  <span class="comment">// 灰色E 断开引用 白色G </span></span><br><span class="line">objD.fieldG = G;  <span class="comment">// 黑色D 引用 白色G</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1754212602.jpg" alt="图片来自网络"></p>
+<p>漏标问题就非常严重了，其会导致存活对象被回收，会严重影响程序功能。</p>
+<p>那么我们的垃圾回收器是怎么解决这个问题的呢？</p>
+<p>答案是：<strong>增加一个「重新标记」阶段。无论是在 CMS 回收器还是 G1 回收器，它们都在并发标记阶段之后，新增了一个「重新标记」阶段来校正「并发标记」阶段出现的问题。</strong> 只是对于 CMS 回收器和 G1 回收器来说，它们解决的原理不同罢了。</p>
+<h2 id="漏标解决方案"><a href="#漏标解决方案" class="headerlink" title="漏标解决方案"></a>漏标解决方案</h2><p>正如前面所说，三色标记算法会造成漏标和多标问题。但多标问题相对不是那么严重，而漏标问题才是最严重的。我们经过分析可以知道，漏标问题要发生需要满足如下两个充要条件：</p>
+<ol>
+<li>有至少一个黑色对象在自己被标记之后指向了这个白色对象</li>
+<li>所有的灰色对象在自己引用扫描完成之前删除了对白色对象的引用</li>
+</ol>
+<p>只有当上面两个条件都满足，三色标记算法才会发生漏标的问题。换言之，如果我们破坏任何一个条件，这个白色对象就不会被漏标。<strong>这其实就产生了两种方式，分别是：增量更新、原始快照。CMS 回收器使用的增量更新方案，G1 采用的是原始快照方案。</strong></p>
+<h3 id="CMS-解决方案"><a href="#CMS-解决方案" class="headerlink" title="CMS 解决方案"></a>CMS 解决方案</h3><p><strong>CMS 回收器采用的是增量更新方案，即破坏第一个条件：「有至少一个黑色对象在自己被标记之后指向了这个白色对象」。</strong></p>
+<p>既然有黑色对象在自己标记后，又重新指向了白色对象。那么我就把这个黑色对象的引用记录下来，在后续「重新标记」阶段再以这个黑色对象为根，对其引用进行重新扫描。通过这种方式，被黑色对象引用的白色对象就会变成灰色，从而变为存活状态。</p>
+<p>这种方式有个缺点，就是会重新扫描新增的这部分黑色对象，会浪费多一些时间。但是这段时间相对于并发标记整个链路的扫描，还是小巫见大巫，毕竟真正发生引用变化的黑色对象是比较少的。</p>
+<h3 id="G1-解决方案"><a href="#G1-解决方案" class="headerlink" title="G1 解决方案"></a>G1 解决方案</h3><p><strong>G1 回收器采用的是原始快照的方案，即破坏第二个条件：「所有的灰色对象在自己引用扫描完成之前删除了对白色对象的引用」。</strong></p>
+<p>既然灰色对象在扫描完成前删除了对白色对象的引用，那么我是否能在灰色对象取消引用之前，先将灰色对象引用的白色对象记录下来。随后在「重新标记」阶段再以白色对象为根，对它的引用进行扫描，从而避免了漏标的问题。通过这种方式，原本漏标的对象就会被重新扫描变成灰色，从而变为存活状态。</p>
+<p><strong>这种方式有个缺点，就是会产生浮动垃圾。</strong> 因为当用户线程取消引用的时候，有可能是真的取消引用，对应的对象是真的要回收掉的。这时候我们通过这种方式，就会把本该回收的对象又复活了，从而导致出现浮动垃圾。但相对于本该存活的对象被回收，这个代价还是可以接受的，毕竟在下次 GC 的时候就可以回收了。</p>
+<p><strong>对于 CMS 和 G1 这两种处理方案哪种更好，很多资料说的是 G1 这种解决方案更好。</strong> 原因是其觉得 G1 这种方式产生了一些浮动垃圾，但节省了一些时间。但我对比了一下发现：CMS 和 G1 都需要重新对某些元素进行引用链扫描。从这点看来，好像差别不大。有弄懂的朋友可以评论区留言讨论讨论。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>看完了整篇文章，我们试图来回答一些问题。</p>
+<p><strong>三色标记算法是什么？</strong> 三色标记算法是根可达算法的一种实现方案，其目的是为了找出所有可达对象。</p>
+<p><strong>为什么要有三色标记算法？</strong> 因为传统的「标记-清除」算法效率太低，于是采用三色标记算法通过将对象分成白色、黑色、灰色，以及将整个过程拆分成「初始标记、并发标记、重新标记、并发清除」4 个过程，从而降低 GC 停顿时间。</p>
+<p><strong>三色标记算法有什么缺陷？</strong> 三色标记算法会产生多标和漏标问题，其中漏标问题最严重。漏标问题会导致本该存活的对象被回收，从而导致严重的程序问题。</p>
+<p><strong>漏标有什么解决方案？</strong> 漏标有两种解决方案，分别是：增量更新和原始快照方式。CMS 回收器采用了增量更新方式，G1 回收器采用了原始快照方式。</p>
+<p><strong>漏标哪种解决方案最好？</strong> 江湖传闻 G1 回收器的原始快照方式效率高，但没有确切的理论证明，且听且珍惜。</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/chanshuyi/p/head-first-of-triple-color-marking-algorithm.html">https://www.cnblogs.com/chanshuyi/p/head-first-of-triple-color-marking-algorithm.html</a></p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/0.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-internet/G1垃圾回收器的原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>G1（Garbage-First）垃圾回收器是Java虚拟机（JVM）中面向大内存、低延迟场景设计的垃圾回收器，自JDK 7u4正式推出，并在JDK 9后成为默认回收器。其核心原理结合了分区管理、并发标记和可预测停顿时间模型，以下从关键设计点展开说明：</p>
+<hr>
+<h3 id="🧩-一、核心设计思想"><a href="#🧩-一、核心设计思想" class="headerlink" title="🧩 一、核心设计思想"></a>🧩 一、<strong>核心设计思想</strong></h3><ol>
+<li><p><strong>分区模型（Region-Based Heap）</strong><br>G1将堆内存划分为多个大小相等的 <strong>Region</strong>（默认约2048个，每个1MB–32MB）。每个Region可动态充当以下角色：</p>
+<ul>
+<li><strong>Eden区</strong>：存放新对象。</li>
+<li><strong>Survivor区</strong>：存放Minor GC后存活的对象。</li>
+<li><strong>Old区</strong>：存放长期存活的对象。</li>
+<li><strong>Humongous区</strong>：专存大小超过Region容量50%的大对象（如大数组）。<br>这种设计避免传统分代堆的物理隔离，实现内存分配的灵活性，并减少内存碎片。</li>
 </ul>
 </li>
-<li><p><strong>确定性有穷自动机（DFA）</strong></p>
+<li><p><strong>垃圾优先（Garbage-First）策略</strong><br>G1通过跟踪每个Region的<strong>回收价值</strong>（垃圾占比 × 回收速度），优先回收垃圾最多的Region，最大化单次回收效率。用户可通过 <code>-XX:MaxGCPauseMillis</code>（默认200ms）设定最大停顿时间目标，G1据此动态调整回收范围。</p>
+</li>
+</ol>
+<hr>
+<h3 id="🔁-二、工作流程：并发标记与混合回收"><a href="#🔁-二、工作流程：并发标记与混合回收" class="headerlink" title="🔁 二、工作流程：并发标记与混合回收"></a>🔁 二、<strong>工作流程：并发标记与混合回收</strong></h3><p>G1的回收过程分为四个阶段，其中仅<strong>并发标记阶段完全无停顿</strong>：</p>
+<ol>
+<li><p><strong>初始标记（Initial Marking）</strong>  </p>
 <ul>
-<li><strong>适用场景</strong>：固定模式模糊匹配（如<code>139****1234</code>）</li>
-<li><strong>实现代码</strong>：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ahocorasick</span><br><span class="line">automaton = ahocorasick.Automaton()</span><br><span class="line"><span class="keyword">for</span> pattern <span class="keyword">in</span> [<span class="string">&#x27;%apple%&#x27;</span>, <span class="string">&#x27;%banana%&#x27;</span>]:</span><br><span class="line">    automaton.add_word(pattern.strip(<span class="string">&#x27;%&#x27;</span>), pattern)</span><br><span class="line">automaton.make_automaton()</span><br></pre></td></tr></table></figure></li>
+<li><strong>STW</strong>（暂停所有应用线程），标记GC Roots直接关联的对象。</li>
+<li><strong>借道Young GC</strong>：此阶段复用Young GC的暂停时间，几乎不增加额外开销。</li>
+</ul>
+</li>
+<li><p><strong>并发标记（Concurrent Marking）</strong>  </p>
+<ul>
+<li>与用户线程<strong>并发执行</strong>，遍历对象图标记存活对象。</li>
+<li>使用 <strong>SATB（Snapshot-At-The-Beginning）算法</strong> 记录标记开始时的对象快照，解决并发修改导致的“对象消失”问题。</li>
+</ul>
+</li>
+<li><p><strong>最终标记（Final Marking）</strong>  </p>
+<ul>
+<li><strong>STW</strong>，处理SATB记录中的引用变更，确保标记完整性。</li>
+<li>回收完全空闲的Region。</li>
+</ul>
+</li>
+<li><p><strong>筛选回收（Evacuation）</strong>  </p>
+<ul>
+<li><strong>STW</strong>，基于回收价值排序Region，在停顿时间内复制存活对象到新Region（复制算法），并清空旧Region。</li>
+<li>支持<strong>分批次回收</strong>（通过 <code>-XX:G1MixedGCCountTarget</code> 控制批次），避免单次停顿过长。</li>
 </ul>
 </li>
 </ol>
 <hr>
-<h3 id="五、各方案成本对比"><a href="#五、各方案成本对比" class="headerlink" title="五、各方案成本对比"></a>五、各方案成本对比</h3><table>
+<h3 id="⚙️-三、关键技术机制"><a href="#⚙️-三、关键技术机制" class="headerlink" title="⚙️ 三、关键技术机制"></a>⚙️ 三、<strong>关键技术机制</strong></h3><ol>
+<li><p><strong>跨代引用处理：RSet（Remembered Set）</strong>  </p>
+<ul>
+<li>每个Region维护一个<strong>RSet</strong>，记录其他Region中指向本Region内对象的引用。</li>
+<li>作用：避免全堆扫描。例如Young GC时，只需扫描Old区中RSet记录的卡表（Card Table），定位到老年代对新生代的引用。</li>
+</ul>
+</li>
+<li><p><strong>大对象（Humongous）管理</strong>  </p>
+<ul>
+<li>大对象直接分配至连续Humongous Region，避免跨Region存储的复杂性。</li>
+<li>回收时机：在Young GC或Mixed GC中<strong>随附属Region一并回收</strong>。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="🔄-四、回收模式：Young-GC-与-Mixed-GC"><a href="#🔄-四、回收模式：Young-GC-与-Mixed-GC" class="headerlink" title="🔄 四、回收模式：Young GC 与 Mixed GC"></a>🔄 四、<strong>回收模式：Young GC 与 Mixed GC</strong></h3><table>
 <thead>
 <tr>
-<th>方案</th>
-<th>开发成本</th>
-<th>维护成本</th>
-<th>硬件消耗</th>
-<th>查询延迟</th>
+<th><strong>模式</strong></th>
+<th><strong>触发条件</strong></th>
+<th><strong>回收范围</strong></th>
+<th><strong>特点</strong></th>
 </tr>
 </thead>
 <tbody><tr>
-<td>数据库LIKE全扫</td>
-<td>★☆☆</td>
-<td>★☆☆</td>
-<td>★★★★</td>
-<td>秒级</td>
+<td><strong>Young GC</strong></td>
+<td>Eden区满</td>
+<td>仅新生代Region</td>
+<td>STW，复制算法，频率高但停顿短</td>
 </tr>
 <tr>
-<td>数据库trigram索引</td>
-<td>★★☆</td>
-<td>★★☆</td>
-<td>★★★☆</td>
-<td>10-100ms</td>
+<td><strong>Mixed GC</strong></td>
+<td>老年代占比 ≥ 45%（默认）</td>
+<td>新生代 + <strong>高价值老年代Region</strong></td>
+<td>含并发标记阶段，可控制停顿时间</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>⚠️ <strong>Full GC触发条件</strong>：当Mixed GC中存活对象无空闲Region容纳时，退化为单线程Full GC（需极力避免）。</p>
+</blockquote>
+<hr>
+<h3 id="⚖️-五、对比其他回收器"><a href="#⚖️-五、对比其他回收器" class="headerlink" title="⚖️ 五、对比其他回收器"></a>⚖️ 五、<strong>对比其他回收器</strong></h3><table>
+<thead>
+<tr>
+<th><strong>特性</strong></th>
+<th><strong>G1</strong></th>
+<th><strong>CMS</strong></th>
+<th><strong>ZGC</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>内存模型</strong></td>
+<td>Region分区</td>
+<td>连续分代</td>
+<td>虚拟内存映射</td>
 </tr>
 <tr>
-<td>Elasticsearch</td>
-<td>★★★☆</td>
-<td>★★★☆</td>
-<td>★★☆</td>
-<td>5-50ms</td>
+<td><strong>停顿目标</strong></td>
+<td>可预测（200ms内）</td>
+<td>不可预测</td>
+<td>亚毫秒级（&lt;1ms）</td>
 </tr>
 <tr>
-<td>定制化DFA&#x2F;SIMD方案</td>
-<td>★★★★☆</td>
-<td>★★★★☆</td>
-<td>★☆☆</td>
-<td>&lt;1ms（内存中）</td>
+<td><strong>碎片处理</strong></td>
+<td>复制算法（自动整理）</td>
+<td>标记-清除（需压缩）</td>
+<td>无碎片</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>堆内存 &gt;6GB，兼顾吞吐与延迟</td>
+<td>小堆（&lt;6GB），低延迟</td>
+<td>超大堆（TB级），极致延迟</td>
 </tr>
 </tbody></table>
 <hr>
-<h3 id="总结建议"><a href="#总结建议" class="headerlink" title="总结建议"></a>总结建议</h3><ol>
-<li><strong>高频复杂模糊查询</strong>：<strong>Elasticsearch&#x2F;Solr</strong>是生产环境首选，通配符性能是数据库的 <strong>100倍以上</strong></li>
-<li><strong>轻度模糊查询</strong>：<ul>
-<li>PostgreSQL用 <strong><code>pg_trgm</code></strong></li>
-<li>MySQL 8.0+ 用 <strong><code>ngram Full-Text</code>索引</strong></li>
+<h3 id="🛠️-六、调优建议"><a href="#🛠️-六、调优建议" class="headerlink" title="🛠️ 六、调优建议"></a>🛠️ 六、<strong>调优建议</strong></h3><ol>
+<li><strong>核心参数</strong>：<ul>
+<li><code>-XX:MaxGCPauseMillis=200</code>：根据业务需求调整（过低易触发Full GC）。</li>
+<li><code>-XX:InitiatingHeapOccupancyPercent=45</code>：调高可延迟Mixed GC触发。</li>
 </ul>
 </li>
-<li><strong>超低延迟需求</strong>：开发 <strong>基于SIMD+DFA的定制化引擎</strong>（仅在内存充足时有效）</li>
+<li><strong>避免Full GC</strong>：<ul>
+<li>增加堆内存，或降低大对象分配。</li>
+<li>监控晋升失败（Promotion Failure）与疏散失败（Evacuation Failure）。</li>
+</ul>
+</li>
+<li><strong>Region大小优化</strong>：<br>堆较大时建议设置 <code>-XX:G1HeapRegionSize=4M</code>（默认值计算为堆大小&#x2F;2048）。</li>
+</ol>
+<hr>
+<h3 id="💎-总结"><a href="#💎-总结" class="headerlink" title="💎 总结"></a>💎 总结</h3><p>G1通过 <strong>Region分区 + 价值优先回收 + 并发标记</strong> 三大支柱，在<strong>大堆场景下平衡吞吐量与停顿可控性</strong>，成为JDK 9+的默认选择。其设计精髓在于：<br>✅ <strong>空间维度</strong>：Region化解构堆内存，实现细粒度回收；<br>✅ <strong>时间维度</strong>：SATB和RSet减少STW范围，并发标记提升效率；<br>✅ <strong>策略维度</strong>：按回收价值动态选择目标，最大化单位时间收益。  </p>
+<p>对于追求更低延迟（如&lt;10ms）或超大堆（&gt;100GB）的场景，可评估ZGC或Shenandoah，但G1仍是多数生产环境的稳健之选。</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/0.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-internet/新对象在JVM中如何分配的" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>新对象在 JVM 中的内存分配是一个多层级协作的过程，其核心流程如下（以主流的 <strong>分代收集算法</strong> 为例）：</p>
+<hr>
+<h3 id="一、分配流程总览"><a href="#一、分配流程总览" class="headerlink" title="一、分配流程总览"></a><strong>一、分配流程总览</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    A[新对象创建] --&gt; B&#123;对象是否过大?&#125;</span><br><span class="line">    B -- 是 --&gt; C[直接进入老年代]</span><br><span class="line">    B -- 否 --&gt; D&#123;是否开启逃逸分析且可栈上分配?&#125;</span><br><span class="line">    D -- 是 --&gt; E[栈上分配]</span><br><span class="line">    D -- 否 --&gt; F&#123;是否在 TLAB 内分配?&#125;</span><br><span class="line">    F -- 是 --&gt; G[TLAB 分配]</span><br><span class="line">    F -- 否 --&gt; H[共享 Eden 区分配]</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="二、关键步骤详解"><a href="#二、关键步骤详解" class="headerlink" title="二、关键步骤详解"></a><strong>二、关键步骤详解</strong></h3><h4 id="1-逃逸分析与栈上分配（优先尝试）"><a href="#1-逃逸分析与栈上分配（优先尝试）" class="headerlink" title="1. 逃逸分析与栈上分配（优先尝试）"></a><strong>1. 逃逸分析与栈上分配（优先尝试）</strong></h4><ul>
+<li><strong>条件</strong>：  <ul>
+<li>开启逃逸分析（<code>-XX:+DoEscapeAnalysis</code>，默认开启）  </li>
+<li>对象未逃出当前方法作用域（无外部引用）</li>
+</ul>
+</li>
+<li><strong>分配位置</strong>：直接分配在 <strong>当前线程栈帧</strong> 上  </li>
+<li><strong>优势</strong>：  <ul>
+<li>自动随栈帧销毁回收（无GC压力）  </li>
+<li>无锁竞争（线程私有）</li>
+</ul>
+</li>
+<li><strong>伪代码示例</strong>：  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">createLocalObj</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">Object</span> <span class="variable">localObj</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Object</span>();  <span class="comment">// 未逃逸 → 栈上分配</span></span><br><span class="line">&#125;  <span class="comment">// 方法结束，对象自动销毁</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<blockquote>
+<p>⚠️ 若对象逃逸（如作为返回值或赋值给静态变量），则跳过此步骤。</p>
+</blockquote>
+<hr>
+<h4 id="2-TLAB-快速分配（第二优先级）"><a href="#2-TLAB-快速分配（第二优先级）" class="headerlink" title="2. TLAB 快速分配（第二优先级）"></a><strong>2. TLAB 快速分配（第二优先级）</strong></h4><ul>
+<li><strong>TLAB 机制</strong>：  <ul>
+<li>每个线程在 <strong>Eden 区</strong> 预先划出私有内存块（Thread Local Allocation Buffer）  </li>
+<li>大小通过 <code>-XX:TLABSize</code> 控制（默认自适应）</li>
+</ul>
+</li>
+<li><strong>分配逻辑</strong>：  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (对象大小 &lt;= TLAB剩余空间) &#123;</span><br><span class="line">    在TLAB内移动指针分配;  <span class="comment">// 无锁操作（仅原子指针后移）</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    尝试申请新TLAB或直接进入共享Eden区;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><strong>优势</strong>：避免多线程竞争锁（提升高并发下分配效率）</li>
+</ul>
+<hr>
+<h4 id="3-共享-Eden-区分配（常规路径）"><a href="#3-共享-Eden-区分配（常规路径）" class="headerlink" title="3. 共享 Eden 区分配（常规路径）"></a><strong>3. 共享 Eden 区分配（常规路径）</strong></h4><ul>
+<li><strong>流程</strong>：  <ol>
+<li>若对象大小未超过 <code>-XX:PretenureSizeThreshold</code>（默认0），进入新生代 Eden 区  </li>
+<li>通过 <strong>指针碰撞（Bump The Pointer）</strong> 或 <strong>空闲列表（Free List）</strong> 分配：  <ul>
+<li><strong>指针碰撞</strong>（堆内存规整时）：  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">addr = eden_top;           <span class="comment">// 获取当前Eden顶部地址</span></span><br><span class="line">eden_top += obj_size;      <span class="comment">// 指针后移（CAS操作保证原子性）</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>空闲列表</strong>（内存不规整时）：从空闲内存块链表中查找足够空间</li>
+</ul>
+</li>
+<li>若 <strong>Eden 区空间不足</strong>，触发 <strong>Minor GC</strong>（年轻代垃圾回收）</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h4 id="4-大对象直接入老年代（避免复制开销）"><a href="#4-大对象直接入老年代（避免复制开销）" class="headerlink" title="4. 大对象直接入老年代（避免复制开销）"></a><strong>4. 大对象直接入老年代（避免复制开销）</strong></h4><ul>
+<li><strong>条件</strong>：  <ul>
+<li>对象大小 ≥ <code>-XX:PretenureSizeThreshold</code>（默认0，需手动设置如 <code>-XX:PretenureSizeThreshold=4M</code>）  </li>
+<li>或对象为巨型数组（JVM 自动判断）</li>
+</ul>
+</li>
+<li><strong>分配位置</strong>：直接在 <strong>老年代</strong> 分配  </li>
+<li><strong>原因</strong>：避免大对象在 Eden 区及 Survivor 区频繁复制带来的性能损耗</li>
+</ul>
+<hr>
+<h3 id="三、底层技术支撑"><a href="#三、底层技术支撑" class="headerlink" title="三、底层技术支撑"></a><strong>三、底层技术支撑</strong></h3><table>
+<thead>
+<tr>
+<th><strong>技术</strong></th>
+<th><strong>作用</strong></th>
+<th><strong>相关参数</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>逃逸分析</strong></td>
+<td>决定能否栈上分配</td>
+<td><code>-XX:+DoEscapeAnalysis</code></td>
+</tr>
+<tr>
+<td><strong>TLAB</strong></td>
+<td>线程私有分配缓冲区减少锁竞争</td>
+<td><code>-XX:+UseTLAB</code>, <code>-XX:TLABSize</code></td>
+</tr>
+<tr>
+<td><strong>指针碰撞</strong></td>
+<td>快速分配连续内存（需内存规整）</td>
+<td><code>-XX:+UseCompactAtFullCollection</code></td>
+</tr>
+<tr>
+<td><strong>空闲列表</strong></td>
+<td>管理碎片化内存（CMS收集器常用）</td>
+<td><code>-XX:+UseCMSCompactAtFullCollection</code></td>
+</tr>
+<tr>
+<td><strong>大对象阈值</strong></td>
+<td>直接进入老年代</td>
+<td><code>-XX:PretenureSizeThreshold</code></td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="四、对象分配流程图解"><a href="#四、对象分配流程图解" class="headerlink" title="四、对象分配流程图解"></a><strong>四、对象分配流程图解</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">    A[新对象] --&gt; B&#123;是否可逃逸分析?&#125;</span><br><span class="line">    B -- 是 --&gt; C[栈上分配]         </span><br><span class="line">    B -- 否 --&gt; D&#123;是否大对象?&#125;</span><br><span class="line">    D -- 是 --&gt; E[老年代分配]        </span><br><span class="line">    D -- 否 --&gt; F&#123;TLAB空间足够?&#125;</span><br><span class="line">    F -- 是 --&gt; G[TLAB分配]         </span><br><span class="line">    F -- 否 --&gt; H[共享Eden区分配]   </span><br><span class="line">    H -- 空间不足 --&gt; I[触发Minor GC] </span><br><span class="line">    I -- GC后空间足够 --&gt; J[分配成功] </span><br><span class="line">    I -- GC后空间不足 --&gt; K&#123;老年代空间担保?&#125;  </span><br><span class="line">    K -- 担保成功 --&gt; I[执行Minor GC]  </span><br><span class="line">    K -- 担保失败 --&gt; L[触发Full GC] </span><br><span class="line">    L -- GC后空间足够 --&gt; H </span><br><span class="line">    L -- GC后仍不足 --&gt; M[OOM] </span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="五、关键注意事项"><a href="#五、关键注意事项" class="headerlink" title="五、关键注意事项"></a><strong>五、关键注意事项</strong></h3><ol>
+<li><strong>TLAB 并非完全无锁</strong>：  <ul>
+<li>当 TLAB 用尽时仍需竞争共享区的锁（通过 <code>-XX:TLABWasteTargetPercent</code> 调节浪费比例）</li>
+</ul>
+</li>
+<li><strong>堆内存规整性依赖 GC 器</strong>：  <ul>
+<li>Serial&#x2F;ParNew 等用 <strong>标记-复制</strong> 算法 → 内存规整 → 支持指针碰撞  </li>
+<li>CMS 用 <strong>标记-清除</strong> → 内存碎片 → 需空闲列表</li>
+</ul>
+</li>
+<li><strong>空间分配担保风险</strong>：  <ul>
+<li>Full GC 后仍无法分配 → <code>OutOfMemoryError: Java heap space</code></li>
+</ul>
+</li>
 </ol>
 <blockquote>
-<p>📌 <strong>紧急避坑提示</strong>：<br><strong>切勿</strong>在数据库无索引时直接跑 <code>%xxx%</code>！<br><strong>切勿</strong>在ES中使用前导通配符 <code>*xxx</code>（性能杀手）！</p>
+<p>💡 <strong>调优建议</strong>：在高并发应用中，通过 <code>-XX:TLABSize</code> 增大 TLAB 可显著提升分配效率，同时监控 <code>-XX:+PrintTLAB</code> 日志优化浪费阈值。</p>
+</blockquote>
+<h1 id="空间分配担保"><a href="#空间分配担保" class="headerlink" title="空间分配担保"></a>空间分配担保</h1><p><strong>空间分配担保（Promotion Handling）</strong> 是 JVM 在 <strong>Minor GC 触发前</strong>，为确保存活对象能安全进入老年代而设计的 <strong>风险评估机制</strong>。其核心目的是在年轻代空间不足时，通过老年代的空间兜底来避免频繁 Full GC。</p>
+<hr>
+<h3 id="一、核心流程与规则"><a href="#一、核心流程与规则" class="headerlink" title="一、核心流程与规则"></a><strong>一、核心流程与规则</strong></h3><p>当发生 <strong>Minor GC</strong> 前，JVM 会执行如下判断：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">    A[触发 Minor GC] --&gt; B&#123;检查老年代连续空间大小&#125;</span><br><span class="line">    B -- 是否 ≥ 新生代对象总大小? --&gt; C&#123;是&#125;</span><br><span class="line">    B -- 否 --&gt; D[强制 Full GC]</span><br><span class="line">    C -- 是 --&gt; E[执行 Minor GC]</span><br><span class="line">    E -- GC后存活对象大小 &gt; Survivor区容量 --&gt; F[提前晋升至老年代]</span><br><span class="line">    E -- GC后存活对象大小 ≤ Survivor区容量 --&gt; G[正常进入 Survivor]</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>📌 <strong>关键阈值：</strong><br>担保成功需满足：<strong>老年代连续可用空间 ≥ 新生代所有对象总大小</strong><br>（若开启 <code>-XX:HandlePromotionFailure=true</code>，则放宽为 <strong>≥ 历次晋升老年代的平均大小</strong>）</p>
+</blockquote>
+<hr>
+<h3 id="二、三个核心阶段详解"><a href="#二、三个核心阶段详解" class="headerlink" title="二、三个核心阶段详解"></a><strong>二、三个核心阶段详解</strong></h3><h4 id="阶段-1：GC-前风险检查"><a href="#阶段-1：GC-前风险检查" class="headerlink" title="阶段 1：GC 前风险检查"></a><strong>阶段 1：GC 前风险检查</strong></h4><ul>
+<li><strong>检查条件</strong>：<br><code>Minor GC</code> 前发现 <strong>Eden + From Survivor</strong> 区空间不足  </li>
+<li><strong>评估标准</strong>：<br>判断老年代是否 <strong>有能力容纳以下两者的最大值</strong>：  <ol>
+<li>当前新生代所有存活对象（若全晋升）  </li>
+<li>历史平均晋升大小（若开启 <code>HandlePromotionFailure</code>）</li>
+</ol>
+</li>
+<li><strong>决策逻辑</strong>：  <ul>
+<li>若老年代空间 <strong>足够</strong> → 允许进行 Minor GC  </li>
+<li>若老年代空间 <strong>不足</strong> → 直接触发 <strong>Full GC</strong>（避免 Minor GC 失败）</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>注</strong>：JDK 7+ 默认忽略 <code>HandlePromotionFailure</code> 参数（始终做严格检查）</p>
+</blockquote>
+<h4 id="阶段-2：Minor-GC-执行"><a href="#阶段-2：Minor-GC-执行" class="headerlink" title="阶段 2：Minor GC 执行"></a><strong>阶段 2：Minor GC 执行</strong></h4><ul>
+<li><strong>存活对象分配策略</strong>：  <ul>
+<li>若存活对象 <strong>≤ Survivor 区容量</strong> → 进入 Survivor 区（年龄+1）  </li>
+<li>若存活对象 <strong>&gt; Survivor 区容量</strong> → <strong>提前晋升至老年代</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="阶段-3：担保失败处理"><a href="#阶段-3：担保失败处理" class="headerlink" title="阶段 3：担保失败处理"></a><strong>阶段 3：担保失败处理</strong></h4><p>若 Minor GC 后发现存活对象太多 → 老年代<strong>实际空间不足</strong> → 触发 <strong>Full GC</strong><br>（最坏场景：Full GC 后仍不足 → <code>OOM: Java heap space</code>）</p>
+<hr>
+<h3 id="三、参数与调优"><a href="#三、参数与调优" class="headerlink" title="三、参数与调优"></a><strong>三、参数与调优</strong></h3><table>
+<thead>
+<tr>
+<th><strong>参数</strong></th>
+<th><strong>作用</strong></th>
+<th><strong>默认值</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-XX:HandlePromotionFailure</code></td>
+<td>是否允许根据历史记录放宽担保条件（JDK6用，7+废弃）</td>
+<td><code>true</code> (JDK6)</td>
+</tr>
+<tr>
+<td><code>-XX:MaxTenuringThreshold</code></td>
+<td>对象最大晋升年龄（超过直接进老年代）</td>
+<td><code>15</code></td>
+</tr>
+<tr>
+<td><code>-XX:SurvivorRatio</code></td>
+<td>Eden 与 Survivor 区比例（如 <code>8</code> 表示 Eden:Survivor&#x3D;8:1）</td>
+<td><code>8</code></td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="四、空间分配担保的意义"><a href="#四、空间分配担保的意义" class="headerlink" title="四、空间分配担保的意义"></a><strong>四、空间分配担保的意义</strong></h3><ol>
+<li><strong>避免无效 Minor GC</strong><br>若老年代无法兜底存活对象，提前触发 Full GC 比 Minor GC 失败再 Full GC 更高效</li>
+<li><strong>减少 Full GC 频率</strong><br>担保成功后 Minor GC 可安全执行，避免直接 Full GC</li>
+<li><strong>防止过早 OOM</strong><br>严格检查确保存活对象有去向（若完全不担保，Minor GC 后存活对象无处存放直接 OOM）</li>
+</ol>
+<hr>
+<h3 id="五、调优建议"><a href="#五、调优建议" class="headerlink" title="五、调优建议"></a><strong>五、调优建议</strong></h3><ol>
+<li><strong>监控老年代空闲比例</strong><br>确保老年代剩余空间 &gt; <strong>新生代总容量 × 1.2</strong>（安全余量）  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstat -gcutil &lt;pid&gt; 1000  <span class="comment"># 监控 Old 区利用率</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>调整 Survivor 区容量</strong><br>增大 <code>-XX:SurvivorRatio</code> 或使用 <code>-XX:+UseAdaptiveSizePolicy</code>（默认启用）  </li>
+<li><strong>控制对象晋升速率</strong>  <ul>
+<li>降低 <code>-XX:MaxTenuringThreshold</code>（减少对象在年轻代停留）  </li>
+<li>排查内存泄漏（避免过多本应回收的对象进入老年代）</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>💡 <strong>关键原则</strong>：空间分配担保是 JVM 的自救策略，但根治方案仍是 <strong>合理分配堆大小</strong> 与 <strong>优化代码内存占用</strong>。</p>
 </blockquote>
 
     
@@ -418,866 +1254,94 @@
 
 
   
-    <article id="post-interview/快速复习指南" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-internet/从源码解析线程池keepAliveTime生效机制  " class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/b44a5d7a.html" target="_blank">快速复习指南</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/b44a5d7a.html" class="archive-article-date">
-        <time datetime="2022-05-26T03:31:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-26</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
   <div class="article-entry" itemprop="articleBody">
     
-    <hr>
-<h2 id="计算机基础"><a href="#计算机基础" class="headerlink" title="计算机基础"></a>计算机基础</h2><h3 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h3><h2 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h2><ul>
-<li><a href="https://blog.elfred.top/posts/c783f2ce.html">操作系统面试题</a></li>
-</ul>
-<h2 id="JAVA基础"><a href="#JAVA基础" class="headerlink" title="JAVA基础"></a>JAVA基础</h2><h3 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h3><ul>
-<li><a href="https://blog.elfred.top/posts/531c5825.html">多线程面试题</a></li>
-</ul>
-<h3 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h3><ul>
-<li><a href="https://blog.elfred.top/posts/eec2f852.html">JVM面试题</a></li>
-</ul>
-<h2 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h2><h3 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h3><h4 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h4><ul>
-<li><a href="https://blog.elfred.top/posts/bf7bdd05.html">redis常见面试题</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/O1W2CJ9T-bVj0t-E5gihRA">妈妈再也不担心我面试被Redis问得脸都绿了</a></li>
-</ul>
-<h4 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h4><ul>
-<li><a href="https://blog.elfred.top/posts/a2aadf50.html">redis集群及架构</a></li>
-</ul>
-<h3 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h3><h4 id="基础-1"><a href="#基础-1" class="headerlink" title="基础"></a>基础</h4><ul>
-<li><a href="https://blog.elfred.top/posts/e27205e0.html">MySQL常见面试题</a></li>
-</ul>
-<h4 id="进阶-1"><a href="#进阶-1" class="headerlink" title="进阶"></a>进阶</h4><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YQFHclmKQGlZtvBkSINpsw">InnoDB解决幻读的方案–LBCC&amp;MVCC</a></li>
-</ul>
-<h4 id="分库分表最佳实践"><a href="#分库分表最佳实践" class="headerlink" title="分库分表最佳实践"></a>分库分表最佳实践</h4><p>TODO</p>
-<h2 id="系统架构设计"><a href="#系统架构设计" class="headerlink" title="系统架构设计"></a>系统架构设计</h2><ul>
-<li><a href="https://blog.elfred.top/posts/75203a6f.html">系统架构设计面试题</a></li>
-</ul>
-<h3 id="场景设计题"><a href="#场景设计题" class="headerlink" title="场景设计题"></a>场景设计题</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://zq99299.github.io/note-architect/hc/07/03.html#%E8%AE%BE%E8%AE%A1%E4%BF%A1%E6%81%AF%E6%B5%81%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%85%B3%E6%B3%A8%E7%82%B9%E6%9C%89%E5%93%AA%E4%BA%9B">如何设计微博feeds流</a></li>
-</ul>
-<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><h3 id="刷题网站"><a href="#刷题网站" class="headerlink" title="刷题网站"></a>刷题网站</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://codetop.cc/home">codetop</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.programmercarl.com/">代码随想录</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.cyc2018.xyz/%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87%20Offer%20%E9%A2%98%E8%A7%A3/%E5%89%91%E6%8C%87%20Offer%20%E9%A2%98%E8%A7%A3%20-%20%E7%9B%AE%E5%BD%95.html">CS-Notes 剑指 Offer 题解</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.cyc2018.xyz/%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87%20Offer%20%E9%A2%98%E8%A7%A3/%E5%89%91%E6%8C%87%20Offer%20%E9%A2%98%E8%A7%A3%20-%20%E7%9B%AE%E5%BD%95.html">CS-Notes Leetcode 题解</a></li>
-</ul>
-<h2 id="综合面经"><a href="#综合面经" class="headerlink" title="综合面经"></a>综合面经</h2><ul>
-<li><a href="https://blog.elfred.top/2021/01/20/interview/2021%E9%9D%A2%E7%BB%8F/">2021面经</a></li>
-<li><a href="https://blog.elfred.top/2021/05/09/interview/2021%E9%9D%A2%E7%BB%8F%E7%AC%AC%E4%BA%8C%E6%B3%A2/">2021面经第二波</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/cciIzLMXVs28vBHaapdvfw">20+互联网公司面试总结</a></li>
-</ul>
-<h2 id="快速检索："><a href="#快速检索：" class="headerlink" title="快速检索："></a>快速检索：</h2><ul>
-<li><a href="https://blog.elfred.top/posts/d64d980f.html">那些年我们背过的JAVA面试题</a></li>
-<li><a href="https://blog.elfred.top/posts/ec3caae2.html">系统设计面试题</a></li>
-<li><a target="_blank" rel="noopener" href="https://snailclimb.gitee.io/javaguide/#/">JavaGuide</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.cyc2018.xyz/">CS-Notes</a></li>
-</ul>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">快速复习指南</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/b44a5d7a.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-internet/redis集群的架构、问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/a2aadf50.html" target="_blank">redis集群的架构、问题，附脑洞</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/a2aadf50.html" class="archive-article-date">
-        <time datetime="2022-05-24T12:52:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-24</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <hr>
-<h1 id="redis集群的架构、问题，附脑洞"><a href="#redis集群的架构、问题，附脑洞" class="headerlink" title="redis集群的架构、问题，附脑洞"></a><strong>redis集群的架构、问题，附脑洞</strong></h1><p>Redis 是一种开源（BSD 许可）、数据结构存储在内存中的系统，用作数据库、缓存和消息队列。Redis 提供了诸如字符串、散列、列表、集合、带范围查询的排序集合、位图、超级日志、地理空间索引和流等数据结构。Redis 内置复制、Lua 脚本、LRU 驱逐、事务和不同级别的磁盘持久化，并通过 Redis Sentinel 和 Redis Cluster 自动分区提供高可用性。</p>
-<h2 id="1-集群的优势"><a href="#1-集群的优势" class="headerlink" title="1 集群的优势"></a>1 集群的优势</h2><p>下面是redis集群的几个明显优势。</p>
-<h3 id="1-1-伸缩性，数据规模不断增大的时候，容易扩容"><a href="#1-1-伸缩性，数据规模不断增大的时候，容易扩容" class="headerlink" title="1.1 伸缩性，数据规模不断增大的时候，容易扩容"></a>1.1 伸缩性，数据规模不断增大的时候，容易扩容</h3><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d28640001ba3d07320377.jpg"></p>
-<p>单实例模式：只能垂直扩展，增大机器内存的容量；</p>
-<p>集群模式：支持垂直扩展，也支持水平扩展，有更好的灵活性，也可以支持更大的容量；</p>
-    
-    <a class="article-more-a" href="/posts/a2aadf50.html#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">redis</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">redis集群</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">架构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/a2aadf50.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-interview/Spring常见面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/5dd00982.html" target="_blank">Spring常见面试题</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/5dd00982.html" class="archive-article-date">
-        <time datetime="2022-05-21T14:32:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-21</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <hr>
-    
-    <a class="article-more-a" href="/posts/5dd00982.html#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/5dd00982.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-internet/JAVA" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/d64d980f.html" target="_blank">那些年我们背过的JAVA面试题</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/d64d980f.html" class="archive-article-date">
-        <time datetime="2022-05-21T03:24:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-21</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <hr>
-<!--fork from https://github.com/idaSmilence/javaDesign-->
-    
-    <a class="article-more-a" href="/posts/d64d980f.html#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">面试题</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/d64d980f.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-internet/DESIGN" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/ec3caae2.html" target="_blank">系统设计面试题</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/ec3caae2.html" class="archive-article-date">
-        <time datetime="2022-05-21T03:24:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-21</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <hr>
-<!--fork from https://github.com/idaSmilence/javaDesign-->
-    
-    <a class="article-more-a" href="/posts/ec3caae2.html#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">面试题</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">系统设计</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/ec3caae2.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-internet/布隆过滤器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/9a0369ec.html" target="_blank">布隆过滤器</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/9a0369ec.html" class="archive-article-date">
-        <time datetime="2022-05-16T14:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-16</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="布隆过滤器"><a href="#布隆过滤器" class="headerlink" title="布隆过滤器"></a>布隆过滤器</h1><p>海量数据处理以及缓存穿透这两个场景让我认识了 布隆过滤器 ，我查阅了一些资料来了解它，但是很多现成资料并不满足我的需求，所以就决定自己总结一篇关于布隆过滤器的文章。希望通过这篇文章让更多人了解布隆过滤器，并且会实际去使用它！</p>
-<p>下面我们将分为几个方面来介绍布隆过滤器：</p>
-<ol>
-<li>什么是布隆过滤器？</li>
-<li>布隆过滤器的原理介绍。</li>
-<li>布隆过滤器使用场景。</li>
-<li>通过 Java 编程手动实现布隆过滤器。</li>
-<li>利用 Google 开源的 Guava 中自带的布隆过滤器。</li>
-<li>Redis 中的布隆过滤器。</li>
-</ol>
-    
-    <a class="article-more-a" href="/posts/9a0369ec.html#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/9a0369ec.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-interview/2022面经" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/708d4d58.html" target="_blank">2022面经</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/708d4d58.html" class="archive-article-date">
-        <time datetime="2022-05-12T12:02:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-12</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <hr>
-    
-    <a class="article-more-a" href="/posts/708d4d58.html#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/面经//" class="article-tag-list-link color3">面经</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/708d4d58.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-study/数据结构与算法之美/学习笔记/29讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/22fa690f.html" target="_blank">29讲</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/22fa690f.html" class="archive-article-date">
-        <time datetime="2021-08-23T01:30:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-23</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <hr>
-<h1 id="29-堆的应用：如何快速获取到Top-10最热门的搜索关键词？"><a href="#29-堆的应用：如何快速获取到Top-10最热门的搜索关键词？" class="headerlink" title="29 | 堆的应用：如何快速获取到Top 10最热门的搜索关键词？"></a>29 | 堆的应用：如何快速获取到Top 10最热门的搜索关键词？</h1><h2 id="堆的应用一：优先级队列"><a href="#堆的应用一：优先级队列" class="headerlink" title="堆的应用一：优先级队列"></a>堆的应用一：优先级队列</h2><h3 id="1-合并有序小文件"><a href="#1-合并有序小文件" class="headerlink" title="1. 合并有序小文件"></a>1. 合并有序小文件</h3><p>假设我们有 100 个小文件，每个文件的大小是 100MB，每个文件中存储的都是有序的字符串。我们希望将这些 100 个小文件合并成一个有序的大文件。这里就会用到优先级队列。</p>
-<p>整体思路有点像归并排序中的合并函数。我们从这 100 个文件中，各取第一个字符串，放入数组中，然后比较大小，把最小的那个字符串放入合并后的大文件中，并从数组中删除。</p>
-<p>假设，这个最小的字符串来自于 13.txt 这个小文件，我们就再从这个小文件取下一个字符串，放到数组中，重新比较大小，并且选择最小的放入合并后的大文件，将它从数组中删除。依次类推，直到所有的文件中的数据都放入到大文件为止。</p>
-<p>这里我们用数组这种数据结构，来存储从小文件中取出来的字符串。每次从数组中取最小字符串，都需要循环遍历整个数组，显然，这不是很高效。有没有更加高效方法呢？</p>
-<p>这里就可以用到优先级队列，也可以说是堆。我们将从小文件中取出来的字符串放入到小顶堆中，那堆顶的元素，也就是优先级队列队首的元素，就是最小的字符串。我们将这个字符串放入到大文件中，并将其从堆中删除。然后再从小文件中取出下一个字符串，放入到堆中。循环这个过程，就可以将 100 个小文件中的数据依次放入到大文件中。</p>
-<p>我们知道，删除堆顶数据和往堆中插入数据的时间复杂度都是 O(logn)，n 表示堆中的数据个数，这里就是 100。是不是比原来数组存储的方式高效了很多呢？</p>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/22fa690f.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-study/数据结构与算法之美/学习笔记/28讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/9a460e6a.html" target="_blank">28讲</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/9a460e6a.html" class="archive-article-date">
-        <time datetime="2021-08-23T00:30:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-23</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <hr>
-<h1 id="28-堆和堆排序：为什么说堆排序没有快速排序快？"><a href="#28-堆和堆排序：为什么说堆排序没有快速排序快？" class="headerlink" title="28 | 堆和堆排序：为什么说堆排序没有快速排序快？"></a>28 | 堆和堆排序：为什么说堆排序没有快速排序快？</h1><h2 id="如何理解“堆”？"><a href="#如何理解“堆”？" class="headerlink" title="如何理解“堆”？"></a>如何理解“堆”？</h2><p>前面我们提到，堆是一种特殊的树。我们现在就来看看，什么样的树才是堆。我罗列了两点要求，只要满足这两点，它就是一个堆。</p>
+    <h3 id="从源码解析keepAliveTime生效机制"><a href="#从源码解析keepAliveTime生效机制" class="headerlink" title="从源码解析keepAliveTime生效机制"></a>从源码解析<code>keepAliveTime</code>生效机制</h3><p>在<code>ThreadPoolExecutor</code>中，<code>keepAliveTime</code>的空闲线程回收逻辑集中在**<code>getTask()</code>方法<strong>（约320行）和</strong>任务队列的阻塞操作**中。以下是关键源码解析：</p>
+<hr>
+<h4 id="一、回收触发点：getTask-方法"><a href="#一、回收触发点：getTask-方法" class="headerlink" title="一、回收触发点：getTask()方法"></a>一、回收触发点：<code>getTask()</code>方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Runnable <span class="title function_">getTask</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">boolean</span> <span class="variable">timedOut</span> <span class="operator">=</span> <span class="literal">false</span>; <span class="comment">// 标记上次poll是否超时</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">        <span class="comment">// ... [状态检查代码省略] ...</span></span><br><span class="line">        </span><br><span class="line">        <span class="type">int</span> <span class="variable">wc</span> <span class="operator">=</span> workerCountOf(c);</span><br><span class="line">        <span class="comment">// 关键判断1：是否启用超时控制</span></span><br><span class="line">        <span class="type">boolean</span> <span class="variable">timed</span> <span class="operator">=</span> allowCoreThreadTimeOut || wc &gt; corePoolSize;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 关键判断2：回收条件检测（需满足两大条件）</span></span><br><span class="line">        <span class="comment">// 条件A，超过最大线程数或者已被标记为超时</span></span><br><span class="line">        <span class="comment">// 条件B，worker大于1或者队列为空</span></span><br><span class="line">       <span class="comment">// 4种组合，前2种：线程不小心超过最大线程数&amp;&amp;（线程大于1 || 队列为空）</span></span><br><span class="line">       <span class="comment">// 后2种：线程超时 &amp;&amp; （线程大于1 || 队列为空），如果只有一个线程是不会回收的</span></span><br><span class="line">       <span class="comment">// 结论就是线程超时，队列没有任务，回收当前线程</span></span><br><span class="line">       <span class="comment">// 线程超时，当前线程数大于1，回收当前线程</span></span><br><span class="line">        <span class="keyword">if</span> ((wc &gt; maximumPoolSize || (timed &amp;&amp; timedOut))  </span><br><span class="line">            &amp;&amp; (wc &gt; <span class="number">1</span> || workQueue.isEmpty())) &#123;         </span><br><span class="line">            <span class="keyword">if</span> (compareAndDecrementWorkerCount(c))</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">null</span>; <span class="comment">// ▶️ 触发回收！</span></span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 核心差异点 ▼▼▼</span></span><br><span class="line">            <span class="type">Runnable</span> <span class="variable">r</span> <span class="operator">=</span> timed ?</span><br><span class="line">                <span class="comment">// 非核心线程：超时等待（keepAliveTime生效处）</span></span><br><span class="line">                workQueue.poll(keepAliveTime, TimeUnit.NANOSECONDS) :</span><br><span class="line">                <span class="comment">// 核心线程：永久阻塞</span></span><br><span class="line">                workQueue.take();</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (r != <span class="literal">null</span>)</span><br><span class="line">                <span class="keyword">return</span> r;</span><br><span class="line">            timedOut = <span class="literal">true</span>; <span class="comment">// ◀◀◀ 超时标记点</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException retry) &#123;</span><br><span class="line">            timedOut = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="二、keepAliveTime生效四步曲"><a href="#二、keepAliveTime生效四步曲" class="headerlink" title="二、keepAliveTime生效四步曲"></a>二、<code>keepAliveTime</code>生效四步曲</h4><h5 id="步骤1：设置超时控制模式-timed标志"><a href="#步骤1：设置超时控制模式-timed标志" class="headerlink" title="步骤1：设置超时控制模式 (timed标志)"></a>步骤1：设置超时控制模式 (<code>timed</code>标志)</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">boolean</span> <span class="variable">timed</span> <span class="operator">=</span> allowCoreThreadTimeOut || wc &gt; corePoolSize;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>堆是一个完全二叉树；</li>
-<li>堆中每一个节点的值都必须大于等于（或小于等于）其子树中每个节点的值。</li>
+<li>当满足以下任一条件时，线程进入<strong>超时控制模式</strong>：<ol>
+<li>当前是<strong>非核心线程</strong>（<code>wc &gt; corePoolSize</code>）</li>
+<li>启用了<strong>核心线程超时</strong>（<code>allowCoreThreadTimeOut=true</code>）</li>
+</ol>
+</li>
 </ul>
-<p>我分别解释一下这两点。</p>
-<p>第一点，堆必须是一个完全二叉树。还记得我们之前讲的完全二叉树的定义吗？完全二叉树要求，除了最后一层，其他层的节点个数都是满的，最后一层的节点都靠左排列。</p>
-<p>第二点，堆中的每个节点的值必须大于等于（或者小于等于）其子树中每个节点的值。实际上，我们还可以换一种说法，堆中每个节点的值都大于等于（或者小于等于）其左右子节点的值。这两种表述是等价的。</p>
-<p>对于每个节点的值都大于等于子树中每个节点值的堆，我们叫做“大顶堆”。对于每个节点的值都小于等于子树中每个节点值的堆，我们叫做“小顶堆”。</p>
-<p>定义解释清楚了，你来看看，下面这几个二叉树是不是堆？</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021202108230804058.jpeg" alt="img"></p>
-<p>其中第 1 个和第 2 个是大顶堆，第 3 个是小顶堆，第 4 个不是堆。除此之外，从图中还可以看出来，对于同一组数据，我们可以构建多种不同形态的堆。</p>
-    
-    <a class="article-more-a" href="/posts/9a460e6a.html#more">more >></a>
-    
+<h5 id="步骤2：执行超时等待-workQueue-poll"><a href="#步骤2：执行超时等待-workQueue-poll" class="headerlink" title="步骤2：执行超时等待 (workQueue.poll())"></a>步骤2：执行超时等待 (<code>workQueue.poll()</code>)</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果queue里面任务为0，会等待keepAliveTime纳秒，超时无任务，线程会被回收</span></span><br><span class="line">workQueue.poll(keepAliveTime, TimeUnit.NANOSECONDS);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>调用<code>BlockingQueue</code>的<code>poll</code>方法，参数为：<ul>
+<li><code>keepAliveTime</code>：用户设置的存活时间</li>
+<li><code>TimeUnit.NANOSECONDS</code>：纳秒级精度</li>
+</ul>
+</li>
+<li><strong>阻塞行为</strong>：最多等待<code>keepAliveTime</code>时间，期间：<ul>
+<li>若有新任务入队 → 立即返回任务对象</li>
+<li>若超时无任务 → 返回<code>null</code></li>
+</ul>
+</li>
+</ul>
+<h5 id="步骤3：标记超时状态-timedOut-true"><a href="#步骤3：标记超时状态-timedOut-true" class="headerlink" title="步骤3：标记超时状态 (timedOut=true)"></a>步骤3：标记超时状态 (<code>timedOut=true</code>)</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (r != <span class="literal">null</span>) </span><br><span class="line">    <span class="keyword">return</span> r;  <span class="comment">// 获取到任务</span></span><br><span class="line">timedOut = <span class="literal">true</span>; <span class="comment">// ◀◀◀ 超时标记</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>当<code>poll()</code>返回<code>null</code>时，设置<code>timedOut=true</code></li>
+<li>此标记将在<strong>下一轮循环</strong>中触发回收判断</li>
+</ul>
+<h5 id="步骤4：触发回收条件-timed-timedOut"><a href="#步骤4：触发回收条件-timed-timedOut" class="headerlink" title="步骤4：触发回收条件 (timed &amp;&amp; timedOut)"></a>步骤4：触发回收条件 (<code>timed &amp;&amp; timedOut</code>)</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ((wc &gt; maximumPoolSize || (timed &amp;&amp; timedOut))  <span class="comment">// 条件A</span></span><br><span class="line">    &amp;&amp; (wc &gt; <span class="number">1</span> || workQueue.isEmpty()))           <span class="comment">// 条件B</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>条件A</strong>（任一满足）：<ul>
+<li><code>timed &amp;&amp; timedOut</code>：当前是超时控制线程且已超时 ★</li>
+<li>线程数超过最大值（非常规情况）</li>
+</ul>
+</li>
+<li><strong>条件B</strong>（任一满足）：<ul>
+<li><code>wc &gt; 1</code>：至少还有1个活跃线程</li>
+<li><code>workQueue.isEmpty()</code>：任务队列为空</li>
+</ul>
+</li>
+<li>同时满足A和B → 通过CAS减少线程计数 → 返回<code>null</code></li>
+</ul>
+<hr>
+<h4 id="三、线程回收执行流"><a href="#三、线程回收执行流" class="headerlink" title="三、线程回收执行流"></a>三、线程回收执行流</h4><p>当<code>getTask()</code>返回<code>null</code>后：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title function_">runWorker</span><span class="params">(Worker w)</span> &#123;</span><br><span class="line">    <span class="keyword">while</span> (task != <span class="literal">null</span> || (task = getTask()) != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="comment">// ... [任务执行] ...</span></span><br><span class="line">    &#125;</span><br><span class="line">    processWorkerExit(w, <span class="literal">false</span>); <span class="comment">// ▶️ 回收执行入口</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在<code>processWorkerExit()</code>中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">processWorkerExit</span><span class="params">(Worker w, <span class="type">boolean</span> completedAbruptly)</span> &#123;</span><br><span class="line">    <span class="comment">// 1. 从workers集合移除Worker</span></span><br><span class="line">    workers.remove(w);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 2. 统计已完成任务数</span></span><br><span class="line">    completedTaskCount += w.completedTasks;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 3. 尝试终止线程池（若满足SHUTDOWN条件）</span></span><br><span class="line">    tryTerminate();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 4. 补充新线程（如果需要）</span></span><br><span class="line">    <span class="keyword">if</span> (runStateLessThan(c, STOP)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!completedAbruptly) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">min</span> <span class="operator">=</span> allowCoreThreadTimeOut ? <span class="number">0</span> : corePoolSize;</span><br><span class="line">            <span class="keyword">if</span> (min == <span class="number">0</span> &amp;&amp; ! workQueue.isEmpty())</span><br><span class="line">                min = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span> (workerCountOf(c) &gt;= min)</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        addWorker(<span class="literal">null</span>, <span class="literal">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="四、核心源码设计亮点"><a href="#四、核心源码设计亮点" class="headerlink" title="四、核心源码设计亮点"></a>四、核心源码设计亮点</h4><ol>
+<li><p><strong>双条件保障</strong><br><code>条件A + 条件B</code> 防止过度回收：</p>
+<ul>
+<li>避免回收<strong>最后一个有任务的线程</strong>（当<code>!workQueue.isEmpty()</code>时）</li>
+<li>避免回收<strong>唯一存活的线程</strong>（当<code>wc == 1</code>时）</li>
+</ul>
+</li>
+<li><p><strong>纳秒级精度控制</strong><br><code>TimeUnit.NANOSECONDS</code> 确保高精度超时：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 底层实现（LinkedBlockingQueue为例）</span></span><br><span class="line"><span class="keyword">public</span> E <span class="title function_">poll</span><span class="params">(<span class="type">long</span> timeout, TimeUnit unit)</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">    <span class="type">long</span> <span class="variable">nanos</span> <span class="operator">=</span> unit.toNanos(timeout); <span class="comment">// 转换为纳秒</span></span><br><span class="line">    <span class="comment">// ... [精确到纳秒的等待] ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>无锁化判断</strong><br>通过<code>compareAndDecrementWorkerCount(c)</code>实现原子计数更新，避免同步开销。</p>
+</li>
+</ol>
+<hr>
+<h4 id="五、线程回收全流程图示"><a href="#五、线程回收全流程图示" class="headerlink" title="五、线程回收全流程图示"></a>五、线程回收全流程图示</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    participant Thread as 工作线程</span><br><span class="line">    participant getTask as getTask()</span><br><span class="line">    participant Queue as 任务队列</span><br><span class="line">    participant Pool as 线程池</span><br><span class="line">    </span><br><span class="line">    Thread-&gt;&gt;getTask: 请求新任务</span><br><span class="line">    activate getTask</span><br><span class="line">    </span><br><span class="line">    getTask-&gt;&gt;getTask: 检查超时模式(timed)</span><br><span class="line">    alt 超时模式</span><br><span class="line">        getTask-&gt;&gt;Queue: poll(keepAliveTime, NANOSECONDS)</span><br><span class="line">        Queue--&gt;&gt;getTask: 等待结果</span><br><span class="line">        alt 超时无任务</span><br><span class="line">            getTask-&gt;&gt;getTask: 标记timedOut=true</span><br><span class="line">        else 获取任务</span><br><span class="line">            getTask--&gt;&gt;Thread: 返回任务</span><br><span class="line">        end</span><br><span class="line">    else 永久阻塞</span><br><span class="line">        getTask-&gt;&gt;Queue: take()</span><br><span class="line">        Queue--&gt;&gt;getTask: 阻塞直到有任务</span><br><span class="line">    end</span><br><span class="line">    </span><br><span class="line">    alt 满足回收条件</span><br><span class="line">        getTask-&gt;&gt;Pool: CAS减少线程计数</span><br><span class="line">        getTask--&gt;&gt;Thread: 返回null</span><br><span class="line">        Thread-&gt;&gt;Pool: 调用processWorkerExit()</span><br><span class="line">        Pool-&gt;&gt;Pool: 移除Worker对象</span><br><span class="line">        Pool-&gt;&gt;JVM: 线程资源待回收</span><br><span class="line">    end</span><br><span class="line">    deactivate getTask</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="六、关键结论"><a href="#六、关键结论" class="headerlink" title="六、关键结论"></a>六、关键结论</h4><ol>
+<li><p><strong>生效位置</strong>：<br><code>keepAliveTime</code>在<code>workQueue.poll(keepAliveTime, NANOSECONDS)</code>调用中生效</p>
+</li>
+<li><p><strong>超时判定</strong>：<br>当<code>poll()</code>方法在指定时间内未获取任务返回<code>null</code>时，触发超时标记</p>
+</li>
+<li><p><strong>回收执行</strong>：<br>超时标记(<code>timedOut=true</code>)结合线程状态判断，导致<code>getTask()</code>返回<code>null</code>，最终触发线程退出</p>
+</li>
+<li><p><strong>精度保障</strong>：<br>使用<code>TimeUnit.NANOSECONDS</code>确保时间精度，避免毫秒级误差</p>
+</li>
+</ol>
+<blockquote>
+<p>通过这种设计，线程池实现了<strong>精准的空闲线程回收</strong>，在资源利用率和响应速度之间取得平衡。</p>
+</blockquote>
+
     
 
     
@@ -1288,26 +1352,373 @@
   <div class="article-info article-info-index">
     
     
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
     
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/posts/9a460e6a.html">展开全文 >></a>
+      <a class="article-more-a" href="/posts/0.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-internet/MySql行锁:叶索:表锁，共享锁:排它锁，悲观锁:乐观锁" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h1 id="MySql行锁-叶索-表锁，共享锁-排它锁，悲观锁-乐观锁"><a href="#MySql行锁-叶索-表锁，共享锁-排它锁，悲观锁-乐观锁" class="headerlink" title="MySql行锁&#x2F;叶索&#x2F;表锁，共享锁&#x2F;排它锁，悲观锁&#x2F;乐观锁"></a>MySql行锁&#x2F;叶索&#x2F;表锁，共享锁&#x2F;排它锁，悲观锁&#x2F;乐观锁</h1><p><a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/778217">https://developer.aliyun.com/article/778217</a></p>
+<p>索引和锁是数据库中的两个核心知识点，隔离级别的实现都是通过锁来完成的</p>
+<h2 id="按照锁颗粒对锁进行划分-？"><a href="#按照锁颗粒对锁进行划分-？" class="headerlink" title="按照锁颗粒对锁进行划分 ？"></a>按照锁颗粒对锁进行划分 ？</h2><p>锁用来对数据进行锁定，我们可以从锁定对象的粒度大小来对锁进行划分，分别为行锁、页锁和表锁。</p>
+<ul>
+<li>行锁就是按照行的粒度对数据进行锁定。锁定力度小，发生锁冲突概率低，可以实现的并发度高，但是对于锁的开销比较大，加锁会比较慢，容易出现死锁情况。</li>
+<li>页锁就是在页的粒度上进行锁定，锁定的数据资源比行锁要多，因为一个页中可以有多个行记录。当我们使用页锁的时候，会出现数据浪费的现象，但这样的浪费最多也就是一个页上的数据行。页锁的开销介于表锁和行锁之间，会出现死锁。锁定粒度介于表锁和行锁之间，并发度一般。</li>
+<li>表锁就是对数据表进行锁定，锁定粒度很大，同时发生锁冲突的概率也会较高，数据访问的并发度低。不过好处在于对锁的使用开销小，加锁会很快。</li>
+</ul>
+<p>还有区锁和数据库锁.<br><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1754014796.webp" alt="image.png"></p>
+<p>每个层级的锁数量是有限制的，因为锁会占用内存空间，锁空间的大小是有限的。当某个层级的锁数量超过了这个层级的阈值时，就会进行锁升级。锁升级就是用更大粒度的锁替代多个更小粒度的锁，比如 InnoDB 中行锁升级为表锁，这样做的好处是占用的锁空间降低了，但同时数据的并发度也下降了。</p>
+<h2 id="从数据库管理的角度对锁进行划分"><a href="#从数据库管理的角度对锁进行划分" class="headerlink" title="从数据库管理的角度对锁进行划分"></a>从数据库管理的角度对锁进行划分</h2><p>共享锁和排它锁</p>
+<ul>
+<li>共享锁也叫读锁或 S 锁，共享锁锁定的资源可以被其他用户读取，但不能修改。在进行SELECT的时候，会将对象进行共享锁锁定，当数据读取完毕之后，就会释放共享锁，这样就可以保证数据在读取时不被修改。<br><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1754014821.webp" alt="image.png"></li>
+<li>排它锁也叫独占锁、写锁或 X 锁。排它锁锁定的数据只允许进行锁定操作的事务使用，其他事务无法对已锁定的数据进行查询或修改。<br><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1754014826.webp" alt="image.png"></li>
+<li>当我们对数据进行更新的时候，也就是INSERT、DELETE或者UPDATE的时候，数据库也会自动使用排它锁，防止其他事务对该数据行进行操作。</li>
+</ul>
+<p>意向锁（Intent Lock），简单来说就是给更大一级别的空间示意里面是否已经上过锁。</p>
+<h2 id="从程序员的角度对锁进行划分"><a href="#从程序员的角度对锁进行划分" class="headerlink" title="从程序员的角度对锁进行划分"></a>从程序员的角度对锁进行划分</h2><p><strong>乐观锁</strong><br>乐观锁（Optimistic Locking）认为对同一数据的并发操作不会总发生，属于小概率事件，不用每次都对数据上锁，也就是不采用数据库自身的锁机制，而是通过程序来实现。在程序上，我们可以采用版本号机制或者时间戳机制实现。</p>
+<ul>
+<li>乐观锁的版本号机制<br>在表中设计一个版本字段 version，第一次读的时候，会获取 version 字段的取值。然后对数据进行更新或删除操作时，会执行<code>UPDATE ... SET version=version+1 WHERE version=version</code>。此时如果已经有事务对这条数据进行了更改，修改就不会成功。</li>
+<li>乐观锁的时间戳机制<br>时间戳和版本号机制一样，也是在更新提交的时候，将当前数据的时间戳和更新之前取得的时间戳进行比较，如果两者一致则更新成功，否则就是版本冲突。</li>
+</ul>
+<p><strong>悲观锁</strong><br>悲观锁（Pessimistic Locking）也是一种思想，对数据被其他事务的修改持保守态度，会通过数据库自身的锁机制来实现，从而保证数据操作的排它性。</p>
+<p>适用场景</p>
+<ul>
+<li>乐观锁适合读操作多的场景，相对来说写的操作比较少。它的优点在于程序实现，不存在死锁问题，不过适用场景也会相对乐观，因为它阻止不了除了程序以外的数据库操作。</li>
+<li>悲观锁适合写操作多的场景，因为写的操作具有排它性。采用悲观锁的方式，可以在数据库层面阻止其他事务对该数据的操作权限，防止读 - 写和写 - 写的冲突。</li>
+<li><code>SELECT ... FOR UPDATE</code>： 这是最常用的实现悲观锁的方式。它会对查询结果集中的行（或表，取决于查询条件和隔离级别）施加<strong>排他锁</strong>。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>乐观锁和悲观锁并不是锁，而是锁的设计思想。</p>
+<p>避免死锁的发生：</p>
+<ul>
+<li>如果事务涉及多个表，操作比较复杂，那么可以尽量一次锁定所有的资源，而不是逐步来获取，这样可以减少死锁发生的概率；</li>
+<li>如果事务需要更新数据表中的大部分数据，数据表又比较大，这时可以采用锁升级的方式，比如将行级锁升级为表级锁，从而减少死锁产生的概率；</li>
+<li>不同事务并发读写多张数据表，可以约定访问表的顺序，采用相同的顺序降低死锁发生的概率</li>
+</ul>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/0.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-internet/主流分布式事务中间件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>以下是主流分布式事务中间件的原理分析及适用场景对比，结合工业实践总结而成：</p>
+<hr>
+<h3 id="📊-分布式事务中间件核心方案对比"><a href="#📊-分布式事务中间件核心方案对比" class="headerlink" title="📊 分布式事务中间件核心方案对比"></a>📊 分布式事务中间件核心方案对比</h3><table>
+<thead>
+<tr>
+<th><strong>中间件</strong></th>
+<th><strong>核心原理</strong></th>
+<th><strong>事务模型</strong></th>
+<th><strong>适用场景</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Seata</strong></td>
+<td>全局事务协调器（TC）管理分支事务（RM），通过事务ID串联多阶段操作</td>
+<td>AT&#x2F;TCC&#x2F;XA&#x2F;Saga</td>
+<td>微服务强一致性场景（如支付、订单）</td>
+</tr>
+<tr>
+<td><strong>RocketMQ事务消息</strong></td>
+<td>两阶段提交 + 状态回查：半消息暂存→本地事务→提交&#x2F;回滚→Broker投递</td>
+<td>最终一致性</td>
+<td>异步解耦场景（订单-库存扣减）</td>
+</tr>
+<tr>
+<td><strong>XA&#x2F;JTA</strong></td>
+<td>基于2PC协议，数据库原生支持，TM协调多个RM（数据库）的Prepare&#x2F;Commit</td>
+<td>强一致性</td>
+<td>传统银行系统、跨数据库事务</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="⚙️-一、Seata（核心：事务协调器-多模式支持）"><a href="#⚙️-一、Seata（核心：事务协调器-多模式支持）" class="headerlink" title="⚙️ 一、Seata（核心：事务协调器+多模式支持）"></a>⚙️ 一、Seata（核心：事务协调器+多模式支持）</h3><h4 id="1-AT模式（自动补偿）"><a href="#1-AT模式（自动补偿）" class="headerlink" title="1. AT模式（自动补偿）"></a><strong>1. AT模式（自动补偿）</strong></h4><ul>
+<li><strong>原理</strong>：  <ul>
+<li><strong>一阶段</strong>：业务SQL执行时，Seata拦截SQL生成<strong>反向日志</strong>（UNDO_LOG），本地提交并释放锁。  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 示例：生成UNDO_LOG</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> undo_log (branch_id, xid, rollback_info) </span><br><span class="line"><span class="keyword">VALUES</span> (?, ?, <span class="string">&#x27;&#123;&quot;after&quot;:&#123;&quot;stock&quot;:95&#125;,&quot;before&quot;:&#123;&quot;stock&quot;:100&#125;&#125;&#x27;</span>)</span><br></pre></td></tr></table></figure></li>
+<li><strong>二阶段</strong>：  <ul>
+<li>成功 → TC异步删除UNDO_LOG  </li>
+<li>失败 → TC根据UNDO_LOG自动生成反向SQL回滚（如<code>UPDATE stock SET count=100 WHERE id=1</code>）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>优势</strong>：无代码侵入，SQL自动解析补偿。</li>
+</ul>
+<h4 id="2-TCC模式（手动补偿）"><a href="#2-TCC模式（手动补偿）" class="headerlink" title="2. TCC模式（手动补偿）"></a><strong>2. TCC模式（手动补偿）</strong></h4><ul>
+<li><strong>流程</strong>：  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">  A[Try: 冻结库存] --&gt; B&#123;全部成功?&#125;</span><br><span class="line">  B --&gt;|Yes| C[Confirm: 扣减真实库存]</span><br><span class="line">  B --&gt;|No| D[Cancel: 释放冻结库存]</span><br></pre></td></tr></table></figure></li>
+<li><strong>场景</strong>：需细粒度资源控制的场景（如秒杀冻结库存）。</li>
+</ul>
+<h4 id="3-Saga模式（长事务补偿）"><a href="#3-Saga模式（长事务补偿）" class="headerlink" title="3. Saga模式（长事务补偿）"></a><strong>3. Saga模式（长事务补偿）</strong></h4><ul>
+<li><strong>原理</strong>：将事务拆分为多个本地子事务，失败时按序执行补偿操作（如：订单创建→支付→发货，失败则触发退款→取消订单）。</li>
+</ul>
+<hr>
+<h3 id="✉️-二、RocketMQ事务消息（核心：消息驱动最终一致）"><a href="#✉️-二、RocketMQ事务消息（核心：消息驱动最终一致）" class="headerlink" title="✉️ 二、RocketMQ事务消息（核心：消息驱动最终一致）"></a>✉️ 二、RocketMQ事务消息（核心：消息驱动最终一致）</h3><h4 id="运作流程"><a href="#运作流程" class="headerlink" title="运作流程"></a><strong>运作流程</strong></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    Producer-&gt;&gt;Broker: 1. 发送半消息（RMQ_SYS_TRANS_HALF_TOPIC）</span><br><span class="line">    Producer-&gt;&gt;Producer: 2. 执行本地事务（如更新订单状态）</span><br><span class="line">    alt 事务成功</span><br><span class="line">        Producer-&gt;&gt;Broker: 3a. 提交消息（转存至业务Topic）</span><br><span class="line">    else 事务失败</span><br><span class="line">        Producer-&gt;&gt;Broker: 3b. 回滚消息（删除）</span><br><span class="line">    end</span><br><span class="line">    Broker-&gt;&gt;Consumer: 4. 投递消息（若已提交）</span><br><span class="line">    loop 状态不明确时</span><br><span class="line">        Broker-&gt;&gt;Producer: 5. 定时回查事务状态</span><br><span class="line">    end</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>容错机制</strong>：  <ul>
+<li>生产者宕机 → Broker通过<strong>回查线程</strong>（默认30秒&#x2F;次）确认事务状态。  </li>
+<li>消费端需<strong>幂等设计</strong>：通过唯一业务ID（如订单号）避免重复处理。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="🔗-三、XA-JTA（核心：数据库协议层强一致）"><a href="#🔗-三、XA-JTA（核心：数据库协议层强一致）" class="headerlink" title="🔗 三、XA&#x2F;JTA（核心：数据库协议层强一致）"></a>🔗 三、XA&#x2F;JTA（核心：数据库协议层强一致）</h3><h4 id="2PC执行流程"><a href="#2PC执行流程" class="headerlink" title="2PC执行流程"></a><strong>2PC执行流程</strong></h4><ol>
+<li><strong>Prepare阶段</strong>：  <ul>
+<li>TM向所有RM发送PREPARE命令，各数据库写入Redo Log并锁定资源。</li>
+</ul>
+</li>
+<li><strong>Commit阶段</strong>：  <ul>
+<li>所有RM返回YES → TM广播COMMIT，释放锁。  </li>
+<li>任一RM返回NO → TM广播ROLLBACK。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><strong>缺点</strong>：同步阻塞（事务期间资源锁定）、协调者单点故障风险。</li>
+</ul>
+<hr>
+<h3 id="🧩-四、选型建议（根据场景决策）"><a href="#🧩-四、选型建议（根据场景决策）" class="headerlink" title="🧩 四、选型建议（根据场景决策）"></a>🧩 四、选型建议（根据场景决策）</h3><ol>
+<li><strong>强一致性要求</strong>（如金融转账）→ <strong>XA模式</strong>（牺牲性能保一致）  </li>
+<li><strong>高并发异步场景</strong>（如电商下单）→ <strong>RocketMQ事务消息</strong>（吞吐量&gt;10万TPS）  </li>
+<li><strong>微服务混合操作</strong>（涉及多个DB&#x2F;服务）→ <strong>Seata AT&#x2F;TCC</strong>（无侵入&#x2F;灵活补偿）  </li>
+<li><strong>长周期事务</strong>（如跨境物流）→ <strong>Seata Saga</strong>（分段提交+逆向补偿）</li>
+</ol>
+<blockquote>
+<p><strong>生产经验</strong>：  </p>
+<ul>
+<li>Seata AT模式在阿里云支撑日均亿级订单，RocketMQ事务消息在双11峰值达百万级消息&#x2F;秒。  </li>
+<li>避免“过度设计”：非核心业务可用<strong>最大努力通知</strong>（简单重试+告警）。</li>
+</ul>
+</blockquote>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/0.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-internet/如何保证MQ消息不丢失以及不重复消费" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>好的，以 Kafka 为例，我们从<strong>业务层（应用逻辑）</strong>和<strong>中间件层（Kafka Broker 和 Client 配置）</strong>两个维度详细说明如何防止消息丢失和重复消费。</p>
+<hr>
+<h3 id="核心目标"><a href="#核心目标" class="headerlink" title="核心目标"></a><strong>核心目标</strong></h3><ol>
+<li><strong>防止消息丢失 (Reliability)</strong>: 确保发送到 Kafka 的消息，最终一定能被消费。</li>
+<li><strong>防止消息重复消费 (Idempotence&#x2F;Ordering)</strong>: 确保同一条消息不会被消费者处理多次（即使网络波动等原因导致重试）。</li>
+</ol>
+<h3 id="一、防止消息丢失-No-Message-Loss"><a href="#一、防止消息丢失-No-Message-Loss" class="headerlink" title="一、防止消息丢失 (No Message Loss)"></a><strong>一、防止消息丢失 (No Message Loss)</strong></h3><p>消息丢失可能发生在 Producer -&gt; Broker、Broker 存储、Broker -&gt; Consumer 三个阶段。</p>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>阶段</strong></th>
+<th align="left"><strong>业务层措施</strong></th>
+<th align="left"><strong>中间件层 (Kafka) 措施</strong></th>
+<th align="left"><strong>关键配置&#x2F;机制</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Producer 发送</strong></td>
+<td align="left"><strong>1. 处理回调&#x2F;异常：</strong> 必须处理 <code>send()</code> 方法的 <code>Callback</code>（或 <code>Future.get()</code>）捕获异常（如 <code>NetworkException</code>, <code>TimeoutException</code>）并重试。<br><strong>2. 异步发送确认：</strong> 使用异步发送时，确保有机制确认发送成功（如 Future + Blocking）。</td>
+<td align="left"><strong>1. ACKs 机制：</strong> <code>acks=all</code> (或 <code>-1</code>)。要求所有 <strong>ISR (In-Sync Replicas)</strong> 副本都写入成功后才认为成功。<strong>这是防止Broker单点故障丢失的核心!</strong><br><strong>2. 重试机制：</strong> 启用并配置合理的 <code>retries</code> (需结合 <code>delivery.timeout.ms</code>)。<br><strong>3. 幂等发送：</strong> 开启幂等 <code>enable.idempotence=true</code> (内部包含 <code>acks=all</code> 和 <code>retries&gt;=1</code>)。</td>
+<td align="left"><code>acks=all</code>, <code>enable.idempotence=true</code>, <code>retries=Integer.MAX_VALUE</code>, <code>delivery.timeout.ms &gt;= request.timeout.ms + linger.ms + retries * retry.backoff.ms</code></td>
+</tr>
+<tr>
+<td align="left"><strong>Broker 存储</strong></td>
+<td align="left"></td>
+<td align="left"><strong>1. 副本机制 (Replication):</strong> 设置 <code>replication.factor &gt;= 3</code>。<br><strong>2. 持久化策略：</strong> 消息写入 Leader 的 Page Cache 后即返回给 Producer (<code>acks</code> 控制)，由操作系统异步刷盘。<code>flush.messages</code>&#x2F;<code>flush.ms</code> 控制强制刷盘频率（牺牲性能换安全）。<br><strong>3. ISR 维护：</strong> Broker 维护 ISR 列表。<code>min.insync.replicas &gt; 1</code> (如2)。<strong>这是防止Broker故障丢失的关键配置!</strong></td>
+<td align="left"><code>replication.factor=N (&gt;=3)</code>, <code>min.insync.replicas=M (&gt;=2, 且 M &lt;= N)</code>, <code>unclean.leader.election.enable=false</code> (防止落后副本成为Leader导致数据丢失)</td>
+</tr>
+<tr>
+<td align="left"><strong>Consumer 消费</strong></td>
+<td align="left"><strong>1. 手动提交 Offset：</strong> 关闭 <code>enable.auto.commit</code>。在处理完<strong>业务逻辑</strong>并<strong>持久化结果后</strong>，再手动调用 <code>consumer.commitSync()</code> &#x2F; <code>commitAsync()</code>。<br><strong>2. 处理 Commit 异常：</strong> 处理 <code>commitSync()</code> 的异常，决定重试还是回退。</td>
+<td align="left"><strong>1. Offset 管理：</strong> Kafka 在内部主题 <code>__consumer_offsets</code> 中管理消费者的消费位移。<br><strong>2. 消费者组重平衡：</strong> 在重平衡期间，消费者在<code>revoke</code>分区前会提交Offset（手动提交可更精确控制）。</td>
+<td align="left"><code>enable.auto.commit=false</code>, <code>auto.offset.reset=earliest/latest</code> (定义无Offset或Offset无效时的重置策略，通常设<code>latest</code>减少重复)</td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>关键要点：</strong> <strong><code>acks=all</code> + <code>min.insync.replicas=2/3</code> + <code>replication.factor=3</code> + <code>enable.idempotence=true</code> (Producer端) + <code>enable.auto.commit=false</code> + 手动提交Offset (Consumer端)</strong> 是保证不丢消息的标准配置组合。</li>
+</ul>
+<hr>
+<h3 id="二、防止消息重复消费-Avoid-Duplicate-Processing"><a href="#二、防止消息重复消费-Avoid-Duplicate-Processing" class="headerlink" title="二、防止消息重复消费 (Avoid Duplicate Processing)"></a><strong>二、防止消息重复消费 (Avoid Duplicate Processing)</strong></h3><p>重复消费来源：<strong>1) Producer 重试 (发送阶段)。2) Consumer 重平衡和重试 (消费阶段)。3) 因业务失败导致的业务重试。</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>来源</strong></th>
+<th align="left"><strong>业务层措施</strong></th>
+<th align="left"><strong>中间件层 (Kafka) 措施</strong></th>
+<th align="left"><strong>关键配置&#x2F;机制</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Producer 重试</strong></td>
+<td align="left"><strong>1. 启用 Kafka 生产者端幂等：</strong> 这直接解决了由 <strong>Producer 自身重试</strong>（网络抖动、Leader选举等导致的 <code>OutOfOrderSequenceException</code>）导致的 Broker 端重复存储问题。</td>
+<td align="left"><strong>开启幂等发送 (Idempotent Producer):</strong> <code>enable.idempotence=true</code>。依赖内部的 <code>Producer ID (PID)</code> 和每条消息的 <code>Sequence Number</code>。Broker 会拒绝已接收过的 <code>&lt;PID, Partition, SeqNumber&gt;</code> 组合。</td>
+<td align="left"><code>enable.idempotence=true</code>。一旦开启，自动开启 <code>acks=all</code> 且 <code>retries</code> 设为 <code>Integer.MAX_VALUE</code>。</td>
+</tr>
+<tr>
+<td align="left"><strong>Consumer 重试&#x2F;重平衡</strong></td>
+<td align="left"><strong>1. 业务层幂等设计：</strong> <strong>这是防止重复消费最根本、最通用的保障！</strong><br><strong>原理：</strong> 保证同一个操作执行一次和执行多次的效果相同。<br><strong>实现：</strong><br>  - <strong>唯一标识 + 状态检查：</strong> 每条消息携带唯一业务标识符（如订单号、支付流水号）。消费前检查该标识符的业务状态（是否已处理成功）。<br>  - <strong>幂等表&#x2F;Redis：</strong> 记录已成功处理的消息标识符（如数据库唯一索引、Redis SETNX）。处理前判断是否已记录。<br><strong>2. 事务型操作：</strong> 将消费消息、处理业务、更新状态（包括幂等记录）放在同一个（分布式）事务中。</td>
+<td align="left"><strong>1. 精确 Offset 管理：</strong> 手动提交 Offset 可以确保只有在业务成功处理后才提交，减少重试时重复处理的概率。<br><strong>2. <code>isolation.level</code>：</strong> 设置 <code>isolation.level=read_committed</code> 可跳过未提交的事务消息（适用于事务型消息场景）。</td>
+<td align="left"><code>isolation.level=read_committed</code>&#x2F;<code>read_uncommitted</code>, <code>enable.auto.commit=false</code>。手动提交 Offset 是关键基础。幂等靠业务设计，中间件只能减少来源。</td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>关键要点：</strong> <ul>
+<li><strong>Producer 重试导致的重复 -&gt; 使用 Kafka 生产者幂等 (<code>enable.idempotence=true</code>) 解决</strong> (Broker级别不重复)。</li>
+<li><strong>Consumer 端可能重复 (重平衡、业务重试、提交失败) -&gt; 依赖业务层幂等设计解决</strong>。</li>
+<li>手动提交 Offset 是减少 Consumer 端因位置回溯导致大范围重复的基础。</li>
+<li>幂等设计方法：<strong>唯一标识符 + 状态检查</strong>。存储去重（DB唯一键、Redis SETNX）和状态机校验是核心手段。</li>
+<li><strong>没有绝对的“一次”，只有“至少一次” + “幂等” &#x3D; “最终效果一次”。</strong> Kafka 本身保证消息的“至少一次”（At Least Once）语义。要获得“效果一次”（Effectively Once），必须配合幂等消费。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="总结：如何搭建可靠的-Kafka-消息系统"><a href="#总结：如何搭建可靠的-Kafka-消息系统" class="headerlink" title="总结：如何搭建可靠的 Kafka 消息系统"></a><strong>总结：如何搭建可靠的 Kafka 消息系统</strong></h3><ol>
+<li><strong>防止丢失:</strong><ul>
+<li><strong>Producer:</strong> <code>acks=all</code>, <code>enable.idempotence=true</code>, 合理重试配置, 正确处理发送异常和回调。</li>
+<li><strong>Broker:</strong> <code>replication.factor &gt;=3</code>, <code>min.insync.replicas &gt;=2</code>, <code>unclean.leader.election.enable=false</code>。</li>
+<li><strong>Consumer:</strong> <code>enable.auto.commit=false</code>, 在<strong>业务逻辑完成并持久化结果后</strong>再<strong>手动同步提交</strong> Offset (<code>commitSync()</code>), 处理 Commit 异常。</li>
+</ul>
+</li>
+<li><strong>防止重复:</strong><ul>
+<li><strong>Producer:</strong> 使用幂等发送 (<code>enable.idempotence=true</code>) 解决发送端重复。</li>
+<li><strong>Consumer:</strong> <strong>业务层必须进行幂等设计！</strong> 通过<strong>唯一标识符 + 状态检查&#x2F;防重表</strong>确保处理逻辑的幂等性。</li>
+<li><strong>Consumer:</strong> <code>enable.auto.commit=false</code> + 手动提交 Offset，减少无效重试范围。可考虑 <code>isolation.level=read_committed</code>（如果使用事务消息）。</li>
+</ul>
+</li>
+</ol>
+<p><strong>始终记住：</strong> “防止丢失”主要是<strong>中间件配置</strong>层面的任务，“防止重复”则<strong>极度依赖业务层的幂等设计</strong>。</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/0.html">展开全文 >></a>
     </p>
     
 
@@ -1339,7 +1750,7 @@
   
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -1470,6 +1881,14 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面经</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
@@ -1502,27 +1921,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面经</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">redis集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">架构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1531,6 +1930,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1550,10 +1953,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">限流算法原理及实现</a>
               </li>
              
@@ -1562,7 +1961,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">redis集群</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">架构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -40,7 +40,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d29e4000181d407940754.jpg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/20212021618d29fe0001b5fc04100474.jpg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d2a440001f7e408040754.jpg">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d2a620001c82915881552.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1753683319.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d2a7f00014f8907000367.jpg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d2aac000172c310240561.jpg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d2acc0001dd0307000388.jpg">
@@ -50,7 +50,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1753618224.jpg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1753618226.jpg">
 <meta property="article:published_time" content="2022-05-24T12:52:00.000Z">
-<meta property="article:modified_time" content="2025-07-27T12:10:55.844Z">
+<meta property="article:modified_time" content="2025-07-28T06:18:39.980Z">
 <meta property="article:author" content="Elfred">
 <meta property="article:tag" content="面经">
 <meta property="article:tag" content="redis">
@@ -323,7 +323,7 @@
 <p>一个 Redis Cluster包含16384（0~16383）个哈希槽，存储在Redis Cluster中的所有键都会被映射到这些slot中。</p>
 <p>集群中的每个键都属于这16384个哈希槽中的一个，集群使用公式slot&#x3D;CRC16（key）&#x2F;16384来计算key属于哪个槽，其中CRC16(key)语句用于计算key的CRC16 校验和。</p>
 <p>按照槽来进行分片，通过为每个节点指派不同数量的槽，可以控制不同节点负责的数据量和请求数。</p>
-<h2 id="3-集群元数据的一致性"><a href="#3-集群元数据的一致性" class="headerlink" title="3 集群元数据的一致性"></a>3 集群元数据的一致性</h2><h3 id="3-1-对比：集中式存储元数据"><a href="#3-1-对比：集中式存储元数据" class="headerlink" title="3.1 对比：集中式存储元数据"></a>3.1 对比：集中式存储元数据</h3><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1753618202.png" alt="yifan-online.com"></p>
+<h2 id="3-集群元数据的一致性"><a href="#3-集群元数据的一致性" class="headerlink" title="3 集群元数据的一致性"></a>3 集群元数据的一致性</h2><h3 id="3-1-对比：集中式存储元数据"><a href="#3-1-对比：集中式存储元数据" class="headerlink" title="3.1 对比：集中式存储元数据"></a>3.1 对比：集中式存储元数据</h3><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1753618202.png"></p>
 <p>依赖外部的集中式存储服务，比如：zookeeper, etcd等，会增加运维负担和系统复杂度。</p>
 <p>集中式的好处在于，元数据的读取和更新，时效性非常好，一旦元数据出现了变更，就立即更新到集中式的存储中，其它节点读取的时候就可以感知到；不好在于，所有的元数据的更新压力全部集中在一个地方，可能会导致元数据的存储有压力。</p>
 <h3 id="3-2-gossip-协议来广播自己的状态以及自己对整个集群认知的改变"><a href="#3-2-gossip-协议来广播自己的状态以及自己对整个集群认知的改变" class="headerlink" title="3.2 gossip 协议来广播自己的状态以及自己对整个集群认知的改变"></a>3.2 gossip 协议来广播自己的状态以及自己对整个集群认知的改变</h3><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d29440001b49909960994.jpg"></p>
@@ -362,7 +362,7 @@
 <h3 id="5-3-slot编号"><a href="#5-3-slot编号" class="headerlink" title="5.3 slot编号"></a>5.3 slot编号</h3><p>无需要求每个master的slot编号是连续的，只要每个master管理的slot的数量均衡就可以。</p>
 <h3 id="5-4-减少节点-缩容"><a href="#5-4-减少节点-缩容" class="headerlink" title="5.4 减少节点(缩容)"></a>5.4 减少节点(缩容)</h3><p>缩容的过程与扩容类似，只是slot和数据从下线的节点内转移到其他的节点上。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d2a440001f7e408040754.jpg"></p>
-<h2 id="6-集群中机器出现故障"><a href="#6-集群中机器出现故障" class="headerlink" title="6 集群中机器出现故障"></a>6 集群中机器出现故障</h2><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021618d2a620001c82915881552.jpg"></p>
+<h2 id="6-集群中机器出现故障"><a href="#6-集群中机器出现故障" class="headerlink" title="6 集群中机器出现故障"></a>6 集群中机器出现故障</h2><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1753683319.png"></p>
 <h3 id="6-1-故障检测，节点失效"><a href="#6-1-故障检测，节点失效" class="headerlink" title="6.1 故障检测，节点失效"></a>6.1 故障检测，节点失效</h3><p>如果一个节点认为另外一个节点宕机，那么就是 pfail，主观宕机；</p>
 <p>如果超过半数的节点都认为另外一个节点宕机了，那么就是 fail，客观宕机；</p>
 <h3 id="6-2-故障转移，节点选举"><a href="#6-2-故障转移，节点选举" class="headerlink" title="6.2 故障转移，节点选举"></a>6.2 故障转移，节点选举</h3><p>每个slave节点，都根据自己对 master 复制数据的 offset，来设置一个选举时间，offset 越大（复制数据越多）的从节点，选举时间越靠前，优先进行选举。</p>
@@ -787,6 +787,14 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面经</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
@@ -819,27 +827,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面经</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">redis集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">架构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -848,6 +836,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -867,10 +859,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">限流算法原理及实现</a>
               </li>
              
@@ -879,7 +867,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">redis集群</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">架构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">

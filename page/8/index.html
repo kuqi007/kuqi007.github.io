@@ -16,15 +16,17 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="2019年末投了几个简历，20年初收到了杭州阿里和北京美团的面邀 接下来的面经将合并两场面试的问题，如果有都问到的会在问题后面标记（double） # 多线程死锁的条件，如何打破 JMM 如何创建线程池，队列都有哪些？拒绝策略都有哪些？任务过多时都是如何处理的（double） 线程生命周期 synchronized原理（double） jdk对synchronized做了哪些优化 Reentran">
+    
+    <!-- <meta name="keywords" content="前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
+    <meta name="description" content="好记性不如烂笔头"> -->
+  
+  <meta name="description" content="好记性不如烂笔头">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Elfred&#39;s Blog">
-<meta property="og:url" content="https://blog.elfred.top/private/%E5%8F%82%E8%80%83%E9%9D%A2%E7%BB%8F/%E5%8F%82%E8%80%83%E5%88%AB%E4%BA%BA%E9%9D%A2%E7%BB%8F%E6%95%B4%E7%90%86.html">
+<meta property="og:url" content="https://blog.elfred.top/page/8/index.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="2019年末投了几个简历，20年初收到了杭州阿里和北京美团的面邀 接下来的面经将合并两场面试的问题，如果有都问到的会在问题后面标记（double） # 多线程死锁的条件，如何打破 JMM 如何创建线程池，队列都有哪些？拒绝策略都有哪些？任务过多时都是如何处理的（double） 线程生命周期 synchronized原理（double） jdk对synchronized做了哪些优化 Reentran">
+<meta property="og:description" content="好记性不如烂笔头">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-07-05T03:15:51.102Z">
-<meta property="article:modified_time" content="2022-07-05T03:15:51.102Z">
 <meta property="article:author" content="Elfred">
 <meta property="article:tag" content="前端,js,jquery,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
 <meta name="twitter:card" content="summary">
@@ -215,107 +217,184 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="page-" class="article article-type-page " itemscope itemprop="blogPost">
+            
+
+  
+    <article id="post-interview/JVM面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/eec2f852.html" target="_blank">JVM面试题</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/eec2f852.html" class="archive-article-date">
+        <time datetime="2021-01-23T08:23:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-23</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
   <div class="article-entry" itemprop="articleBody">
     
-    <p>2019年末投了几个简历，20年初收到了杭州阿里和北京美团的面邀</p>
-<p>接下来的面经将合并两场面试的问题，如果有都问到的会在问题后面标记（double）</p>
-<h2 id="多线程"><a href="#多线程" class="headerlink" title="# 多线程"></a><a target="_blank" rel="noopener" href="http://shiyujun.cn/posts/%E6%88%91%E7%9A%84%E9%A6%96%E6%AC%A1%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F-%E9%98%BF%E9%87%8C%E5%92%8C%E7%BE%8E%E5%9B%A2.html#%E5%A4%9A%E7%BA%BF%E7%A8%8B">#</a> 多线程</h2><p>死锁的条件，如何打破</p>
-<p>JMM</p>
-<p>如何创建线程池，队列都有哪些？拒绝策略都有哪些？任务过多时都是如何处理的（double）</p>
-<p>线程生命周期</p>
-<p>synchronized原理（double）</p>
-<p>jdk对synchronized做了哪些优化</p>
-<p>ReentrantLock</p>
-<p>CAS、ABA问题（double）</p>
-<h2 id="集合"><a href="#集合" class="headerlink" title="# 集合"></a><a target="_blank" rel="noopener" href="http://shiyujun.cn/posts/%E6%88%91%E7%9A%84%E9%A6%96%E6%AC%A1%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F-%E9%98%BF%E9%87%8C%E5%92%8C%E7%BE%8E%E5%9B%A2.html#%E9%9B%86%E5%90%88">#</a> 集合</h2><p>ArrayList和LinkedList</p>
-<p>什么是fail—fast？</p>
-<p>HashMap的put、扩容原理，1.7和1.8的数据结构（double）</p>
-<h2 id="网络"><a href="#网络" class="headerlink" title="# 网络"></a><a target="_blank" rel="noopener" href="http://shiyujun.cn/posts/%E6%88%91%E7%9A%84%E9%A6%96%E6%AC%A1%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F-%E9%98%BF%E9%87%8C%E5%92%8C%E7%BE%8E%E5%9B%A2.html#%E7%BD%91%E7%BB%9C">#</a> 网络</h2><p>TCP粘包，为什么出现，如何解决？</p>
-<p>TCP如何实现消息可靠性、滑动窗口</p>
-<p>TCP三次握手四次挥手</p>
-<p>DNS</p>
-<p>https原理、可以被攻击么？（double）</p>
-<h2 id="数据库事务"><a href="#数据库事务" class="headerlink" title="# 数据库事务"></a><a target="_blank" rel="noopener" href="http://shiyujun.cn/posts/%E6%88%91%E7%9A%84%E9%A6%96%E6%AC%A1%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F-%E9%98%BF%E9%87%8C%E5%92%8C%E7%BE%8E%E5%9B%A2.html#%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1">#</a> 数据库事务</h2><p>事务的隔离级别、mysql和oracle默认是什么，都解决了什么问题（double）</p>
-<p>事务的特性（double）</p>
-<p>快照读和当前读</p>
-<p>乐观锁、悲观锁、间隙锁、行锁、表锁的使用场景</p>
-<p>B+树、聚簇索引和非聚簇索引（double）</p>
-<p>mvcc（double）</p>
-<p>redolog、undolog、binlog</p>
-<p>一个表没有索引的结构类型</p>
-<p>索引失效的场景</p>
-<p>mysql都有哪些组件</p>
-<h2 id="中间件"><a href="#中间件" class="headerlink" title="# 中间件"></a><a target="_blank" rel="noopener" href="http://shiyujun.cn/posts/%E6%88%91%E7%9A%84%E9%A6%96%E6%AC%A1%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F-%E9%98%BF%E9%87%8C%E5%92%8C%E7%BE%8E%E5%9B%A2.html#%E4%B8%AD%E9%97%B4%E4%BB%B6">#</a> 中间件</h2><p>RabbitMQ和kafka的架构（double）</p>
-<p>如何保证消息的顺序性</p>
-<p>为什么使用这个中间件（double）</p>
-<p>Redis数据类型，底层数据结构（double）</p>
-<p>缓存淘汰算法</p>
-<p>缓存穿透、缓存击穿</p>
-<p>缓存数据库双写（double）</p>
-<h2 id="Spring"><a href="#Spring" class="headerlink" title="# Spring"></a><a target="_blank" rel="noopener" href="http://shiyujun.cn/posts/%E6%88%91%E7%9A%84%E9%A6%96%E6%AC%A1%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F-%E9%98%BF%E9%87%8C%E5%92%8C%E7%BE%8E%E5%9B%A2.html#spring">#</a> Spring</h2><p>IOC和AOP的理解及原理（double）</p>
-<p>Bean的生命周期（double）</p>
-<p>自动注入方式有哪些，两个注解的区别</p>
-<p>Spring MVC流程</p>
-<h2 id="微服务"><a href="#微服务" class="headerlink" title="# 微服务"></a><a target="_blank" rel="noopener" href="http://shiyujun.cn/posts/%E6%88%91%E7%9A%84%E9%A6%96%E6%AC%A1%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F-%E9%98%BF%E9%87%8C%E5%92%8C%E7%BE%8E%E5%9B%A2.html#%E5%BE%AE%E6%9C%8D%E5%8A%A1">#</a> 微服务</h2><p>分布式事务怎么做的（double）</p>
-<p>CAP、BASE理论</p>
-<p>如何实现一个RPC框架</p>
-<p>服务熔断如何做的</p>
-<p>令牌桶、漏桶算法</p>
-<p>分布式id如何生成（double）</p>
-<h2 id="JVM"><a href="#JVM" class="headerlink" title="# JVM"></a><a target="_blank" rel="noopener" href="http://shiyujun.cn/posts/%E6%88%91%E7%9A%84%E9%A6%96%E6%AC%A1%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F-%E9%98%BF%E9%87%8C%E5%92%8C%E7%BE%8E%E5%9B%A2.html#jvm">#</a> JVM</h2><p>各个区域的内容（double）</p>
-<p>常见OOM（double）</p>
-<p>垃圾收集器、算法</p>
-<p>类加载机制（double）</p>
-<p>内存分配并发问题</p>
-<p>新生代默认多少次晋升老年代</p>
-<p>反射</p>
-<h2 id="算法"><a href="#算法" class="headerlink" title="# 算法"></a><a target="_blank" rel="noopener" href="http://shiyujun.cn/posts/%E6%88%91%E7%9A%84%E9%A6%96%E6%AC%A1%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F-%E9%98%BF%E9%87%8C%E5%92%8C%E7%BE%8E%E5%9B%A2.html#%E7%AE%97%E6%B3%95">#</a> 算法</h2><p>都是一个力扣简单级一个中等级，只不过美团上现场白纸写，阿里是伯乐系统在线做</p>
-<h2 id="项目"><a href="#项目" class="headerlink" title="# 项目"></a><a target="_blank" rel="noopener" href="http://shiyujun.cn/posts/%E6%88%91%E7%9A%84%E9%A6%96%E6%AC%A1%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F-%E9%98%BF%E9%87%8C%E5%92%8C%E7%BE%8E%E5%9B%A2.html#%E9%A1%B9%E7%9B%AE">#</a> 项目</h2><p>项目中出现各种场景的解决方案</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="# 总结"></a><a target="_blank" rel="noopener" href="http://shiyujun.cn/posts/%E6%88%91%E7%9A%84%E9%A6%96%E6%AC%A1%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F-%E9%98%BF%E9%87%8C%E5%92%8C%E7%BE%8E%E5%9B%A2.html#%E6%80%BB%E7%BB%93">#</a> 总结</h2><p>大厂的面试官都很nice，遇到你不会的问题会去引导</p>
-<p>简历上写的东西都会被问到</p>
-<p>基础很重要，一定要重视</p>
-<p>没有问docker和k8s猜测可能是大厂职责划分比较详细，拧螺丝不需要😂</p>
-<p>算法一定要提前捋好思路，跟面试官沟通完再写代码，尤其是白纸上，一不容易就容易涂涂画画</p>
-<p>自己学历和经验都还不足，继续努力</p>
-<p>总的面试体验超好，给几位面试官点赞😄</p>
+    <hr>
+<h2 id="JVM内存划分"><a href="#JVM内存划分" class="headerlink" title="JVM内存划分"></a>JVM内存划分</h2><h3 id="唯一不会发生OOM的区域"><a href="#唯一不会发生OOM的区域" class="headerlink" title="唯一不会发生OOM的区域"></a>唯一不会发生OOM的区域</h3><p><strong>程序计数器（Program Counter Register）</strong> 是唯一 <strong>不会发生 <code>OutOfMemoryError</code>（OOM）</strong> 的区域。</p>
+<p><strong>核心原因</strong></p>
+<ol>
+<li><strong>内存分配机制</strong>：<br>程序计数器是 ​<strong>线程私有</strong>​ 的内存区域，其生命周期与线程绑定。每个线程创建时，JVM 会为它分配一个独立的程序计数器，大小固定（64位系统下通常占 ​<strong>4字节或8字节</strong>），​<strong>不依赖垃圾回收</strong>，也无法动态扩展内存空间。</li>
+<li><strong>功能限制</strong>：<br>它的功能仅是记录当前线程执行的字节码指令地址（若执行 Java 方法）或 <code>undefined</code>（若执行 Native 方法）。不存储对象、数组等数据结构，因此不受堆内存或元空间等动态区域的限制。</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>内存区域</strong></th>
+<th align="center"><strong>是否会发生 OOM</strong></th>
+<th align="center"><strong>原因</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">程序计数器</td>
+<td align="center">❌ 不会</td>
+<td align="center">固定大小、线程私有、仅存储指令地址</td>
+</tr>
+<tr>
+<td align="center">虚拟机栈 (Java Stack)</td>
+<td align="center">✅ 会</td>
+<td align="center">线程请求的栈深度 &gt; 栈最大深度 → <code>StackOverflowError</code>；扩展栈时内存不足 → <code>OOM</code></td>
+</tr>
+<tr>
+<td align="center">本地方法栈</td>
+<td align="center">✅ 会</td>
+<td align="center">同虚拟机栈（为 Native 方法服务）</td>
+</tr>
+<tr>
+<td align="center">堆 (Heap)</td>
+<td align="center">✅ 会</td>
+<td align="center">存储对象实例，当对象总数超过堆最大容量 → <code>OOM: Java heap space</code></td>
+</tr>
+<tr>
+<td align="center">方法区 (JDK8+ 元空间)</td>
+<td align="center">✅ 会</td>
+<td align="center">存储类元信息，类加载过多或动态生成过多类 → <code>OOM: Metaspace</code></td>
+</tr>
+</tbody></table>
+<h3 id="new一个对象，JVM到底发生了什么？"><a href="#new一个对象，JVM到底发生了什么？" class="headerlink" title="new一个对象，JVM到底发生了什么？"></a>new一个对象，JVM到底发生了什么？</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    A[new 指令] --&gt; B&#123;类已加载?&#125;</span><br><span class="line">    B -- 否 --&gt; C[加载类]</span><br><span class="line">    B -- 是 --&gt; D[选择分配策略]</span><br><span class="line">    D --&gt; E1[指针碰撞]</span><br><span class="line">    D --&gt; E2[空闲列表]</span><br><span class="line">    D --&gt; E3[TLAB分配]</span><br><span class="line">    E1 --&gt; F[分配内存]</span><br><span class="line">    E2 --&gt; F</span><br><span class="line">    E3 --&gt; F</span><br><span class="line">    F --&gt; G[初始化零值]</span><br><span class="line">    G --&gt; H[设置对象头]</span><br><span class="line">    H --&gt; I[执行构造函数]</span><br><span class="line">    I --&gt; J[对象可用]</span><br></pre></td></tr></table></figure>
+
+<h2 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h2><p><strong>过程：加载、验证、准备、解析、初始化</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210610235314.jpeg" alt="img"></p>
+<p>类加载过程分为三个阶段：Load、Link和Init，即<strong>加载</strong>、<strong>链接</strong>、<strong>初始化</strong></p>
+<ol>
+<li>第一步，Load阶段读取类文件产生二进制流，并转化为特定的数据结构，初步校验cafe babe魔法数、常量池、文件长度、是否有父类等，然后创建对应类的<code>java.lang.Class</code>实例</li>
+<li>第二步，Link阶段包括<strong>验证</strong>、<strong>准备</strong>、<strong>解析</strong>三个步骤。验证是更详细的校验，比如final是否合规、类型是否正确、静态变量是否合理等；准备阶段是为静态变量分配内存，并设定默认值，解析类和方法确保类与类之间的相互引用正确性，完成内存结构布局。</li>
+<li>第三步，Init阶段执行雷构造器&lt;clinit&gt;方法，如果赋值运算是通过其他类的静态方法来完成的，那么会马上解析另外一个类，在虚拟机栈中执行完毕后通过返回值进行赋值。</li>
+</ol>
+<h3 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h3><h4 id="什么是双亲委派机制"><a href="#什么是双亲委派机制" class="headerlink" title="什么是双亲委派机制"></a>什么是双亲委派机制</h4><p>首先，我们知道，虚拟机在加载类的过程中需要使用类加载器进行加载，而在Java中，类加载器有很多，那么当JVM想要加载一个.class文件的时候，到底应该由哪个类加载器加载呢？</p>
+<p>这就不得不提到”双亲委派机制”。</p>
+<p>首先，我们需要知道的是，Java语言系统中支持以下4种类加载器：</p>
+<ul>
+<li>Bootstrap ClassLoader 启动类加载器</li>
+<li>Extention ClassLoader 标准扩展类加载器</li>
+<li>Application ClassLoader 应用类加载器</li>
+<li>User ClassLoader 用户自定义类加载器</li>
+</ul>
+<p>这四种类加载器之间，是存在着一种层次关系的，如下图</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1754201674.jpeg"></p>
+<p>一般认为上一层加载器是下一层加载器的父加载器，那么，除了BootstrapClassLoader之外，所有的加载器都是有父加载器的。</p>
+<p>那么，所谓的双亲委派机制，指的就是：<strong>当一个类加载器收到了类加载的请求的时候，他不会直接去加载指定的类，而是把这个请求委托给自己的父加载器去加载。只有父加载器无法加载这个类的时候，才会由当前这个加载器来负责类的加载。</strong></p>
+<p>那么，什么情况下父加载器会无法加载某一个类呢？</p>
+<p>其实，Java中提供的这四种类型的加载器，是有各自的职责的：</p>
+<ul>
+<li>Bootstrap ClassLoader ，主要负责加载Java核心类库，%JRE_HOME%\lib下的rt.jar、resources.jar、charsets.jar和class等。</li>
+<li>Extention ClassLoader，主要负责加载目录%JRE_HOME%\lib\ext目录下的jar包和class文件。</li>
+<li>Application ClassLoader ，主要负责加载当前应用的classpath下的所有类</li>
+<li>User ClassLoader ， 用户自定义的类加载器,可加载指定路径的class文件</li>
+</ul>
+<p>那么也就是说，一个用户自定义的类，如com.hollis.ClassHollis 是无论如何也不会被Bootstrap和Extention加载器加载的（<code>-Xbootclasspath</code>参数是否可以使得自定义类被bootstrap加载？）。</p>
+<h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><h3 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h3><h4 id="JDK8-CMS：（关注最短垃圾回收停顿时间）"><a href="#JDK8-CMS：（关注最短垃圾回收停顿时间）" class="headerlink" title="JDK8-CMS：（关注最短垃圾回收停顿时间）"></a>JDK8-CMS：（关注最短垃圾回收停顿时间）</h4><p><strong>CMS回收器</strong>（Concurrent Mark Sweep Collector）是回收停顿时间比较短，目前比较常用的垃圾回收器。它通过初始标记（Initial Mark）、并发标记（Concurrent Mark）、重新标记（Remark)、并发清除（Concurrent Sweep）四个步骤完成垃圾回收工作。第1、3步的初始标记和重新标记阶段依然会引发STW。2、4步可以和应用程序并发执行。CMS采用“标记 - 清除算法”，因此产生大量的空间碎片。可以通过<code>-XX:+UseCMSCompactAtFullCollection</code>参数，强制JVM在FGC完成后对老年代进行压缩，执行一次空间碎片整理，但是会引发STW。为了减少STW次数，CMS还可以通过配置<code>-XX:+CMSFullGCsBeforeCompaction=n</code>参数，在执行了n次FGC后，JVM再在老年代执行空间碎片整理。</p>
+<h4 id="JDK9-G1：（精准控制停顿时间，避免垃圾碎片）"><a href="#JDK9-G1：（精准控制停顿时间，避免垃圾碎片）" class="headerlink" title="JDK9-G1：（精准控制停顿时间，避免垃圾碎片）"></a>JDK9-G1：（精准控制停顿时间，避免垃圾碎片）</h4><p>G1（Garbage-First Garbage Collector）垃圾回收器。</p>
+<p>是⼀款⾯向服务器的垃圾收集器,主要针对配备多颗处理器及⼤容量内存的机器.以极⾼概率满⾜GC停顿时<br>间要求的同时,还具备⾼吞吐量性能特征；相比与 CMS 收集器，G1 收集器两个最突出的改进是：</p>
+<p>【1】基于标记-整理算法，不产生内存碎片。</p>
+<p>【2】可以非常精确控制停顿时间，在不牺牲吞吐量前提下，实现低停顿垃圾回收。</p>
+<p>G1 收集器避免全区域垃圾收集，它把堆内存划分为大小固定的几个独立区域，并且跟踪这些区域的垃圾<br>收集进度，同时在后台维护一个优先级列表，每次根据所允许的收集时间，优先回收垃圾最多的区域。<strong>区域划</strong><br><strong>分</strong>和<strong>优先级区域</strong>回收机制，确保 G1 收集器可以在有限时间获得最高的垃圾收集效率。</p>
+<ul>
+<li><p><strong>初始标记</strong>：<strong>Stop The World，</strong>仅使用一条初始标记线程对GC Roots关联的对象进行标记</p>
+</li>
+<li><p><strong>并发标记</strong>：使用一条标记线程与用户线程并发执行。此过程进行<strong>可达性分析，速度很慢</strong></p>
+</li>
+<li><p><strong>最终标记</strong>：<strong>Stop The World</strong>，使用多条标记线程并发执行</p>
+</li>
+<li><p><strong>筛选回收</strong>：回收废弃对象，此时也要 <strong>Stop The World</strong>，并使用多条筛选回收线程并发执行</p>
+</li>
+</ul>
+<h5 id="G1垃圾回收期原理"><a href="#G1垃圾回收期原理" class="headerlink" title="G1垃圾回收期原理"></a>G1垃圾回收期原理</h5><p>TODO</p>
+<h4 id="ZGC"><a href="#ZGC" class="headerlink" title="ZGC"></a>ZGC</h4><p>2022年6月5日TODO（作为亮点）</p>
+<h4 id="如何配置垃圾收集器"><a href="#如何配置垃圾收集器" class="headerlink" title="如何配置垃圾收集器"></a><strong>如何配置垃圾收集器</strong></h4><ul>
+<li>首先是内存大小问题，基本上每一个内存区域我都会设置一个上限，来避免溢出问题，比如元空间。</li>
+<li>通常，堆空间我会设置成操作系统的 2&#x2F;3，超过 8GB 的堆，优先选用 G1</li>
+<li>然后我会对 JVM 进行初步优化，比如根据老年代的对象提升速度，来调整年轻代和老年代之间的比例</li>
+<li>依据系统容量、访问延迟、吞吐量等进行专项优化，我们的服务是高并发的，对 STW 的时间敏感</li>
+<li>我会通过记录详细的 GC 日志，来找到这个瓶颈点，借用 GCeasy 这样的日志分析工具，定位问题</li>
+</ul>
+<h3 id="GC触发条件"><a href="#GC触发条件" class="headerlink" title="GC触发条件"></a>GC触发条件</h3><h4 id="MinorGC触发条件"><a href="#MinorGC触发条件" class="headerlink" title="MinorGC触发条件"></a>MinorGC触发条件</h4><p>当Eden区满时触发MinorGC</p>
+<h4 id="FullGC触发条件"><a href="#FullGC触发条件" class="headerlink" title="FullGC触发条件"></a>FullGC触发条件</h4><ol>
+<li>调用System.gc时，系统建议执行FullGC，但是不必然执行</li>
+<li>老年代空间不足</li>
+<li>方法区空间不足（jdk8之前）</li>
+<li>通过MinorGC后进入老年代的平均大小大于老年代的可用内存</li>
+<li>由Eden区、FromSpace向ToSpace区复制时，对象大小大于ToSpace可用内存，则把该对象转存到老年代，且老年代的可用内存小于该对象大小</li>
+</ol>
+<h2 id="综合面试题"><a href="#综合面试题" class="headerlink" title="综合面试题"></a>综合面试题</h2><h3 id="对象已经死亡？"><a href="#对象已经死亡？" class="headerlink" title="对象已经死亡？"></a>对象已经死亡？</h3><h4 id="如何判断一个类是无用的类"><a href="#如何判断一个类是无用的类" class="headerlink" title="如何判断一个类是无用的类"></a>如何判断一个类是无用的类</h4><p>方法区主要回收的是无用的类，那么如何判断一个类是无用的类的呢？</p>
+<p>判定一个常量是否是“废弃常量”比较简单，而要判定一个类是否是“无用的类”的条件则相对苛刻许多。类需要同时满足下面 3 个条件才能算是 <strong>“无用的类”</strong> ：</p>
+<ul>
+<li>该类所有的实例都已经被回收，也就是 Java 堆中不存在该类的任何实例。</li>
+<li>加载该类的 <code>ClassLoader</code> 已经被回收。</li>
+<li>该类对应的 <code>java.lang.Class</code> 对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。</li>
+</ul>
+<p>虚拟机可以对满足上述 3 个条件的无用类进行回收，这里说的仅仅是“可以”，而并不是和对象一样不使用了就会必然被回收。</p>
+<h3 id="JVM调优"><a href="#JVM调优" class="headerlink" title="JVM调优"></a>JVM调优</h3><h4 id="JVM优化的思路"><a href="#JVM优化的思路" class="headerlink" title="JVM优化的思路"></a>JVM优化的思路</h4><p>1、一般来说，当survivor区不够大或者占用量达到50%，就会把一些对象放到老年区。通过设置合理的eden区，survivor区及使用率，可以将年轻对象保存在年轻代，从而避免full GC，使用<code>-Xmn</code>设置年轻代的大小</p>
+<p>2、对于占用内存比较多的大对象，一般会选择在老年代分配内存。如果在年轻代给大对象分配内存，年轻代内存不够了，就要在eden区移动大量对象到老年代，然后这些移动的对象可能很快消亡，因此导致full GC。通过设置参数：<code>-XX:PetenureSizeThreshold=1000000</code>，单位为B，标明对象大小超过1M时，在老年代(tenured)分配内存空间。</p>
+<p>3、一般情况下，年轻对象放在eden区，当第一次GC后，如果对象还存活，放到survivor区，此后，每GC一次，年龄增加1，当对象的年龄达到阈值，就被放到tenured老年区。这个阈值可以同构<code>-XX:MaxTenuringThreshold</code>设置。如果想让对象留在年轻代，可以设置比较大的阈值。</p>
+<p>4、设置最小堆和最大堆：<code>-Xmx</code>和<code>-Xms</code>稳定的堆大小堆垃圾回收是有利的，获得一个稳定的堆大小的方法是设置-Xms和-Xmx的值一样，即最大堆和最小堆一样，如果这样子设置，系统在运行时堆大小理论上是恒定的，稳定的堆空间可以减少GC次数，因此，很多服务端都会将这两个参数设置为一样的数值。稳定的堆大小虽然减少GC次数，但是增加每次GC的时间，因为每次GC要把堆的大小维持在一个区间内。</p>
+<p>5、一个不稳定的堆并非毫无用处。在系统不需要使用大内存的时候，压缩堆空间，使得GC每次应对一个较小的堆空间，加快单次GC次数。基于这种考虑，JVM提供两个参数，用于压缩和扩展堆空间。<br>（1）<code>-XX:MinHeapFreeRatio</code> 参数用于设置堆空间的最小空闲比率。默认值是40，当堆空间的空闲内存比率小于40，JVM便会扩展堆空间<br>（2）<code>-XX:MaxHeapFreeRatio</code> 参数用于设置堆空间的最大空闲比率。默认值是70， 当堆空间的空闲内存比率大于70，JVM便会压缩堆空间。<br>（3）当-Xmx和-Xmx相等时，上面两个参数无效</p>
+<p>6、通过增大吞吐量提高系统性能，可以通过设置并行垃圾回收收集器。<br>（1）<code>-XX:+UseParallelGC</code>:年轻代使用并行垃圾回收收集器。这是一个关注吞吐量的收集器，可以尽可能的减少垃圾回收时间。<br>（2）<code>-XX:+UseParallelOldGC</code>:设置老年代使用并行垃圾回收收集器。</p>
+<p>7、尝试使用大的内存分页：使用大的内存分页增加CPU的内存寻址能力，从而系统的性能。<code>-XX:+LargePageSizeInBytes</code> 设置内存页的大小</p>
+<p>8、使用非占用的垃圾收集器。<code>-XX:+UseConcMarkSweepGC</code>老年代使用CMS收集器降低停顿。</p>
+<p>9、<code>-XXSurvivorRatio=3</code>，表示年轻代中的分配比率：survivor:eden &#x3D; 2:3</p>
+<p>10、JVM性能调优的工具：<br>（1）jps（Java Process Status）：输出JVM中运行的进程状态信息(现在一般使用jconsole)<br>（2）jstack：查看java进程内线程的堆栈信息。<br>（3）jmap：用于生成堆转存快照<br>（4）jhat：用于分析jmap生成的堆转存快照（一般不推荐使用，而是使用Ecplise Memory Analyzer）<br>（3）jstat是JVM统计监测工具。可以用来显示垃圾回收信息、类加载信息、新生代统计信息等。<br>（4）VisualVM：故障处理工具</p>
+<h4 id="生产环境JVM调优具体步骤"><a href="#生产环境JVM调优具体步骤" class="headerlink" title="生产环境JVM调优具体步骤"></a>生产环境JVM调优具体步骤</h4><h5 id="1-监控GC的状态"><a href="#1-监控GC的状态" class="headerlink" title="1.监控GC的状态"></a>1.监控GC的状态</h5><p>使用各种JVM工具，查看当前日志，分析当前JVM参数设置，并且分析当前堆内存快照和gc日志，根据实际的各区域内存划分和GC执行时间，觉得是否进行优化。举一个例子，系统崩溃前的一些现象：每次垃圾回收的时间越来越长，由之前的10ms延长到50ms左右，FullGC的时间也由之前的0.5s延长到4、5s，FullGC的次数越来越多，最频繁时隔不到1分钟就进行一次FullGC，老年代的内存越来越大并且每次FGC后老年代没有内存释放，之后系统会无法响应新的数据，逐渐到达OutMemoryError的临界值，这个时候就需要分析JVM内存快照dump。</p>
+<h5 id="2-生成堆的dump文件"><a href="#2-生成堆的dump文件" class="headerlink" title="2.生成堆的dump文件"></a>2.生成堆的dump文件</h5><p>通过JMX的MBean生成当前的Heap信息，大小为一个3G（整个堆得大小）的hprof文件，如果没有启动JMX可以通过Java的jmap命令来生成改文件。</p>
+<h5 id="3-分析dump文件"><a href="#3-分析dump文件" class="headerlink" title="3.分析dump文件"></a>3.分析dump文件</h5><p>打开这个3G的堆信息文件，显然一般的Windows系统没有这么大的内存，必须借助高配置的Linux，几种工具打开该文件：Visual VM、IBM HeadpAnalyzer、JDK自带的Hprof工具、Mat（Eclipse专门的静态内存分析工具）推荐使用。Tips：文件太大，建议使用Eclipse专门的静态内存工具Mat打开分析。</p>
+<h5 id="4-分析结果，判断是否需要优化"><a href="#4-分析结果，判断是否需要优化" class="headerlink" title="4.分析结果，判断是否需要优化"></a>4.分析结果，判断是否需要优化</h5><p>如果各项参数设置合理，系统没有超时日志出现，GC频率不高，GC耗时不高，那么没有必要进行GC优化，如果GC时间超过1-3s，或者频繁GC，则必须优化。注意： 如果满足下面的指标，<strong>则一般不需要进行 GC 优化：</strong></p>
+<blockquote>
+<ul>
+<li>MinorGC 执行时间不到50ms；</li>
+<li>Minor GC 执行不频繁，约10秒一次；</li>
+<li>Full GC 执行时间不到1s；</li>
+<li>Full GC 执行频率不算频繁，不低于10分钟1次。</li>
+</ul>
+</blockquote>
+<h5 id="5-调整GC类型和内存分配"><a href="#5-调整GC类型和内存分配" class="headerlink" title="5.调整GC类型和内存分配"></a>5.调整GC类型和内存分配</h5><p>如果内存分配 过大或过小，或者采用的GC收集器比较慢，则应该优先调整这些参数，并且先找1台或几台机器进行beta，然后比较优化过的机器和没有优化的机器的性能对比，并有针对性的做出最后选择。</p>
+<h5 id="6-不断的分析和调整"><a href="#6-不断的分析和调整" class="headerlink" title="6.不断的分析和调整"></a>6.不断的分析和调整</h5><p>通过不断的试验和试错，分析并找出最合适的参数，如果找到了最合适的参数，则将这些参数应用到所有服务器。</p>
+<p>一般遇到问题就是打出当时的线程信息生成dump然后查异常代码。</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MjM5NzMyMjAwMA==&mid=2651485913&idx=1&sn=c40e03e94a7eb1f62baaa09173afc860&chksm=bd251aa68a5293b00dd0228451e19eef1e98684e5d596bbed2d647b8530e02eac2042580870e&scene=21#wechat_redirect">附：JVM 性能调优监控工具 jps、jstack、jmap、jhat、jstat、hprof 使用详解</a></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.hollischuang.com/archives/6055">我竟然被”双亲委派”给虐了！</a></li>
+</ul>
 
     
 
-    
-    <div class="page-reward">
-      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
-        <div class="tooltip tooltip-east">
-          <span class="tooltip-item">
-            赏
-          </span>
-          <span class="tooltip-content">
-            <span class="tooltip-text">
-              <span class="tooltip-inner">
-                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
-                    class="icon icon-quo-right"></i></p>
-                <div class="reward-box">
-                  
-                  <div class="reward-box-item">
-                    <img class="reward-img" src="/img/alipay.png">
-                    <span class="reward-type">支付宝</span>
-                  </div>
-                  
-                  
-                  <div class="reward-box-item">
-                    <img class="reward-img" src="/img/weixin.png">
-                    <span class="reward-type">微信</span>
-                  </div>
-                  
-                </div>
-              </span>
-            </span>
-          </span>
-        </div>
-      </a>
-    </div>
     
 
     
@@ -324,69 +403,30 @@
   <div class="article-info article-info-index">
     
     
-    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
 
     
 
     
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/eec2f852.html">展开全文 >></a>
+    </p>
     
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a> -->
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
-        </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://blog.elfred.top/private/%E5%8F%82%E8%80%83%E9%9D%A2%E7%BB%8F/%E5%8F%82%E8%80%83%E5%88%AB%E4%BA%BA%E9%9D%A2%E7%BB%8F%E6%95%B4%E7%90%86.html" alt="微信分享二维码"> -->
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
 
     
     <div class="clearfix"></div>
   </div>
   </div>
 </article>
-
-
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -401,18 +441,162 @@
         </div>
         
         
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text"> 多线程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E5%90%88"><span class="toc-number">2.</span> <span class="toc-text"> 集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C"><span class="toc-number">3.</span> <span class="toc-text"> 网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1"><span class="toc-number">4.</span> <span class="toc-text"> 数据库事务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text"> 中间件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring"><span class="toc-number">6.</span> <span class="toc-text"> Spring</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="toc-number">7.</span> <span class="toc-text"> 微服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM"><span class="toc-number">8.</span> <span class="toc-text"> JVM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95"><span class="toc-number">9.</span> <span class="toc-text"> 算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE"><span class="toc-number">10.</span> <span class="toc-text"> 项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">11.</span> <span class="toc-text"> 总结</span></a></li></ol>
-                    </div>
-                </span>
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-interview/2021面经" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/416557c5.html" target="_blank">2021面经</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/416557c5.html" class="archive-article-date">
+        <time datetime="2021-01-20T08:49:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-20</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <hr>
+<h3 id="叮咚买菜"><a href="#叮咚买菜" class="headerlink" title="叮咚买菜"></a>叮咚买菜</h3><ul>
+<li><p>hashmap的扩容过程</p>
+</li>
+<li><p>单向链表如何判断有环</p>
+<blockquote>
+<p>HashSet遍历和快慢指针</p>
+</blockquote>
+</li>
+<li><p>如何找出一个数组重复元素最多的前K个元素</p>
+<blockquote>
+<p>TopK问题，堆排序，时间复杂度nLogK</p>
+</blockquote>
+</li>
+<li><p>MySQL什么情况下会发生死锁？如何解决？</p>
+<blockquote>
+<p>举个例子：事务A按照先后顺序去更新id&#x3D;1和id&#x3D;2的记录，事务B同一时间按照先后顺序去更新id&#x3D;2和id&#x3D;1的记录，因为行锁是两阶段协议，A获得id&#x3D;1的行锁不会马上释放，此时B会等待A释放id&#x3D;1的行锁，而A会等待B释放id&#x3D;2的行锁，这样就形成了死锁。<br><strong>如何解决：</strong></p>
+<ul>
+<li>一种策略是，直接进入等待，直到超时。这个超时时间可以通过参数innodb_lock_wait_timeout来设置。</li>
+<li>另一种策略是，发起死锁检测，发现死锁后，主动回滚死锁链条中的某一个事务，让其他事务得以继续执行。将参数innodb_deadlock_detect设置为on，表示开启这个逻辑。</li>
+</ul>
+</blockquote>
+</li>
+<li><p>ArrayList的contains方法和HashSet的contains方法的时间复杂度各是多少</p>
+<blockquote>
+<p>O(n)和O(1）</p>
+</blockquote>
+</li>
+<li><p>2个线程，A生产数据，B消费数据，有哪几种实现形式（使用LinkedList实现有哪些需要注意的，线程安全问题，如何解决：加锁）</p>
+</li>
+<li><p>一个抽奖系统，奖品1的概率是10%，奖品2的概率是20%，不中奖的概率是70%，算法如何实现？</p>
+<blockquote>
+<p>随机数和区间</p>
+</blockquote>
+</li>
+<li><p>缓存一致性如何保证？</p>
+<blockquote>
+<p>最好的解决方案是先更新数据库再删除缓存（在极端情况下也会有问题，比如说B线程更新数据的节点，缓存正好失效，此时线程A读取到了旧值，随后B操作数据库完成更新并且删除缓存之后，A再把旧值写入缓存，此时再去请求拿到的会是脏数据，这种概率非常低，基本可以忽略）</p>
+</blockquote>
+</li>
+<li><p>Dubbo IO线程池和业务线程池有什么区别？默认是哪种线程池（Fixed）</p>
+</li>
+<li><p>使用Dubbo有没有遇到什么坑？</p>
+<blockquote>
+<ul>
+<li>父子类有相同属性时值丢失：hessian序列化问题</li>
+<li>自定义异常被包装成RuntimeException</li>
+<li>Data length too large</li>
+<li>线程耗尽：Provider默认是fixed线程池，且线程数为200</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013256816/article/details/102674846"><strong>具体参考链接</strong></a></p>
+</blockquote>
+</li>
+<li><p>网关是用来做什么的？为什么要用网关？</p>
+</li>
+<li><p>乐观锁和悲观锁有什么区别？乐观锁有哪些实现方式？（版本号机制和CAS算法）</p>
+<blockquote>
+<p>版本号机制和CAS算法</p>
+</blockquote>
+</li>
+<li><p>线程池主要有哪些东西？线程池中如果没有任务，会是什么状态？</p>
+</li>
+<li><p>项目中遇到的技术难题，是如何解决的？</p>
+</li>
+<li><p>分库分表一些连表问题和条件查询是如何解决的？</p>
+<blockquote>
+<p>分两次查询，第一次把联表的id查出来，通过这些id再做一次查询</p>
+</blockquote>
+</li>
+</ul>
+    
+    <a class="article-more-a" href="/posts/416557c5.html#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/416557c5.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
             </div>
         </div>
+        
         
     </div>
 </aside>
@@ -420,14 +604,700 @@
 
 
 
+  
+    <article id="post-interview/dubbo面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/7644b6f2.html" target="_blank">Dubbo面试题</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/7644b6f2.html" class="archive-article-date">
+        <time datetime="2021-01-18T08:31:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-18</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <hr>
+<h3 id="dubbo分层"><a href="#dubbo分层" class="headerlink" title="dubbo分层"></a>dubbo分层</h3><p>从大的范围来说，dubbo分为三层，business业务逻辑层由我们自己来提供接口和实现还有一些配置信息，RPC层就是真正的RPC调用的核心层，封装整个RPC的调用过程、负载均衡、集群容错、代理，remoting则是对网络传输协议和数据转换的封装。</p>
+<p>划分到更细的层面，就是图中的10层模式，整个分层依赖由上至下，除开business业务逻辑之外，其他的几层都是SPI机制。<br><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118155842.webp" alt="图片"></p>
+<h3 id="能说下Dubbo的工作原理吗？"><a href="#能说下Dubbo的工作原理吗？" class="headerlink" title="能说下Dubbo的工作原理吗？"></a>能说下Dubbo的工作原理吗？</h3><ol>
+<li>服务启动的时候，provider和consumer根据配置信息，连接到注册中心register，分别向注册中心注册和订阅服务</li>
+<li>register根据服务订阅关系，返回provider信息到consumer，同时consumer会把provider信息缓存到本地。如果信息有变更，consumer会收到来自register的推送</li>
+<li>consumer生成代理对象，同时根据负载均衡策略，选择一台provider，同时定时向monitor记录接口的调用次数和时间信息</li>
+<li>拿到代理对象之后，consumer通过代理对象发起接口调用</li>
+<li>provider收到请求后对数据进行反序列化，然后通过代理调用具体的接口实现</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118155952.webp" alt="图片"></p>
+<h3 id="dubbo服务暴露的过程"><a href="#dubbo服务暴露的过程" class="headerlink" title="dubbo服务暴露的过程"></a>dubbo服务暴露的过程</h3><ol>
+<li>在容器启动的时候，通过ServiceConfig解析标签，创建dubbo标签解析器来解析dubbo的标签，容器创建完成之后，触发ContextRefreshEvent事件回调开始暴露服务</li>
+<li>通过ProxyFactory获取到invoker，invoker包含了需要执行的方法的对象信息和具体的URL地址</li>
+<li>再通过DubboProtocol的实现把包装后的invoker转换成exporter，然后启动服务器server，监听端口</li>
+<li>最后RegistryProtocol保存URL地址和invoker的映射关系，同时注册到服务中心</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118160055.webp" alt="图片"></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/TOcBA5AFDsMNCCosI5tZZA">https://mp.weixin.qq.com/s/TOcBA5AFDsMNCCosI5tZZA</a></p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/7644b6f2.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
 
 
 
 
+  
+    <article id="post-application/面试遇到的简单多线程编程题：线程交替打印的升级版" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/575b225b.html" target="_blank">面试遇到的简单多线程编程题：线程交替打印的升级版</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/575b225b.html" class="archive-article-date">
+        <time datetime="2020-03-26T07:34:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-26</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近面试遇到一道简单的多线程编码题，线程交替打印的升级版，我们来研究下这道题怎么解决。  </p>
+<h3 id="题目介绍："><a href="#题目介绍：" class="headerlink" title="题目介绍："></a>题目介绍：</h3><blockquote>
+<p>线程A每次处理只能输出一个A<br>线程B每次输出只能输出一个B<br>主线程不能输出A或B<br>请尽可能不使用封装好的工具方法或类来调度线程，然后输出以下内容：<br>ABBBBABBBBABBBBABBBB….<br>加分项：增加线程B1，行为和B一样，要求B和B1负载均衡</p>
+</blockquote>
+    
+    <a class="article-more-a" href="/posts/575b225b.html#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">面试题</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/575b225b.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
 
 
 
 
+  
+    <article id="post-application/Spring、SpringMvc、SpringBoot和SpringCloud的联系与区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/7e8f7b41.html" target="_blank">Spring、SpringMvc、SpringBoot和SpringCloud的联系与区别</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/7e8f7b41.html" class="archive-article-date">
+        <time datetime="2020-02-29T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-29</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>最近面试被问到了Spring、SpringMvc、SpringBoot和SpringCloud的关系和区别，以及各解决了什么问题，简单整理了下四者之间的区别和联系以及解决的问题：</p>
+    
+    <a class="article-more-a" href="/posts/7e8f7b41.html#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/7e8f7b41.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-application/SpringBoot打包时复制指定配置文件到指定目录，并剔除jar包内所有配置文件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/9ca55b1a.html" target="_blank">SpringBoot打包时复制指定配置文件到指定目录，并剔除jar包内所有配置文件</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/9ca55b1a.html" class="archive-article-date">
+        <time datetime="2020-02-24T03:04:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-24</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>最近遇到一个需求，把SpringBoot项目的配置文件放到Jar包外面，Jar包内不包含多余配置文件，Jar包运行时指定外部配置文件启动。我的配置文件放在src&#x2F;main&#x2F;resources&#x2F;config下，打包时拷贝到Jar包同级config目录下（SpringBoot默认支持读取Jar包同级config文件夹中的配置），具体解决方案如下：</p>
+<ul>
+<li><p>使用maven-jar-plugin插件移除配置文件将其不打包进jar包中</p>
+</li>
+<li><p>使用maven-resources-plugin插件将需要复制的文件复制到指定路径（例：将配置文件提取到指定路径）</p>
+<p>Maven配置如下：</p>
+    
+    <a class="article-more-a" href="/posts/9ca55b1a.html#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/9ca55b1a.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-application/使用gitlab-ci和docker自动化部署vue项目" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/1b05c064.html" target="_blank">使用gitlab-ci和docker自动化部署vue项目</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/1b05c064.html" class="archive-article-date">
+        <time datetime="2019-10-27T07:51:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-27</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>之前用docker的时候想到gitlab可以直接提交代码触发docker编译部署，非常方便，于是试验了一个单体vue项目如何使用gitlab和docker的强大功能进行编译发布，此教程仅供参考，适用于公司或者个人测试。</p>
+    
+    <a class="article-more-a" href="/posts/1b05c064.html#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/1b05c064.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-application/CoreOS配置Docker-API-TLS认证" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/a623d7c5.html" target="_blank">【转】CoreOS配置Docker API TLS认证</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/a623d7c5.html" class="archive-article-date">
+        <time datetime="2019-10-19T15:43:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-19</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>我们经常会利用Portainer来管理docker环境，也经常会用Jenkins来自动构建和部署docker，远程管理都会使用到Docker API，通常我们只是开启了没有安全保护的2375（通常）端口，这个比较危险，会导致远程劫持攻击。那么我们就需要配置TLS认证的2376（通常）端口。</p>
+    
+    <a class="article-more-a" href="/posts/a623d7c5.html#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">docker</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/a623d7c5.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-application/ORM框架对比" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/9eb10313.html" target="_blank">ORM框架对比</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/9eb10313.html" class="archive-article-date">
+        <time datetime="2019-10-13T14:16:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-13</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>　　因为项目需要选择数据持久化框架，看了一下主要几个流行的和不流行的框架，对于复杂业务系统，最终的结论是，JOOQ是总体上最好的，可惜不是完全免费，最终选择JDBC Template。</p>
+    
+    <a class="article-more-a" href="/posts/9eb10313.html#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">框架</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/JAVA随笔//" class="article-tag-list-link color2">JAVA随笔</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/9eb10313.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-application/JPA实现Specification" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/ea992500.html" target="_blank">使用JPA实现Specification规范规格模式</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/ea992500.html" class="archive-article-date">
+        <time datetime="2019-10-13T13:55:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-13</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>　　由DDD之父 Eric Evans 和OO之父 Martin Fowler定义的规范(Specification也称规格模式)模式article 越来越受到广泛应用，本文介绍如何使用JavaEE 持久层规范JPA实现规格模式，其实现思想也适合其他持久层框架。案例源码见GitHub。</p>
+    
+    <a class="article-more-a" href="/posts/ea992500.html#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/ea992500.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
+    </nav>
+  
 
 
           </div>
@@ -467,7 +1337,7 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: false,
+		isHome: true,
 		isPost: false,
 		isArchive: false,
 		isTag: false,

@@ -220,7 +220,7 @@
             
 
   
-    <article id="post-interview/计算机网络" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-study/数据结构与算法之美/学习笔记/07讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -228,7 +228,7 @@
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/posts/e255a10a.html" target="_blank">计算机网络</a>
+	  <a class="article-title" href="/posts/b8e54d5c.html" target="_blank">07讲</a>
   
     </h1>
   
@@ -236,8 +236,8 @@
 
   
   
-<a href="/posts/e255a10a.html" class="archive-article-date">
-        <time datetime="2021-02-04T07:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-04</time>
+<a href="/posts/b8e54d5c.html" class="archive-article-date">
+        <time datetime="2021-03-28T17:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-29</time>
 </a>
 
   
@@ -250,29 +250,72 @@
   <div class="article-entry" itemprop="articleBody">
     
     <hr>
-<h2 id="TCP-UDP"><a href="#TCP-UDP" class="headerlink" title="TCP&#x2F;UDP"></a>TCP&#x2F;UDP</h2><h3 id="什么是TCP"><a href="#什么是TCP" class="headerlink" title="什么是TCP"></a>什么是TCP</h3><h3 id="TCP三次握手"><a href="#TCP三次握手" class="headerlink" title="TCP三次握手"></a>TCP三次握手</h3><h4 id="三次握手的流程"><a href="#三次握手的流程" class="headerlink" title="三次握手的流程"></a>三次握手的流程</h4><h4 id="为什么是三次，两次行不行？"><a href="#为什么是三次，两次行不行？" class="headerlink" title="为什么是三次，两次行不行？"></a>为什么是三次，两次行不行？</h4><h3 id="TCP四次挥手"><a href="#TCP四次挥手" class="headerlink" title="TCP四次挥手"></a>TCP四次挥手</h3><h4 id="四次挥手的流程？"><a href="#四次挥手的流程？" class="headerlink" title="四次挥手的流程？"></a>四次挥手的流程？</h4><h4 id="为什么是四次挥手不是三次？"><a href="#为什么是四次挥手不是三次？" class="headerlink" title="为什么是四次挥手不是三次？"></a>为什么是四次挥手不是三次？</h4><h3 id="TCP如何保证可靠性传输"><a href="#TCP如何保证可靠性传输" class="headerlink" title="TCP如何保证可靠性传输"></a>TCP如何保证可靠性传输</h3><h3 id="TCP粘包和拆包"><a href="#TCP粘包和拆包" class="headerlink" title="TCP粘包和拆包"></a>TCP粘包和拆包</h3><p>TCP是个“流”协议，所谓流，就是没有界限的一串数据。大家可以想想河里的流水，是连成一片的，其间并没有分界线。TCP底层并不了解上层业务数据的具体含义，它会根据TCP缓冲区的实际情况进行包的划分，所以在业务上认为，一个完整的包可能会被TCP拆分成多个包进行发送，也有可能把多个小的包封装成一个大的数据包发送，这就是所谓的TCP粘包和拆包问题。</p>
-<h4 id="TCP粘包-拆包问题说明"><a href="#TCP粘包-拆包问题说明" class="headerlink" title="TCP粘包&#x2F;拆包问题说明"></a>TCP粘包&#x2F;拆包问题说明</h4><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210212215650.png" alt="img"></p>
-<p>假设客户端分别发送了两个数据包D1和D2给服务端，由于服务端一次读取到的字节数是不确定的，故可能存在以下4种情况。</p>
-<ol>
-<li>服务端分两次读取到了两个独立的数据包，分别是D1和D2，没有粘包和拆包；</li>
-<li>服务端一次接收到了两个数据包，D1和D2粘合在一起，被称为TCP粘包；</li>
-<li>服务端分两次读取到了两个数据包，第一次读取到了完整的D1包和D2包的部分内容，第二次读取到了D2包的剩余内容，这被称为TCP拆包；</li>
-<li>服务端分两次读取到了两个数据包，第一次读取到了D1包的部分内容D1_1，第二次读取到了D1包的剩余内容D1_2和D2包的整包。</li>
-</ol>
-<p>如果此时服务端TCP接收滑窗非常小，而数据包D1和D2比较大，很有可能会发生第五种可能，即服务端分多次才能将D1和D2包接收完全，期间发生多次拆包。</p>
-<h4 id="TCP粘包-拆包发生的原因"><a href="#TCP粘包-拆包发生的原因" class="headerlink" title="TCP粘包&#x2F;拆包发生的原因"></a>TCP粘包&#x2F;拆包发生的原因</h4><ol>
-<li>应用程序write写入的字节大小大于套接口发送缓冲区大小；</li>
-<li>进行MSS大小的TCP分段；</li>
-<li>以太网帧的payload大于MTU进行IP分片。</li>
-</ol>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210212215514.png" alt="img"></p>
-<h4 id="粘包问题的解决策略"><a href="#粘包问题的解决策略" class="headerlink" title="粘包问题的解决策略"></a>粘包问题的解决策略</h4><p>由于底层的TCP无法理解上层的业务数据，所以在底层是无法保证数据包不被拆分和重组的，这个问题只能通过上层的应用协议栈设计来解决，根据业界的主流协议的解决方案，可以归纳如下：</p>
-<ol>
-<li>消息定长，例如每个报文的大小为固定长度200字节，如果不够，空位补空格；</li>
-<li>在包尾增加回车换行符进行分割，例如FTP协议；</li>
-<li>将消息分为消息头和消息体，消息头中包含表示消息总长度（或者消息体长度）的字段，通常设计思路为消息头的第一个字段使用int32来表示消息的总长度；</li>
-<li>更复杂的应用层协议。</li>
-</ol>
+<h1 id="07-链表（下）：如何轻松写出正确的链表代码？"><a href="#07-链表（下）：如何轻松写出正确的链表代码？" class="headerlink" title="07 | 链表（下）：如何轻松写出正确的链表代码？"></a>07 | 链表（下）：如何轻松写出正确的链表代码？</h1><h2 id="几个写链表代码的技巧"><a href="#几个写链表代码的技巧" class="headerlink" title="几个写链表代码的技巧"></a>几个写链表代码的技巧</h2><h3 id="技巧一：理解指针或引用的含义"><a href="#技巧一：理解指针或引用的含义" class="headerlink" title="技巧一：理解指针或引用的含义"></a>技巧一：理解指针或引用的含义</h3><p>实际上，对于指针或引用的理解，你只需要记住下面这句话就可以了：</p>
+<p><strong>将某个变量赋值给指针，实际上就是将这个变量的地址赋值给指针，或者反过来说，指针中存储了这个变量的内存地址，指向了这个变量，通过指针就能找到这个变量。</strong></p>
+<p>在编写链表代码的时候，我们经常会有这样的代码：p-&gt;next&#x3D;q。这行代码是说，p 结点中的 next 指针存储了 q 结点的内存地址。</p>
+<p>还有一个更复杂的，也是我们写链表代码经常会用到的：p-&gt;next&#x3D;p-&gt;next-&gt;next。这行代码表示，p 结点的 next 指针存储了 p 结点的下下一个结点的内存地址。</p>
+<p>掌握了指针或引用的概念，你应该可以很轻松地看懂链表代码。恭喜你，已经离写出链表代码近了一步！</p>
+<h3 id="技巧二：警惕指针丢失和内存泄漏"><a href="#技巧二：警惕指针丢失和内存泄漏" class="headerlink" title="技巧二：警惕指针丢失和内存泄漏"></a>技巧二：警惕指针丢失和内存泄漏</h3><p>不知道你有没有这样的感觉，写链表代码的时候，指针指来指去，一会儿就不知道指到哪里了。所以，我们在写的时候，一定注意不要弄丢了指针。</p>
+<p>指针往往都是怎么弄丢的呢？我拿单链表的插入操作为例来给你分析一下。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210329002827.jpeg" alt="img"></p>
+<p>如图所示，我们希望在结点 a 和相邻的结点 b 之间插入结点 x，假设当前指针 p 指向结点 a。如果我们将代码实现变成下面这个样子，就会发生指针丢失和内存泄露。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">p-&gt;next = x;  <span class="comment">// 将p的next指针指向x结点；</span></span><br><span class="line">x-&gt;next = p-&gt;next;  <span class="comment">// 将x的结点的next指针指向b结点；</span></span><br></pre></td></tr></table></figure>
+
+<p>初学者经常会在这儿犯错。p-&gt;next 指针在完成第一步操作之后，已经不再指向结点 b 了，而是指向结点 x。第 2 行代码相当于将 x 赋值给 x-&gt;next，自己指向自己。因此，整个链表也就断成了两半，从结点 b 往后的所有结点都无法访问到了。</p>
+<p>对于有些语言来说，比如 C 语言，内存管理是由程序员负责的，如果没有手动释放结点对应的内存空间，就会产生内存泄露。所以，我们<strong>插入结点时，一定要注意操作的顺序</strong>，要先将结点 x 的 next 指针指向结点 b，再把结点 a 的 next 指针指向结点 x，这样才不会丢失指针，导致内存泄漏。所以，对于刚刚的插入代码，我们只需要把第 1 行和第 2 行代码的顺序颠倒一下就可以了。</p>
+<p>同理，<strong>删除链表结点时，也一定要记得手动释放内存空间</strong>，否则，也会出现内存泄漏的问题。当然，对于像 Java 这种虚拟机自动管理内存的编程语言来说，就不需要考虑这么多了。</p>
+<h3 id="技巧三：利用哨兵简化实现难度"><a href="#技巧三：利用哨兵简化实现难度" class="headerlink" title="技巧三：利用哨兵简化实现难度"></a>技巧三：利用哨兵简化实现难度</h3><p>首先，我们先来回顾一下单链表的插入和删除操作。如果我们在结点 p 后面插入一个新的结点，只需要下面两行代码就可以搞定。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">new_node-&gt;next = p-&gt;next;</span><br><span class="line">p-&gt;next = new_node;</span><br></pre></td></tr></table></figure>
+
+<p>但是，当我们要向一个空链表中插入第一个结点，刚刚的逻辑就不能用了。我们需要进行下面这样的特殊处理，其中 head 表示链表的头结点。所以，从这段代码，我们可以发现，对于单链表的插入操作，第一个结点和其他结点的插入逻辑是不一样的。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (head == null) &#123;</span><br><span class="line">  head = new_node;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们再来看单链表结点删除操作。如果要删除结点 p 的后继结点，我们只需要一行代码就可以搞定。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p-&gt;next = p-&gt;next-&gt;next;</span><br></pre></td></tr></table></figure>
+
+<p>但是，如果我们要删除链表中的最后一个结点，前面的删除代码就不 work 了。跟插入类似，我们也需要对于这种情况特殊处理。写成代码是这样子的：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (head-&gt;next == null) &#123;</span><br><span class="line">   head = null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从前面的一步一步分析，我们可以看出，<strong>针对链表的插入、删除操作，需要对插入第一个结点和删除最后一个结点的情况进行特殊处理</strong>。这样代码实现起来就会很繁琐，不简洁，而且也容易因为考虑不全而出错。如何来解决这个问题呢？</p>
+<p>技巧三中提到的哨兵就要登场了。哨兵，解决的是国家之间的边界问题。同理，这里说的哨兵也是解决“边界问题”的，不直接参与业务逻辑。</p>
+<p>还记得如何表示一个空链表吗？head&#x3D;null 表示链表中没有结点了。其中 head 表示头结点指针，指向链表中的第一个结点。</p>
+<p>如果我们引入哨兵结点，在任何时候，不管链表是不是空，head 指针都会一直指向这个哨兵结点。我们也把这种有哨兵结点的链表叫<strong>带头链表</strong>。相反，没有哨兵结点的链表就叫作<strong>不带头链表</strong>。</p>
+<p>我画了一个带头链表，你可以发现，哨兵结点是不存储数据的。因为哨兵结点一直存在，所以插入第一个结点和插入其他结点，删除最后一个结点和删除其他结点，都可以统一为相同的代码实现逻辑了。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 插入第一个节点</span></span><br><span class="line">new_node-&gt;next = dummy_node-&gt;next</span><br><span class="line">dummy_node-&gt;next = new_node</span><br><span class="line"><span class="comment">// 删除最后一个节点</span></span><br><span class="line">dummy_node-&gt;next = dummy_node-&gt;next-&gt;next;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210329003540.jpeg" alt="img"></p>
+<h3 id="技巧四：重点留意边界条件处理"><a href="#技巧四：重点留意边界条件处理" class="headerlink" title="技巧四：重点留意边界条件处理"></a>技巧四：重点留意边界条件处理</h3><p>软件开发中，代码在一些边界或者异常情况下，最容易产生 Bug。链表代码也不例外。要实现没有 Bug 的链表代码，一定要在编写的过程中以及编写完成之后，检查边界条件是否考虑全面，以及代码在边界条件下是否能正确运行。</p>
+<p>我经常用来检查链表代码是否正确的边界条件有这样几个：</p>
+<ul>
+<li>如果链表为空时，代码是否能正常工作？</li>
+<li>如果链表只包含一个结点时，代码是否能正常工作？</li>
+<li>如果链表只包含两个结点时，代码是否能正常工作？</li>
+<li>代码逻辑在处理头结点和尾结点的时候，是否能正常工作？</li>
+</ul>
+<h3 id="技巧五：举例画图，辅助思考"><a href="#技巧五：举例画图，辅助思考" class="headerlink" title="技巧五：举例画图，辅助思考"></a>技巧五：举例画图，辅助思考</h3><p>对于稍微复杂的链表操作，比如前面我们提到的单链表反转，指针一会儿指这，一会儿指那，一会儿就被绕晕了。总感觉脑容量不够，想不清楚。所以这个时候就要使用大招了，<strong>举例法</strong>和<strong>画图法</strong>。</p>
+<p>你可以找一个具体的例子，把它画在纸上，释放一些脑容量，留更多的给逻辑思考，这样就会感觉到思路清晰很多。比如往单链表中插入一个数据这样一个操作，我一般都是把各种情况都举一个例子，画出插入前和插入后的链表变化，如图所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210329004753.jpeg" alt="img"></p>
+<p>看图写代码，是不是就简单多啦？而且，当我们写完代码之后，也可以举几个例子，画在纸上，照着代码走一遍，很容易就能发现代码中的 Bug。</p>
+<h3 id="技巧六：多写多练，没有捷径"><a href="#技巧六：多写多练，没有捷径" class="headerlink" title="技巧六：多写多练，没有捷径"></a>技巧六：多写多练，没有捷径</h3><p>我精选了 5 个常见的链表操作。你只要把这几个操作都能写熟练，不熟就多写几遍，我保证你之后再也不会害怕写链表代码。</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/reverse-linked-list/">206. 反转链表</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/linked-list-cycle/">141. 环形链表</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/merge-two-sorted-lists/">21. 合并两个有序链表</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/">19. 删除链表的倒数第 N 个结点</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/middle-of-the-linked-list/">876. 链表的中间结点</a></p>
+</li>
+</ul>
+<h2 id="课后思考"><a href="#课后思考" class="headerlink" title="课后思考"></a>课后思考</h2><p>今天我们讲到用哨兵来简化编码实现，你是否还能够想到其他场景，利用哨兵可以大大地简化编码难度？</p>
+<blockquote>
+<p>哨兵可以理解为它可以减少特殊情况的判断，比如判空，比如判越界，比如减少链表插入删除中对空链表的判断，比如例子中对i越界的判断。</p>
+<p>空与越界可以认为是小概率情况，所以代码每一次操作都走一遍判断，在大部分情况下都会是多余的。</p>
+<p>哨兵的巧妙就是提前将这种情况去除，比如给一个哨兵结点，以及将key赋值给数组末元素，让数组遍历不用判断越界也可以因为相等停下来。</p>
+<p>使用哨兵的指导思想应该是将小概率需要的判断先提前扼杀，比如提前给他一个值让他不为null，或者提前预设值，或者多态的时候提前给个空实现，然后在每一次操作中不必再判断以增加效率。</p>
+</blockquote>
 
     
 
@@ -289,516 +332,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/e255a10a.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-interview/系统架构设计" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/75203a6f.html" target="_blank">系统架构设计</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/75203a6f.html" class="archive-article-date">
-        <time datetime="2021-01-30T06:09:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-30</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <hr>
-<h1 id="如何设计一个高并发系统？"><a href="#如何设计一个高并发系统？" class="headerlink" title="如何设计一个高并发系统？"></a>如何设计一个高并发系统？</h1><p>可以分为以下 6 点：</p>
-<ul>
-<li>系统拆分</li>
-<li>缓存</li>
-<li>MQ</li>
-<li>分库分表</li>
-<li>读写分离</li>
-<li>ElasticSearch</li>
-</ul>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210126145855.png" alt="high-concurrency-system-design"></p>
-<h1 id="如何设计一个高可用系统"><a href="#如何设计一个高可用系统" class="headerlink" title="如何设计一个高可用系统"></a>如何设计一个高可用系统</h1><h2 id="什么是高可用？可用性的判断标准是啥？"><a href="#什么是高可用？可用性的判断标准是啥？" class="headerlink" title="什么是高可用？可用性的判断标准是啥？"></a>什么是高可用？可用性的判断标准是啥？</h2><p><strong>高可用描述的是一个系统在大部分时间都是可用的，可以为我们提供服务的。高可用代表系统即使在发生硬件故障或者系统升级的时候，服务仍然是可用的。</strong></p>
-<p><strong>一般情况下，我们使用多少个 9 来评判一个系统的可用性，比如 99.9999% 就是代表该系统在所有的运行时间中只有 0.0001% 的时间是不可用的，这样的系统就是非常非常高可用的了！当然，也会有系统如果可用性不太好的话，可能连 9 都上不了。</strong></p>
-<p>除此之外，系统的可用性还可以用某功能的失败次数与总的请求次数之比来衡量，比如对网站请求 1000 次，其中有 10 次请求失败，那么可用性就是 99%。</p>
-<h2 id="哪些情况会导致系统不可用？"><a href="#哪些情况会导致系统不可用？" class="headerlink" title="哪些情况会导致系统不可用？"></a>哪些情况会导致系统不可用？</h2><ol>
-<li>黑客攻击；</li>
-<li>硬件故障，比如服务器坏掉。</li>
-<li>并发量&#x2F;用户请求量激增导致整个服务宕掉或者部分服务不可用。</li>
-<li>代码中的坏味道导致内存泄漏或者其他问题导致程序挂掉。</li>
-<li>网站架构某个重要的角色比如 Nginx 或者数据库突然不可用。</li>
-<li>自然灾害或者人为破坏。</li>
-<li>……</li>
-</ol>
-<h2 id="有哪些提高系统可用性的方法？"><a href="#有哪些提高系统可用性的方法？" class="headerlink" title="有哪些提高系统可用性的方法？"></a>有哪些提高系统可用性的方法？</h2><h3 id="1-注重代码质量，测试严格把关"><a href="#1-注重代码质量，测试严格把关" class="headerlink" title="1. 注重代码质量，测试严格把关"></a>1. 注重代码质量，测试严格把关</h3><p>我觉得这个是最最最重要的，代码质量有问题比如比较常见的内存泄漏、循环依赖都是对系统可用性极大的损害。大家都喜欢谈限流、降级、熔断，但是我觉得从代码质量这个源头把关是首先要做好的一件很重要的事情。如何提高代码质量？比较实际可用的就是 CodeReview，不要在乎每天多花的那 1 个小时左右的时间，作用可大着呢！</p>
-<p>另外，安利这个对提高代码质量有实际效果的宝贝：</p>
-<ol>
-<li>sonarqube ：保证你写出更安全更干净的代码！（ps: 目前所在的项目基本都会用到这个插件）。</li>
-<li>Alibaba 开源的 Java 诊断工具 Arthas 也是很不错的选择。</li>
-<li>IDEA 自带的代码分析等工具进行代码扫描也是非常非常棒的。</li>
-</ol>
-<h3 id="2-使用集群，减少单点故障"><a href="#2-使用集群，减少单点故障" class="headerlink" title="2.使用集群，减少单点故障"></a>2.使用集群，减少单点故障</h3><p>先拿常用的 Redis 举个例子！我们如何保证我们的 Redis 缓存高可用呢？答案就是使用集群，避免单点故障。当我们使用一个 Redis 实例作为缓存的时候，这个 Redis 实例挂了之后，整个缓存服务可能就挂了。使用了集群之后，即使一台 Redis 实例，不到一秒就会有另外一台 Redis 实例顶上。</p>
-<h3 id="3-限流"><a href="#3-限流" class="headerlink" title="3.限流"></a>3.限流</h3><p>流量控制（flow control），其原理是监控应用流量的 QPS 或并发线程数等指标，当达到指定的阈值时对流量进行控制，以避免被瞬时的流量高峰冲垮，从而保障应用的高可用性。——来自 alibaba-<a target="_blank" rel="noopener" href="https://github.com/alibaba/Sentinel">Sentinel</a> 的 wiki。</p>
-<h3 id="4-超时和重试机制设置"><a href="#4-超时和重试机制设置" class="headerlink" title="4.超时和重试机制设置"></a>4.超时和重试机制设置</h3><p>一旦用户请求超过某个时间的得不到响应，就抛出异常。这个是非常重要的，很多线上系统故障都是因为没有进行超时设置或者超时设置的方式不对导致的。我们在读取第三方服务的时候，尤其适合设置超时和重试机制。一般我们使用一些 RPC 框架的时候，这些框架都自带的超时重试的配置。如果不进行超时设置可能会导致请求响应速度慢，甚至导致请求堆积进而让系统无法在处理请求。重试的次数一般设为 3 次，再多次的重试没有好处，反而会加重服务器压力（部分场景使用失败重试机制会不太适合）。</p>
-<h3 id="5-熔断机制"><a href="#5-熔断机制" class="headerlink" title="5.熔断机制"></a>5.熔断机制</h3><p>超时和重试机制设置之外，熔断机制也是很重要的。 熔断机制说的是系统自动收集所依赖服务的资源使用情况和性能指标，当所依赖的服务恶化或者调用失败次数达到某个阈值的时候就迅速失败，让当前系统立即切换依赖其他备用服务。 比较常用的是流量控制和熔断降级框架是 Netflix 的 Hystrix 和 alibaba 的 Sentinel。</p>
-<h3 id="6-异步调用"><a href="#6-异步调用" class="headerlink" title="6.异步调用"></a>6.异步调用</h3><p>异步调用的话我们不需要关心最后的结果，这样我们就可以用户请求完成之后就立即返回结果，具体处理我们可以后续再做，秒杀场景用这个还是蛮多的。但是，使用异步之后我们可能需要 <strong>适当修改业务流程进行配合</strong>，比如<strong>用户在提交订单之后，不能立即返回用户订单提交成功，需要在消息队列的订单消费者进程真正处理完该订单之后，甚至出库后，再通过电子邮件或短信通知用户订单成功</strong>。除了可以在程序中实现异步之外，我们常常还使用消息队列，消息队列可以通过异步处理提高系统性能（削峰、减少响应所需时间）并且可以降低系统耦合性。</p>
-<h3 id="7-使用缓存"><a href="#7-使用缓存" class="headerlink" title="7.使用缓存"></a>7.使用缓存</h3><p>如果我们的系统属于并发量比较高的话，如果我们单纯使用数据库的话，当大量请求直接落到数据库可能数据库就会直接挂掉。使用缓存缓存热点数据，因为缓存存储在内存中，所以速度相当地快！</p>
-<h3 id="8-其他"><a href="#8-其他" class="headerlink" title="8.其他"></a>8.其他</h3><ol>
-<li><strong>核心应用和服务优先使用更好的硬件</strong></li>
-<li><strong>监控系统资源使用情况增加报警设置。</strong></li>
-<li><strong>注意备份，必要时候回滚。</strong></li>
-<li><strong>灰度发布：</strong> 将服务器集群分成若干部分，每天只发布一部分机器，观察运行稳定没有故障，第二天继续发布一部分机器，持续几天才把整个集群全部发布完毕，期间如果发现问题，只需要回滚已发布的一部分服务器即可</li>
-<li><strong>定期检查&#x2F;更换硬件：</strong> 如果不是购买的云服务的话，定期还是需要对硬件进行一波检查的，对于一些需要更换或者升级的硬件，要及时更换或者升级。</li>
-<li>…..(想起来再补充！也欢迎各位欢迎补充！)</li>
-</ol>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210213235715.png" alt="如何设计高可用系统？"></p>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/75203a6f.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-interview/计算机基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/c783f2ce.html" target="_blank">计算机基础</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/c783f2ce.html" class="archive-article-date">
-        <time datetime="2021-01-30T05:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-30</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <hr>
-<h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><h2 id="介绍下Linux（Unix）操作系统的五种IO模型"><a href="#介绍下Linux（Unix）操作系统的五种IO模型" class="headerlink" title="介绍下Linux（Unix）操作系统的五种IO模型"></a>介绍下Linux（Unix）操作系统的五种IO模型</h2><p>在Linux(UNIX)操作系统中，共有五种IO模型，分别是：<strong>阻塞IO模型</strong>、<strong>非阻塞IO模型</strong>、<strong>IO复用模型</strong>、<strong>信号驱动IO模型</strong>以及<strong>异步IO模型</strong>。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210126103811.jpeg" alt="图片"></p>
-<p>我们说阻塞IO模型、非阻塞IO模型、IO复用模型和信号驱动IO模型都是同步的IO模型。原因是因为，无论以上那种模型，真正的数据拷贝过程，都是同步进行的。</p>
-<p><strong>同步和异步：</strong></p>
-<p>从操作系统角度来说，<strong>网络IO的数据拷贝主要分为两个阶段，一是数据准备阶段，二是数据从内核拷贝到用户中。</strong></p>
-<p>同步IO指的是数据从内核拷贝到用户时。发起该请求的线程会自己来拷贝数据（表现为线程阻塞拷贝）。</p>
-<p>PS：一旦涉及到网络 IO必定会发生数据拷贝的阻塞（此阻塞非彼阻塞，这里的阻塞形容的是拷贝数据相对于CPU的速度来说是非常耗时的，看起来像线程阻塞了一样。我们常说的阻塞是线程挂起并让出CPU），只不过阻塞发生在其他的地方（自己来拷贝就是同步的，别人帮我拷贝就是异步的），因为IO必定会用到CPU，即使是零拷贝。</p>
-<p><strong>阻塞和非阻塞：</strong></p>
-<p>阻塞和非阻塞主要描述的是网络IO数据拷贝的第一个阶段。</p>
-<p>阻塞指的是线程一直等待数据准备好，期间什么都不干，但是会让出CPU，这样其他线程可以执行（CPU的利用率比较高），数据准备好之后自己来拷贝数据。</p>
-<p>非阻塞指的是在第一阶段，发起网络IO请求的时候会立即返回去干别的事情，但是会不断地进行询问数据是否准备好，这种方式称之为轮询。由于CPU要处理更多的系统调用（每次询问都是系统调用），这种模型的CPU利用率低。</p>
-<h2 id="NIO是如何实现同步非阻塞的呢？"><a href="#NIO是如何实现同步非阻塞的呢？" class="headerlink" title="NIO是如何实现同步非阻塞的呢？"></a>NIO是如何实现同步非阻塞的呢？</h2><p>Java的NIO实现采用了同步非阻塞IO和IO多路复用，其核心组件是Selector。Selector会不断的主动的询问Channel是否有事件发生，有事件发生，会进行事件处理。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//java nio</span></span><br><span class="line"><span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">  ......</span><br><span class="line">  selector.select(<span class="number">1</span>); <span class="comment">//不阻塞</span></span><br><span class="line">  Set&lt;SelectionKey&gt; selectionKeySet= selector.selectedKeys();</span><br><span class="line">  ......</span><br><span class="line">  <span class="comment">//处理selectionKeySet中事件,线程没有阻塞</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//java socket处理连接，线程会阻塞</span></span><br><span class="line"><span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">  ......</span><br><span class="line">  <span class="type">Socket</span> <span class="variable">socket</span> <span class="operator">=</span> serverSocket.accept(); <span class="comment">//阻塞</span></span><br><span class="line">  <span class="type">InputStream</span> <span class="variable">in</span> <span class="operator">=</span> socket.getInputStream(); </span><br><span class="line">  ......</span><br><span class="line">  <span class="comment">//处理in中内容</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Netty采用的是NIO其对Java的NIO进行了改进，其内部也封装了Selector和Channel，采用串行并发来提高效率。</p>
-<p>Java的NIO采用的是Reactor线程模型中的单Reactor单线程模型（前台和服务员是一个人，全程为顾客服务，可以服务多个人），Netty的NIO采用的是主从Reactor模型，是多Reactor多线程模型。</p>
-<h2 id="I-O-多路复用"><a href="#I-O-多路复用" class="headerlink" title="I&#x2F;O 多路复用"></a>I&#x2F;O 多路复用</h2><p><a target="_blank" rel="noopener" href="https://imageslr.com/2020/02/27/select-poll-epoll.html#%E4%BB%8E%E9%98%BB%E5%A1%9E-io-%E5%88%B0-io-%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8">参考：从阻塞-io-到-io-多路复用</a></p>
-<h3 id="select-的缺点"><a href="#select-的缺点" class="headerlink" title="select 的缺点"></a>select 的缺点</h3><ol>
-<li>性能开销大<ol>
-<li>调用 <code>select</code> 时会陷入内核，这时需要将参数中的 <code>fd_set</code> 从用户空间拷贝到内核空间</li>
-<li>内核需要遍历传递进来的所有 <code>fd_set</code> 的每一位，不管它们是否就绪</li>
-</ol>
-</li>
-<li>同时能够监听的文件描述符数量太少。受限于 <code>sizeof(fd_set)</code> 的大小，在编译内核时就确定了且无法更改。一般是 1024，不同的操作系统不相同</li>
-</ol>
-<h3 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h3><p>poll 和 select 几乎没有区别。poll 采用链表的方式存储文件描述符，没有最大存储数量的限制。</p>
-<p>从性能开销上看，poll 和 select 的差别不大。</p>
-<h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h3><p>epoll 是对 select 和 poll 的改进，避免了“性能开销大”和“文件描述符数量少”两个缺点。</p>
-<p>简而言之，epoll 有以下几个特点：</p>
-<ul>
-<li>使用<strong>红黑树</strong>存储文件描述符集合</li>
-<li>使用<strong>队列</strong>存储就绪的文件描述符</li>
-<li>每个文件描述符只需在添加时传入一次；通过事件更改文件描述符状态</li>
-</ul>
-<p>select、poll 模型都只使用一个函数，而 epoll 模型使用三个函数：<code>epoll_create</code>、<code>epoll_ctl</code> 和 <code>epoll_wait</code>。</p>
-<h3 id="epoll-的优点"><a href="#epoll-的优点" class="headerlink" title="epoll 的优点"></a>epoll 的优点</h3><p>一开始说，epoll 是对 select 和 poll 的改进，避免了“性能开销大”和“文件描述符数量少”两个缺点。</p>
-<p>对于“文件描述符数量少”，select 使用整型数组存储文件描述符集合，而 epoll 使用红黑树存储，数量较大。</p>
-<p>对于“性能开销大”，<code>epoll_ctl</code> 中为每个文件描述符指定了回调函数，并在就绪时将其加入到就绪列表，因此 epoll 不需要像 <code>select</code> 那样遍历检测每个文件描述符，只需要判断就绪列表是否为空即可。这样，在没有描述符就绪时，epoll 能更早地让出系统资源。</p>
-<blockquote>
-<p>相当于时间复杂度从 O(n) 降为 O(1)</p>
-</blockquote>
-<p>此外，每次调用 <code>select</code> 时都需要向内核拷贝所有要监听的描述符集合，而 epoll 对于每个描述符，只需要在 <code>epoll_ctl</code> 传递一次，之后 <code>epoll_wait</code> 不需要再次传递。这也大大提高了效率。</p>
-<h3 id="水平触发、边缘触发"><a href="#水平触发、边缘触发" class="headerlink" title="水平触发、边缘触发"></a>水平触发、边缘触发</h3><p><code>select</code> 只支持水平触发，<code>epoll</code> 支持水平触发和边缘触发。</p>
-<p>水平触发（LT，Level Trigger）：当文件描述符就绪时，会触发通知，如果用户程序没有一次性把数据读&#x2F;写完，下次还会发出可读&#x2F;可写信号进行通知。</p>
-<p>边缘触发（ET，Edge Trigger）：仅当描述符从未就绪变为就绪时，通知一次，之后不会再通知。</p>
-<p>区别：边缘触发效率更高，<strong>减少了事件被重复触发的次数</strong>，函数不会返回大量用户程序可能不需要的文件描述符。</p>
-<blockquote>
-<p>水平触发、边缘触发的名称来源：数字电路当中的电位水平，高低电平切换瞬间的触发动作叫边缘触发，而处于高电平的触发动作叫做水平触发。</p>
-</blockquote>
-<h3 id="为什么边缘触发必须使用非阻塞-I-O？"><a href="#为什么边缘触发必须使用非阻塞-I-O？" class="headerlink" title="为什么边缘触发必须使用非阻塞 I&#x2F;O？"></a>为什么边缘触发必须使用非阻塞 I&#x2F;O？</h3><p>关于这个问题的解答，强烈建议阅读<a target="_blank" rel="noopener" href="https://eklitzke.org/blocking-io-nonblocking-io-and-epoll">这篇文章</a>。下面是一些关键摘要：</p>
-<ul>
-<li>每次通过 <code>read</code> 系统调用读取数据时，最多只能读取缓冲区大小的字节数；如果某个文件描述符一次性收到的数据超过了缓冲区的大小，那么需要对其 <code>read</code> 多次才能全部读取完毕</li>
-<li><strong><code>select</code> 可以使用阻塞 I&#x2F;O</strong>。通过 <code>select</code> 获取到所有可读的文件描述符后，遍历每个文件描述符，<code>read</code> <strong>一次</strong>数据（见上文 <a target="_blank" rel="noopener" href="https://imageslr.com/2020/02/27/select-poll-epoll.html#selectdemo">select 示例</a>）<ul>
-<li>这些文件描述符都是可读的，因此即使 <code>read</code> 是阻塞 I&#x2F;O，也一定可以读到数据，不会一直阻塞下去</li>
-<li><code>select</code> 采用水平触发模式，因此如果第一次 <code>read</code> 没有读取完全部数据，那么下次调用 <code>select</code> 时依然会返回这个文件描述符，可以再次 <code>read</code></li>
-<li><strong><code>select</code> 也可以使用非阻塞 I&#x2F;O</strong>。当遍历某个可读文件描述符时，使用 <code>for</code> 循环调用 <code>read</code> <strong>多次</strong>，直到读取完所有数据为止（返回 <code>EWOULDBLOCK</code>）。这样做会多一次 <code>read</code> 调用，但可以减少调用 <code>select</code> 的次数</li>
-</ul>
-</li>
-<li>在 <code>epoll</code> 的边缘触发模式下，只会在文件描述符的可读&#x2F;可写状态发生切换时，才会收到操作系统的通知<ul>
-<li>因此，如果使用 <code>epoll</code> 的<strong>边缘触发模式</strong>，在收到通知时，<strong>必须使用非阻塞 I&#x2F;O，并且必须循环调用 <code>read</code> 或 <code>write</code> 多次，直到返回 <code>EWOULDBLOCK</code> 为止</strong>，然后再调用 <code>epoll_wait</code> 等待操作系统的下一次通知</li>
-<li>如果没有一次性读&#x2F;写完所有数据，那么在操作系统看来这个文件描述符的状态没有发生改变，将不会再发起通知，调用 <code>epoll_wait</code> 会使得该文件描述符一直等待下去，服务端也会一直等待客户端的响应，业务流程无法走完</li>
-<li>这样做的好处是每次调用 <code>epoll_wait</code> 都是<strong>有效</strong>的——保证数据全部读写完毕了，等待下次通知。在水平触发模式下，如果调用 <code>epoll_wait</code> 时数据没有读&#x2F;写完毕，会直接返回，再次通知。因此边缘触发能显著减少事件被触发的次数</li>
-<li>为什么 <code>epoll</code> 的<strong>边缘触发模式不能使用阻塞 I&#x2F;O</strong>？很显然，边缘触发模式需要循环读&#x2F;写一个文件描述符的所有数据。如果使用阻塞 I&#x2F;O，那么一定会在最后一次调用（没有数据可读&#x2F;写）时阻塞，导致无法正常结束</li>
-</ul>
-</li>
-</ul>
-<h3 id="三者对比"><a href="#三者对比" class="headerlink" title="三者对比"></a>三者对比</h3><ul>
-<li><code>select</code>：调用开销大（需要复制集合）；集合大小有限制；需要遍历整个集合找到就绪的描述符</li>
-<li><code>poll</code>：poll 采用链表的方式存储文件描述符，没有最大存储数量的限制，其他方面和 select 没有区别</li>
-<li><code>epoll</code>：调用开销小（不需要复制）；集合大小无限制；采用回调机制，不需要遍历整个集合</li>
-</ul>
-<p><code>select</code>、<code>poll</code> 都是在用户态维护文件描述符集合，因此每次需要将完整集合传给内核；<code>epoll</code> 由操作系统在内核中维护文件描述符集合，因此只需要在创建的时候传入文件描述符。</p>
-<p>此外 <code>select</code> 只支持水平触发，<code>epoll</code> 支持边缘触发。</p>
-<h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h3><p>当连接数较多并且有很多的不活跃连接时，epoll 的效率比其它两者高很多。当连接数较少并且都十分活跃的情况下，由于 epoll 需要很多回调，因此性能可能低于其它两者。</p>
-<h3 id="Redis-的线程模型"><a href="#Redis-的线程模型" class="headerlink" title="Redis 的线程模型"></a>Redis 的线程模型</h3><p>Redis 是一个单线程的工作模型，使用 I&#x2F;O 多路复用来处理客户端的多个连接。为什么 Redis 选择单线程也能效率这么高？</p>
-<p>I&#x2F;O 设备（如磁盘、网络）等速度远远慢于 CPU，因此引入了多线程技术。当一个线程发起 I&#x2F;O 请求时，先将它挂起，切换到别的线程；当 I&#x2F;O 设备就绪时，再切换回该线程。总之，<strong>多线程技术是为了充分利用 CPU 的计算资源，适用于下层存储慢速的场景</strong>。</p>
-<p>而 redis 是纯内存操作，读写速度非常快。所有的操作都会在内存中完成，不涉及任何 I&#x2F;O 操作，因此<strong>多线程频繁的上下文切换反而是一种负优化</strong>。Redis 选择基于非阻塞 I&#x2F;O 的 <strong>I&#x2F;O 多路复用机制</strong>，在单线程里<strong>并发</strong>处理客户端的多个连接，减少多线程带来的系统开销，同时也有更好的可维护性，方便开发和调试。</p>
-<p>不过 redis 在最新的几个版本中也引入了多线程，目的是：</p>
-<ol>
-<li>异步处理删除操作。当删除超大键值对的时候，单线程内同步地删除可能会阻塞待处理的任务</li>
-<li>应对网络 I&#x2F;O 的场景，网络 I&#x2F;O 是慢速 I&#x2F;O。redis6 吞吐量提高了 1 倍</li>
-</ol>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/c783f2ce.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-interview/Redis常见面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/bf7bdd05.html" target="_blank">Redis常见面试题</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/bf7bdd05.html" class="archive-article-date">
-        <time datetime="2021-01-23T08:24:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-23</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <hr>
-<h2 id="Redis线程模型"><a href="#Redis线程模型" class="headerlink" title="Redis线程模型"></a>Redis线程模型</h2><h3 id="Redis单线程的理解，Redis-为什么早期版本选择单线程？"><a href="#Redis单线程的理解，Redis-为什么早期版本选择单线程？" class="headerlink" title="Redis单线程的理解，Redis 为什么早期版本选择单线程？"></a>Redis单线程的理解，Redis 为什么早期版本选择单线程？</h3><h4 id="官方解释"><a href="#官方解释" class="headerlink" title="官方解释"></a>官方解释</h4><p>因为 Redis 是基于内存的操作，<strong>CPU 不是 Redis 的瓶颈</strong>，Redis 的瓶颈最有可能是 <strong>机器内存的大小</strong> 或者 <strong>网络带宽</strong>。既然单线程容易实现，而且 CPU 不会成为瓶颈，那就顺理成章地采用单线程的方案了。</p>
-<blockquote>
-<p>首先，我们需要明白，多线程解决的问题。当一个线程处理的任务是I&#x2F;O密集型的，而I&#x2F;O传输数据很慢，因此线程总是处于等待数据传输，从而造成CPU资源的浪费。这时我们可以开辟多个线程，当一个线程在等待I&#x2F;O传输时，调度其他线程进行任务处理。<br>然而，redis所有的数据都存储在内存中，此时并不需要I&#x2F;O操作。而多线程调度还会造成额外的开销且实现复杂。<br>最终，选用单线程即可。</p>
-</blockquote>
-<p>一种解释：</p>
-<p>因为Redis是基于内存的操作，CPU不是Redis的瓶颈，Redis的瓶颈最有可能是机器内存的大小或者网络带宽。既然单线程容易实现，而且CPU不会成为瓶颈，那就顺理成章地采用单线程的方案了。</p>
-<h4 id="简单总结一下"><a href="#简单总结一下" class="headerlink" title="简单总结一下"></a>简单总结一下</h4><ol>
-<li>使用单线程模型能带来更好的 <strong>可维护性</strong>，方便开发和调试；</li>
-<li>使用单线程模型也能 <strong>并发</strong> 的处理客户端的请求(I&#x2F;O 多路复用机制epoll)；</li>
-<li>Redis 服务中运行的绝大多数操作的 <strong>性能瓶颈都不是 CPU</strong>；</li>
-</ol>
-<h3 id="Redis为什么这么快？"><a href="#Redis为什么这么快？" class="headerlink" title="Redis为什么这么快？"></a>Redis为什么这么快？</h3><p>简单总结：</p>
-<ol>
-<li><strong>纯内存操作</strong>：读取不需要进行磁盘 I&#x2F;O，所以比传统数据库要快上不少；*(但不要有误区说磁盘就一定慢，例如 Kafka 就是使用磁盘顺序读取但仍然较快)*</li>
-<li><strong>单线程，无锁竞争</strong>：这保证了没有线程的上下文切换，不会因为多线程的一些操作而降低性能；</li>
-<li><strong>多路 I&#x2F;O 复用模型，非阻塞 I&#x2F;O</strong>：采用多路 I&#x2F;O 复用技术可以让单个线程高效的处理多个网络连接请求（尽量减少网络 IO 的时间消耗）；</li>
-<li><strong>高效的数据结构，加上底层做了大量优化</strong>：Redis 对于底层的数据结构和内存占用做了大量的优化，例如不同长度的字符串使用不同的结构体表示，HyperLogLog 的密集型存储结构等等..</li>
-</ol>
-<h2 id="Redis数据结构"><a href="#Redis数据结构" class="headerlink" title="Redis数据结构"></a>Redis数据结构</h2><h3 id="Redis-的-SDS-和-C-中字符串相比有什么优势？"><a href="#Redis-的-SDS-和-C-中字符串相比有什么优势？" class="headerlink" title="Redis 的 SDS 和 C 中字符串相比有什么优势？"></a>Redis 的 SDS 和 C 中字符串相比有什么优势？</h3><h4 id="先简单总结一下"><a href="#先简单总结一下" class="headerlink" title="先简单总结一下"></a>先简单总结一下</h4><p>C 语言使用了一个长度为 <code>N+1</code> 的字符数组来表示长度为 <code>N</code> 的字符串，并且字符数组最后一个元素总是 <code>\0</code>，这种简单的字符串表示方式 <strong>不符合 Redis 对字符串在安全性、效率以及功能方面的要求</strong>。</p>
-<h4 id="再来说-C-语言字符串的问题"><a href="#再来说-C-语言字符串的问题" class="headerlink" title="再来说 C 语言字符串的问题"></a>再来说 C 语言字符串的问题</h4><p>这样简单的数据结构可能会造成以下一些问题：</p>
-<ul>
-<li><strong>获取字符串长度为 O(N) 级别的操作</strong> → 因为 C 不保存数组的长度，每次都需要遍历一遍整个数组；</li>
-<li>不能很好的杜绝 <strong>缓冲区溢出&#x2F;内存泄漏</strong> 的问题 → 跟上述问题原因一样，如果执行拼接 or 缩短字符串的操作，如果操作不当就很容易造成上述问题；</li>
-<li>C 字符串 <strong>只能保存文本数据</strong> → 因为 C 语言中的字符串必须符合某种编码（比如 ASCII），例如中间出现的 <code>&#39;\0&#39;</code> 可能会被判定为提前结束的字符串而识别不了；</li>
-</ul>
-<h4 id="Redis-如何解决的-SDS-的优势"><a href="#Redis-如何解决的-SDS-的优势" class="headerlink" title="Redis 如何解决的 | SDS 的优势"></a>Redis 如何解决的 | SDS 的优势</h4><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210228212624.webp" alt="图片"></p>
-<p>如果去看 Redis 的源码 <code>sds.h/sdshdr</code> 文件，你会看到 SDS 完整的实现细节，这里简单来说一下 Redis 如何解决的：</p>
-<ol>
-<li><strong>多增加 len 表示当前字符串的长度</strong>：这样就可以直接获取长度了，复杂度 O(1)；</li>
-<li><strong>自动扩展空间</strong>：当 SDS 需要对字符串进行修改时，首先借助于 <code>len</code> 和 <code>alloc</code> 检查空间是否满足修改所需的要求，如果空间不够的话，SDS 会自动扩展空间，避免了像 C 字符串操作中的覆盖情况；</li>
-<li><strong>有效降低内存分配次数</strong>：C 字符串在涉及增加或者清除操作时会改变底层数组的大小造成重新分配，SDS 使用了 <strong>空间预分配</strong> 和 <strong>惰性空间释放</strong> 机制，简单理解就是每次在扩展时是成倍的多分配的，在缩容是也是先留着并不正式归还给 OS；</li>
-<li><strong>二进制安全</strong>：C 语言字符串只能保存 <code>ascii</code> 码，对于图片、音频等信息无法保存，SDS 是二进制安全的，写入什么读取就是什么，不做任何过滤和限制；</li>
-</ol>
-<h3 id="字典是如何实现的？Rehash-了解吗？"><a href="#字典是如何实现的？Rehash-了解吗？" class="headerlink" title="字典是如何实现的？Rehash 了解吗？"></a>字典是如何实现的？Rehash 了解吗？</h3><h4 id="先总体聊一下-Redis-中的字典"><a href="#先总体聊一下-Redis-中的字典" class="headerlink" title="先总体聊一下 Redis 中的字典"></a>先总体聊一下 Redis 中的字典</h4><p>字典是 Redis 服务器中出现最为频繁的复合型数据结构。除了 <strong>hash</strong> 结构的数据会用到字典外，整个 Redis 数据库的所有 <code>key</code> 和 <code>value</code> 也组成了一个 <strong>全局字典</strong>，还有带过期时间的 <code>key</code> 也是一个字典。*(存储在 RedisDb 数据结构中)*</p>
-<h4 id="说明字典内部结构和-rehash"><a href="#说明字典内部结构和-rehash" class="headerlink" title="说明字典内部结构和 rehash"></a>说明字典内部结构和 rehash</h4><p><strong>Redis</strong> 中的字典相当于 Java 中的 <strong>HashMap</strong>，内部实现也差不多类似，都是通过 <strong>“数组 + 链表”</strong> 的 <strong>链地址法</strong> 来解决部分 哈希冲突，同时这样的结构也吸收了两种不同数据结构的优点。</p>
-<p>字典结构内部包含 <strong>两个 hashtable</strong>，通常情况下只有一个 <code>hashtable</code> 有值，但是在字典扩容缩容时，需要分配新的 <code>hashtable</code>，然后进行 <strong>渐进式搬迁</strong> *(rehash)*，这时候两个 <code>hashtable</code> 分别存储旧的和新的 <code>hashtable</code>，待搬迁结束后，旧的将被删除，新的 <code>hashtable</code> 取而代之。</p>
-<h4 id="扩缩容的条件"><a href="#扩缩容的条件" class="headerlink" title="扩缩容的条件"></a>扩缩容的条件</h4><p>正常情况下，当 hash 表中 <strong>元素的个数等于第一维数组的长度时</strong>，就会开始扩容，扩容的新数组是 <strong>原数组大小的 2 倍</strong>。不过如果 Redis 正在做 <code>bgsave(持久化命令)</code>，为了减少内存过多分离，Redis 尽量不去扩容，但是如果 hash 表非常满了，<strong>达到了第一维数组长度的 5 倍了</strong>，这个时候就会 <strong>强制扩容</strong>。</p>
-<p>当 hash 表因为元素逐渐被删除变得越来越稀疏时，Redis 会对 hash 表进行缩容来减少 hash 表的第一维数组空间占用。所用的条件是 **元素个数低于数组长度的 10%**，缩容不会考虑 Redis 是否在做 <code>bgsave</code>。</p>
-<h4 id="渐进式rehash"><a href="#渐进式rehash" class="headerlink" title="渐进式rehash"></a>渐进式rehash</h4><h6 id="为什么需要渐进式rehash呢？"><a href="#为什么需要渐进式rehash呢？" class="headerlink" title="为什么需要渐进式rehash呢？"></a>为什么需要渐进式rehash呢？</h6><p>在元素数量较少时，rehash会非常快的进行，但是当元素数量达到几百、甚至几个亿时进行rehash将会是一个非常耗时的操作。如果一次性将成万上亿的元素的键值对rehash到ht[1]，庞大的计算量可能会导致服务器在一段时间内停止服务，这是非常危险的！所以，rehash这个动作不能一次性、集中式的完成，而是分多次、渐进式地完成。</p>
-<h6 id="渐进式rehash步骤："><a href="#渐进式rehash步骤：" class="headerlink" title="渐进式rehash步骤："></a><strong>渐进式rehash步骤：</strong></h6><ol>
-<li>为<code>ht[1]</code>分配空间，让字典同时持有<code>ht[0]</code>和<code>ht[1]</code>两个哈希表。</li>
-<li>在字典中维持一个索引计数器变量rehashidx，并将它的值设置为0，表示rehash工作正式开始。</li>
-<li>在rehash进行期间，每次对字典执行CRUD：添加、删除、查找或者更新操作时，程序除了执行指定的操作以外，还会顺带将<code>ht[0]</code>哈希表在rehashidx索引上的所有键值对rehash到<code>ht[1]</code>，当rehash工作完成之后，程序将rehashidx+1(表示下次将rehash下一个桶)。</li>
-<li>随着字典操作的不断执行，最终在某个时间点上，<code>ht[0]</code>的所有键值对都会被rehash至<code>ht[1]</code>，这时程序将rehashidx属性的值设为-1，表示rehash完成。</li>
-</ol>
-<p><strong>渐进式rehash的好处在于它采取分而治之的方式，将rehash键值对所需的计算工作均摊到对字典的每个添加、删除、查找和更新操作上，从而避免了集中式rehash 而带来的庞大计算量。</strong></p>
-<p><strong>需要注意的是在渐进式rehash的过程，如果有增删改查操作时，如果<code>index</code>大于<code>rehashindex</code>，访问<code>ht[0]</code>，否则访问<code>ht[1]。</code></strong></p>
-<h6 id="搬迁是埋伏在客户端请求指令当中，如果客户端闲置下来，没有后续指令触发这个搬迁，未搬迁完的的数据怎么办？"><a href="#搬迁是埋伏在客户端请求指令当中，如果客户端闲置下来，没有后续指令触发这个搬迁，未搬迁完的的数据怎么办？" class="headerlink" title="搬迁是埋伏在客户端请求指令当中，如果客户端闲置下来，没有后续指令触发这个搬迁，未搬迁完的的数据怎么办？"></a><strong>搬迁是埋伏在客户端请求指令当中，如果客户端闲置下来，没有后续指令触发这个搬迁，未搬迁完的的数据怎么办？</strong></h6><p>Redis 还会在定时任务中对字典进行主动搬迁。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 服务器定时任务</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">databaseCron</span><span class="params">()</span> </span>&#123;</span><br><span class="line"> ...</span><br><span class="line"> <span class="keyword">if</span> (server.activerehashing) &#123;</span><br><span class="line"> <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; dbs_per_call; j++) &#123;</span><br><span class="line"> <span class="type">int</span> work_done = <span class="built_in">incrementallyRehash</span>(rehash_db);</span><br><span class="line"> <span class="keyword">if</span> (work_done) &#123;</span><br><span class="line"> <span class="comment">/* If the function did some work, stop here, we&#x27;ll do</span></span><br><span class="line"><span class="comment"> * more at the next cron loop. */</span></span><br><span class="line"> <span class="keyword">break</span>;</span><br><span class="line"> &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"> <span class="comment">/* If this db didn&#x27;t need rehash, we&#x27;ll try the next one. */</span></span><br><span class="line"> rehash_db++;</span><br><span class="line"> rehash_db %= server.dbnum;</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h6 id="渐进式rehash的疑问"><a href="#渐进式rehash的疑问" class="headerlink" title="渐进式rehash的疑问"></a><strong>渐进式rehash的疑问</strong></h6><ol>
-<li><p>在迁移的过程中，会不会造成读少数据?</p>
-<blockquote>
-<p>不会，因为在迁移时，首先会从ht[0]读取数据，如果ht[0]读不到，则会去ht[1]读。</p>
-</blockquote>
-</li>
-<li><p>在迁移过程中，新增加的数据会存放在哪个ht?</p>
-<blockquote>
-<p>迁移过程中，新增的数据只会存在ht[1]中，而不会存放到ht[0]，ht[0]只会减少不会新增。</p>
-</blockquote>
-</li>
-</ol>
-<h3 id="跳跃表"><a href="#跳跃表" class="headerlink" title="跳跃表"></a>跳跃表</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg5MzU2NDgyNw==&mid=2247487151&idx=1&sn=30b017e0d25b80848e645fc77d772655&source=41&poc_token=HGTkhWijw4ULfZ3mXoRydh5A1uN2Dm2NbbtJxx0k">Redis(2)——跳跃表</a></li>
-</ul>
-<h2 id="Redis高可用"><a href="#Redis高可用" class="headerlink" title="Redis高可用"></a>Redis高可用</h2><h3 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h3><h4 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h4><p><strong>Redis 快照</strong> 是最简单的 Redis 持久性模式。当满足特定条件时，它将生成数据集的时间点快照，例如，如果先前的快照是在 2 分钟前创建的，并且现在已经至少有 <code>100</code> 次新写入，则将创建一个新的快照。此条件可以由用户配置 Redis 实例来控制，也可以在运行时修改而无需重新启动服务器。快照作为包含整个数据集的单个 <code>.rdb</code> 文件生成。</p>
-<h4 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h4><p><strong>快照不是很持久</strong>。如果运行 Redis 的计算机停止运行，电源线出现故障或者您 <code>kill -9</code> 的实例意外发生，则写入 Redis 的最新数据将丢失。尽管这对于某些应用程序可能不是什么大问题，但有些使用案例具有充分的耐用性，在这些情况下，快照并不是可行的选择。</p>
-<p><strong>AOF(Append Only File - 仅追加文件)</strong> 它的工作方式非常简单：每次执行 <strong>修改内存</strong> 中数据集的写操作时，都会 <strong>记录</strong> 该操作。假设 AOF 日志记录了自 Redis 实例创建以来 <strong>所有的修改性指令序列</strong>，那么就可以通过对一个空的 Redis 实例 <strong>顺序执行所有的指令</strong>，也就是 <strong>「重放」</strong>，来恢复 Redis 当前实例的内存数据结构的状态。</p>
-<h4 id="Redis-4-0-的混合持久化"><a href="#Redis-4-0-的混合持久化" class="headerlink" title="Redis 4.0 的混合持久化"></a>Redis 4.0 的混合持久化</h4><p>重启 Redis 时，我们很少使用 <code>rdb</code> 来恢复内存状态，因为会丢失大量数据。我们通常使用 AOF 日志重放，但是重放 AOF 日志性能相对 <code>rdb</code> 来说要慢很多，这样在 Redis 实例很大的情况下，启动需要花费很长的时间。</p>
-<p><strong>Redis 4.0</strong> 为了解决这个问题，带来了一个新的持久化选项——<strong>混合持久化</strong>。将 <code>rdb</code> 文件的内容和增量的 AOF 日志文件存在一起。这里的 AOF 日志不再是全量的日志，而是 <strong>自持久化开始到持久化结束</strong> 的这段时间发生的增量 AOF 日志，通常这部分 AOF 日志很小：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210509211524.webp" alt="图片"></p>
-<p>于是在 Redis 重启的时候，可以先加载 <code>rdb</code> 的内容，然后再重放增量 AOF 日志就可以完全替代之前的 AOF 全量文件重放，重启效率因此大幅得到提升。</p>
-<h4 id="RDB-和-AOF-各自有什么优缺点？"><a href="#RDB-和-AOF-各自有什么优缺点？" class="headerlink" title="RDB 和 AOF 各自有什么优缺点？"></a>RDB 和 AOF 各自有什么优缺点？</h4><h5 id="RDB-优点"><a href="#RDB-优点" class="headerlink" title="RDB | 优点"></a>RDB | 优点</h5><ol>
-<li>只有一个文件 <code>dump.rdb</code>，<strong>方便持久化</strong>。</li>
-<li><strong>容灾性好</strong>，一个文件可以保存到安全的磁盘。</li>
-<li><strong>性能最大化</strong>，<code>fork</code> 子进程来完成写操作，让主进程继续处理命令，所以使 IO 最大化。使用单独子进程来进行持久化，主进程不会进行任何 IO 操作，保证了 Redis 的高性能</li>
-<li>相对于数据集大时，比 AOF 的 <strong>启动效率</strong> 更高。</li>
-</ol>
-<h5 id="RDB-缺点"><a href="#RDB-缺点" class="headerlink" title="RDB | 缺点"></a>RDB | 缺点</h5><ol>
-<li><strong>数据安全性低</strong>。RDB 是间隔一段时间进行持久化，如果持久化之间 Redis 发生故障，会发生数据丢失。所以这种方式更适合数据要求不严谨的时候；</li>
-</ol>
-<h5 id="AOF-优点"><a href="#AOF-优点" class="headerlink" title="AOF | 优点"></a>AOF | 优点</h5><ol>
-<li><strong>数据安全</strong>，aof 持久化可以配置 <code>appendfsync</code> 属性，有 <code>always</code>，每进行一次命令操作就记录到 aof 文件中一次。</li>
-<li>通过 append 模式写文件，即使中途服务器宕机，可以通过 redis-check-aof 工具解决数据一致性问题。</li>
-<li>AOF 机制的 rewrite 模式。AOF 文件没被 rewrite 之前（文件过大时会对命令 进行合并重写），可以删除其中的某些命令（比如误操作的 flushall）</li>
-</ol>
-<h5 id="AOF-缺点"><a href="#AOF-缺点" class="headerlink" title="AOF | 缺点"></a>AOF | 缺点</h5><ol>
-<li>AOF 文件比 RDB <strong>文件大</strong>，且 <strong>恢复速度慢</strong>。</li>
-<li><strong>数据集大</strong> 的时候，比 rdb <strong>启动效率低</strong>。</li>
-</ol>
-<h4 id="两种方式如何选择？"><a href="#两种方式如何选择？" class="headerlink" title="两种方式如何选择？"></a>两种方式如何选择？</h4><ul>
-<li>一般来说， 如果想达到足以媲美 PostgreSQL 的 <strong>数据安全性</strong>，你应该 <strong>同时使用两种持久化功能</strong>。在这种情况下，当 Redis 重启的时候会优先载入 AOF 文件来恢复原始的数据，因为在通常情况下 AOF 文件保存的数据集要比 RDB 文件保存的数据集要完整。</li>
-<li>如果你非常关心你的数据， 但仍然 <strong>可以承受数分钟以内的数据丢失</strong>，那么你可以 <strong>只使用 RDB 持久化</strong>。</li>
-<li>有很多用户都只使用 AOF 持久化，但并不推荐这种方式，因为定时生成 RDB 快照（snapshot）非常便于进行数据库备份， 并且 RDB 恢复数据集的速度也要比 AOF 恢复的速度要快，除此之外，使用 RDB 还可以避免 AOF 程序的 bug。</li>
-<li>如果你只希望你的数据在服务器运行的时候存在，你也可以不使用任何持久化方式。</li>
-</ul>
-<h4 id="Redis-的数据恢复"><a href="#Redis-的数据恢复" class="headerlink" title="Redis 的数据恢复"></a>Redis 的数据恢复</h4><p><strong>Redis</strong> 的数据恢复有着如下的优先级：</p>
-<ol>
-<li>如果只配置 AOF ，重启时加载 AOF 文件恢复数据；</li>
-<li>如果同时配置了 RDB 和 AOF ，启动只加载 AOF 文件恢复数据；</li>
-<li>如果只配置 RDB，启动将加载 dump 文件恢复数据。</li>
-</ol>
-<p>拷贝 <strong>AOF</strong> 文件到 Redis 的数据目录，启动 redis-server AOF 的数据恢复过程：Redis 虚拟一个客户端，读取 AOF 文件恢复 Redis 命令和参数，然后执行命令从而恢复数据，这些过程主要在 <code>loadAppendOnlyFile()</code> 中实现。</p>
-<p>拷贝 <strong>RDB</strong> 文件到 Redis 的数据目录，启动 redis-server 即可，因为 RDB 文件和重启前保存的是真实数据而不是命令状态和参数。</p>
-<h3 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h3><h4 id="Redis主从复制核心原理"><a href="#Redis主从复制核心原理" class="headerlink" title="Redis主从复制核心原理"></a>Redis主从复制核心原理</h4><ol>
-<li>salve node启动，会发送一个<code>PSYNC</code>命令给master node</li>
-<li>如果是slave node初次连接到master node，会触发一次<code>full resynchronization</code> 全量复制。此时master回启动一个后台线程，生成<code>RDB</code>快照文件，同时将从客户端新收到的所有写命令缓存到内存中。<code>RDB</code> 文件生成完毕后， master 会将这个 <code>RDB</code> 发送给 slave，slave 会先<strong>写入本地磁盘，然后再从本地磁盘加载到内存</strong>中，接着 master 会将内存中缓存的写命令发送到 slave，slave 也会同步这些数据。</li>
-<li>slave node如果跟master node有网络故障，断开了链接，会自动重连，连接之后master node仅会复制给salve部分缺少的数据。<br><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210119165016.png" alt="Redis-master-slave-replication"></li>
-</ol>
-<h4 id="主从复制是如何断点续传的？"><a href="#主从复制是如何断点续传的？" class="headerlink" title="主从复制是如何断点续传的？"></a>主从复制是如何断点续传的？</h4><p>从 Redis2.8 开始，就支持主从复制的断点续传，如果主从复制过程中，网络连接断掉了，那么可以接着上次复制的地方，继续复制下去，而不是从头开始复制一份。</p>
-<p>master node会在内存中维护一个backlog，master和slave都会保存一个replica offset还有一个master run id，offset就是保存在backlog中的。如果master和slave网络连接断掉了，slave会让master从上次replica offset开始复制，如果没有找到对应的offset，那么就会执行一次<code>resynchronization</code> 。</p>
-<blockquote>
-<p> 如果根据 host+ip 定位 master node，是不靠谱的，如果 master node 重启或者数据出现了变化，那么 slave node 应该根据不同的 run id 区分。</p>
-</blockquote>
-<h3 id="淘汰策略"><a href="#淘汰策略" class="headerlink" title="淘汰策略"></a>淘汰策略</h3><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg5MzU2NDgyNw==&mid=2247487138&idx=1&sn=0e580a60cf28707b012f7c2068ca2bbc&source=41#wechat_redirect">妈妈再也不担心我面试被Redis问得脸都绿了</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.51cto.com/article/668394.html">redis渐进式rehash</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.51cto.com/article/668394.html">Redis中的hash扩容渐进式rehash过程</a></li>
-</ol>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">redis</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
         		</li>
       		
 		</ul>
@@ -808,7 +346,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/posts/bf7bdd05.html">展开全文 >></a>
+      <a class="article-more-a" href="/posts/b8e54d5c.html">展开全文 >></a>
     </p>
     
 
@@ -838,7 +376,7 @@
 
 
   
-    <article id="post-interview/JVM面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-study/数据结构与算法之美/学习笔记/06讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -846,7 +384,7 @@
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/posts/eec2f852.html" target="_blank">JVM面试题</a>
+	  <a class="article-title" href="/posts/592a39.html" target="_blank">06讲</a>
   
     </h1>
   
@@ -854,8 +392,8 @@
 
   
   
-<a href="/posts/eec2f852.html" class="archive-article-date">
-        <time datetime="2021-01-23T08:23:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-23</time>
+<a href="/posts/592a39.html" class="archive-article-date">
+        <time datetime="2021-03-27T06:57:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-27</time>
 </a>
 
   
@@ -868,106 +406,78 @@
   <div class="article-entry" itemprop="articleBody">
     
     <hr>
-<h2 id="对象已经死亡？"><a href="#对象已经死亡？" class="headerlink" title="对象已经死亡？"></a>对象已经死亡？</h2><h3 id="如何判断一个类是无用的类"><a href="#如何判断一个类是无用的类" class="headerlink" title="如何判断一个类是无用的类"></a>如何判断一个类是无用的类</h3><p>方法区主要回收的是无用的类，那么如何判断一个类是无用的类的呢？</p>
-<p>判定一个常量是否是“废弃常量”比较简单，而要判定一个类是否是“无用的类”的条件则相对苛刻许多。类需要同时满足下面 3 个条件才能算是 <strong>“无用的类”</strong> ：</p>
+<h1 id="06-链表（上）：如何实现LRU缓存淘汰算法"><a href="#06-链表（上）：如何实现LRU缓存淘汰算法" class="headerlink" title="06 | 链表（上）：如何实现LRU缓存淘汰算法?"></a>06 | 链表（上）：如何实现LRU缓存淘汰算法?</h1><h2 id="链表的概念"><a href="#链表的概念" class="headerlink" title="链表的概念"></a>链表的概念</h2><h3 id="链表和数组的区别"><a href="#链表和数组的区别" class="headerlink" title="链表和数组的区别"></a>链表和数组的区别</h3><p>我们先从<strong>底层的存储结构</strong>上来看一看。</p>
+<p>为了直观地对比，我画了一张图。从图中我们看到，数组需要一块<strong>连续的内存空间</strong>来存储，对内存的要求比较高。如果我们申请一个 100MB 大小的数组，当内存中没有连续的、足够大的存储空间时，即便内存的剩余总可用空间大于 100MB，仍然会申请失败。</p>
+<p>而链表恰恰相反，它并不需要一块连续的内存空间，它通过“指针”将一组<strong>零散的内存块</strong>串联起来使用，所以如果我们申请的是 100MB 大小的链表，根本不会有问题。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210327143549.jpeg" alt="img"></p>
+<h3 id="五花八门的的链表结构"><a href="#五花八门的的链表结构" class="headerlink" title="五花八门的的链表结构"></a>五花八门的的链表结构</h3><p>链表结构五花八门，今天我重点给你介绍三种最常见的链表结构，它们分别是：单链表、双向链表和循环链表。我们首先来看最简单、最常用的<strong>单链表</strong>。</p>
+<h4 id="单链表"><a href="#单链表" class="headerlink" title="单链表"></a>单链表</h4><p>我们刚刚讲到，链表通过指针将一组零散的内存块串联在一起。其中，我们把内存块称为链表的“<strong>结点</strong>”。为了将所有的结点串起来，每个链表的结点除了存储数据之外，还需要记录链上的下一个结点的地址。如图所示，我们把这个记录下个结点地址的指针叫作<strong>后继指针 next</strong>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210327144616.jpeg" alt="img"></p>
+<p>从我画的单链表图中，你应该可以发现，其中有两个结点是比较特殊的，它们分别是第一个结点和最后一个结点。我们习惯性地把第一个结点叫作<strong>头结点</strong>，把最后一个结点叫作<strong>尾结点</strong>。其中，头结点用来记录链表的基地址。有了它，我们就可以遍历得到整条链表。而尾结点特殊的地方是：指针不是指向下一个结点，而是指向一个<strong>空地址 NULL</strong>，表示这是链表上最后一个结点。</p>
+<p>与数组一样，链表也支持数据的查找、插入和删除操作。</p>
+<p>我们知道，在进行数组的插入、删除操作时，为了保持内存数据的连续性，需要做大量的数据搬移，所以**时间复杂度是 O(n)**。而在链表中插入或者删除一个数据，我们并不需要为了保持内存的连续性而搬移结点，因为链表的存储空间本身就不是连续的。所以，在链表中插入和删除一个数据是非常快速的。</p>
+<p>为了方便你理解，我画了一张图，从图中我们可以看出，针对链表的插入和删除操作，我们只需要考虑相邻结点的指针改变，所以对应的**时间复杂度是 O(1)**。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210327144923.jpeg" alt="img"></p>
+<p>但是，有利就有弊。链表要想随机访问第 k 个元素，就没有数组那么高效了。因为链表中的数据并非连续存储的，所以无法像数组那样，根据首地址和下标，通过寻址公式就能直接计算出对应的内存地址，而是需要根据指针一个结点一个结点地依次遍历，直到找到相应的结点。</p>
+<p>你可以把链表想象成一个队伍，队伍中的每个人都只知道自己后面的人是谁，所以当我们希望知道排在第 k 位的人是谁的时候，我们就需要从第一个人开始，一个一个地往下数。所以，链表随机访问的性能没有数组好，需要 <strong>O(n) 的时间复杂度</strong>。</p>
+<h4 id="循环链表"><a href="#循环链表" class="headerlink" title="循环链表"></a>循环链表</h4><p><strong>循环链表是一种特殊的单链表</strong>。实际上，循环链表也很简单。它跟单链表唯一的区别就在尾结点。我们知道，单链表的尾结点指针指向空地址，表示这就是最后的结点了。而循环链表的尾结点指针是指向链表的头结点。从我画的循环链表图中，你应该可以看出来，它像一个环一样首尾相连，所以叫作“循环”链表。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210327145318.jpeg"></p>
+<p>和单链表相比，循环链表的优点是从链尾到链头比较方便。当要处理的数据具有环型结构特点时，就特别适合采用循环链表。比如著名的约瑟夫问题。尽管用单链表也可以实现，但是用循环链表实现的话，代码就会简洁很多。</p>
+<h4 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h4><p>单链表和循环链表是不是都不难？接下来我们再来看一个稍微复杂的，在实际的软件开发中，也更加常用的链表结构：<strong>双向链表</strong>。</p>
+<p>单向链表只有一个方向，结点只有一个后继指针 next 指向后面的结点。而双向链表，顾名思义，它支持两个方向，每个结点不止有一个后继指针 next 指向后面的结点，还有一个前驱指针 prev 指向前面的结点。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210327145700.jpeg" alt="img"></p>
+<p>从我画的图中可以看出来，双向链表需要额外的两个空间来存储后继结点和前驱结点的地址。所以，如果存储同样多的数据，双向链表要比单链表占用更多的内存空间。虽然两个指针比较浪费存储空间，但可以支持双向遍历，这样也带来了双向链表操作的灵活性。</p>
+<h4 id="双链表相对单链表的优势"><a href="#双链表相对单链表的优势" class="headerlink" title="双链表相对单链表的优势"></a>双链表相对单链表的优势</h4><p>那相比单链表，双向链表适合解决哪种问题呢？</p>
+<p>从结构上来看，双向链表可以支持 O(1) 时间复杂度的情况下找到前驱结点，正是这样的特点，也使双向链表在某些情况下的插入、删除等操作都要比单链表简单、高效。</p>
+<p>你可能会说，我刚讲到单链表的插入、删除操作的时间复杂度已经是 O(1) 了，双向链表还能再怎么高效呢？别着急，刚刚的分析比较偏理论，很多数据结构和算法书籍中都会这么讲，但是这种说法实际上是不准确的，或者说是有先决条件的。我再来带你分析一下链表的两个操作。</p>
+<p>我们先来看<strong>删除操作</strong>。</p>
+<p>在实际的软件开发中，从链表中删除一个数据无外乎这两种情况：</p>
 <ul>
-<li>该类所有的实例都已经被回收，也就是 Java 堆中不存在该类的任何实例。</li>
-<li>加载该类的 <code>ClassLoader</code> 已经被回收。</li>
-<li>该类对应的 <code>java.lang.Class</code> 对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。</li>
+<li>删除结点中“值等于某个给定值”的结点；</li>
+<li>删除给定指针指向的结点。</li>
 </ul>
-<p>虚拟机可以对满足上述 3 个条件的无用类进行回收，这里说的仅仅是“可以”，而并不是和对象一样不使用了就会必然被回收。</p>
-<h2 id="JVM内存划分"><a href="#JVM内存划分" class="headerlink" title="JVM内存划分"></a>JVM内存划分</h2><h2 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h2><p><strong>过程：加载、验证、准备、解析、初始化</strong></p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210610235314.jpeg" alt="img"></p>
-<p>类加载过程分为三个阶段：Load、Link和Init，即<strong>加载</strong>、<strong>链接</strong>、<strong>初始化</strong></p>
+<p>对于第一种情况，不管是单链表还是双向链表，为了查找到值等于给定值的结点，都需要从头结点开始一个一个依次遍历对比，直到找到值等于给定值的结点，然后再通过我前面讲的指针操作将其删除。</p>
+<p>尽管单纯的删除操作时间复杂度是 O(1)，但遍历查找的时间是主要的耗时点，对应的时间复杂度为 O(n)。根据时间复杂度分析中的加法法则，删除值等于给定值的结点对应的链表操作的总时间复杂度为 O(n)。</p>
+<p>对于第二种情况，我们已经找到了要删除的结点，但是删除某个结点 q 需要知道其前驱结点，而单链表并不支持直接获取前驱结点，所以，为了找到前驱结点，我们还是要从头结点开始遍历链表，直到 p-&gt;next&#x3D;q，说明 p 是 q 的前驱结点。</p>
+<p>但是对于双向链表来说，这种情况就比较有优势了。因为双向链表中的结点已经保存了前驱结点的指针，不需要像单链表那样遍历。所以，针对第二种情况，单链表删除操作需要 O(n) 的时间复杂度，而双向链表只需要在 O(1) 的时间复杂度内就搞定了！</p>
+<p>同理，如果我们希望在链表的某个指定结点前面插入一个结点，双向链表比单链表有很大的优势。双向链表可以在 O(1) 时间复杂度搞定，而单向链表需要 O(n) 的时间复杂度。你可以参照我刚刚讲过的删除操作自己分析一下。</p>
+<p>除了插入、删除操作有优势之外，对于一个有序链表，双向链表的按值查询的效率也要比单链表高一些。因为，我们可以记录上次查找的位置 p，每次查询时，根据要查找的值与 p 的大小关系，决定是往前还是往后查找，所以平均只需要查找一半的数据。</p>
+<h4 id="双向循环链表"><a href="#双向循环链表" class="headerlink" title="双向循环链表"></a>双向循环链表</h4><p>了解了循环链表和双向链表，如果把这两种链表整合在一起就是一个新的版本：<strong>双向循环链表</strong>。我想不用我多讲，你应该知道双向循环链表长什么样子了吧？你可以自己试着在纸上画一画。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210327154453.jpeg" alt="img"></p>
+<h3 id="链表-VS-数组性能大比拼"><a href="#链表-VS-数组性能大比拼" class="headerlink" title="链表 VS 数组性能大比拼"></a>链表 VS 数组性能大比拼</h3><p>通过前面内容的学习，你应该已经知道，数组和链表是两种截然不同的内存组织方式。正是因为内存存储的区别，它们插入、删除、随机访问操作的时间复杂度正好相反。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210327154545.jpeg" alt="img"></p>
+<p>不过，数组和链表的对比，并不能局限于时间复杂度。而且，在实际的软件开发中，不能仅仅利用复杂度分析就决定使用哪个数据结构来存储数据。</p>
+<p>数组简单易用，在实现上使用的是连续的内存空间，可以借助 CPU 的缓存机制，预读数组中的数据，所以访问效率更高。而链表在内存中并不是连续存储，所以对 CPU 缓存不友好，没办法有效预读。</p>
+<blockquote>
+<p>CPU在从内存读取数据的时候，会先把读取到的数据加载到CPU的缓存中。而CPU每次从内存读取数据并不是只读取那个特定要访问的地址，而是读取一个数据块并保存到CPU缓存中，然后下次访问内存数据的时候就会先从CPU缓存开始查找（<strong>计算机的局部性原理</strong>），如果找到就不需要再从内存中取。这样就实现了比内存访问速度更快的机制，也就是CPU缓存存在的意义：为了弥补内存访问速度过慢与CPU执行速度快之间的差异而引入。 对于数组来说，存储空间是连续的，所以在加载某个下标的时候可以把以后的几个下标元素也加载到CPU缓存这样执行速度会快于存储空间不连续的链表存储。</p>
+</blockquote>
+<p>数组的缺点是大小固定，一经声明就要占用整块连续内存空间。如果声明的数组过大，系统可能没有足够的连续内存空间分配给它，导致“内存不足（out of memory）”。如果声明的数组过小，则可能出现不够用的情况。这时只能再申请一个更大的内存空间，把原数组拷贝进去，非常费时。链表本身没有大小的限制，天然地支持动态扩容，我觉得这也是它与数组最大的区别。</p>
+<p>除此之外，如果你的代码对内存的使用非常苛刻，那数组就更适合你。因为链表中的每个结点都需要消耗额外的存储空间去存储一份指向下一个结点的指针，所以内存消耗会翻倍。而且，对链表进行频繁的插入、删除操作，还会导致频繁的内存申请和释放，容易造成内存碎片，如果是 Java 语言，就有可能会导致频繁的 GC（Garbage Collection，垃圾回收）。</p>
+<h2 id="基于链表实现-LRU-缓存淘汰算法"><a href="#基于链表实现-LRU-缓存淘汰算法" class="headerlink" title="基于链表实现 LRU 缓存淘汰算法"></a>基于链表实现 LRU 缓存淘汰算法</h2><h3 id="常见的缓存淘汰策略"><a href="#常见的缓存淘汰策略" class="headerlink" title="常见的缓存淘汰策略"></a>常见的缓存淘汰策略</h3><p>缓存的大小有限，当缓存被用满时，哪些数据应该被清理出去，哪些数据应该被保留？这就需要缓存淘汰策略来决定。常见的策略有三种：先进先出策略 FIFO（First In，First Out）、最少使用策略 LFU（Least Frequently Used）、最近最少使用策略 LRU（Least Recently Used）。</p>
+<p>这些策略你不用死记，我打个比方你很容易就明白了。假如说，你买了很多本技术书，但有一天你发现，这些书太多了，太占书房空间了，你要做个大扫除，扔掉一些书籍。那这个时候，你会选择扔掉哪些书呢？对应一下，你的选择标准是不是和上面的三种策略神似呢？</p>
+<h3 id="LRU在操作系统中的应用"><a href="#LRU在操作系统中的应用" class="headerlink" title="LRU在操作系统中的应用"></a>LRU在操作系统中的应用</h3><p>LRU最近最少未使用算法。在OS虚拟存储器那部分。用到了该算法，根据程序的局部性原理，前人设计出了虚拟存储器，每个进程只被分配几个内存块，当进程的内存块被占完了之后。从硬盘上又重新读取了一个内存块的数据量，此时，哪个内存块的内容被换出去比较合适呢？如果置换算法采取的不好，就会导致缺页率上升。进程频繁的发生缺页中断。OS就会频繁的在内存和外存之间替换页面。影响了进程的执行效率，这种现象又称之为”抖动”，LRU置换算法的缺页率相对比较低。</p>
+<h3 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h3><p>我的思路是这样的：我们维护一个有序单链表，越靠近链表尾部的结点是越早之前访问的。当有一个新的数据被访问时，我们从链表头开始顺序遍历链表。</p>
 <ol>
-<li>第一步，Load阶段读取类文件产生二进制流，并转化为特定的数据结构，初步校验cafe babe魔法数、常量池、文件长度、是否有父类等，然后创建对应类的<code>java.lang.Class</code>实例</li>
-<li>第二步，Link阶段包括<strong>验证</strong>、<strong>准备</strong>、<strong>解析</strong>三个步骤。验证是更详细的校验，比如final是否合规、类型是否正确、静态变量是否合理等；准备阶段是为静态变量分配内存，并设定默认值，解析类和方法确保类与类之间的相互引用正确性，完成内存结构布局。</li>
-<li>第三步，Init阶段执行雷构造器&lt;clinit&gt;方法，如果赋值运算是通过其他类的静态方法来完成的，那么会马上解析另外一个类，在虚拟机栈中执行完毕后通过返回值进行赋值。</li>
+<li>如果此数据之前已经被缓存在链表中了，我们遍历得到这个数据对应的结点，并将其从原来的位置删除，然后再插入到链表的头部。</li>
+<li>如果此数据没有在缓存链表中，又可以分为两种情况：</li>
 </ol>
-<h2 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h2><h3 id="什么是双亲委派机制"><a href="#什么是双亲委派机制" class="headerlink" title="什么是双亲委派机制"></a>什么是双亲委派机制</h3><p>首先，我们知道，虚拟机在加载类的过程中需要使用类加载器进行加载，而在Java中，类加载器有很多，那么当JVM想要加载一个.class文件的时候，到底应该由哪个类加载器加载呢？</p>
-<p>这就不得不提到”双亲委派机制”。</p>
-<p>首先，我们需要知道的是，Java语言系统中支持以下4种类加载器：</p>
 <ul>
-<li>Bootstrap ClassLoader 启动类加载器</li>
-<li>Extention ClassLoader 标准扩展类加载器</li>
-<li>Application ClassLoader 应用类加载器</li>
-<li>User ClassLoader 用户自定义类加载器</li>
+<li>如果此时缓存未满，则将此结点直接插入到链表的头部；</li>
+<li>如果此时缓存已满，则链表尾结点删除，将新的数据结点插入链表的头部。</li>
 </ul>
-<p>这四种类加载器之间，是存在着一种层次关系的，如下图</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021202205232103648.jpeg" alt="-w704"></p>
-<p>一般认为上一层加载器是下一层加载器的父加载器，那么，除了BootstrapClassLoader之外，所有的加载器都是有父加载器的。</p>
-<p>那么，所谓的双亲委派机制，指的就是：<strong>当一个类加载器收到了类加载的请求的时候，他不会直接去加载指定的类，而是把这个请求委托给自己的父加载器去加载。只有父加载器无法加载这个类的时候，才会由当前这个加载器来负责类的加载。</strong></p>
-<p>那么，什么情况下父加载器会无法加载某一个类呢？</p>
-<p>其实，Java中提供的这四种类型的加载器，是有各自的职责的：</p>
-<ul>
-<li>Bootstrap ClassLoader ，主要负责加载Java核心类库，%JRE_HOME%\lib下的rt.jar、resources.jar、charsets.jar和class等。</li>
-<li>Extention ClassLoader，主要负责加载目录%JRE_HOME%\lib\ext目录下的jar包和class文件。</li>
-<li>Application ClassLoader ，主要负责加载当前应用的classpath下的所有类</li>
-<li>User ClassLoader ， 用户自定义的类加载器,可加载指定路径的class文件</li>
-</ul>
-<p>那么也就是说，一个用户自定义的类，如com.hollis.ClassHollis 是无论如何也不会被Bootstrap和Extention加载器加载的（<code>-Xbootclasspath</code>参数是否可以使得自定义类被bootstrap加载？）。</p>
-<h2 id="JVM垃圾回收"><a href="#JVM垃圾回收" class="headerlink" title="JVM垃圾回收"></a>JVM垃圾回收</h2><h3 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h3><h4 id="JDK8-CMS：（关注最短垃圾回收停顿时间）"><a href="#JDK8-CMS：（关注最短垃圾回收停顿时间）" class="headerlink" title="JDK8-CMS：（关注最短垃圾回收停顿时间）"></a>JDK8-CMS：（关注最短垃圾回收停顿时间）</h4><p><strong>CMS回收器</strong>（Concurrent Mark Sweep Collector）是回收停顿时间比较短，目前比较常用的垃圾回收器。它通过初始标记（Initial Mark）、并发标记（Concurrent Mark）、重新标记（Remark)、并发清除（Concurrent Sweep）四个步骤完成垃圾回收工作。第1、3步的初始标记和重新标记阶段依然会引发STW。2、4步可以和应用程序并发执行。CMS采用“标记 - 清除算法”，因此产生大量的空间碎片。可以通过<code>-XX:+UseCMSCompactAtFullCollection</code>参数，强制JVM在FGC完成后对老年代进行压缩，执行一次空间碎片整理，但是会引发STW。为了减少STW次数，CMS还可以通过配置<code>-XX:+CMSFullGCsBeforeCompaction=n</code>参数，在执行了n次FGC后，JVM再在老年代执行空间碎片整理。</p>
-<h4 id="JDK9-G1：（精准控制停顿时间，避免垃圾碎片）"><a href="#JDK9-G1：（精准控制停顿时间，避免垃圾碎片）" class="headerlink" title="JDK9-G1：（精准控制停顿时间，避免垃圾碎片）"></a>JDK9-G1：（精准控制停顿时间，避免垃圾碎片）</h4><p>G1（Garbage-First Garbage Collector）垃圾回收器。</p>
-<p>是⼀款⾯向服务器的垃圾收集器,主要针对配备多颗处理器及⼤容量内存的机器.以极⾼概率满⾜GC停顿时<br>间要求的同时,还具备⾼吞吐量性能特征；相比与 CMS 收集器，G1 收集器两个最突出的改进是：</p>
-<p>【1】基于标记-整理算法，不产生内存碎片。</p>
-<p>【2】可以非常精确控制停顿时间，在不牺牲吞吐量前提下，实现低停顿垃圾回收。</p>
-<p>G1 收集器避免全区域垃圾收集，它把堆内存划分为大小固定的几个独立区域，并且跟踪这些区域的垃圾<br>收集进度，同时在后台维护一个优先级列表，每次根据所允许的收集时间，优先回收垃圾最多的区域。<strong>区域划</strong><br><strong>分</strong>和<strong>优先级区域</strong>回收机制，确保 G1 收集器可以在有限时间获得最高的垃圾收集效率。</p>
-<ul>
-<li><p><strong>初始标记</strong>：<strong>Stop The World，</strong>仅使用一条初始标记线程对GC Roots关联的对象进行标记</p>
-</li>
-<li><p><strong>并发标记</strong>：使用一条标记线程与用户线程并发执行。此过程进行<strong>可达性分析，速度很慢</strong></p>
-</li>
-<li><p><strong>最终标记</strong>：<strong>Stop The World</strong>，使用多条标记线程并发执行</p>
-</li>
-<li><p><strong>筛选回收</strong>：回收废弃对象，此时也要 <strong>Stop The World</strong>，并使用多条筛选回收线程并发执行</p>
-</li>
-</ul>
-<h5 id="G1垃圾回收期原理"><a href="#G1垃圾回收期原理" class="headerlink" title="G1垃圾回收期原理"></a>G1垃圾回收期原理</h5><p>TODO</p>
-<h4 id="ZGC"><a href="#ZGC" class="headerlink" title="ZGC"></a>ZGC</h4><p>2022年6月5日TODO（作为亮点）</p>
-<h4 id="如何配置垃圾收集器"><a href="#如何配置垃圾收集器" class="headerlink" title="如何配置垃圾收集器"></a><strong>如何配置垃圾收集器</strong></h4><ul>
-<li>首先是内存大小问题，基本上每一个内存区域我都会设置一个上限，来避免溢出问题，比如元空间。</li>
-<li>通常，堆空间我会设置成操作系统的 2&#x2F;3，超过 8GB 的堆，优先选用 G1</li>
-<li>然后我会对 JVM 进行初步优化，比如根据老年代的对象提升速度，来调整年轻代和老年代之间的比例</li>
-<li>依据系统容量、访问延迟、吞吐量等进行专项优化，我们的服务是高并发的，对 STW 的时间敏感</li>
-<li>我会通过记录详细的 GC 日志，来找到这个瓶颈点，借用 GCeasy 这样的日志分析工具，定位问题</li>
-</ul>
-<h3 id="GC触发条件"><a href="#GC触发条件" class="headerlink" title="GC触发条件"></a>GC触发条件</h3><h4 id="MinorGC触发条件"><a href="#MinorGC触发条件" class="headerlink" title="MinorGC触发条件"></a>MinorGC触发条件</h4><p>当Eden区满时触发MinorGC</p>
-<h4 id="FullGC触发条件"><a href="#FullGC触发条件" class="headerlink" title="FullGC触发条件"></a>FullGC触发条件</h4><ol>
-<li>调用System.gc时，系统建议执行FullGC，但是不必然执行</li>
-<li>老年代空间不足</li>
-<li>方法区空间不足（jdk8之前）</li>
-<li>通过MinorGC后进入老年代的平均大小大于老年代的可用内存</li>
-<li>由Eden区、FromSpace向ToSpace区复制时，对象大小大于ToSpace可用内存，则把该对象转存到老年代，且老年代的可用内存小于该对象大小</li>
-</ol>
-<h2 id="JVM调优"><a href="#JVM调优" class="headerlink" title="JVM调优"></a>JVM调优</h2><h3 id="JVM优化的思路"><a href="#JVM优化的思路" class="headerlink" title="JVM优化的思路"></a>JVM优化的思路</h3><p>1、一般来说，当survivor区不够大或者占用量达到50%，就会把一些对象放到老年区。通过设置合理的eden区，survivor区及使用率，可以将年轻对象保存在年轻代，从而避免full GC，使用<code>-Xmn</code>设置年轻代的大小</p>
-<p>2、对于占用内存比较多的大对象，一般会选择在老年代分配内存。如果在年轻代给大对象分配内存，年轻代内存不够了，就要在eden区移动大量对象到老年代，然后这些移动的对象可能很快消亡，因此导致full GC。通过设置参数：<code>-XX:PetenureSizeThreshold=1000000</code>，单位为B，标明对象大小超过1M时，在老年代(tenured)分配内存空间。</p>
-<p>3、一般情况下，年轻对象放在eden区，当第一次GC后，如果对象还存活，放到survivor区，此后，每GC一次，年龄增加1，当对象的年龄达到阈值，就被放到tenured老年区。这个阈值可以同构<code>-XX:MaxTenuringThreshold</code>设置。如果想让对象留在年轻代，可以设置比较大的阈值。</p>
-<p>4、设置最小堆和最大堆：<code>-Xmx</code>和<code>-Xms</code>稳定的堆大小堆垃圾回收是有利的，获得一个稳定的堆大小的方法是设置-Xms和-Xmx的值一样，即最大堆和最小堆一样，如果这样子设置，系统在运行时堆大小理论上是恒定的，稳定的堆空间可以减少GC次数，因此，很多服务端都会将这两个参数设置为一样的数值。稳定的堆大小虽然减少GC次数，但是增加每次GC的时间，因为每次GC要把堆的大小维持在一个区间内。</p>
-<p>5、一个不稳定的堆并非毫无用处。在系统不需要使用大内存的时候，压缩堆空间，使得GC每次应对一个较小的堆空间，加快单次GC次数。基于这种考虑，JVM提供两个参数，用于压缩和扩展堆空间。<br>（1）<code>-XX:MinHeapFreeRatio</code> 参数用于设置堆空间的最小空闲比率。默认值是40，当堆空间的空闲内存比率小于40，JVM便会扩展堆空间<br>（2）<code>-XX:MaxHeapFreeRatio</code> 参数用于设置堆空间的最大空闲比率。默认值是70， 当堆空间的空闲内存比率大于70，JVM便会压缩堆空间。<br>（3）当-Xmx和-Xmx相等时，上面两个参数无效</p>
-<p>6、通过增大吞吐量提高系统性能，可以通过设置并行垃圾回收收集器。<br>（1）<code>-XX:+UseParallelGC</code>:年轻代使用并行垃圾回收收集器。这是一个关注吞吐量的收集器，可以尽可能的减少垃圾回收时间。<br>（2）<code>-XX:+UseParallelOldGC</code>:设置老年代使用并行垃圾回收收集器。</p>
-<p>7、尝试使用大的内存分页：使用大的内存分页增加CPU的内存寻址能力，从而系统的性能。<code>-XX:+LargePageSizeInBytes</code> 设置内存页的大小</p>
-<p>8、使用非占用的垃圾收集器。<code>-XX:+UseConcMarkSweepGC</code>老年代使用CMS收集器降低停顿。</p>
-<p>9、<code>-XXSurvivorRatio=3</code>，表示年轻代中的分配比率：survivor:eden &#x3D; 2:3</p>
-<p>10、JVM性能调优的工具：<br>（1）jps（Java Process Status）：输出JVM中运行的进程状态信息(现在一般使用jconsole)<br>（2）jstack：查看java进程内线程的堆栈信息。<br>（3）jmap：用于生成堆转存快照<br>（4）jhat：用于分析jmap生成的堆转存快照（一般不推荐使用，而是使用Ecplise Memory Analyzer）<br>（3）jstat是JVM统计监测工具。可以用来显示垃圾回收信息、类加载信息、新生代统计信息等。<br>（4）VisualVM：故障处理工具</p>
-<h3 id="生产环境JVM调优具体步骤"><a href="#生产环境JVM调优具体步骤" class="headerlink" title="生产环境JVM调优具体步骤"></a>生产环境JVM调优具体步骤</h3><h5 id="1-监控GC的状态"><a href="#1-监控GC的状态" class="headerlink" title="1.监控GC的状态"></a>1.监控GC的状态</h5><p>使用各种JVM工具，查看当前日志，分析当前JVM参数设置，并且分析当前堆内存快照和gc日志，根据实际的各区域内存划分和GC执行时间，觉得是否进行优化。举一个例子，系统崩溃前的一些现象：每次垃圾回收的时间越来越长，由之前的10ms延长到50ms左右，FullGC的时间也由之前的0.5s延长到4、5s，FullGC的次数越来越多，最频繁时隔不到1分钟就进行一次FullGC，老年代的内存越来越大并且每次FGC后老年代没有内存释放，之后系统会无法响应新的数据，逐渐到达OutMemoryError的临界值，这个时候就需要分析JVM内存快照dump。</p>
-<h5 id="2-生成堆的dump文件"><a href="#2-生成堆的dump文件" class="headerlink" title="2.生成堆的dump文件"></a>2.生成堆的dump文件</h5><p>通过JMX的MBean生成当前的Heap信息，大小为一个3G（整个堆得大小）的hprof文件，如果没有启动JMX可以通过Java的jmap命令来生成改文件。</p>
-<h5 id="3-分析dump文件"><a href="#3-分析dump文件" class="headerlink" title="3.分析dump文件"></a>3.分析dump文件</h5><p>打开这个3G的堆信息文件，显然一般的Windows系统没有这么大的内存，必须借助高配置的Linux，几种工具打开该文件：Visual VM、IBM HeadpAnalyzer、JDK自带的Hprof工具、Mat（Eclipse专门的静态内存分析工具）推荐使用。Tips：文件太大，建议使用Eclipse专门的静态内存工具Mat打开分析。</p>
-<h5 id="4-分析结果，判断是否需要优化"><a href="#4-分析结果，判断是否需要优化" class="headerlink" title="4.分析结果，判断是否需要优化"></a>4.分析结果，判断是否需要优化</h5><p>如果各项参数设置合理，系统没有超时日志出现，GC频率不高，GC耗时不高，那么没有必要进行GC优化，如果GC时间超过1-3s，或者频繁GC，则必须优化。注意： 如果满足下面的指标，<strong>则一般不需要进行 GC 优化：</strong></p>
+<p>现在我们来看下缓存访问的时间复杂度是多少。因为不管缓存有没有满，我们都需要遍历一遍链表，所以这种基于链表的实现思路，缓存访问的时间复杂度为 O(n)。</p>
+<p>实际上，我们可以继续优化这个实现思路，比如引入<strong>散列表</strong>（Hash table）来记录每个数据的位置，将缓存访问的时间复杂度降到 O(1)。</p>
+<h2 id="课后思考"><a href="#课后思考" class="headerlink" title="课后思考"></a>课后思考</h2><ol>
+<li><p>如何基于数组实现LRU算法</p>
 <blockquote>
-<ul>
-<li>MinorGC 执行时间不到50ms；</li>
-<li>Minor GC 执行不频繁，约10秒一次；</li>
-<li>Full GC 执行时间不到1s；</li>
-<li>Full GC 执行频率不算频繁，不低于10分钟1次。</li>
-</ul>
+<p>循环数组？</p>
 </blockquote>
-<h5 id="5-调整GC类型和内存分配"><a href="#5-调整GC类型和内存分配" class="headerlink" title="5.调整GC类型和内存分配"></a>5.调整GC类型和内存分配</h5><p>如果内存分配 过大或过小，或者采用的GC收集器比较慢，则应该优先调整这些参数，并且先找1台或几台机器进行beta，然后比较优化过的机器和没有优化的机器的性能对比，并有针对性的做出最后选择。</p>
-<h5 id="6-不断的分析和调整"><a href="#6-不断的分析和调整" class="headerlink" title="6.不断的分析和调整"></a>6.不断的分析和调整</h5><p>通过不断的试验和试错，分析并找出最合适的参数，如果找到了最合适的参数，则将这些参数应用到所有服务器。</p>
-<p>一般遇到问题就是打出当时的线程信息生成dump然后查异常代码。</p>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MjM5NzMyMjAwMA==&mid=2651485913&idx=1&sn=c40e03e94a7eb1f62baaa09173afc860&chksm=bd251aa68a5293b00dd0228451e19eef1e98684e5d596bbed2d647b8530e02eac2042580870e&scene=21#wechat_redirect">附：JVM 性能调优监控工具 jps、jstack、jmap、jhat、jstat、hprof 使用详解</a></p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://www.hollischuang.com/archives/6055">我竟然被”双亲委派”给虐了！</a></li>
-</ul>
+</li>
+<li><p>如何判断一个字符串是否是回文字符串的问题，我想你应该听过，我们今天的题目就是基于这个问题的改造版本。如果字符串是通过单链表来存储的，那该如何来判断是一个回文串呢？你有什么好的解决思路呢？相应的时间空间复杂度又是多少呢？</p>
+<blockquote>
+</blockquote>
+</li>
+</ol>
 
     
 
@@ -984,493 +494,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/eec2f852.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-interview/多线程面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/531c5825.html" target="_blank">多线程面试题</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/531c5825.html" class="archive-article-date">
-        <time datetime="2021-01-23T08:23:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-23</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <hr>
-<h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><h3 id="进程和线程的区别？"><a href="#进程和线程的区别？" class="headerlink" title="进程和线程的区别？"></a>进程和线程的区别？</h3><h3 id="进程上下文切换开销都有哪些？"><a href="#进程上下文切换开销都有哪些？" class="headerlink" title="进程上下文切换开销都有哪些？"></a>进程上下文切换开销都有哪些？</h3><p>那么上下文切换的时候，CPU的开销都具体有哪些呢？开销分成两种，一种是直接开销、一种是间接开销。</p>
-<p>直接开销就是在切换时，cpu必须做的事情，包括：</p>
-<ul>
-<li><p>1、切换页表全局目录</p>
-</li>
-<li><p>2、切换内核态堆栈</p>
-</li>
-<li><p>3、切换硬件上下文（进程恢复前，必须装入寄存器的数据统称为硬件上下文）</p>
-</li>
-<li><ul>
-<li>ip(instruction pointer)：指向当前执行指令的下一条指令</li>
-<li>bp(base pointer): 用于存放执行中的函数对应的栈帧的栈底地址</li>
-<li>sp(stack poinger): 用于存放执行中的函数对应的栈帧的栈顶地址</li>
-<li>cr3:页目录基址寄存器，保存页目录表的物理地址</li>
-<li>……</li>
-</ul>
-</li>
-<li><p>4、刷新TLB</p>
-</li>
-<li><p>5、系统调度器的代码执行</p>
-</li>
-</ul>
-<p>间接开销主要指的是虽然切换到一个新进程后，由于各种缓存并不热，速度运行会慢一些。如果进程始终都在一个CPU上调度还好一些，如果跨CPU的话，之前热起来的TLB、L1、L2、L3因为运行的进程已经变了，所以以局部性原理cache起来的代码、数据也都没有用了，导致新进程穿透到内存的IO会变多。其实我们上面的实验并没有很好地测量到这种情况，所以实际的上下文切换开销可能比3.5us要大。</p>
-<p>想了解更详细操作过程的同学请参考《深入理解Linux内核》中的第三章和第九章。</p>
-<h3 id="线程上下文切换"><a href="#线程上下文切换" class="headerlink" title="线程上下文切换"></a>线程上下文切换</h3><p>上下文切换：</p>
-<p>多线程编程中一般线程的个数都大于 CPU 核心的个数，而一个 CPU 核心在任意时刻只能被一个线程使用，为了让这些线程都能得到有效执行，CPU 采取的策略是为每个线程分配时间片并轮转的形式。当一个线程的时间片用完的时候就会重新处于就绪状态让给其他线程使用，这个过程就属于一次上下文切换。概括来说就是：当前任务在执行完 CPU 时间片切换到另一个任务之前会先保存自己的状态，以便下次再切换回这个任务时，可以再加载这个任务的状态。<strong>任务从保存到再加载的过程就是一次上下文切换</strong>。</p>
-<p>上下文切换通常是计算密集型的。也就是说，它需要相当可观的处理器时间，在每秒几十上百次的切换中，每次切换都需要纳秒量级的时间。所以，上下文切换对系统来说意味着消耗大量的 CPU 时间，事实上，可能是操作系统中时间消耗最大的操作。</p>
-<p>Linux 相比与其他操作系统（包括其他类 Unix 系统）有很多的优点，其中有一项就是，其上下文切换和模式切换的时间消耗非常少。</p>
-<h2 id="原子性、有序性和可见性"><a href="#原子性、有序性和可见性" class="headerlink" title="原子性、有序性和可见性"></a>原子性、有序性和可见性</h2><h3 id="final关键字的可见性"><a href="#final关键字的可见性" class="headerlink" title="final关键字的可见性"></a>final关键字的可见性</h3><h2 id="悲观锁和乐观锁"><a href="#悲观锁和乐观锁" class="headerlink" title="悲观锁和乐观锁"></a>悲观锁和乐观锁</h2><h3 id="CAS有什么问题？"><a href="#CAS有什么问题？" class="headerlink" title="CAS有什么问题？"></a>CAS有什么问题？</h3><p>CAS的缺点有如ABA问题，自旋锁消耗问题、多变量共享一致性问题：</p>
-<p>1.<strong>ABA</strong>：<br>问题描述：线程t1将它的值从A变为B，再从B变为A。同时有线程t2要将值从A变为C。但CAS检查的时候会发现没有改变，但是实质上它已经发生了改变 。可能会造成数据的缺失。</p>
-<p>解决方法：CAS还是类似于乐观锁，同数据乐观锁的方式给它加一个版本号或者时间戳，如AtomicStampedReference</p>
-<p>2.<strong>自旋消耗资源</strong>：<br>问题描述：多个线程争夺同一个资源时，如果自旋一直不成功，将会一直占用CPU。</p>
-<p>解决方法：破坏掉for死循环，当超过一定时间或者一定次数时，return退出。</p>
-<p>JDK8新增的LongAddr和ConcurrentHashMap类似的方法。当多个线程竞争时，将粒度变小，将一个变量拆分为多个变量，达到多个线程访问多个资源的效果，最后再调用sum把它合起来。虽然base和cells都是volatile修饰的，但感觉这个sum操作没有加锁，可能sum的结果不是那么精确。</p>
-<p>3.<strong>多变量共享一致性问题</strong>：<br>解决方法： CAS操作是针对一个变量的，如果对多个变量操作，解决方案如下</p>
-<ol>
-<li>可以加锁来解决</li>
-<li>封装成对象类解决</li>
-</ol>
-<h2 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a>Java内存模型</h2><h3 id="happens-before简介"><a href="#happens-before简介" class="headerlink" title="happens-before简介"></a>happens-before简介</h3><p>在JMM中，如果一个操作执行的结果需要对另一个操作可见，那么这两个操作之间必须要存在happens-before关系。这里提到的两个操作既可以是在一个线程里，也可以是在不同的线程里。</p>
-<p>与程序员密切相关的happens-before规则如下：</p>
-<ul>
-<li>程序顺序规则：一个线程中的每个操作，happens-before于该线程中的任意后续操作。</li>
-<li>监视器锁规则：对一个锁的解锁，happens-before于随后对这个锁的加锁。</li>
-<li>volatile变量规则：对一个volatile域的写，happens-before于任意后续对这个volatile域的读。</li>
-<li>传递性：如果A happens-before B，且B happens-before C，那么A happens-before C。</li>
-</ul>
-<blockquote>
-<p><strong>注意：</strong>两个操作之间具有happens-before关系，并不意味着前一个操作必须要在后一个操作之前执行！happens-before仅仅要求前一个操作（执行的结果）对后一个操作可见，且前一个操作按顺序排在第二个操作之前（the first is visible to and ordered before the second）。</p>
-</blockquote>
-<h3 id="单线程、多线程在单核CPU、多核CPU中的影响"><a href="#单线程、多线程在单核CPU、多核CPU中的影响" class="headerlink" title="单线程、多线程在单核CPU、多核CPU中的影响"></a>单线程、多线程在单核CPU、多核CPU中的影响</h3><p>我们分别来分析下单线程、多线程在单核CPU、多核CPU中的影响。</p>
-<p><strong>单线程。</strong>cpu核心的缓存只被一个线程访问。缓存独占，不会出现访问冲突等问题。</p>
-<p><strong>单核CPU，多线程。</strong>进程中的多个线程会同时访问进程中的共享数据，CPU将某块内存加载到缓存后，不同线程在访问相同的物理地址的时候，都会映射到相同的缓存位置，这样即使发生线程的切换，缓存仍然不会失效。但由于任何时刻只能有一个线程在执行，因此不会出现缓存访问冲突。</p>
-<p><strong>多核CPU，多线程。</strong>每个核都至少有一个L1 缓存。多个线程访问进程中的某个共享内存，且这多个线程分别在不同的核心上执行，则每个核心都会在各自的caehe中保留一份共享内存的缓冲。由于多核是可以并行的，可能会出现多个线程同时写各自的缓存的情况，而各自的cache之间的数据就有可能不同。</p>
-<p>在CPU和主存之间增加缓存，在多线程场景下就可能存在<strong>缓存一致性问题</strong>，也就是说，在多核CPU中，每个核的自己的缓存中，关于同一个数据的缓存内容可能不一致。</p>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/531c5825.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-interview/2021面经" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/416557c5.html" target="_blank">2021面经</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/416557c5.html" class="archive-article-date">
-        <time datetime="2021-01-20T08:49:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-20</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <hr>
-<h3 id="叮咚买菜"><a href="#叮咚买菜" class="headerlink" title="叮咚买菜"></a>叮咚买菜</h3><ul>
-<li><p>hashmap的扩容过程</p>
-</li>
-<li><p>单向链表如何判断有环</p>
-<blockquote>
-<p>HashSet遍历和快慢指针</p>
-</blockquote>
-</li>
-<li><p>如何找出一个数组重复元素最多的前K个元素</p>
-<blockquote>
-<p>TopK问题，堆排序，时间复杂度nLogK</p>
-</blockquote>
-</li>
-<li><p>MySQL什么情况下会发生死锁？如何解决？</p>
-<blockquote>
-<p>举个例子：事务A按照先后顺序去更新id&#x3D;1和id&#x3D;2的记录，事务B同一时间按照先后顺序去更新id&#x3D;2和id&#x3D;1的记录，因为行锁是两阶段协议，A获得id&#x3D;1的行锁不会马上释放，此时B会等待A释放id&#x3D;1的行锁，而A会等待B释放id&#x3D;2的行锁，这样就形成了死锁。<br><strong>如何解决：</strong></p>
-<ul>
-<li>一种策略是，直接进入等待，直到超时。这个超时时间可以通过参数innodb_lock_wait_timeout来设置。</li>
-<li>另一种策略是，发起死锁检测，发现死锁后，主动回滚死锁链条中的某一个事务，让其他事务得以继续执行。将参数innodb_deadlock_detect设置为on，表示开启这个逻辑。</li>
-</ul>
-</blockquote>
-</li>
-<li><p>ArrayList的contains方法和HashSet的contains方法的时间复杂度各是多少</p>
-<blockquote>
-<p>O(n)和O(1）</p>
-</blockquote>
-</li>
-<li><p>2个线程，A生产数据，B消费数据，有哪几种实现形式（使用LinkedList实现有哪些需要注意的，线程安全问题，如何解决：加锁）</p>
-</li>
-<li><p>一个抽奖系统，奖品1的概率是10%，奖品2的概率是20%，不中奖的概率是70%，算法如何实现？</p>
-<blockquote>
-<p>随机数和区间</p>
-</blockquote>
-</li>
-<li><p>缓存一致性如何保证？</p>
-<blockquote>
-<p>最好的解决方案是先更新数据库再删除缓存（在极端情况下也会有问题，比如说B线程更新数据的节点，缓存正好失效，此时线程A读取到了旧值，随后B操作数据库完成更新并且删除缓存之后，A再把旧值写入缓存，此时再去请求拿到的会是脏数据，这种概率非常低，基本可以忽略）</p>
-</blockquote>
-</li>
-<li><p>Dubbo IO线程池和业务线程池有什么区别？默认是哪种线程池（Fixed）</p>
-</li>
-<li><p>使用Dubbo有没有遇到什么坑？</p>
-<blockquote>
-<ul>
-<li>父子类有相同属性时值丢失：hessian序列化问题</li>
-<li>自定义异常被包装成RuntimeException</li>
-<li>Data length too large</li>
-<li>线程耗尽：Provider默认是fixed线程池，且线程数为200</li>
-</ul>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013256816/article/details/102674846"><strong>具体参考链接</strong></a></p>
-</blockquote>
-</li>
-<li><p>网关是用来做什么的？为什么要用网关？</p>
-</li>
-<li><p>乐观锁和悲观锁有什么区别？乐观锁有哪些实现方式？（版本号机制和CAS算法）</p>
-<blockquote>
-<p>版本号机制和CAS算法</p>
-</blockquote>
-</li>
-<li><p>线程池主要有哪些东西？线程池中如果没有任务，会是什么状态？</p>
-</li>
-<li><p>项目中遇到的技术难题，是如何解决的？</p>
-</li>
-<li><p>分库分表一些连表问题和条件查询是如何解决的？</p>
-<blockquote>
-<p>分两次查询，第一次把联表的id查出来，通过这些id再做一次查询</p>
-</blockquote>
-</li>
-</ul>
-    
-    <a class="article-more-a" href="/posts/416557c5.html#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/416557c5.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-interview/dubbo面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/7644b6f2.html" target="_blank">Dubbo面试题</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/7644b6f2.html" class="archive-article-date">
-        <time datetime="2021-01-18T08:31:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-18</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <hr>
-<h3 id="dubbo分层"><a href="#dubbo分层" class="headerlink" title="dubbo分层"></a>dubbo分层</h3><p>从大的范围来说，dubbo分为三层，business业务逻辑层由我们自己来提供接口和实现还有一些配置信息，RPC层就是真正的RPC调用的核心层，封装整个RPC的调用过程、负载均衡、集群容错、代理，remoting则是对网络传输协议和数据转换的封装。</p>
-<p>划分到更细的层面，就是图中的10层模式，整个分层依赖由上至下，除开business业务逻辑之外，其他的几层都是SPI机制。<br><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118155842.webp" alt="图片"></p>
-<h3 id="能说下Dubbo的工作原理吗？"><a href="#能说下Dubbo的工作原理吗？" class="headerlink" title="能说下Dubbo的工作原理吗？"></a>能说下Dubbo的工作原理吗？</h3><ol>
-<li>服务启动的时候，provider和consumer根据配置信息，连接到注册中心register，分别向注册中心注册和订阅服务</li>
-<li>register根据服务订阅关系，返回provider信息到consumer，同时consumer会把provider信息缓存到本地。如果信息有变更，consumer会收到来自register的推送</li>
-<li>consumer生成代理对象，同时根据负载均衡策略，选择一台provider，同时定时向monitor记录接口的调用次数和时间信息</li>
-<li>拿到代理对象之后，consumer通过代理对象发起接口调用</li>
-<li>provider收到请求后对数据进行反序列化，然后通过代理调用具体的接口实现</li>
-</ol>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118155952.webp" alt="图片"></p>
-<h3 id="dubbo服务暴露的过程"><a href="#dubbo服务暴露的过程" class="headerlink" title="dubbo服务暴露的过程"></a>dubbo服务暴露的过程</h3><ol>
-<li>在容器启动的时候，通过ServiceConfig解析标签，创建dubbo标签解析器来解析dubbo的标签，容器创建完成之后，触发ContextRefreshEvent事件回调开始暴露服务</li>
-<li>通过ProxyFactory获取到invoker，invoker包含了需要执行的方法的对象信息和具体的URL地址</li>
-<li>再通过DubboProtocol的实现把包装后的invoker转换成exporter，然后启动服务器server，监听端口</li>
-<li>最后RegistryProtocol保存URL地址和invoker的映射关系，同时注册到服务中心</li>
-</ol>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210118160055.webp" alt="图片"></p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/TOcBA5AFDsMNCCosI5tZZA">https://mp.weixin.qq.com/s/TOcBA5AFDsMNCCosI5tZZA</a></p>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/7644b6f2.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-application/面试遇到的简单多线程编程题：线程交替打印的升级版" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/575b225b.html" target="_blank">面试遇到的简单多线程编程题：线程交替打印的升级版</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/575b225b.html" class="archive-article-date">
-        <time datetime="2020-03-26T07:34:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-26</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近面试遇到一道简单的多线程编码题，线程交替打印的升级版，我们来研究下这道题怎么解决。  </p>
-<h3 id="题目介绍："><a href="#题目介绍：" class="headerlink" title="题目介绍："></a>题目介绍：</h3><blockquote>
-<p>线程A每次处理只能输出一个A<br>线程B每次输出只能输出一个B<br>主线程不能输出A或B<br>请尽可能不使用封装好的工具方法或类来调度线程，然后输出以下内容：<br>ABBBBABBBBABBBBABBBB….<br>加分项：增加线程B1，行为和B一样，要求B和B1负载均衡</p>
-</blockquote>
-    
-    <a class="article-more-a" href="/posts/575b225b.html#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">面试题</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
         		</li>
       		
 		</ul>
@@ -1480,7 +508,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/posts/575b225b.html">展开全文 >></a>
+      <a class="article-more-a" href="/posts/592a39.html">展开全文 >></a>
     </p>
     
 
@@ -1510,7 +538,7 @@
 
 
   
-    <article id="post-application/Spring、SpringMvc、SpringBoot和SpringCloud的联系与区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-study/数据结构与算法之美/学习笔记/05讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -1518,7 +546,7 @@
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/posts/7e8f7b41.html" target="_blank">Spring、SpringMvc、SpringBoot和SpringCloud的联系与区别</a>
+	  <a class="article-title" href="/posts/12ec85d7.html" target="_blank">05讲</a>
   
     </h1>
   
@@ -1526,8 +554,8 @@
 
   
   
-<a href="/posts/7e8f7b41.html" class="archive-article-date">
-        <time datetime="2020-02-29T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-29</time>
+<a href="/posts/12ec85d7.html" class="archive-article-date">
+        <time datetime="2021-03-25T12:57:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-25</time>
 </a>
 
   
@@ -1539,10 +567,43 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p>最近面试被问到了Spring、SpringMvc、SpringBoot和SpringCloud的关系和区别，以及各解决了什么问题，简单整理了下四者之间的区别和联系以及解决的问题：</p>
-    
-    <a class="article-more-a" href="/posts/7e8f7b41.html#more">more >></a>
-    
+    <hr>
+<h1 id="数组：为什么很多编程语言中数组都从0开始编号？"><a href="#数组：为什么很多编程语言中数组都从0开始编号？" class="headerlink" title="数组：为什么很多编程语言中数组都从0开始编号？"></a>数组：为什么很多编程语言中数组都从0开始编号？</h1><h2 id="数组如何实现随机访问？"><a href="#数组如何实现随机访问？" class="headerlink" title="数组如何实现随机访问？"></a>数组如何实现随机访问？</h2><h3 id="什么是数组？"><a href="#什么是数组？" class="headerlink" title="什么是数组？"></a>什么是数组？</h3><p><strong>数组（Array）是一种线性表数据结构。它用一组连续的内存空间，来存储一组具有相同类型的数据</strong>。</p>
+<h3 id="数组是如何实现根据下标随机访问数组元素的吗？"><a href="#数组是如何实现根据下标随机访问数组元素的吗？" class="headerlink" title="数组是如何实现根据下标随机访问数组元素的吗？"></a>数组是如何实现根据下标随机访问数组元素的吗？</h3><p>我们拿一个长度为 10 的 int 类型的数组 int[] a &#x3D; new int[10]来举例。在我画的这个图中，计算机给数组 a[10]，分配了一块连续内存空间 1000～1039，其中，内存块的首地址为 base_address &#x3D; 1000。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210324230955.jpeg" alt="img"></p>
+<p>我们知道，计算机会给每个内存单元分配一个地址，计算机通过地址来访问内存中的数据。当计算机需要随机访问数组中的某个元素时，它会首先通过下面的寻址公式，计算出该元素存储的内存地址：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a[i]_address = base_address + i * data_type_size</span><br></pre></td></tr></table></figure>
+
+<p>其中 data_type_size 表示数组中每个元素的大小。我们举的这个例子里，数组中存储的是 int 类型数据，所以 data_type_size 就为 4 个字节。</p>
+<h2 id="容器和数组该如何选择？"><a href="#容器和数组该如何选择？" class="headerlink" title="容器和数组该如何选择？"></a>容器和数组该如何选择？</h2><ol>
+<li>Java ArrayList 无法存储基本类型，比如 int、long，需要封装为 Integer、Long 类，而 Autoboxing、Unboxing 则有一定的性能消耗，所以如果特别关注性能，或者希望使用基本类型，就可以选用数组。</li>
+<li>如果数据大小事先已知，并且对数据的操作非常简单，用不到 ArrayList 提供的大部分方法，也可以直接使用数组。</li>
+<li>还有一个是我个人的喜好，当要表示多维数组时，用数组往往会更加直观。比如 Object[][] array；而用容器的话则需要这样定义：ArrayList&lt;ArrayList&lt;object&gt;&gt; array。</li>
+</ol>
+<p>总结一下，对于业务开发，直接使用容器就足够了，省时省力。毕竟损耗一丢丢性能，完全不会影响到系统整体的性能。但如果你是做一些非常底层的开发，比如开发网络框架，性能的优化需要做到极致，这个时候数组就会优于容器，成为首选。</p>
+<h2 id="为什么数组要从-0-开始编号？"><a href="#为什么数组要从-0-开始编号？" class="headerlink" title="为什么数组要从 0 开始编号？"></a>为什么数组要从 0 开始编号？</h2><p>从数组存储的内存模型上来看，“下标”最确切的定义应该是“偏移（offset）”。前面也讲到，如果用 a 来表示数组的首地址，a[0]就是偏移为 0 的位置，也就是首地址，a[k]就表示偏移 k 个 type_size 的位置，所以计算 a[k]的内存地址只需要用这个公式：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a[k]_address = base_address + k * type_size</span><br></pre></td></tr></table></figure>
+
+<p>但是，如果数组从 1 开始计数，那我们计算数组元素 a[k]的内存地址就会变为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a[k]_address = base_address + (k<span class="number">-1</span>) * type_size</span><br></pre></td></tr></table></figure>
+
+<p>对比两个公式，我们不难发现，从 1 开始编号，每次随机访问数组元素都多了一次减法运算，对于 CPU 来说，就是多了一次减法指令。</p>
+<p>数组作为非常基础的数据结构，通过下标随机访问数组元素又是其非常基础的编程操作，效率的优化就要尽可能做到极致。所以为了减少一次减法操作，数组选择了从 0 开始编号，而不是从 1 开始。</p>
+<p>不过我认为，上面解释得再多其实都算不上压倒性的证明，说数组起始编号非 0 开始不可。所以我觉得最主要的原因可能是历史原因。</p>
+<p>C 语言设计者用 0 开始计数数组下标，之后的 Java、JavaScript 等高级语言都效仿了 C 语言，或者说，为了在一定程度上减少 C 语言程序员学习 Java 的学习成本，因此继续沿用了从 0 开始计数的习惯。实际上，很多语言中数组也并不是从 0 开始计数的，比如 Matlab。甚至还有一些语言支持负数下标，比如 Python。</p>
+<h2 id="课后思考"><a href="#课后思考" class="headerlink" title="课后思考"></a>课后思考</h2><p>1.前面我基于数组的原理引出 JVM 的标记清除垃圾回收算法的核心理念。我不知道你是否使用 Java 语言，理解 JVM，如果你熟悉，可以在评论区回顾下你理解的标记清除垃圾回收算法。</p>
+<blockquote>
+<p>分为“标记”和“清除”两个阶段：首先标记出所有需要回收的对象，在标记完成后，统一回收掉所有被标记的对象，也可以反过来，标记存活的对象，统一回收所有未被标记的对象。</p>
+<p>大多数主流虚拟机采用可达性分析算法来判断对象是否存活，在标记阶段，会遍历所有 GC ROOTS，将所有 GC ROOTS 可达的对象标记为存活。</p>
+<p>缺点主要有两个：1. 执行效率不稳定，如果Java堆中包含大量对象，而且其中大部分是需要被回收的，这时必须进行大量标记和清除的动作，导致标记和清除两个过程的执行效率都随对象数量增长而降低；2. 内存碎片化问题，标记、清除之后会产生大量不连续的内存碎片，空间碎片太多可能会导致当以后在程序运行过程中需要分配较大对象时无法找到足够的连续内存而不得不提前触发一次垃圾回收动作。</p>
+</blockquote>
+<p>2.前面我们讲到一维数组的内存寻址公式，那你可以思考一下，类比一下，二维数组的内存寻址公式是怎样的呢？</p>
+<blockquote>
+<p>二维数组内存寻址：</p>
+<p>对于 m * n 的数组，a [i][j] (i &lt; m, j &lt; n)的地址为：</p>
+<p><code>address = base_address + ( i * n + j) * type_size</code></p>
+</blockquote>
+
     
 
     
@@ -1553,11 +614,822 @@
   <div class="article-info article-info-index">
     
     
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
     
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/posts/7e8f7b41.html">展开全文 >></a>
+      <a class="article-more-a" href="/posts/12ec85d7.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-study/数据结构与算法之美/每周打卡/3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/e7fad26f.html" target="_blank">第三周</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/e7fad26f.html" class="archive-article-date">
+        <time datetime="2021-03-24T05:59:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-24</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <hr>
+<p>数据结构与算法之美每周打卡 2021.03.22-2021.03.28</p>
+<h3 id="面试题-16-26-计算器"><a href="#面试题-16-26-计算器" class="headerlink" title="面试题 16.26. 计算器"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/calculator-lcci/">面试题 16.26. 计算器</a></h3><p>给定一个包含正整数、加(+)、减(-)、乘(*)、除(&#x2F;)的算数表达式(括号除外)，计算其结果。</p>
+<p>表达式仅包含非负整数，<code>+</code>， <code>-</code> ，<code>*</code>，<code>/</code> 四种运算符和空格 <code> </code>。 整数除法仅保留整数部分。</p>
+<p><strong>示例 1:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: &quot;3+2*2&quot;</span><br><span class="line">输出: 7</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: &quot; 3/2 &quot;</span><br><span class="line">输出: 1</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 3:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: &quot; 3+5 / 2 &quot;</span><br><span class="line">输出: 5</span><br></pre></td></tr></table></figure>
+
+<p><strong>说明：</strong></p>
+<ul>
+<li>你可以假设所给定的表达式都是有效的。</li>
+<li>请<strong>不要</strong>使用内置的库函数 <code>eval</code>。</li>
+</ul>
+<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>主要思想如下：</p>
+<ol>
+<li>将减法转化为加法（取相反数） </li>
+<li>由于乘除法优先级高，直接计算</li>
+<li>整数不仅一位，会&gt;10 </li>
+<li>表达式中没有括号</li>
+</ol>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">calculate</span><span class="params">(String s)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> s.length();</span><br><span class="line">        Deque&lt;Integer&gt; stack = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br><span class="line">        <span class="type">int</span> <span class="variable">num</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">char</span> <span class="variable">preSign</span> <span class="operator">=</span> <span class="string">&#x27;+&#x27;</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="type">char</span> <span class="variable">c</span> <span class="operator">=</span> s.charAt(i);</span><br><span class="line">            <span class="keyword">if</span> (Character.isDigit(c)) &#123;</span><br><span class="line">                <span class="comment">// 连续数字字符串转为数字，比如字符串 “23”</span></span><br><span class="line">                <span class="comment">// num 第一次保存为2，num第二次保存 2*10 + 3 = 23。</span></span><br><span class="line">                num = num * <span class="number">10</span> + c - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 如果是运算符或者是最后一个字符</span></span><br><span class="line">            <span class="keyword">if</span> ((!Character.isDigit(c) &amp;&amp; c != <span class="string">&#x27; &#x27;</span>) || i == n - <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">switch</span> (preSign) &#123;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">&#x27;+&#x27;</span>:</span><br><span class="line">                        stack.push(num);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">&#x27;-&#x27;</span>:</span><br><span class="line">                        stack.push(-num);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">&#x27;*&#x27;</span>:</span><br><span class="line">                        stack.push(stack.pop() * num);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">&#x27;/&#x27;</span>:</span><br><span class="line">                        stack.push(stack.pop() / num);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                preSign = c;</span><br><span class="line">                <span class="comment">// num用完归零</span></span><br><span class="line">                num = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 将栈中元素求和</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">res</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (!stack.isEmpty()) &#123;</span><br><span class="line">            res += stack.pop();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="739-每日温度"><a href="#739-每日温度" class="headerlink" title="739. 每日温度"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/daily-temperatures/">739. 每日温度</a></h3><p>请根据每日 <code>气温</code> 列表，重新生成一个列表。对应位置的输出为：要想观测到更高的气温，至少需要等待的天数。如果气温在这之后都不会升高，请在该位置用 <code>0</code> 来代替。</p>
+<p>例如，给定一个列表 <code>temperatures = [73, 74, 75, 71, 69, 72, 76, 73]</code>，你的输出应该是 <code>[1, 1, 4, 2, 1, 1, 0, 0]</code>。</p>
+<p><strong>提示：</strong><code>气温</code> 列表长度的范围是 <code>[1, 30000]</code>。每个气温的值的均为华氏度，都是在 <code>[30, 100]</code> 范围内的整数。</p>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] dailyTemperatures(<span class="type">int</span>[] T) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> T.length;</span><br><span class="line">        <span class="type">int</span>[] ans = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">        <span class="comment">// 维护一个单调递减栈</span></span><br><span class="line">        Deque&lt;Integer&gt; stack = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">num</span> <span class="operator">=</span> T[i];</span><br><span class="line">            <span class="comment">// 如果栈不为空并且当前元素大于栈顶元素，弹出栈中比当前小的元素</span></span><br><span class="line">            <span class="comment">// 并更新它们在返回数组中对应位置的值（需要等待的天数）</span></span><br><span class="line">            <span class="comment">// 栈里面需要保存元素在数组中的下标，而不是具体的数字。因为需要根据下标修改结果数组</span></span><br><span class="line">            <span class="keyword">while</span> (!stack.isEmpty() &amp;&amp; num &gt; T[stack.peek()]) &#123;</span><br><span class="line">                <span class="type">Integer</span> <span class="variable">preIndex</span> <span class="operator">=</span> stack.pop();</span><br><span class="line">                ans[preIndex] = i - preIndex;</span><br><span class="line">            &#125;</span><br><span class="line">            stack.push(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">每周打卡</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/e7fad26f.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-study/数据结构与算法之美/学习笔记/04讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/aa50e2b2.html" target="_blank">04讲</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/aa50e2b2.html" class="archive-article-date">
+        <time datetime="2021-03-21T14:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-21</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <hr>
+<h1 id="复杂度分析（下）：浅析最好、最坏、平均、均摊时间复杂度"><a href="#复杂度分析（下）：浅析最好、最坏、平均、均摊时间复杂度" class="headerlink" title="复杂度分析（下）：浅析最好、最坏、平均、均摊时间复杂度"></a>复杂度分析（下）：浅析最好、最坏、平均、均摊时间复杂度</h1><h3 id="一、复杂度分析的4个概念"><a href="#一、复杂度分析的4个概念" class="headerlink" title="一、复杂度分析的4个概念"></a>一、复杂度分析的4个概念</h3><ol>
+<li><strong>最好情况时间复杂度</strong>：代码在最理想情况下执行的时间复杂度。</li>
+<li><strong>最坏情况时间复杂度</strong>：代码在最坏情况下执行的时间复杂度。</li>
+<li><strong>平均时间复杂度</strong>：用代码在所有情况下执行的次数的加权平均值表示。</li>
+<li><strong>均摊时间复杂度</strong>：在代码执行的所有复杂度情况中绝大部分是低级别的复杂度，个别情况是高级别复杂度且发生具有时序关系时，可以将个别高级别复杂度均摊到低级别复杂度上。基本上均摊结果就等于低级别复杂度。</li>
+</ol>
+<h3 id="二、为什么要引入这4个概念？"><a href="#二、为什么要引入这4个概念？" class="headerlink" title="二、为什么要引入这4个概念？"></a>二、为什么要引入这4个概念？</h3><ol>
+<li>同一段代码在不同情况下时间复杂度会出现量级差异，为了更全面，更准确的描述代码的时间复杂度，所以引入这4个概念。</li>
+<li>代码复杂度在不同情况下出现量级差别时才需要区别这四种复杂度。大多数情况下，是不需要区别分析它们的。</li>
+</ol>
+<h3 id="三、如何分析平均、均摊时间复杂度？"><a href="#三、如何分析平均、均摊时间复杂度？" class="headerlink" title="三、如何分析平均、均摊时间复杂度？"></a>三、如何分析平均、均摊时间复杂度？</h3><ol>
+<li><strong>平均时间复杂度</strong>：代码在不同情况下复杂度出现量级差别，则用代码所有可能情况下执行次数的加权平均值表示。</li>
+<li><strong>均摊时间复杂度</strong>：两个条件满足时使用：1）代码在绝大多数情况下是低级别复杂度，只有极少数情况是高级别复杂度；2）低级别和高级别复杂度出现具有时序规律。均摊结果一般都等于低级别复杂度。</li>
+</ol>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/aa50e2b2.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-study/数据结构与算法之美/学习笔记/03讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/3787da0b.html" target="_blank">03讲</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/3787da0b.html" class="archive-article-date">
+        <time datetime="2021-03-21T14:47:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-21</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <hr>
+<h1 id="复杂度分析（上）：如何分析、统计算法的执行效率和资源消耗？"><a href="#复杂度分析（上）：如何分析、统计算法的执行效率和资源消耗？" class="headerlink" title="复杂度分析（上）：如何分析、统计算法的执行效率和资源消耗？"></a>复杂度分析（上）：如何分析、统计算法的执行效率和资源消耗？</h1><h3 id="时间复杂度分析"><a href="#时间复杂度分析" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h3><h4 id="1-只关注循环执行次数最多的一段代码"><a href="#1-只关注循环执行次数最多的一段代码" class="headerlink" title="1.只关注循环执行次数最多的一段代码"></a>1.只关注循环执行次数最多的一段代码</h4><p>大 O 这种复杂度表示方法只是表示一种变化趋势。我们通常会忽略掉公式中的常量、低阶、系数，只需要记录一个最大阶的量级就可以了。所以，<strong>我们在分析一个算法、一段代码的时间复杂度的时候，也只关注循环执行次数最多的那一段代码就可以了</strong>。</p>
+<h4 id="2-加法法则：总复杂度等于量级最大的那段代码的复杂度"><a href="#2-加法法则：总复杂度等于量级最大的那段代码的复杂度" class="headerlink" title="2.加法法则：总复杂度等于量级最大的那段代码的复杂度"></a>2.加法法则：总复杂度等于量级最大的那段代码的复杂度</h4><p><strong>时间复杂度不是代码的执行时间，而是一种随着数据规模不断增长的一种变化趋势</strong>。所以遇到常量执行时间的代码，无论这段代码执行10000次、100000次，只要是一个已知的数，跟 n 无关，照样也是常量级的执行时间。当 n 无限大的时候，就可以忽略。尽管对代码的执行时间会有很大影响，但是回到时间复杂度的概念来说，它表示的是一个算法执行效率与数据规模增长的变化趋势，所以不管常量的执行时间多大，我们都可以忽略掉。因为它本身对增长趋势并没有影响。</p>
+<h4 id="3-乘法法则：嵌套代码的复杂度等于嵌套内外代码复杂度的乘积"><a href="#3-乘法法则：嵌套代码的复杂度等于嵌套内外代码复杂度的乘积" class="headerlink" title="3.乘法法则：嵌套代码的复杂度等于嵌套内外代码复杂度的乘积"></a>3.乘法法则：嵌套代码的复杂度等于嵌套内外代码复杂度的乘积</h4><h3 id="几种常见时间复杂度实例分析"><a href="#几种常见时间复杂度实例分析" class="headerlink" title="几种常见时间复杂度实例分析"></a>几种常见时间复杂度实例分析</h3><p>虽然代码千差万别，但是常见的复杂度量级并不多。我稍微总结了一下，这些复杂度量级几乎涵盖了你今后可以接触的所有代码的复杂度量级。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210321211233.jpeg" alt="img"></p>
+<h4 id="1-O-1"><a href="#1-O-1" class="headerlink" title="1.O(1)"></a>1.O(1)</h4><p>我稍微总结一下，只要代码的执行时间不随 n 的增大而增长，这样代码的时间复杂度我们都记作 O(1)。或者说，**一般情况下，只要算法中不存在循环语句、递归语句，即使有成千上万行的代码，其时间复杂度也是Ο(1)**。</p>
+<h4 id="2-O-logn-、O-nlogn"><a href="#2-O-logn-、O-nlogn" class="headerlink" title="2.O(logn)、O(nlogn)"></a>2.O(logn)、O(nlogn)</h4><h4 id="3-O-m-n-、O-m-n"><a href="#3-O-m-n-、O-m-n" class="headerlink" title="3.O(m+n)、O(m*n)"></a>3.O(m+n)、O(m*n)</h4><h3 id="空间复杂度分析"><a href="#空间复杂度分析" class="headerlink" title="空间复杂度分析"></a>空间复杂度分析</h3><p>前面我讲过，时间复杂度的全称是<strong>渐进时间复杂度，表示算法的执行时间与数据规模之间的增长关系</strong>。类比一下，空间复杂度全称就是<strong>渐进空间复杂度</strong>（asymptotic space complexity），<strong>表示算法的存储空间与数据规模之间的增长关系</strong>。</p>
+<p>我们常见的空间复杂度就是 O(1)、O(n)、O(n2 )，像 O(logn)、O(nlogn) 这样的对数阶复杂度平时都用不到。</p>
+<h3 id="内容小结"><a href="#内容小结" class="headerlink" title="内容小结"></a>内容小结</h3><p>基础复杂度分析的知识到此就讲完了，我们来总结一下。</p>
+<p>复杂度也叫渐进复杂度，包括时间复杂度和空间复杂度，用来分析算法执行效率与数据规模之间的增长关系，可以粗略地表示，越高阶复杂度的算法，执行效率越低。常见的复杂度并不多，从低阶到高阶有：O(1)、O(logn)、O(n)、O(nlogn)、O(n2 )。等你学完整个专栏之后，你就会发现几乎所有的数据结构和算法的复杂度都跑不出这几个。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210321220126.jpeg" alt="img"></p>
+<h3 id="留言区优秀总结"><a href="#留言区优秀总结" class="headerlink" title="留言区优秀总结"></a>留言区优秀总结</h3><h4 id="一、什么是复杂度分析？"><a href="#一、什么是复杂度分析？" class="headerlink" title="一、什么是复杂度分析？"></a>一、什么是复杂度分析？</h4><p>1.数据结构和算法解决是“如何让计算机更快时间、更省空间的解决问题”。<br>2.因此需从执行时间和占用空间两个维度来评估数据结构和算法的性能。<br>3.分别用时间复杂度和空间复杂度两个概念来描述性能问题，二者统称为复杂度。<br>4.复杂度描述的是算法执行时间（或占用空间）与数据规模的增长关系。</p>
+<h4 id="二、为什么要进行复杂度分析？"><a href="#二、为什么要进行复杂度分析？" class="headerlink" title="二、为什么要进行复杂度分析？"></a>二、为什么要进行复杂度分析？</h4><p>1.和性能测试相比，复杂度分析有不依赖执行环境、成本低、效率高、易操作、指导性强的特点。<br>2.掌握复杂度分析，将能编写出性能更优的代码，有利于降低系统开发和维护成本。</p>
+<h4 id="三、如何进行复杂度分析？"><a href="#三、如何进行复杂度分析？" class="headerlink" title="三、如何进行复杂度分析？"></a>三、如何进行复杂度分析？</h4><h5 id="1-大O表示法"><a href="#1-大O表示法" class="headerlink" title="1.大O表示法"></a>1.大O表示法</h5><p>1）来源<br>算法的执行时间与每行代码的执行次数成正比，用T(n) &#x3D; O(f(n))表示，其中T(n)表示算法执行总时间，f(n)表示每行代码执行总次数，而n往往表示数据的规模。<br>2）特点<br>以时间复杂度为例，由于时间复杂度描述的是算法执行时间与数据规模的增长变化趋势，所以常量阶、低阶以及系数实际上对这种增长趋势不产决定性影响，所以在做时间复杂度分析时忽略这些项。</p>
+<h5 id="2-复杂度分析法则"><a href="#2-复杂度分析法则" class="headerlink" title="2.复杂度分析法则"></a>2.复杂度分析法则</h5><p>1）单段代码看高频：比如循环。<br>2）多段代码取最大：比如一段代码中有单循环和多重循环，那么取多重循环的复杂度。<br>3）嵌套代码求乘积：比如递归、多重循环等<br>4）多个规模求加法：比如方法有两个参数控制两个循环的次数，那么这时就取二者复杂度相加。</p>
+<h4 id="四、常用的复杂度级别？"><a href="#四、常用的复杂度级别？" class="headerlink" title="四、常用的复杂度级别？"></a>四、常用的复杂度级别？</h4><p>多项式阶：随着数据规模的增长，算法的执行时间和空间占用，按照多项式的比例增长。包括，<br>O(1)（常数阶）、O(logn)（对数阶）、O(n)（线性阶）、O(nlogn)（线性对数阶）、O(n^2)（平方阶）、O(n^3)（立方阶）<br>非多项式阶：随着数据规模的增长，算法的执行时间和空间占用暴增，这类算法性能极差。包括，<br>O(2^n)（指数阶）、O(n!)（阶乘阶）</p>
+<h4 id="五、如何掌握好复杂度分析方法？"><a href="#五、如何掌握好复杂度分析方法？" class="headerlink" title="五、如何掌握好复杂度分析方法？"></a>五、如何掌握好复杂度分析方法？</h4><p>复杂度分析关键在于多练，所谓孰能生巧。</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/3787da0b.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-algorithm/面试高频算法题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/e62dd828.html" target="_blank">面试高频算法题</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/e62dd828.html" class="archive-article-date">
+        <time datetime="2021-03-21T09:35:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-21</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <hr>
+<h2 id="字节跳动"><a href="#字节跳动" class="headerlink" title="字节跳动"></a>字节跳动</h2><h3 id="36进制加法"><a href="#36进制加法" class="headerlink" title="36进制加法"></a>36进制加法</h3><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210321174103.png" alt="图片"></p>
+<h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>36进制由0-9，a-z，共36个字符表示。</p>
+<p>要求按照加法规则计算出任意两个36进制正整数的和，如 1b + 2x &#x3D; 48  （解释：47+105&#x3D;152），1 + a &#x3D; b （解释：1+10 &#x3D; 11 ） , 1z + 1 &#x3D; 20 （解释：71 + 1 &#x3D; 72）</p>
+<p>要求：不允许使用先将36进制数字整体转为10进制，相加后再转回为36进制的做法</p>
+<h4 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h4><p>跟<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/add-strings/">LC415. 字符串相加</a>做法类似，掌握十进制的大整数加法后，本题只需要注意将<code>10</code>变成<code>36</code>，以及36进制字符与数值的转换。这里使用<code>getChar(int n)</code>和<code>getInt(char c)</code>两个辅助函数来完成36进制字符与数值的转换。</p>
+<h4 id="参考代码"><a href="#参考代码" class="headerlink" title="参考代码"></a>参考代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Add36Strings</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">add36Strings</span><span class="params">(String num1, String num2)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n1</span> <span class="operator">=</span> num1.length(), n2 = num2.length();</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">res</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> n1 - <span class="number">1</span>, j = n2 - <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">carry</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &gt;= <span class="number">0</span> || j &gt;= <span class="number">0</span> || carry != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span> (i &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                x = getInt(num1.charAt(i));</span><br><span class="line">                i--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">int</span> <span class="variable">y</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span> (j &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                y = getInt(num2.charAt(j));</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> x + y + carry;</span><br><span class="line">            res.append(getChar(sum % <span class="number">36</span>));</span><br><span class="line">            carry = sum / <span class="number">36</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res.reverse().toString();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将字符转换为数字</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">getInt</span><span class="params">(<span class="type">char</span> c)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (c &gt;= <span class="string">&#x27;0&#x27;</span> &amp;&amp; c &lt;= <span class="string">&#x27;9&#x27;</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> c - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> c - <span class="string">&#x27;a&#x27;</span> + <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将数字转换为字符</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">char</span> <span class="title function_">getChar</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (n &lt;= <span class="number">9</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> (<span class="type">char</span>) (n + <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> (<span class="type">char</span>) (n - <span class="number">10</span> + <span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Add36Strings</span> <span class="variable">add36Strings</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Add36Strings</span>();</span><br><span class="line">        add36Strings.add36Strings(<span class="string">&quot;1&quot;</span>, <span class="string">&quot;a&quot;</span>);</span><br><span class="line">        add36Strings.add36Strings(<span class="string">&quot;1b&quot;</span>, <span class="string">&quot;2x&quot;</span>);</span><br><span class="line">        add36Strings.add36Strings(<span class="string">&quot;1z&quot;</span>, <span class="string">&quot;1&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/e62dd828.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-study/数据结构与算法之美/学习笔记/02讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/8f3bbd6e.html" target="_blank">02讲</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/8f3bbd6e.html" class="archive-article-date">
+        <time datetime="2021-03-17T14:10:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-17</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <hr>
+<h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><h4 id="思维导图"><a href="#思维导图" class="headerlink" title="思维导图"></a>思维导图</h4><p>为了让你对数据结构和算法有个全面的认识，我画了一张图，里面几乎涵盖了所有数据结构和算法书籍中都会讲到的知识点。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210317221223.jpeg" alt="img"></p>
+<h4 id="常用的数据结构与算法"><a href="#常用的数据结构与算法" class="headerlink" title="常用的数据结构与算法"></a>常用的数据结构与算法</h4><p>所以，结合我自己的学习心得，还有这些年的面试、开发经验，我总结了<strong>20个最常用的、最基础</strong>的数据结构与算法，<strong>不管是应付面试还是工作需要，只要集中精力逐一攻克这20个知识点就足够了。</strong></p>
+<p>这里面有 10 个数据结构：<strong>数组、链表、栈、队列、散列表、二叉树、堆、跳表、图、Trie 树</strong>；10 个算法：<strong>递归、排序、二分查找、搜索、哈希算法、贪心算法、分治算法、回溯算法、动态规划、字符串匹配算法</strong>。</p>
+<p>在学习数据结构和算法的过程中，你也要注意，不要只是死记硬背，不要为了学习和学习，而是**要学习它的“来历” “自身的特点” “适合解决的问题” 以及 “实际的应用场景” ** 。</p>
+<h3 id="一些可以让你事半功倍的学习技巧"><a href="#一些可以让你事半功倍的学习技巧" class="headerlink" title="一些可以让你事半功倍的学习技巧"></a>一些可以让你事半功倍的学习技巧</h3><h4 id="1-边学边练，适度刷题"><a href="#1-边学边练，适度刷题" class="headerlink" title="1.边学边练，适度刷题"></a>1.边学边练，适度刷题</h4><h4 id="2-多问、多思考、多互动"><a href="#2-多问、多思考、多互动" class="headerlink" title="2.多问、多思考、多互动"></a>2.多问、多思考、多互动</h4><h4 id="3-打怪升级学习法"><a href="#3-打怪升级学习法" class="headerlink" title="3.打怪升级学习法"></a>3.打怪升级学习法</h4><p><strong>学习的过程中，我们碰到最大的问题就是，坚持不下来。</strong></p>
+<p>所以，<strong>我们在枯燥的学习过程中，也可以给自己设立一个切实可行的目标</strong>，就像打怪升级一样。</p>
+<h4 id="4-只是需要沉淀，不要想试图一下子掌握所有"><a href="#4-只是需要沉淀，不要想试图一下子掌握所有" class="headerlink" title="4.只是需要沉淀，不要想试图一下子掌握所有"></a>4.只是需要沉淀，不要想试图一下子掌握所有</h4><p>在学习的过程中，一定会碰到“拦路虎”。如果哪个知识点没有怎么学懂，不要着急，这是正常的。因为，想听一遍、看一遍就把所有知识掌握，这肯定是不可能的。<strong>学习知识的过程是反复迭代、不断沉淀的过程</strong>。</p>
+<h3 id="留言区优秀总结"><a href="#留言区优秀总结" class="headerlink" title="留言区优秀总结"></a>留言区优秀总结</h3><h4 id="是什么："><a href="#是什么：" class="headerlink" title="是什么："></a>是什么：</h4><p>数据结构指的是“一组数据的存储结构”，算法指的是“操作数据的一组方法”。<br>数据结构是为算法服务的，算法是要作用再特定的数据结构上的。</p>
+<h4 id="学什么："><a href="#学什么：" class="headerlink" title="学什么："></a>学什么：</h4><ol>
+<li>效率和资源消耗的度量衡–复杂度分析。</li>
+<li>最常用、最基础的20个数据结构与算法，学习他们的：“来历”、“特点”、“适合解决什么问题”和“实际的应用场景”。10个数据结构：<strong>数组、链表、栈、队列、散列表、二叉树‘、堆、跳表、图、Trie树</strong>；10个算法： <strong>递归、排序、二分查找、搜索、哈希算法、贪心算法、分治算法、回溯算法、动态规划、字符串匹配算法</strong>。</li>
+</ol>
+<h4 id="怎么学："><a href="#怎么学：" class="headerlink" title="怎么学："></a>怎么学：</h4><ol>
+<li>边学边练，每周花 1~2 小时集中攻关三节课涉及的数据结构和算法，全部写出来。</li>
+<li>主动提问、多思考、多互动。在留言区增加自己的留言。</li>
+<li>自我激励，每次学习完做一篇学习笔记。</li>
+<li>沉下心不要浮躁，先把这些基础的数据结构和算法，还有学习方法熟练掌握后，再追求更高层次。</li>
+</ol>
+<hr>
+<p>flag：每篇文章必写学习笔记，每周必实现一次该周代码。</p>
+<h3 id="学习工具"><a href="#学习工具" class="headerlink" title="学习工具"></a>学习工具</h3><p><a target="_blank" rel="noopener" href="https://www.cs.usfca.edu/~galles/visualization/Algorithms.html">https://www.cs.usfca.edu/~galles/visualization/Algorithms.html</a><br>此网站可以将指定算法可视化，能方便理解。</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/8f3bbd6e.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-study/数据结构与算法之美/每周打卡/2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/aae4713d.html" target="_blank">第二周</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/aae4713d.html" class="archive-article-date">
+        <time datetime="2021-03-16T05:59:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-16</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <hr>
+<p>数据结构与算法之美每周打卡 2021.03.15-2021.03.21</p>
+<h3 id="Leetcode-206-反转链表"><a href="#Leetcode-206-反转链表" class="headerlink" title="Leetcode 206. 反转链表"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/reverse-linked-list/">Leetcode 206. 反转链表</a></h3><p>反转一个单链表。</p>
+<p><strong>示例:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL</span><br><span class="line">输出: 5-&gt;4-&gt;3-&gt;2-&gt;1-&gt;NULL</span><br></pre></td></tr></table></figure>
+
+<p><strong>进阶:</strong><br>你可以迭代或递归地反转链表。你能否用两种方法解决这道题？</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><h5 id="迭代法："><a href="#迭代法：" class="headerlink" title="迭代法："></a>迭代法：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> ListNode <span class="title function_">reverseList</span><span class="params">(ListNode head)</span> &#123;</span><br><span class="line">         <span class="type">ListNode</span> <span class="variable">pre</span> <span class="operator">=</span> <span class="literal">null</span>, cur = head;</span><br><span class="line">         <span class="keyword">while</span> (cur != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="type">ListNode</span> <span class="variable">next</span> <span class="operator">=</span> cur.next;</span><br><span class="line">            cur.next = pre;</span><br><span class="line">            pre = cur;</span><br><span class="line">            cur = next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> pre;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="递归："><a href="#递归：" class="headerlink" title="递归："></a>递归：</h5><p><strong>递归编程的三个条件</strong>：</p>
+<ol>
+<li>大问题拆成两个子问题</li>
+<li>子问题求解方式和大问题一样</li>
+<li>存在最小子问题</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> ListNode <span class="title function_">reverseList</span><span class="params">(ListNode head)</span> &#123;</span><br><span class="line">        <span class="comment">/* 递归终止条件：</span></span><br><span class="line"><span class="comment">         * 1. head==null链表为空，不需要反转</span></span><br><span class="line"><span class="comment">         * 2. head.next==null只剩一个节点的时候，也不需要反转</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">if</span> (head == <span class="literal">null</span> || head.next == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> head;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">newHead</span> <span class="operator">=</span> reverseList(head.next);</span><br><span class="line">        head.next.next = head;</span><br><span class="line">        head.next = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">return</span> newHead;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Leetcode-2-两数相加"><a href="#Leetcode-2-两数相加" class="headerlink" title="Leetcode 2. 两数相加"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/add-two-numbers/">Leetcode 2. 两数相加</a></h3><p>给你两个 <strong>非空</strong> 的链表，表示两个非负的整数。它们每位数字都是按照 <strong>逆序</strong> 的方式存储的，并且每个节点只能存储 <strong>一位</strong> 数字。</p>
+<p>请你将两个数相加，并以相同形式返回一个表示和的链表。</p>
+<p>你可以假设除了数字 0 之外，这两个数都不会以 0 开头。</p>
+<p><strong>示例 1：</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210316155523.jpeg" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：l1 = [2,4,3], l2 = [5,6,4]</span><br><span class="line">输出：[7,0,8]</span><br><span class="line">解释：342 + 465 = 807.</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：l1 = [0], l2 = [0]</span><br><span class="line">输出：[0]</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 3：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]</span><br><span class="line">输出：[8,9,9,9,0,0,0,1]</span><br></pre></td></tr></table></figure>
+
+<p> <strong>提示：</strong></p>
+<ul>
+<li>每个链表中的节点数在范围 <code>[1, 100]</code> 内</li>
+<li><code>0 &lt;= Node.val &lt;= 9</code></li>
+<li>题目数据保证列表表示的数字不含前导零</li>
+</ul>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> ListNode <span class="title function_">addTwoNumbers</span><span class="params">(ListNode l1, ListNode l2)</span> &#123;</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">dummyNode</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ListNode</span>(-<span class="number">1</span>);</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">head</span> <span class="operator">=</span> dummyNode;</span><br><span class="line">        <span class="type">int</span> <span class="variable">carry</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 如果l1或l2不为空或者进位为1，则继续循环</span></span><br><span class="line">        <span class="keyword">while</span> (l1 != <span class="literal">null</span> || l2 != <span class="literal">null</span> || carry != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> carry;</span><br><span class="line">            <span class="comment">// 不为空则sum加上这个值，同时指针往下走</span></span><br><span class="line">            <span class="keyword">if</span> (l1 != <span class="literal">null</span>) &#123;</span><br><span class="line">                sum += l1.val;</span><br><span class="line">                l1 = l1.next;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (l2 != <span class="literal">null</span>) &#123;</span><br><span class="line">                sum += l2.val;</span><br><span class="line">                l2 = l2.next;</span><br><span class="line">            &#125;</span><br><span class="line">            head.next = <span class="keyword">new</span> <span class="title class_">ListNode</span>(sum % <span class="number">10</span>);</span><br><span class="line">            head = head.next;</span><br><span class="line">            carry = sum / <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dummyNode.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">每周打卡</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/aae4713d.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-study/数据结构与算法之美/每周打卡/1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/9af29de5.html" target="_blank">第一周</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/9af29de5.html" class="archive-article-date">
+        <time datetime="2021-03-08T05:59:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-08</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <hr>
+<p>数据结构与算法之美每周打卡 2021.03.08-2021.03.14</p>
+<h3 id="面试题-01-03-URL化"><a href="#面试题-01-03-URL化" class="headerlink" title="面试题 01.03. URL化"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/string-to-url-lcci/">面试题 01.03. URL化</a></h3><p>URL化。编写一种方法，将字符串中的空格全部替换为<code>%20</code>。假定该字符串尾部有足够的空间存放新增字符，并且知道字符串的“真实”长度。（注：用<code>Java</code>实现的话，请使用字符数组实现，以便直接在数组上操作。）</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：&quot;Mr John Smith    &quot;, 13</span><br><span class="line">输出：&quot;Mr%20John%20Smith&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：&quot;               &quot;, 5</span><br><span class="line">输出：&quot;%20%20%20%20%20&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<ul>
+<li>字符串长度在 [0, 500000] 范围内。</li>
+</ul>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">replaceSpaces</span><span class="params">(String S, <span class="type">int</span> length)</span> &#123;</span><br><span class="line">        <span class="type">char</span>[] chs = S.toCharArray();</span><br><span class="line">        <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> length - <span class="number">1</span>, j = S.length() - <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// 从右往前走，把左边的的字符串拷贝到右边</span></span><br><span class="line">        <span class="keyword">while</span> (i &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (chs[i] == <span class="string">&#x27; &#x27;</span>) &#123;</span><br><span class="line">                chs[j--] = <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">                chs[j--] = <span class="string">&#x27;2&#x27;</span>;</span><br><span class="line">                chs[j--] = <span class="string">&#x27;%&#x27;</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                chs[j--] = chs[i];</span><br><span class="line">            &#125;</span><br><span class="line">            i--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 最后取拷贝完之后的字符串，也就是j+1开始，字符串长度减去j+1</span></span><br><span class="line">        <span class="keyword">return</span> String.valueOf(chs, j + <span class="number">1</span>, S.length() - j - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1528-重新排列字符串"><a href="#1528-重新排列字符串" class="headerlink" title="1528. 重新排列字符串"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/shuffle-string/">1528. 重新排列字符串</a></h3><p>给你一个字符串 <code>s</code> 和一个 <strong>长度相同</strong> 的整数数组 <code>indices</code> 。</p>
+<p>请你重新排列字符串 <code>s</code> ，其中第 <code>i</code> 个字符需要移动到 <code>indices[i]</code> 指示的位置。</p>
+<p>返回重新排列后的字符串。</p>
+<p><strong>示例 1：</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210322161725.jpeg" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = &quot;codeleet&quot;, indices = [4,5,6,7,0,2,1,3]</span><br><span class="line">输出：&quot;leetcode&quot;</span><br><span class="line">解释：如图所示，&quot;codeleet&quot; 重新排列后变为 &quot;leetcode&quot; 。</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = &quot;abc&quot;, indices = [0,1,2]</span><br><span class="line">输出：&quot;abc&quot;</span><br><span class="line">解释：重新排列后，每个字符都还留在原来的位置上。</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 3：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = &quot;aiohn&quot;, indices = [3,1,4,2,0]</span><br><span class="line">输出：&quot;nihao&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 4：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = &quot;aaiougrt&quot;, indices = [4,0,2,6,7,3,1,5]</span><br><span class="line">输出：&quot;arigatou&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 5：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = &quot;art&quot;, indices = [1,0,2]</span><br><span class="line">输出：&quot;rat&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>s.length == indices.length == n</code></li>
+<li><code>1 &lt;= n &lt;= 100</code></li>
+<li><code>s</code> 仅包含小写英文字母。</li>
+<li><code>0 &lt;= indices[i] &lt; n</code></li>
+<li><code>indices</code> 的所有的值都是唯一的（也就是说，<code>indices</code> 是整数 <code>0</code> 到 <code>n - 1</code> 形成的一组排列）。</li>
+</ul>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">restoreString</span><span class="params">(String s, <span class="type">int</span>[] indices)</span> &#123;</span><br><span class="line">       <span class="type">char</span>[] res = <span class="keyword">new</span> <span class="title class_">char</span>[s.length()];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; s.length(); i++) &#123;</span><br><span class="line">            res[indices[i]] = s.charAt(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> String.valueOf(res);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">每周打卡</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/9af29de5.html">展开全文 >></a>
     </p>
     
 
@@ -1589,7 +1461,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
     </nav>
   
 
@@ -1720,6 +1592,14 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面经</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
@@ -1752,27 +1632,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面经</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">redis集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">架构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1781,6 +1641,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1800,10 +1664,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">限流算法原理及实现</a>
               </li>
              
@@ -1812,7 +1672,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">redis集群</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">架构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -16,17 +16,17 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="对象已经死亡？如何判断一个类是无用的类方法区主要回收的是无用的类，那么如何判断一个类是无用的类的呢？ 判定一个常量是否是“废弃常量”比较简单，而要判定一个类是否是“无用的类”的条件则相对苛刻许多。类需要同时满足下面 3 个条件才能算是 “无用的类” ：  该类所有的实例都已经被回收，也就是 Java 堆中不存在该类的任何实例。 加载该类的 ClassLoader 已经被回收。 该类对应的 jav">
+  <meta name="description" content="JVM内存划分唯一不会发生OOM的区域程序计数器（Program Counter Register） 是唯一 不会发生 OutOfMemoryError（OOM） 的区域。 核心原因  内存分配机制：程序计数器是 ​线程私有​ 的内存区域，其生命周期与线程绑定。每个线程创建时，JVM 会为它分配一个独立的程序计数器，大小固定（64位系统下通常占 ​4字节或8字节），​不依赖垃圾回收，也无法动态扩">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM面试题">
 <meta property="og:url" content="https://blog.elfred.top/posts/eec2f852.html">
 <meta property="og:site_name" content="Elfred&#39;s Blog">
-<meta property="og:description" content="对象已经死亡？如何判断一个类是无用的类方法区主要回收的是无用的类，那么如何判断一个类是无用的类的呢？ 判定一个常量是否是“废弃常量”比较简单，而要判定一个类是否是“无用的类”的条件则相对苛刻许多。类需要同时满足下面 3 个条件才能算是 “无用的类” ：  该类所有的实例都已经被回收，也就是 Java 堆中不存在该类的任何实例。 加载该类的 ClassLoader 已经被回收。 该类对应的 jav">
+<meta property="og:description" content="JVM内存划分唯一不会发生OOM的区域程序计数器（Program Counter Register） 是唯一 不会发生 OutOfMemoryError（OOM） 的区域。 核心原因  内存分配机制：程序计数器是 ​线程私有​ 的内存区域，其生命周期与线程绑定。每个线程创建时，JVM 会为它分配一个独立的程序计数器，大小固定（64位系统下通常占 ​4字节或8字节），​不依赖垃圾回收，也无法动态扩">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210610235314.jpeg">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021202205232103648.jpeg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1754201674.jpeg">
 <meta property="article:published_time" content="2021-01-23T08:23:00.000Z">
-<meta property="article:modified_time" content="2025-03-08T14:46:55.120Z">
+<meta property="article:modified_time" content="2025-08-04T00:37:38.362Z">
 <meta property="article:author" content="Elfred">
 <meta property="article:tag" content="面经">
 <meta name="twitter:card" content="summary">
@@ -251,7 +251,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">3.6k字</span>
+      <span class="post-count">4.1k字</span>
     </span>
   </span>
 
@@ -260,7 +260,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">13分</span>
+      <span class="post-count">14分</span>
     </span>
   </span>
 </div>
@@ -272,15 +272,49 @@
   <div class="article-entry" itemprop="articleBody">
     
     <hr>
-<h2 id="对象已经死亡？"><a href="#对象已经死亡？" class="headerlink" title="对象已经死亡？"></a>对象已经死亡？</h2><h3 id="如何判断一个类是无用的类"><a href="#如何判断一个类是无用的类" class="headerlink" title="如何判断一个类是无用的类"></a>如何判断一个类是无用的类</h3><p>方法区主要回收的是无用的类，那么如何判断一个类是无用的类的呢？</p>
-<p>判定一个常量是否是“废弃常量”比较简单，而要判定一个类是否是“无用的类”的条件则相对苛刻许多。类需要同时满足下面 3 个条件才能算是 <strong>“无用的类”</strong> ：</p>
-<ul>
-<li>该类所有的实例都已经被回收，也就是 Java 堆中不存在该类的任何实例。</li>
-<li>加载该类的 <code>ClassLoader</code> 已经被回收。</li>
-<li>该类对应的 <code>java.lang.Class</code> 对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。</li>
-</ul>
-<p>虚拟机可以对满足上述 3 个条件的无用类进行回收，这里说的仅仅是“可以”，而并不是和对象一样不使用了就会必然被回收。</p>
-<h2 id="JVM内存划分"><a href="#JVM内存划分" class="headerlink" title="JVM内存划分"></a>JVM内存划分</h2><h2 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h2><p><strong>过程：加载、验证、准备、解析、初始化</strong></p>
+<h2 id="JVM内存划分"><a href="#JVM内存划分" class="headerlink" title="JVM内存划分"></a>JVM内存划分</h2><h3 id="唯一不会发生OOM的区域"><a href="#唯一不会发生OOM的区域" class="headerlink" title="唯一不会发生OOM的区域"></a>唯一不会发生OOM的区域</h3><p><strong>程序计数器（Program Counter Register）</strong> 是唯一 <strong>不会发生 <code>OutOfMemoryError</code>（OOM）</strong> 的区域。</p>
+<p><strong>核心原因</strong></p>
+<ol>
+<li><strong>内存分配机制</strong>：<br>程序计数器是 ​<strong>线程私有</strong>​ 的内存区域，其生命周期与线程绑定。每个线程创建时，JVM 会为它分配一个独立的程序计数器，大小固定（64位系统下通常占 ​<strong>4字节或8字节</strong>），​<strong>不依赖垃圾回收</strong>，也无法动态扩展内存空间。</li>
+<li><strong>功能限制</strong>：<br>它的功能仅是记录当前线程执行的字节码指令地址（若执行 Java 方法）或 <code>undefined</code>（若执行 Native 方法）。不存储对象、数组等数据结构，因此不受堆内存或元空间等动态区域的限制。</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>内存区域</strong></th>
+<th align="center"><strong>是否会发生 OOM</strong></th>
+<th align="center"><strong>原因</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">程序计数器</td>
+<td align="center">❌ 不会</td>
+<td align="center">固定大小、线程私有、仅存储指令地址</td>
+</tr>
+<tr>
+<td align="center">虚拟机栈 (Java Stack)</td>
+<td align="center">✅ 会</td>
+<td align="center">线程请求的栈深度 &gt; 栈最大深度 → <code>StackOverflowError</code>；扩展栈时内存不足 → <code>OOM</code></td>
+</tr>
+<tr>
+<td align="center">本地方法栈</td>
+<td align="center">✅ 会</td>
+<td align="center">同虚拟机栈（为 Native 方法服务）</td>
+</tr>
+<tr>
+<td align="center">堆 (Heap)</td>
+<td align="center">✅ 会</td>
+<td align="center">存储对象实例，当对象总数超过堆最大容量 → <code>OOM: Java heap space</code></td>
+</tr>
+<tr>
+<td align="center">方法区 (JDK8+ 元空间)</td>
+<td align="center">✅ 会</td>
+<td align="center">存储类元信息，类加载过多或动态生成过多类 → <code>OOM: Metaspace</code></td>
+</tr>
+</tbody></table>
+<h3 id="new一个对象，JVM到底发生了什么？"><a href="#new一个对象，JVM到底发生了什么？" class="headerlink" title="new一个对象，JVM到底发生了什么？"></a>new一个对象，JVM到底发生了什么？</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    A[new 指令] --&gt; B&#123;类已加载?&#125;</span><br><span class="line">    B -- 否 --&gt; C[加载类]</span><br><span class="line">    B -- 是 --&gt; D[选择分配策略]</span><br><span class="line">    D --&gt; E1[指针碰撞]</span><br><span class="line">    D --&gt; E2[空闲列表]</span><br><span class="line">    D --&gt; E3[TLAB分配]</span><br><span class="line">    E1 --&gt; F[分配内存]</span><br><span class="line">    E2 --&gt; F</span><br><span class="line">    E3 --&gt; F</span><br><span class="line">    F --&gt; G[初始化零值]</span><br><span class="line">    G --&gt; H[设置对象头]</span><br><span class="line">    H --&gt; I[执行构造函数]</span><br><span class="line">    I --&gt; J[对象可用]</span><br></pre></td></tr></table></figure>
+
+<h2 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h2><p><strong>过程：加载、验证、准备、解析、初始化</strong></p>
 <p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210610235314.jpeg" alt="img"></p>
 <p>类加载过程分为三个阶段：Load、Link和Init，即<strong>加载</strong>、<strong>链接</strong>、<strong>初始化</strong></p>
 <ol>
@@ -288,7 +322,7 @@
 <li>第二步，Link阶段包括<strong>验证</strong>、<strong>准备</strong>、<strong>解析</strong>三个步骤。验证是更详细的校验，比如final是否合规、类型是否正确、静态变量是否合理等；准备阶段是为静态变量分配内存，并设定默认值，解析类和方法确保类与类之间的相互引用正确性，完成内存结构布局。</li>
 <li>第三步，Init阶段执行雷构造器&lt;clinit&gt;方法，如果赋值运算是通过其他类的静态方法来完成的，那么会马上解析另外一个类，在虚拟机栈中执行完毕后通过返回值进行赋值。</li>
 </ol>
-<h2 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h2><h3 id="什么是双亲委派机制"><a href="#什么是双亲委派机制" class="headerlink" title="什么是双亲委派机制"></a>什么是双亲委派机制</h3><p>首先，我们知道，虚拟机在加载类的过程中需要使用类加载器进行加载，而在Java中，类加载器有很多，那么当JVM想要加载一个.class文件的时候，到底应该由哪个类加载器加载呢？</p>
+<h3 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h3><h4 id="什么是双亲委派机制"><a href="#什么是双亲委派机制" class="headerlink" title="什么是双亲委派机制"></a>什么是双亲委派机制</h4><p>首先，我们知道，虚拟机在加载类的过程中需要使用类加载器进行加载，而在Java中，类加载器有很多，那么当JVM想要加载一个.class文件的时候，到底应该由哪个类加载器加载呢？</p>
 <p>这就不得不提到”双亲委派机制”。</p>
 <p>首先，我们需要知道的是，Java语言系统中支持以下4种类加载器：</p>
 <ul>
@@ -298,7 +332,7 @@
 <li>User ClassLoader 用户自定义类加载器</li>
 </ul>
 <p>这四种类加载器之间，是存在着一种层次关系的，如下图</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021202205232103648.jpeg" alt="-w704"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1754201674.jpeg"></p>
 <p>一般认为上一层加载器是下一层加载器的父加载器，那么，除了BootstrapClassLoader之外，所有的加载器都是有父加载器的。</p>
 <p>那么，所谓的双亲委派机制，指的就是：<strong>当一个类加载器收到了类加载的请求的时候，他不会直接去加载指定的类，而是把这个请求委托给自己的父加载器去加载。只有父加载器无法加载这个类的时候，才会由当前这个加载器来负责类的加载。</strong></p>
 <p>那么，什么情况下父加载器会无法加载某一个类呢？</p>
@@ -310,7 +344,7 @@
 <li>User ClassLoader ， 用户自定义的类加载器,可加载指定路径的class文件</li>
 </ul>
 <p>那么也就是说，一个用户自定义的类，如com.hollis.ClassHollis 是无论如何也不会被Bootstrap和Extention加载器加载的（<code>-Xbootclasspath</code>参数是否可以使得自定义类被bootstrap加载？）。</p>
-<h2 id="JVM垃圾回收"><a href="#JVM垃圾回收" class="headerlink" title="JVM垃圾回收"></a>JVM垃圾回收</h2><h3 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h3><h4 id="JDK8-CMS：（关注最短垃圾回收停顿时间）"><a href="#JDK8-CMS：（关注最短垃圾回收停顿时间）" class="headerlink" title="JDK8-CMS：（关注最短垃圾回收停顿时间）"></a>JDK8-CMS：（关注最短垃圾回收停顿时间）</h4><p><strong>CMS回收器</strong>（Concurrent Mark Sweep Collector）是回收停顿时间比较短，目前比较常用的垃圾回收器。它通过初始标记（Initial Mark）、并发标记（Concurrent Mark）、重新标记（Remark)、并发清除（Concurrent Sweep）四个步骤完成垃圾回收工作。第1、3步的初始标记和重新标记阶段依然会引发STW。2、4步可以和应用程序并发执行。CMS采用“标记 - 清除算法”，因此产生大量的空间碎片。可以通过<code>-XX:+UseCMSCompactAtFullCollection</code>参数，强制JVM在FGC完成后对老年代进行压缩，执行一次空间碎片整理，但是会引发STW。为了减少STW次数，CMS还可以通过配置<code>-XX:+CMSFullGCsBeforeCompaction=n</code>参数，在执行了n次FGC后，JVM再在老年代执行空间碎片整理。</p>
+<h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><h3 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h3><h4 id="JDK8-CMS：（关注最短垃圾回收停顿时间）"><a href="#JDK8-CMS：（关注最短垃圾回收停顿时间）" class="headerlink" title="JDK8-CMS：（关注最短垃圾回收停顿时间）"></a>JDK8-CMS：（关注最短垃圾回收停顿时间）</h4><p><strong>CMS回收器</strong>（Concurrent Mark Sweep Collector）是回收停顿时间比较短，目前比较常用的垃圾回收器。它通过初始标记（Initial Mark）、并发标记（Concurrent Mark）、重新标记（Remark)、并发清除（Concurrent Sweep）四个步骤完成垃圾回收工作。第1、3步的初始标记和重新标记阶段依然会引发STW。2、4步可以和应用程序并发执行。CMS采用“标记 - 清除算法”，因此产生大量的空间碎片。可以通过<code>-XX:+UseCMSCompactAtFullCollection</code>参数，强制JVM在FGC完成后对老年代进行压缩，执行一次空间碎片整理，但是会引发STW。为了减少STW次数，CMS还可以通过配置<code>-XX:+CMSFullGCsBeforeCompaction=n</code>参数，在执行了n次FGC后，JVM再在老年代执行空间碎片整理。</p>
 <h4 id="JDK9-G1：（精准控制停顿时间，避免垃圾碎片）"><a href="#JDK9-G1：（精准控制停顿时间，避免垃圾碎片）" class="headerlink" title="JDK9-G1：（精准控制停顿时间，避免垃圾碎片）"></a>JDK9-G1：（精准控制停顿时间，避免垃圾碎片）</h4><p>G1（Garbage-First Garbage Collector）垃圾回收器。</p>
 <p>是⼀款⾯向服务器的垃圾收集器,主要针对配备多颗处理器及⼤容量内存的机器.以极⾼概率满⾜GC停顿时<br>间要求的同时,还具备⾼吞吐量性能特征；相比与 CMS 收集器，G1 收集器两个最突出的改进是：</p>
 <p>【1】基于标记-整理算法，不产生内存碎片。</p>
@@ -343,7 +377,15 @@
 <li>通过MinorGC后进入老年代的平均大小大于老年代的可用内存</li>
 <li>由Eden区、FromSpace向ToSpace区复制时，对象大小大于ToSpace可用内存，则把该对象转存到老年代，且老年代的可用内存小于该对象大小</li>
 </ol>
-<h2 id="JVM调优"><a href="#JVM调优" class="headerlink" title="JVM调优"></a>JVM调优</h2><h3 id="JVM优化的思路"><a href="#JVM优化的思路" class="headerlink" title="JVM优化的思路"></a>JVM优化的思路</h3><p>1、一般来说，当survivor区不够大或者占用量达到50%，就会把一些对象放到老年区。通过设置合理的eden区，survivor区及使用率，可以将年轻对象保存在年轻代，从而避免full GC，使用<code>-Xmn</code>设置年轻代的大小</p>
+<h2 id="综合面试题"><a href="#综合面试题" class="headerlink" title="综合面试题"></a>综合面试题</h2><h3 id="对象已经死亡？"><a href="#对象已经死亡？" class="headerlink" title="对象已经死亡？"></a>对象已经死亡？</h3><h4 id="如何判断一个类是无用的类"><a href="#如何判断一个类是无用的类" class="headerlink" title="如何判断一个类是无用的类"></a>如何判断一个类是无用的类</h4><p>方法区主要回收的是无用的类，那么如何判断一个类是无用的类的呢？</p>
+<p>判定一个常量是否是“废弃常量”比较简单，而要判定一个类是否是“无用的类”的条件则相对苛刻许多。类需要同时满足下面 3 个条件才能算是 <strong>“无用的类”</strong> ：</p>
+<ul>
+<li>该类所有的实例都已经被回收，也就是 Java 堆中不存在该类的任何实例。</li>
+<li>加载该类的 <code>ClassLoader</code> 已经被回收。</li>
+<li>该类对应的 <code>java.lang.Class</code> 对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。</li>
+</ul>
+<p>虚拟机可以对满足上述 3 个条件的无用类进行回收，这里说的仅仅是“可以”，而并不是和对象一样不使用了就会必然被回收。</p>
+<h3 id="JVM调优"><a href="#JVM调优" class="headerlink" title="JVM调优"></a>JVM调优</h3><h4 id="JVM优化的思路"><a href="#JVM优化的思路" class="headerlink" title="JVM优化的思路"></a>JVM优化的思路</h4><p>1、一般来说，当survivor区不够大或者占用量达到50%，就会把一些对象放到老年区。通过设置合理的eden区，survivor区及使用率，可以将年轻对象保存在年轻代，从而避免full GC，使用<code>-Xmn</code>设置年轻代的大小</p>
 <p>2、对于占用内存比较多的大对象，一般会选择在老年代分配内存。如果在年轻代给大对象分配内存，年轻代内存不够了，就要在eden区移动大量对象到老年代，然后这些移动的对象可能很快消亡，因此导致full GC。通过设置参数：<code>-XX:PetenureSizeThreshold=1000000</code>，单位为B，标明对象大小超过1M时，在老年代(tenured)分配内存空间。</p>
 <p>3、一般情况下，年轻对象放在eden区，当第一次GC后，如果对象还存活，放到survivor区，此后，每GC一次，年龄增加1，当对象的年龄达到阈值，就被放到tenured老年区。这个阈值可以同构<code>-XX:MaxTenuringThreshold</code>设置。如果想让对象留在年轻代，可以设置比较大的阈值。</p>
 <p>4、设置最小堆和最大堆：<code>-Xmx</code>和<code>-Xms</code>稳定的堆大小堆垃圾回收是有利的，获得一个稳定的堆大小的方法是设置-Xms和-Xmx的值一样，即最大堆和最小堆一样，如果这样子设置，系统在运行时堆大小理论上是恒定的，稳定的堆空间可以减少GC次数，因此，很多服务端都会将这两个参数设置为一样的数值。稳定的堆大小虽然减少GC次数，但是增加每次GC的时间，因为每次GC要把堆的大小维持在一个区间内。</p>
@@ -353,7 +395,7 @@
 <p>8、使用非占用的垃圾收集器。<code>-XX:+UseConcMarkSweepGC</code>老年代使用CMS收集器降低停顿。</p>
 <p>9、<code>-XXSurvivorRatio=3</code>，表示年轻代中的分配比率：survivor:eden &#x3D; 2:3</p>
 <p>10、JVM性能调优的工具：<br>（1）jps（Java Process Status）：输出JVM中运行的进程状态信息(现在一般使用jconsole)<br>（2）jstack：查看java进程内线程的堆栈信息。<br>（3）jmap：用于生成堆转存快照<br>（4）jhat：用于分析jmap生成的堆转存快照（一般不推荐使用，而是使用Ecplise Memory Analyzer）<br>（3）jstat是JVM统计监测工具。可以用来显示垃圾回收信息、类加载信息、新生代统计信息等。<br>（4）VisualVM：故障处理工具</p>
-<h3 id="生产环境JVM调优具体步骤"><a href="#生产环境JVM调优具体步骤" class="headerlink" title="生产环境JVM调优具体步骤"></a>生产环境JVM调优具体步骤</h3><h5 id="1-监控GC的状态"><a href="#1-监控GC的状态" class="headerlink" title="1.监控GC的状态"></a>1.监控GC的状态</h5><p>使用各种JVM工具，查看当前日志，分析当前JVM参数设置，并且分析当前堆内存快照和gc日志，根据实际的各区域内存划分和GC执行时间，觉得是否进行优化。举一个例子，系统崩溃前的一些现象：每次垃圾回收的时间越来越长，由之前的10ms延长到50ms左右，FullGC的时间也由之前的0.5s延长到4、5s，FullGC的次数越来越多，最频繁时隔不到1分钟就进行一次FullGC，老年代的内存越来越大并且每次FGC后老年代没有内存释放，之后系统会无法响应新的数据，逐渐到达OutMemoryError的临界值，这个时候就需要分析JVM内存快照dump。</p>
+<h4 id="生产环境JVM调优具体步骤"><a href="#生产环境JVM调优具体步骤" class="headerlink" title="生产环境JVM调优具体步骤"></a>生产环境JVM调优具体步骤</h4><h5 id="1-监控GC的状态"><a href="#1-监控GC的状态" class="headerlink" title="1.监控GC的状态"></a>1.监控GC的状态</h5><p>使用各种JVM工具，查看当前日志，分析当前JVM参数设置，并且分析当前堆内存快照和gc日志，根据实际的各区域内存划分和GC执行时间，觉得是否进行优化。举一个例子，系统崩溃前的一些现象：每次垃圾回收的时间越来越长，由之前的10ms延长到50ms左右，FullGC的时间也由之前的0.5s延长到4、5s，FullGC的次数越来越多，最频繁时隔不到1分钟就进行一次FullGC，老年代的内存越来越大并且每次FGC后老年代没有内存释放，之后系统会无法响应新的数据，逐渐到达OutMemoryError的临界值，这个时候就需要分析JVM内存快照dump。</p>
 <h5 id="2-生成堆的dump文件"><a href="#2-生成堆的dump文件" class="headerlink" title="2.生成堆的dump文件"></a>2.生成堆的dump文件</h5><p>通过JMX的MBean生成当前的Heap信息，大小为一个3G（整个堆得大小）的hprof文件，如果没有启动JMX可以通过Java的jmap命令来生成改文件。</p>
 <h5 id="3-分析dump文件"><a href="#3-分析dump文件" class="headerlink" title="3.分析dump文件"></a>3.分析dump文件</h5><p>打开这个3G的堆信息文件，显然一般的Windows系统没有这么大的内存，必须借助高配置的Linux，几种工具打开该文件：Visual VM、IBM HeadpAnalyzer、JDK自带的Hprof工具、Mat（Eclipse专门的静态内存分析工具）推荐使用。Tips：文件太大，建议使用Eclipse专门的静态内存工具Mat打开分析。</p>
 <h5 id="4-分析结果，判断是否需要优化"><a href="#4-分析结果，判断是否需要优化" class="headerlink" title="4.分析结果，判断是否需要优化"></a>4.分析结果，判断是否需要优化</h5><p>如果各项参数设置合理，系统没有超时日志出现，GC频率不高，GC耗时不高，那么没有必要进行GC优化，如果GC时间超过1-3s，或者频繁GC，则必须优化。注意： 如果满足下面的指标，<strong>则一般不需要进行 GC 优化：</strong></p>
@@ -491,18 +533,18 @@
 
 <nav id="article-nav">
   
-    <a href="/posts/bf7bdd05.html" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/posts/531c5825.html" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          Redis常见面试题
+          多线程面试题
         
       </div>
     </a>
   
   
-    <a href="/posts/531c5825.html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">多线程面试题</div>
+    <a href="/posts/416557c5.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">2021面经</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -529,7 +571,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E5%B7%B2%E7%BB%8F%E6%AD%BB%E4%BA%A1%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">对象已经死亡？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E7%B1%BB%E6%98%AF%E6%97%A0%E7%94%A8%E7%9A%84%E7%B1%BB"><span class="toc-number">1.1.</span> <span class="toc-text">如何判断一个类是无用的类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM%E5%86%85%E5%AD%98%E5%88%92%E5%88%86"><span class="toc-number">2.</span> <span class="toc-text">JVM内存划分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B"><span class="toc-number">3.</span> <span class="toc-text">类加载过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6"><span class="toc-number">4.</span> <span class="toc-text">双亲委派机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6"><span class="toc-number">4.1.</span> <span class="toc-text">什么是双亲委派机制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="toc-number">5.</span> <span class="toc-text">JVM垃圾回收</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="toc-number">5.1.</span> <span class="toc-text">垃圾回收器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JDK8-CMS%EF%BC%9A%EF%BC%88%E5%85%B3%E6%B3%A8%E6%9C%80%E7%9F%AD%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%81%9C%E9%A1%BF%E6%97%B6%E9%97%B4%EF%BC%89"><span class="toc-number">5.1.1.</span> <span class="toc-text">JDK8-CMS：（关注最短垃圾回收停顿时间）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JDK9-G1%EF%BC%9A%EF%BC%88%E7%B2%BE%E5%87%86%E6%8E%A7%E5%88%B6%E5%81%9C%E9%A1%BF%E6%97%B6%E9%97%B4%EF%BC%8C%E9%81%BF%E5%85%8D%E5%9E%83%E5%9C%BE%E7%A2%8E%E7%89%87%EF%BC%89"><span class="toc-number">5.1.2.</span> <span class="toc-text">JDK9-G1：（精准控制停顿时间，避免垃圾碎片）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#G1%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%9F%E5%8E%9F%E7%90%86"><span class="toc-number">5.1.2.1.</span> <span class="toc-text">G1垃圾回收期原理</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ZGC"><span class="toc-number">5.1.3.</span> <span class="toc-text">ZGC</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8"><span class="toc-number">5.1.4.</span> <span class="toc-text">如何配置垃圾收集器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GC%E8%A7%A6%E5%8F%91%E6%9D%A1%E4%BB%B6"><span class="toc-number">5.2.</span> <span class="toc-text">GC触发条件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MinorGC%E8%A7%A6%E5%8F%91%E6%9D%A1%E4%BB%B6"><span class="toc-number">5.2.1.</span> <span class="toc-text">MinorGC触发条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FullGC%E8%A7%A6%E5%8F%91%E6%9D%A1%E4%BB%B6"><span class="toc-number">5.2.2.</span> <span class="toc-text">FullGC触发条件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM%E8%B0%83%E4%BC%98"><span class="toc-number">6.</span> <span class="toc-text">JVM调优</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JVM%E4%BC%98%E5%8C%96%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="toc-number">6.1.</span> <span class="toc-text">JVM优化的思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83JVM%E8%B0%83%E4%BC%98%E5%85%B7%E4%BD%93%E6%AD%A5%E9%AA%A4"><span class="toc-number">6.2.</span> <span class="toc-text">生产环境JVM调优具体步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E7%9B%91%E6%8E%A7GC%E7%9A%84%E7%8A%B6%E6%80%81"><span class="toc-number">6.2.0.1.</span> <span class="toc-text">1.监控GC的状态</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E7%94%9F%E6%88%90%E5%A0%86%E7%9A%84dump%E6%96%87%E4%BB%B6"><span class="toc-number">6.2.0.2.</span> <span class="toc-text">2.生成堆的dump文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-%E5%88%86%E6%9E%90dump%E6%96%87%E4%BB%B6"><span class="toc-number">6.2.0.3.</span> <span class="toc-text">3.分析dump文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-%E5%88%86%E6%9E%90%E7%BB%93%E6%9E%9C%EF%BC%8C%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E9%9C%80%E8%A6%81%E4%BC%98%E5%8C%96"><span class="toc-number">6.2.0.4.</span> <span class="toc-text">4.分析结果，判断是否需要优化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-%E8%B0%83%E6%95%B4GC%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="toc-number">6.2.0.5.</span> <span class="toc-text">5.调整GC类型和内存分配</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6-%E4%B8%8D%E6%96%AD%E7%9A%84%E5%88%86%E6%9E%90%E5%92%8C%E8%B0%83%E6%95%B4"><span class="toc-number">6.2.0.6.</span> <span class="toc-text">6.不断的分析和调整</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">7.</span> <span class="toc-text">参考</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM%E5%86%85%E5%AD%98%E5%88%92%E5%88%86"><span class="toc-number">1.</span> <span class="toc-text">JVM内存划分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%94%AF%E4%B8%80%E4%B8%8D%E4%BC%9A%E5%8F%91%E7%94%9FOOM%E7%9A%84%E5%8C%BA%E5%9F%9F"><span class="toc-number">1.1.</span> <span class="toc-text">唯一不会发生OOM的区域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#new%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%EF%BC%8CJVM%E5%88%B0%E5%BA%95%E5%8F%91%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">new一个对象，JVM到底发生了什么？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">类加载过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6"><span class="toc-number">2.1.</span> <span class="toc-text">双亲委派机制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6"><span class="toc-number">2.1.1.</span> <span class="toc-text">什么是双亲委派机制</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="toc-number">3.</span> <span class="toc-text">垃圾回收</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="toc-number">3.1.</span> <span class="toc-text">垃圾回收器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JDK8-CMS%EF%BC%9A%EF%BC%88%E5%85%B3%E6%B3%A8%E6%9C%80%E7%9F%AD%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%81%9C%E9%A1%BF%E6%97%B6%E9%97%B4%EF%BC%89"><span class="toc-number">3.1.1.</span> <span class="toc-text">JDK8-CMS：（关注最短垃圾回收停顿时间）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JDK9-G1%EF%BC%9A%EF%BC%88%E7%B2%BE%E5%87%86%E6%8E%A7%E5%88%B6%E5%81%9C%E9%A1%BF%E6%97%B6%E9%97%B4%EF%BC%8C%E9%81%BF%E5%85%8D%E5%9E%83%E5%9C%BE%E7%A2%8E%E7%89%87%EF%BC%89"><span class="toc-number">3.1.2.</span> <span class="toc-text">JDK9-G1：（精准控制停顿时间，避免垃圾碎片）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#G1%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%9F%E5%8E%9F%E7%90%86"><span class="toc-number">3.1.2.1.</span> <span class="toc-text">G1垃圾回收期原理</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ZGC"><span class="toc-number">3.1.3.</span> <span class="toc-text">ZGC</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8"><span class="toc-number">3.1.4.</span> <span class="toc-text">如何配置垃圾收集器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GC%E8%A7%A6%E5%8F%91%E6%9D%A1%E4%BB%B6"><span class="toc-number">3.2.</span> <span class="toc-text">GC触发条件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MinorGC%E8%A7%A6%E5%8F%91%E6%9D%A1%E4%BB%B6"><span class="toc-number">3.2.1.</span> <span class="toc-text">MinorGC触发条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FullGC%E8%A7%A6%E5%8F%91%E6%9D%A1%E4%BB%B6"><span class="toc-number">3.2.2.</span> <span class="toc-text">FullGC触发条件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%BC%E5%90%88%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="toc-number">4.</span> <span class="toc-text">综合面试题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E5%B7%B2%E7%BB%8F%E6%AD%BB%E4%BA%A1%EF%BC%9F"><span class="toc-number">4.1.</span> <span class="toc-text">对象已经死亡？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E7%B1%BB%E6%98%AF%E6%97%A0%E7%94%A8%E7%9A%84%E7%B1%BB"><span class="toc-number">4.1.1.</span> <span class="toc-text">如何判断一个类是无用的类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JVM%E8%B0%83%E4%BC%98"><span class="toc-number">4.2.</span> <span class="toc-text">JVM调优</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JVM%E4%BC%98%E5%8C%96%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="toc-number">4.2.1.</span> <span class="toc-text">JVM优化的思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83JVM%E8%B0%83%E4%BC%98%E5%85%B7%E4%BD%93%E6%AD%A5%E9%AA%A4"><span class="toc-number">4.2.2.</span> <span class="toc-text">生产环境JVM调优具体步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E7%9B%91%E6%8E%A7GC%E7%9A%84%E7%8A%B6%E6%80%81"><span class="toc-number">4.2.2.1.</span> <span class="toc-text">1.监控GC的状态</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E7%94%9F%E6%88%90%E5%A0%86%E7%9A%84dump%E6%96%87%E4%BB%B6"><span class="toc-number">4.2.2.2.</span> <span class="toc-text">2.生成堆的dump文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-%E5%88%86%E6%9E%90dump%E6%96%87%E4%BB%B6"><span class="toc-number">4.2.2.3.</span> <span class="toc-text">3.分析dump文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-%E5%88%86%E6%9E%90%E7%BB%93%E6%9E%9C%EF%BC%8C%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E9%9C%80%E8%A6%81%E4%BC%98%E5%8C%96"><span class="toc-number">4.2.2.4.</span> <span class="toc-text">4.分析结果，判断是否需要优化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-%E8%B0%83%E6%95%B4GC%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="toc-number">4.2.2.5.</span> <span class="toc-text">5.调整GC类型和内存分配</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6-%E4%B8%8D%E6%96%AD%E7%9A%84%E5%88%86%E6%9E%90%E5%92%8C%E8%B0%83%E6%95%B4"><span class="toc-number">4.2.2.6.</span> <span class="toc-text">6.不断的分析和调整</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">5.</span> <span class="toc-text">参考</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -677,6 +719,14 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面经</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
@@ -709,27 +759,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面经</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">redis集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">架构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -738,6 +768,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -757,10 +791,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">限流算法原理及实现</a>
               </li>
              
@@ -769,7 +799,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">redis集群</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">架构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">

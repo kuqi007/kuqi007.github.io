@@ -220,7 +220,7 @@
             
 
   
-    <article id="post-application/SpringBoot打包时复制指定配置文件到指定目录，并剔除jar包内所有配置文件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-design/设计模式初探" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -228,7 +228,7 @@
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/posts/9ca55b1a.html" target="_blank">SpringBoot打包时复制指定配置文件到指定目录，并剔除jar包内所有配置文件</a>
+	  <a class="article-title" href="/posts/74108e1f.html" target="_blank">设计模式初探</a>
   
     </h1>
   
@@ -236,540 +236,8 @@
 
   
   
-<a href="/posts/9ca55b1a.html" class="archive-article-date">
-        <time datetime="2020-02-24T03:04:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-24</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>最近遇到一个需求，把SpringBoot项目的配置文件放到Jar包外面，Jar包内不包含多余配置文件，Jar包运行时指定外部配置文件启动。我的配置文件放在src&#x2F;main&#x2F;resources&#x2F;config下，打包时拷贝到Jar包同级config目录下（SpringBoot默认支持读取Jar包同级config文件夹中的配置），具体解决方案如下：</p>
-<ul>
-<li><p>使用maven-jar-plugin插件移除配置文件将其不打包进jar包中</p>
-</li>
-<li><p>使用maven-resources-plugin插件将需要复制的文件复制到指定路径（例：将配置文件提取到指定路径）</p>
-<p>Maven配置如下：</p>
-    
-    <a class="article-more-a" href="/posts/9ca55b1a.html#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/9ca55b1a.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-application/使用gitlab-ci和docker自动化部署vue项目" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/1b05c064.html" target="_blank">使用gitlab-ci和docker自动化部署vue项目</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/1b05c064.html" class="archive-article-date">
-        <time datetime="2019-10-27T07:51:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-27</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>之前用docker的时候想到gitlab可以直接提交代码触发docker编译部署，非常方便，于是试验了一个单体vue项目如何使用gitlab和docker的强大功能进行编译发布，此教程仅供参考，适用于公司或者个人测试。</p>
-    
-    <a class="article-more-a" href="/posts/1b05c064.html#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/1b05c064.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-application/CoreOS配置Docker-API-TLS认证" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/a623d7c5.html" target="_blank">【转】CoreOS配置Docker API TLS认证</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/a623d7c5.html" class="archive-article-date">
-        <time datetime="2019-10-19T15:43:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-19</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>我们经常会利用Portainer来管理docker环境，也经常会用Jenkins来自动构建和部署docker，远程管理都会使用到Docker API，通常我们只是开启了没有安全保护的2375（通常）端口，这个比较危险，会导致远程劫持攻击。那么我们就需要配置TLS认证的2376（通常）端口。</p>
-    
-    <a class="article-more-a" href="/posts/a623d7c5.html#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">docker</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/a623d7c5.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-application/ORM框架对比" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/9eb10313.html" target="_blank">ORM框架对比</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/9eb10313.html" class="archive-article-date">
-        <time datetime="2019-10-13T14:16:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-13</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>　　因为项目需要选择数据持久化框架，看了一下主要几个流行的和不流行的框架，对于复杂业务系统，最终的结论是，JOOQ是总体上最好的，可惜不是完全免费，最终选择JDBC Template。</p>
-    
-    <a class="article-more-a" href="/posts/9eb10313.html#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">框架</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JAVA随笔//" class="article-tag-list-link color2">JAVA随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/9eb10313.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-application/JPA实现Specification" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/ea992500.html" target="_blank">使用JPA实现Specification规范规格模式</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/ea992500.html" class="archive-article-date">
-        <time datetime="2019-10-13T13:55:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-13</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>　　由DDD之父 Eric Evans 和OO之父 Martin Fowler定义的规范(Specification也称规格模式)模式article 越来越受到广泛应用，本文介绍如何使用JavaEE 持久层规范JPA实现规格模式，其实现思想也适合其他持久层框架。案例源码见GitHub。</p>
-    
-    <a class="article-more-a" href="/posts/ea992500.html#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/ea992500.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-application/JPA-OneToMany简单应用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/c51a8252.html" target="_blank">JPA OneToMany简单应用</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/c51a8252.html" class="archive-article-date">
-        <time datetime="2019-10-08T13:43:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-08</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="1-单向-OneToMany"><a href="#1-单向-OneToMany" class="headerlink" title="1.单向@OneToMany"></a>1.单向@OneToMany</h3><ol>
-<li>User实体类<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table(name = &quot;user&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="meta">@GeneratedValue(strategy = GenerationType.IDENTITY)</span></span><br><span class="line">    <span class="meta">@Column(name = &quot;id&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(name = &quot;username&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@OneToMany(cascade = &#123;CascadeType.REMOVE&#125;)</span></span><br><span class="line">    <span class="meta">@JoinColumn(name = &quot;article_id&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Set&lt;Article&gt; articles;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-2.Article实体类</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table(name = &quot;article&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Article</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="meta">@GeneratedValue(strategy = GenerationType.IDENTITY)</span></span><br><span class="line">    <span class="meta">@Column(name = &quot;id&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Column(name = &quot;article_id&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Long article_id;    </span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(name = &quot;title&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String title;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(name = &quot;content&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String content;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JPA</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">MapStruct</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Java随笔//" class="article-tag-list-link color2">Java随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/c51a8252.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-application/常用设计模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/1e80ad29.html" target="_blank">常用设计模式</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/1e80ad29.html" class="archive-article-date">
-        <time datetime="2019-10-06T07:16:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-06</time>
+<a href="/posts/74108e1f.html" class="archive-article-date">
+        <time datetime="2021-03-01T12:48:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-01</time>
 </a>
 
   
@@ -782,88 +250,20 @@
   <div class="article-entry" itemprop="articleBody">
     
     <hr>
-<h3 id="简单工厂"><a href="#简单工厂" class="headerlink" title="简单工厂"></a>简单工厂</h3><h3 id="工厂模式（Factory-Method）"><a href="#工厂模式（Factory-Method）" class="headerlink" title="工厂模式（Factory Method）"></a>工厂模式（Factory Method）</h3><h3 id="单例（Singleton）"><a href="#单例（Singleton）" class="headerlink" title="单例（Singleton）"></a>单例（Singleton）</h3><h3 id="适配器（Adapter）"><a href="#适配器（Adapter）" class="headerlink" title="适配器（Adapter）"></a>适配器（Adapter）</h3><h3 id="包装器（Decorator装饰模式）"><a href="#包装器（Decorator装饰模式）" class="headerlink" title="包装器（Decorator装饰模式）"></a>包装器（Decorator装饰模式）</h3><h3 id="代理（Proxy）"><a href="#代理（Proxy）" class="headerlink" title="代理（Proxy）"></a>代理（Proxy）</h3><h3 id="观察者（Observer）"><a href="#观察者（Observer）" class="headerlink" title="观察者（Observer）"></a>观察者（Observer）</h3><h3 id="策略（Strategy）"><a href="#策略（Strategy）" class="headerlink" title="策略（Strategy）"></a>策略（Strategy）</h3><h3 id="模板方法（Template-Method）"><a href="#模板方法（Template-Method）" class="headerlink" title="模板方法（Template Method）"></a>模板方法（Template Method）</h3>
+<h3 id="设计模式原则"><a href="#设计模式原则" class="headerlink" title="设计模式原则"></a>设计模式原则</h3><p>面向对象的设计模式有七大基本原则：</p>
+<ul>
+<li>开闭原则（Open Closed Principle，OCP）</li>
+<li>单一职责原则（Single Responsibility Principle, SRP）</li>
+<li>里氏代换原则（Liskov Substitution Principle，LSP）</li>
+<li>依赖倒转原则（Dependency Inversion Principle，DIP）</li>
+<li>接口隔离原则（Interface Segregation Principle，ISP）</li>
+<li>合成&#x2F;聚合复用原则（Composite&#x2F;Aggregate Reuse Principle，CARP）</li>
+<li>最少知识原则（Least Knowledge Principle，LKP）或者迪米特法则（Law of Demeter，LOD）</li>
+</ul>
+<p>简单理解就是：<strong>开闭原则是总纲</strong>，它指导我们要对扩展开放，对修改关闭；单一职责原则指导我们实现类要职责单一；里氏替换原则指导我们不要破坏继承体系；依赖倒置原则指导我们要面向接口编程；接口隔离原则指导我们在设计接口的时候要精简单一；迪米特法则指导我们要降低耦合。</p>
     
-
+    <a class="article-more-a" href="/posts/74108e1f.html#more">more >></a>
     
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/1e80ad29.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-application/Jhipster" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/abc029f4.html" target="_blank">Jhipster学习笔记</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/abc029f4.html" class="archive-article-date">
-        <time datetime="2019-10-04T12:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-04</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h4 id="项目生成"><a href="#项目生成" class="headerlink" title="项目生成"></a>项目生成</h4><h5 id="1-使用Jhipster生成一个纯前端项目"><a href="#1-使用Jhipster生成一个纯前端项目" class="headerlink" title="1. 使用Jhipster生成一个纯前端项目"></a>1. 使用Jhipster生成一个纯前端项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将JH-Vuejs 模块符号链接至当前项目的依赖中 (ps:用管理员权限cmd运行)，这一步很重要，如果不这样做后面生成的代码都是NG框架</span></span><br><span class="line">npm <span class="built_in">link</span> generator-jhipster-vuejs</span><br><span class="line"></span><br><span class="line"><span class="comment">#bash</span></span><br><span class="line">jhipster --skip-server --blueprints vuejs --db mysql --auth jwt</span><br><span class="line"><span class="comment">#或者</span></span><br><span class="line">jhipster --skip-server --blueprints vuejs -d --db mysql --auth jwt</span><br><span class="line"></span><br><span class="line"><span class="comment">#前端项目生成实体命令，必须加--db（???）</span></span><br><span class="line">jhipster entity article --db mysql</span><br></pre></td></tr></table></figure>
-
-
-<h5 id="2-使用Jhipster生成一个纯后端项目"><a href="#2-使用Jhipster生成一个纯后端项目" class="headerlink" title="2. 使用Jhipster生成一个纯后端项目"></a>2. 使用Jhipster生成一个纯后端项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jhipster --skip-client</span><br></pre></td></tr></table></figure>
-
-<h5 id="3-使用Jhipster生成一个非前后端分离项目"><a href="#3-使用Jhipster生成一个非前后端分离项目" class="headerlink" title="3. 使用Jhipster生成一个非前后端分离项目"></a>3. 使用Jhipster生成一个非前后端分离项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#使用vue作为前端框架生成一个前后端不分离的项目</span></span><br><span class="line">jhipster --blueprint vuejs</span><br></pre></td></tr></table></figure>
-
-<h5 id="4-常用命令"><a href="#4-常用命令" class="headerlink" title="4. 常用命令"></a>4. 常用命令</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#导出jdl文件</span></span><br><span class="line">jhipster export-jdl &lt;FILE_NAME&gt;</span><br></pre></td></tr></table></figure>
     
 
     
@@ -879,28 +279,17 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Jhipster</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
         		</li>
       		
 		</ul>
 	</div>
 
     
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Jhipster//" class="article-tag-list-link color4">Jhipster</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/posts/abc029f4.html">展开全文 >></a>
+      <a class="article-more-a" href="/posts/74108e1f.html">展开全文 >></a>
     </p>
     
 
@@ -930,7 +319,7 @@
 
 
   
-    <article id="post-application/为什么要用Spring" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-algorithm/算法思想掌握" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -938,7 +327,7 @@
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/posts/cf4d9cf.html" target="_blank">为什么要用Spring</a>
+	  <a class="article-title" href="/posts/9680e536.html" target="_blank">算法思想掌握</a>
   
     </h1>
   
@@ -946,8 +335,8 @@
 
   
   
-<a href="/posts/cf4d9cf.html" class="archive-article-date">
-        <time datetime="2019-10-04T12:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-04</time>
+<a href="/posts/9680e536.html" class="archive-article-date">
+        <time datetime="2021-02-27T04:36:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-27</time>
 </a>
 
   
@@ -959,30 +348,553 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <h3 id="Spring-IOC"><a href="#Spring-IOC" class="headerlink" title="Spring IOC"></a>Spring IOC</h3><h4 id="依赖注入能做什么"><a href="#依赖注入能做什么" class="headerlink" title="依赖注入能做什么"></a>依赖注入能做什么</h4><ul>
-<li>为什么要使用依赖注入<ul>
-<li>传统的代码，每个对象负责管理与自己需要依赖的对象，导致如果需要切换依赖对象的实现类时，需要修改多处地方。同时，过度耦合也使得对象难以进行单元测试。</li>
-<li>依赖注入把对象的创造交给外部去管理,很好的解决了代码紧耦合（tight couple）的问题，是一种让代码实现松耦合（loose couple）的机制。</li>
-<li>松耦合让代码更具灵活性，能更好地应对需求变动，以及方便单元测试。</li>
+    <hr>
+<h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><h3 id="395-至少有K个重复字符的最长子串"><a href="#395-至少有K个重复字符的最长子串" class="headerlink" title="395. 至少有K个重复字符的最长子串"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/longest-substring-with-at-least-k-repeating-characters/">395. 至少有K个重复字符的最长子串</a></h3><p>给你一个字符串 <code>s</code> 和一个整数 <code>k</code> ，请你找出 <code>s</code> 中的最长子串， 要求该子串中的每一字符出现次数都不少于 <code>k</code> 。返回这一子串的长度。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = &quot;aaabb&quot;, k = 3</span><br><span class="line">输出：3</span><br><span class="line">解释：最长子串为 &quot;aaa&quot; ，其中 &#x27;a&#x27; 重复了 3 次。</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s = &quot;ababbc&quot;, k = 2</span><br><span class="line">输出：5</span><br><span class="line">解释：最长子串为 &quot;ababb&quot; ，其中 &#x27;a&#x27; 重复了 2 次， &#x27;b&#x27; 重复了 3 次。</span><br></pre></td></tr></table></figure>
+
+<p> <strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 10^4</code></li>
+<li><code>s</code> 仅由小写英文字母组成</li>
+<li><code>1 &lt;= k &lt;= 10^5</code></li>
 </ul>
-</li>
+    
+    <a class="article-more-a" href="/posts/9680e536.html#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/算法//" class="article-tag-list-link color3">算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/9680e536.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-algorithm/你需要了解这 14 种编程面试模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/d9dc84f3.html" target="_blank">你需要了解这14种编程面试模式</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/d9dc84f3.html" class="archive-article-date">
+        <time datetime="2021-02-25T01:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-25</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <hr>
+<p>作者：Fahim ul Haq</p>
+<p>机器之心编译</p>
+<p>参与：Panda</p>
+<h1 id="解题套路"><a href="#解题套路" class="headerlink" title="解题套路"></a>解题套路</h1><p>咱们在面试程序员岗位时往往需要经历一个编程面试过程，雇主会借此考验面试者的技术实力。</p>
+<p>然而，这些技术问题有时候却和我们的实际工作并无太大关系，也由此可能给我们的编程面试准备阶段带来很大的压力。</p>
+<p>曾在 Facebook 和微软工作过的 Educative.io 创始人 Fahim ul Haq 近日发文总结了编程面试所遇到的问题的 14 种最常见的模式，也许能帮你看清各种编程面试问题「背后的真相」。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210225100733.png" alt="图片"></p>
+<p>对很多开发者来说，编程工作的面试准备很容易让人焦虑。面试要涉及的东西实在太多，其中很多还往往与开发者的日常工作无关，只会额外增添压力。</p>
+<p>这种现状导致了一个后果：现在的开发者往往需要花费数周时间在 LeetCode 等网站上了解综合数百个问题。</p>
+<p>与我谈过的开发者在面试前的一个常见焦虑问题是：<strong>我是否已经解决过足够多的实际问题？我本可以做到更多吗？</strong></p>
+<p>这就是我想要帮助开发者了解每个问题背后的底层模式的原因——这样他们就不必担忧解决数百个问题以及被 LeetCode 整得疲惫不堪了。</p>
+<p>如果你理解面试的通用模式，你就可以将其用作模板，从而解决各种层级的稍有不同的问题。</p>
+<p>这里我将列出最常见的 14 种模式，它们可被用于解决任何编程面试问题。</p>
+<p>另外我还会说明如何识别每种模式，并会为每种模式提供一些问题示例。</p>
+<p>这些内容都只是蜻蜓点水——<strong>我强烈建议你看看课程《Grokking the Coding Interview: Patterns for Coding Questions》，里面提供了全面的解释、示例和编程实践</strong>。</p>
+<p>下面的模式说明假设你已经知悉了数据结构。如果你还不了解，那需要补充一下知识点哦。</p>
+<p>我们今天将说明以下 14 种模式：</p>
+<blockquote>
+<ul>
+<li>1．滑动窗口</li>
+<li>2．二指针或迭代器</li>
+<li>3．快速和慢速指针或迭代器</li>
+<li>4．合并区间</li>
+<li>5．循环排序</li>
+<li>6．原地反转链表</li>
+<li>7．树的宽度优先搜索（Tree BFS）</li>
+<li>8．树的深度优先搜索（Tree DFS）</li>
+<li>9．Two Heaps</li>
+<li>10．子集</li>
+<li>11．经过修改的二叉搜索</li>
+<li>12．前 K 个元素</li>
+<li>13．K 路合并</li>
+<li>14．拓扑排序</li>
 </ul>
-<h4 id="什么是IOC容器"><a href="#什么是IOC容器" class="headerlink" title="什么是IOC容器"></a>什么是IOC容器</h4><h4 id="COC是什么"><a href="#COC是什么" class="headerlink" title="COC是什么"></a>COC是什么</h4><p>Convention over Configuration 约定优于配置</p>
-<h4 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h4><h3 id="Spring特点"><a href="#Spring特点" class="headerlink" title="Spring特点"></a>Spring特点</h3><h5 id="1-方便解耦，简化开发"><a href="#1-方便解耦，简化开发" class="headerlink" title="1. 方便解耦，简化开发"></a>1. 方便解耦，简化开发</h5><p>　　通过Spring提供的IoC容器，我们可以将对象之间的依赖关系交由Spring进行控制，避免硬编码所造成的过度程序耦合。有了Spring，用户不必再为单实例模式类、属性文件解析等这些很底层的需求编写代码，可以更专注于上层的应用。</p>
-<h5 id="2-AOP编程的支持"><a href="#2-AOP编程的支持" class="headerlink" title="2. AOP编程的支持"></a>2. AOP编程的支持</h5><p>通过Spring提供的AOP功能，方便进行面向切面的编程，许多不容易用传统OOP实现的功能可以通过AOP轻松应付。</p>
-<h5 id="3-声明式事务的支持"><a href="#3-声明式事务的支持" class="headerlink" title="3. 声明式事务的支持"></a>3. 声明式事务的支持</h5><p>　　在Spring中，我们可以从单调烦闷的事务管理代码中解脱出来，通过声明式方式灵活地进行事务的管理，提高开发效率和质量。</p>
-<h5 id="4-方便程序的测试"><a href="#4-方便程序的测试" class="headerlink" title="4. 方便程序的测试"></a>4. 方便程序的测试</h5><p>　　可以用非容器依赖的编程方式进行几乎所有的测试工作，在Spring里，测试不再是昂贵的操作，而是随手可做的事情。例如：Spring对Junit4支持，可以通过注解方便的测试Spring程序。</p>
-<h5 id="5-方便集成各种优秀框架"><a href="#5-方便集成各种优秀框架" class="headerlink" title="5. 方便集成各种优秀框架"></a>5. 方便集成各种优秀框架</h5><p>　　Spring不排斥各种优秀的开源框架，相反，Spring可以降低各种框架的使用难度，Spring提供了对各种优秀框架（如Struts,Hibernate、Hessian、Quartz）等的直接支持。</p>
-<h5 id="6-降低Java-EE-API的使用难度"><a href="#6-降低Java-EE-API的使用难度" class="headerlink" title="6. 降低Java EE API的使用难度"></a>6. 降低Java EE API的使用难度</h5><p>　　Spring对很多难用的Java EE API（如JDBC，JavaMail，远程调用等）提供了一个薄薄的封装层，通过Spring的简易封装，这些Java EE API的使用难度大为降低。</p>
-<h5 id="7-Java-源码是经典学习范例"><a href="#7-Java-源码是经典学习范例" class="headerlink" title="7. Java 源码是经典学习范例"></a>7. Java 源码是经典学习范例</h5><p>　　Spring的源码设计精妙、结构清晰、匠心独运，处处体现着大师对Java设计模式灵活运用以及对Java技术的高深造诣。Spring框架源码无疑是Java技术的最佳实践范例。如果想在短时间内迅速提高自己的Java技术水平和应用开发水平，学习和研究Spring源码将会使你收到意想不到的效果。
-　　</p>
-<h3 id="好处"><a href="#好处" class="headerlink" title="好处"></a>好处</h3><h4 id="总结起来，使用Spring有如下优点："><a href="#总结起来，使用Spring有如下优点：" class="headerlink" title="总结起来，使用Spring有如下优点："></a>总结起来，使用Spring有如下优点：</h4><ol>
-<li>低侵入式设计，代码污染极低</li>
-<li>独立于各种应用服务器，基于Spring框架的应用，可以真正实现Write Once,Run Anywhere的承诺</li>
-<li>Spring的DI机制降低了业务对象替换的复杂性，提高了组件之间的解耦</li>
-<li>Spring的AOP支持允许将一些通用任务如安全、事务、日志等进行集中式管理，从而提供了更好的复用</li>
-<li>Spring的ORM和DAO提供了与第三方持久层框架的良好整合，并简化了底层的数据库访问</li>
-<li>Spring并不强制应用完全依赖于Spring，开发者可自由选用Spring框架的部分或全部</li>
+</blockquote>
+<p>我们开始吧！</p>
+    
+    <a class="article-more-a" href="/posts/d9dc84f3.html#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/d9dc84f3.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-algorithm/算法模板" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/2cc2fa98.html" target="_blank">算法模板</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/2cc2fa98.html" class="archive-article-date">
+        <time datetime="2021-02-22T14:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-22</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <hr>
+<h3 id="滑动窗口"><a href="#滑动窗口" class="headerlink" title="滑动窗口"></a>滑动窗口</h3><h4 id="1-滑动窗口通用模板"><a href="#1-滑动窗口通用模板" class="headerlink" title="1.滑动窗口通用模板"></a>1.滑动窗口通用模板</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">findSubArray</span>(<span class="params">nums</span>):</span><br><span class="line">    N = <span class="built_in">len</span>(nums) <span class="comment"># 数组/字符串长度</span></span><br><span class="line">    left, right = <span class="number">0</span>, <span class="number">0</span> <span class="comment"># 双指针，表示当前遍历的区间[left, right]，闭区间</span></span><br><span class="line">    sums = <span class="number">0</span> <span class="comment"># 用于统计 子数组/子区间 是否有效，根据题目可能会改成求和/计数</span></span><br><span class="line">    res = <span class="number">0</span> <span class="comment"># 保存最大的满足题目要求的 子数组/子串 长度</span></span><br><span class="line">    <span class="keyword">while</span> right &lt; N: <span class="comment"># 当右边的指针没有搜索到 数组/字符串 的结尾</span></span><br><span class="line">        sums += nums[right] <span class="comment"># 增加当前右边指针的数字/字符的求和/计数</span></span><br><span class="line">        <span class="keyword">while</span> 区间[left, right]不符合题意：<span class="comment"># 此时需要一直移动左指针，直至找到一个符合题意的区间</span></span><br><span class="line">            sums -= nums[left] <span class="comment"># 移动左指针前需要从counter中减少left位置字符的求和/计数</span></span><br><span class="line">            left += <span class="number">1</span> <span class="comment"># 真正的移动左指针，注意不能跟上面一行代码写反</span></span><br><span class="line">        <span class="comment"># 到 while 结束时，我们找到了一个符合题意要求的 子数组/子串</span></span><br><span class="line">        res = <span class="built_in">max</span>(res, right - left + <span class="number">1</span>) <span class="comment"># 需要更新结果</span></span><br><span class="line">        right += <span class="number">1</span> <span class="comment"># 移动右指针，去探索新的区间</span></span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
+<p>滑动窗口中用到了左右两个指针，它们移动的思路是：</p>
+<ul>
+<li><strong>以右指针作为驱动，拖着左指针向前走</strong>。 </li>
+<li>右指针每次只移动一步，而左指针在内部 while 循环中每次可能移动多步。</li>
+<li>右指针是主动前移，探索未知的新区域；左指针是被迫移动，负责寻找满足题意的区间。</li>
+</ul>
+<p>模板的整体思想是：</p>
+<ul>
+<li>定义两个指针 left 和 right 分别指向区间的开头和结尾，注意是闭区间；</li>
+<li>定义 sums 用来统计该区间内的各个字符出现次数；</li>
+<li>第一重 while 循环是为了判断 right 指针的位置是否超出了数组边界；</li>
+<li>当 right 每次到了新位置，需要增加 right 指针的求和&#x2F;计数； </li>
+<li>第二重 while 循环是让 left 指针向右移动到 [left, right] 区间符合题意的位置；</li>
+<li>当 left 每次移动到了新位置，需要减少 left 指针的求和&#x2F;计数；</li>
+<li>在第二重 while 循环之后，成功找到了一个符合题意的 [left, right] 区间，题目要求最大的区间长度，因此更新 res 为 max(res, 当前区间的长度) 。 </li>
+<li>right 指针每次向右移动一步，开始探索新的区间。 </li>
+<li>模板中的 sums 需要根据题目意思具体去修改，本题是求和题目因此把sums 定义成整数用于求和；</li>
+<li>如果是计数题目，就需要改成字典用于计数。当左右指针发生变化的时候，都需要更新 sums 。</li>
+</ul>
+<h4 id="2-固定滑动窗口"><a href="#2-固定滑动窗口" class="headerlink" title="2.固定滑动窗口"></a>2.固定滑动窗口</h4><h5 id="leetcode-643-子数组最大平均数-I"><a href="#leetcode-643-子数组最大平均数-I" class="headerlink" title="leetcode 643. 子数组最大平均数 I"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/maximum-average-subarray-i/">leetcode 643. 子数组最大平均数 I</a></h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">double</span> <span class="title function_">findMaxAverage</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> k)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">        sum += nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> <span class="variable">max</span> <span class="operator">=</span> sum;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> k; i &lt; nums.length; i++) &#123;</span><br><span class="line">        sum = sum + nums[i] - nums[i - k];</span><br><span class="line">        max = Math.max(sum, max);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1.0</span> * max / k;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="leetcode-1052-爱生气的书店老板"><a href="#leetcode-1052-爱生气的书店老板" class="headerlink" title="leetcode 1052.爱生气的书店老板"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/grumpy-bookstore-owner/">leetcode 1052.爱生气的书店老板</a></h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">maxSatisfied</span><span class="params">(<span class="type">int</span>[] customers, <span class="type">int</span>[] grumpy, <span class="type">int</span> X)</span> &#123;</span><br><span class="line">      <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> customers.length;</span><br><span class="line">      <span class="type">int</span> <span class="variable">total</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">          total += customers[i] * (<span class="number">1</span> - grumpy[i]);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="type">int</span> <span class="variable">increase</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; X; i++) &#123;</span><br><span class="line">          increase += customers[i] * grumpy[i];</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="type">int</span> <span class="variable">maxIncrease</span> <span class="operator">=</span> increase;</span><br><span class="line">      <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> X; i &lt; n; i++) &#123;</span><br><span class="line">          <span class="comment">// 如果是1的代表生气，0的代表不生气直接乘就可以（仍为0），因为之前已经算出来了</span></span><br><span class="line">          increase = increase - customers[i - X] * grumpy[i - X] + customers[i] * grumpy[i];</span><br><span class="line">          maxIncrease = Math.max(maxIncrease, increase);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> total + maxIncrease;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/2cc2fa98.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-interview/分布式事务" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/cdcc4eae.html" target="_blank">分布式事务</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/cdcc4eae.html" class="archive-article-date">
+        <time datetime="2021-02-21T15:49:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-21</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <hr>
+<h2 id="面试题剖析"><a href="#面试题剖析" class="headerlink" title="面试题剖析"></a>面试题剖析</h2><p>分布式事务的实现主要有以下 6 种方案：</p>
+<ul>
+<li>XA 方案</li>
+<li>TCC 方案</li>
+<li>SAGA 方案</li>
+<li>本地消息表</li>
+<li>可靠消息最终一致性方案</li>
+<li>最大努力通知方案</li>
+</ul>
+<h3 id="两阶段提交方案-XA-方案"><a href="#两阶段提交方案-XA-方案" class="headerlink" title="两阶段提交方案&#x2F;XA 方案"></a>两阶段提交方案&#x2F;XA 方案</h3><p>所谓的 XA 方案，即：两阶段提交，有一个<strong>事务管理器</strong>的概念，负责协调多个数据库（资源管理器）的事务，事务管理器先问问各个数据库你准备好了吗？如果每个数据库都回复 ok，那么就正式提交事务，在各个数据库上执行操作；如果任何其中一个数据库回答不 ok，那么就回滚事务。</p>
+<p>这种分布式事务方案，比较适合单块应用里，跨多个库的分布式事务，而且因为严重依赖于数据库层面来搞定复杂的事务，效率很低，绝对不适合高并发的场景。如果要玩儿，那么基于 <code>Spring + JTA</code> 就可以搞定，自己随便搜个 demo 看看就知道了。</p>
+<p>这个方案，我们很少用，一般来说<strong>某个系统内部如果出现跨多个库</strong>的这么一个操作，是<strong>不合规</strong>的。我可以给大家介绍一下， 现在微服务，一个大的系统分成几十个甚至几百个服务。一般来说，我们的规定和规范，是要求<strong>每个服务只能操作自己对应的一个数据库</strong>。</p>
+<p>如果你要操作别的服务对应的库，不允许直连别的服务的库，违反微服务架构的规范，你随便交叉胡乱访问，几百个服务的话，全体乱套，这样的一套服务是没法管理的，没法治理的，可能会出现数据被别人改错，自己的库被别人写挂等情况。</p>
+<p>如果你要操作别人的服务的库，你必须是通过<strong>调用别的服务的接口</strong>来实现，绝对不允许交叉访问别人的数据库。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210221234444.png" alt="distributed-transacion-XA"></p>
+<h3 id="TCC方案"><a href="#TCC方案" class="headerlink" title="TCC方案"></a>TCC方案</h3><p>TCC 的全称是： <code>Try</code> 、 <code>Confirm</code> 、 <code>Cancel</code> 。</p>
+<ul>
+<li>Try 阶段：这个阶段说的是对各个服务的资源做检测以及对资源进行<strong>锁定或者预留</strong>。</li>
+<li>Confirm 阶段：这个阶段说的是在各个服务中<strong>执行实际的操作</strong>。</li>
+<li>Cancel 阶段：如果任何一个服务的业务方法执行出错，那么这里就需要<strong>进行补偿</strong>，就是执行已经执行成功的业务逻辑的回滚操作。（把那些执行成功的回滚）</li>
+</ul>
+<p>这种方案说实话几乎很少人使用，我们用的也比较少，但是也有使用的场景。因为这个<strong>事务回滚</strong>实际上是<strong>严重依赖于你自己写代码来回滚和补偿</strong>了，会造成补偿代码巨大，非常之恶心。</p>
+<p>比如说我们，一般来说跟<strong>钱</strong>相关的，跟钱打交道的，<strong>支付</strong>、<strong>交易</strong>相关的场景，我们会用 TCC，严格保证分布式事务要么全部成功，要么全部自动回滚，严格保证资金的正确性，保证在资金上不会出现问题。</p>
+<p>而且最好是你的各个业务执行的时间都比较短。</p>
+<p>但是说实话，一般尽量别这么搞，自己手写回滚逻辑，或者是补偿逻辑，实在太恶心了，那个业务代码是很难维护的。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210221231742.png" alt="distributed-transacion-TCC"></p>
+<h3 id="Saga方案"><a href="#Saga方案" class="headerlink" title="Saga方案"></a>Saga方案</h3><p>金融核心等业务可能会选择 TCC 方案，以追求强一致性和更高的并发量，而对于更多的金融核心以上的业务系统往往会选择补偿事务，补偿事务处理在 30 多年前就提出了 Saga 理论，随着微服务的发展，近些年才逐步受到大家的关注。目前业界比较公认的是采用 Saga 作为长事务的解决方案。</p>
+<h4 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h4><p>业务流程中每个参与者都提交本地事务，若某一个参与者失败，则补偿前面已经成功的参与者。下图左侧是正常的事务流程，当执行到 T3 时发生了错误，则开始执行右边的事务补偿流程，反向执行 T3、T2、T1 的补偿服务 C3、C2、C1，将 T3、T2、T1 已经修改的数据补偿掉。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210221231855.png" alt="distributed-transacion-TCC"></p>
+<h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><p>对于一致性要求高、短流程、并发高 的场景，如：金融核心系统，会优先考虑 TCC 方案。而在另外一些场景下，我们并不需要这么强的一致性，只需要保证最终一致性即可。</p>
+<p>比如 很多金融核心以上的业务（渠道层、产品层、系统集成层），这些系统的特点是最终一致即可、流程多、流程长、还可能要调用其它公司的服务。这种情况如果选择 TCC 方案开发的话，一来成本高，二来无法要求其它公司的服务也遵循 TCC 模式。同时流程长，事务边界太长，加锁时间长，也会影响并发性能。</p>
+<p>所以 Saga 模式的适用场景是：</p>
+<ul>
+<li>业务流程长、业务流程多；</li>
+<li>参与者包含其它公司或遗留系统服务，无法提供 TCC 模式要求的三个接口。</li>
+</ul>
+<h4 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h4><ul>
+<li>一阶段提交本地事务，无锁，高性能；</li>
+<li>参与者可异步执行，高吞吐；</li>
+<li>补偿服务易于实现，因为一个更新操作的反向操作是比较容易理解的。</li>
+</ul>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li>不保证事务的隔离性。</li>
+</ul>
+<h3 id="本地消息表"><a href="#本地消息表" class="headerlink" title="本地消息表"></a>本地消息表</h3><p>本地消息表其实是国外的 ebay 搞出来的这么一套思想。</p>
+<p>这个大概意思是这样的：</p>
+<ol>
+<li>A 系统在自己本地一个事务里操作同时，插入一条数据到消息表；</li>
+<li>接着 A 系统将这个消息发送到 MQ 中去；</li>
+<li>B 系统接收到消息之后，在一个事务里，往自己本地消息表里插入一条数据，同时执行其他的业务操作，如果这个消息已经被处理过了，那么此时这个事务会回滚，这样<strong>保证不会重复处理消息</strong>；</li>
+<li>B 系统执行成功之后，就会更新自己本地消息表的状态以及 A 系统消息表的状态；</li>
+<li>如果 B 系统处理失败了，那么就不会更新消息表状态，那么此时 A 系统会定时扫描自己的消息表，如果有未处理的消息，会再次发送到 MQ 中去，让 B 再次处理；</li>
+<li>这个方案保证了最终一致性，哪怕 B 事务失败了，但是 A 会不断重发消息，直到 B 那边成功为止。</li>
+</ol>
+<p>这个方案说实话最大的问题就在于<strong>严重依赖于数据库的消息表来管理事务</strong>啥的，如果是高并发场景咋办呢？咋扩展呢？所以一般确实很少用。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1753859776.png" alt="distributed-transaction-local-message-table"></p>
+<h3 id="可靠消息最终一致性方案"><a href="#可靠消息最终一致性方案" class="headerlink" title="可靠消息最终一致性方案"></a>可靠消息最终一致性方案</h3><p>这个的意思，就是干脆不要用本地的消息表了，直接基于 MQ 来实现事务。比如阿里的 RocketMQ 就支持消息事务。</p>
+<p>大概的意思就是：</p>
+<ol>
+<li>A 系统先发送一个 prepared 消息到 mq，如果这个 prepared 消息发送失败那么就直接取消操作别执行了；</li>
+<li>如果这个消息发送成功过了，那么接着执行本地事务，如果成功就告诉 mq 发送确认消息，如果失败就告诉 mq 回滚消息；</li>
+<li>如果发送了确认消息，那么此时 B 系统会接收到确认消息，然后执行本地的事务；</li>
+<li>mq 会自动<strong>定时轮询</strong>所有 prepared 消息回调你的接口，问你，这个消息是不是本地事务处理失败了，所有没发送确认的消息，是继续重试还是回滚？一般来说这里你就可以查下数据库看之前本地事务是否执行，如果回滚了，那么这里也回滚吧。这个就是避免可能本地事务执行成功了，而确认消息却发送失败了。</li>
+<li>这个方案里，要是系统 B 的事务失败了咋办？重试咯，自动不断重试直到成功，如果实在是不行，要么就是针对重要的资金类业务进行回滚，比如 B 系统本地回滚后，想办法通知系统 A 也回滚；或者是发送报警由人工来手工回滚和补偿。</li>
+<li>这个还是比较合适的，目前国内互联网公司大都是这么玩儿的，要不你就用 RocketMQ 支持的，要不你就自己基于类似 ActiveMQ？RabbitMQ？自己封装一套类似的逻辑出来，总之思路就是这样子的。</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210221234417.png" alt="distributed-transaction-reliable-message"></p>
+<h3 id="最大努力通知方案"><a href="#最大努力通知方案" class="headerlink" title="最大努力通知方案"></a>最大努力通知方案</h3><p>这个方案的大致意思就是：</p>
+<ol>
+<li>系统 A 本地事务执行完之后，发送个消息到 MQ；</li>
+<li>这里会有个专门消费 MQ 的<strong>最大努力通知服务</strong>，这个服务会消费 MQ 然后写入数据库中记录下来，或者是放入个内存队列也可以，接着调用系统 B 的接口；</li>
+<li>要是系统 B 执行成功就 ok 了；要是系统 B 执行失败了，那么最大努力通知服务就定时尝试重新调用系统 B，反复 N 次，最后还是不行就放弃。</li>
+</ol>
+<h3 id="你们公司是如何处理分布式事务的？"><a href="#你们公司是如何处理分布式事务的？" class="headerlink" title="你们公司是如何处理分布式事务的？"></a>你们公司是如何处理分布式事务的？</h3><p>如果你真的被问到，可以这么说，我们某某特别严格的场景，用的是 TCC 来保证强一致性；然后其他的一些场景基于阿里的 RocketMQ 来实现分布式事务。</p>
+<p>你找一个严格资金要求绝对不能错的场景，你可以说你是用的 TCC 方案；如果是一般的分布式事务场景，订单插入之后要调用库存服务更新库存，库存数据没有资金那么的敏感，可以用可靠消息最终一致性方案。</p>
+<p>友情提示一下，RocketMQ 3.2.6 之前的版本，是可以按照上面的思路来的，但是之后接口做了一些改变，我这里不再赘述了。</p>
+<p>当然如果你愿意，你可以参考可靠消息最终一致性方案来自己实现一套分布式事务，比如基于 RocketMQ 来玩儿。</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">分布式事务</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">TCC</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">消息一致性</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/cdcc4eae.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-interview/计算机网络" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/e255a10a.html" target="_blank">计算机网络</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/e255a10a.html" class="archive-article-date">
+        <time datetime="2021-02-04T07:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-04</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <hr>
+<h2 id="TCP-UDP"><a href="#TCP-UDP" class="headerlink" title="TCP&#x2F;UDP"></a>TCP&#x2F;UDP</h2><h3 id="什么是TCP"><a href="#什么是TCP" class="headerlink" title="什么是TCP"></a>什么是TCP</h3><h3 id="TCP三次握手"><a href="#TCP三次握手" class="headerlink" title="TCP三次握手"></a>TCP三次握手</h3><h4 id="三次握手的流程"><a href="#三次握手的流程" class="headerlink" title="三次握手的流程"></a>三次握手的流程</h4><h4 id="为什么是三次，两次行不行？"><a href="#为什么是三次，两次行不行？" class="headerlink" title="为什么是三次，两次行不行？"></a>为什么是三次，两次行不行？</h4><h3 id="TCP四次挥手"><a href="#TCP四次挥手" class="headerlink" title="TCP四次挥手"></a>TCP四次挥手</h3><h4 id="四次挥手的流程？"><a href="#四次挥手的流程？" class="headerlink" title="四次挥手的流程？"></a>四次挥手的流程？</h4><h4 id="为什么是四次挥手不是三次？"><a href="#为什么是四次挥手不是三次？" class="headerlink" title="为什么是四次挥手不是三次？"></a>为什么是四次挥手不是三次？</h4><h3 id="TCP如何保证可靠性传输"><a href="#TCP如何保证可靠性传输" class="headerlink" title="TCP如何保证可靠性传输"></a>TCP如何保证可靠性传输</h3><h3 id="TCP粘包和拆包"><a href="#TCP粘包和拆包" class="headerlink" title="TCP粘包和拆包"></a>TCP粘包和拆包</h3><p>TCP是个“流”协议，所谓流，就是没有界限的一串数据。大家可以想想河里的流水，是连成一片的，其间并没有分界线。TCP底层并不了解上层业务数据的具体含义，它会根据TCP缓冲区的实际情况进行包的划分，所以在业务上认为，一个完整的包可能会被TCP拆分成多个包进行发送，也有可能把多个小的包封装成一个大的数据包发送，这就是所谓的TCP粘包和拆包问题。</p>
+<h4 id="TCP粘包-拆包问题说明"><a href="#TCP粘包-拆包问题说明" class="headerlink" title="TCP粘包&#x2F;拆包问题说明"></a>TCP粘包&#x2F;拆包问题说明</h4><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210212215650.png" alt="img"></p>
+<p>假设客户端分别发送了两个数据包D1和D2给服务端，由于服务端一次读取到的字节数是不确定的，故可能存在以下4种情况。</p>
+<ol>
+<li>服务端分两次读取到了两个独立的数据包，分别是D1和D2，没有粘包和拆包；</li>
+<li>服务端一次接收到了两个数据包，D1和D2粘合在一起，被称为TCP粘包；</li>
+<li>服务端分两次读取到了两个数据包，第一次读取到了完整的D1包和D2包的部分内容，第二次读取到了D2包的剩余内容，这被称为TCP拆包；</li>
+<li>服务端分两次读取到了两个数据包，第一次读取到了D1包的部分内容D1_1，第二次读取到了D1包的剩余内容D1_2和D2包的整包。</li>
+</ol>
+<p>如果此时服务端TCP接收滑窗非常小，而数据包D1和D2比较大，很有可能会发生第五种可能，即服务端分多次才能将D1和D2包接收完全，期间发生多次拆包。</p>
+<h4 id="TCP粘包-拆包发生的原因"><a href="#TCP粘包-拆包发生的原因" class="headerlink" title="TCP粘包&#x2F;拆包发生的原因"></a>TCP粘包&#x2F;拆包发生的原因</h4><ol>
+<li>应用程序write写入的字节大小大于套接口发送缓冲区大小；</li>
+<li>进行MSS大小的TCP分段；</li>
+<li>以太网帧的payload大于MTU进行IP分片。</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210212215514.png" alt="img"></p>
+<h4 id="粘包问题的解决策略"><a href="#粘包问题的解决策略" class="headerlink" title="粘包问题的解决策略"></a>粘包问题的解决策略</h4><p>由于底层的TCP无法理解上层的业务数据，所以在底层是无法保证数据包不被拆分和重组的，这个问题只能通过上层的应用协议栈设计来解决，根据业界的主流协议的解决方案，可以归纳如下：</p>
+<ol>
+<li>消息定长，例如每个报文的大小为固定长度200字节，如果不够，空位补空格；</li>
+<li>在包尾增加回车换行符进行分割，例如FTP协议；</li>
+<li>将消息分为消息头和消息体，消息头中包含表示消息总长度（或者消息体长度）的字段，通常设计思路为消息头的第一个字段使用int32来表示消息的总长度；</li>
+<li>更复杂的应用层协议。</li>
 </ol>
 
     
@@ -1000,7 +912,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
         		</li>
       		
 		</ul>
@@ -1010,7 +922,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/posts/cf4d9cf.html">展开全文 >></a>
+      <a class="article-more-a" href="/posts/e255a10a.html">展开全文 >></a>
     </p>
     
 
@@ -1040,7 +952,7 @@
 
 
   
-    <article id="post-application/hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-interview/系统架构设计" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -1048,7 +960,7 @@
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/posts/4a17b156.html" target="_blank">Hello World</a>
+	  <a class="article-title" href="/posts/75203a6f.html" target="_blank">系统架构设计</a>
   
     </h1>
   
@@ -1056,8 +968,8 @@
 
   
   
-<a href="/posts/4a17b156.html" class="archive-article-date">
-        <time datetime="2019-10-04T03:45:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-04</time>
+<a href="/posts/75203a6f.html" class="archive-article-date">
+        <time datetime="2021-01-30T06:09:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-30</time>
 </a>
 
   
@@ -1069,19 +981,51 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/deployment.html">Deployment</a></p>
+    <hr>
+<h1 id="如何设计一个高并发系统？"><a href="#如何设计一个高并发系统？" class="headerlink" title="如何设计一个高并发系统？"></a>如何设计一个高并发系统？</h1><p>可以分为以下 6 点：</p>
+<ul>
+<li>系统拆分</li>
+<li>缓存</li>
+<li>MQ</li>
+<li>分库分表</li>
+<li>读写分离</li>
+<li>ElasticSearch</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210126145855.png" alt="high-concurrency-system-design"></p>
+<h1 id="如何设计一个高可用系统"><a href="#如何设计一个高可用系统" class="headerlink" title="如何设计一个高可用系统"></a>如何设计一个高可用系统</h1><h2 id="什么是高可用？可用性的判断标准是啥？"><a href="#什么是高可用？可用性的判断标准是啥？" class="headerlink" title="什么是高可用？可用性的判断标准是啥？"></a>什么是高可用？可用性的判断标准是啥？</h2><p><strong>高可用描述的是一个系统在大部分时间都是可用的，可以为我们提供服务的。高可用代表系统即使在发生硬件故障或者系统升级的时候，服务仍然是可用的。</strong></p>
+<p><strong>一般情况下，我们使用多少个 9 来评判一个系统的可用性，比如 99.9999% 就是代表该系统在所有的运行时间中只有 0.0001% 的时间是不可用的，这样的系统就是非常非常高可用的了！当然，也会有系统如果可用性不太好的话，可能连 9 都上不了。</strong></p>
+<p>除此之外，系统的可用性还可以用某功能的失败次数与总的请求次数之比来衡量，比如对网站请求 1000 次，其中有 10 次请求失败，那么可用性就是 99%。</p>
+<h2 id="哪些情况会导致系统不可用？"><a href="#哪些情况会导致系统不可用？" class="headerlink" title="哪些情况会导致系统不可用？"></a>哪些情况会导致系统不可用？</h2><ol>
+<li>黑客攻击；</li>
+<li>硬件故障，比如服务器坏掉。</li>
+<li>并发量&#x2F;用户请求量激增导致整个服务宕掉或者部分服务不可用。</li>
+<li>代码中的坏味道导致内存泄漏或者其他问题导致程序挂掉。</li>
+<li>网站架构某个重要的角色比如 Nginx 或者数据库突然不可用。</li>
+<li>自然灾害或者人为破坏。</li>
+<li>……</li>
+</ol>
+<h2 id="有哪些提高系统可用性的方法？"><a href="#有哪些提高系统可用性的方法？" class="headerlink" title="有哪些提高系统可用性的方法？"></a>有哪些提高系统可用性的方法？</h2><h3 id="1-注重代码质量，测试严格把关"><a href="#1-注重代码质量，测试严格把关" class="headerlink" title="1. 注重代码质量，测试严格把关"></a>1. 注重代码质量，测试严格把关</h3><p>我觉得这个是最最最重要的，代码质量有问题比如比较常见的内存泄漏、循环依赖都是对系统可用性极大的损害。大家都喜欢谈限流、降级、熔断，但是我觉得从代码质量这个源头把关是首先要做好的一件很重要的事情。如何提高代码质量？比较实际可用的就是 CodeReview，不要在乎每天多花的那 1 个小时左右的时间，作用可大着呢！</p>
+<p>另外，安利这个对提高代码质量有实际效果的宝贝：</p>
+<ol>
+<li>sonarqube ：保证你写出更安全更干净的代码！（ps: 目前所在的项目基本都会用到这个插件）。</li>
+<li>Alibaba 开源的 Java 诊断工具 Arthas 也是很不错的选择。</li>
+<li>IDEA 自带的代码分析等工具进行代码扫描也是非常非常棒的。</li>
+</ol>
+<h3 id="2-使用集群，减少单点故障"><a href="#2-使用集群，减少单点故障" class="headerlink" title="2.使用集群，减少单点故障"></a>2.使用集群，减少单点故障</h3><p>先拿常用的 Redis 举个例子！我们如何保证我们的 Redis 缓存高可用呢？答案就是使用集群，避免单点故障。当我们使用一个 Redis 实例作为缓存的时候，这个 Redis 实例挂了之后，整个缓存服务可能就挂了。使用了集群之后，即使一台 Redis 实例，不到一秒就会有另外一台 Redis 实例顶上。</p>
+<h3 id="3-限流"><a href="#3-限流" class="headerlink" title="3.限流"></a>3.限流</h3><p>流量控制（flow control），其原理是监控应用流量的 QPS 或并发线程数等指标，当达到指定的阈值时对流量进行控制，以避免被瞬时的流量高峰冲垮，从而保障应用的高可用性。——来自 alibaba-<a target="_blank" rel="noopener" href="https://github.com/alibaba/Sentinel">Sentinel</a> 的 wiki。</p>
+<h3 id="4-超时和重试机制设置"><a href="#4-超时和重试机制设置" class="headerlink" title="4.超时和重试机制设置"></a>4.超时和重试机制设置</h3><p>一旦用户请求超过某个时间的得不到响应，就抛出异常。这个是非常重要的，很多线上系统故障都是因为没有进行超时设置或者超时设置的方式不对导致的。我们在读取第三方服务的时候，尤其适合设置超时和重试机制。一般我们使用一些 RPC 框架的时候，这些框架都自带的超时重试的配置。如果不进行超时设置可能会导致请求响应速度慢，甚至导致请求堆积进而让系统无法在处理请求。重试的次数一般设为 3 次，再多次的重试没有好处，反而会加重服务器压力（部分场景使用失败重试机制会不太适合）。</p>
+<h3 id="5-熔断机制"><a href="#5-熔断机制" class="headerlink" title="5.熔断机制"></a>5.熔断机制</h3><p>超时和重试机制设置之外，熔断机制也是很重要的。 熔断机制说的是系统自动收集所依赖服务的资源使用情况和性能指标，当所依赖的服务恶化或者调用失败次数达到某个阈值的时候就迅速失败，让当前系统立即切换依赖其他备用服务。 比较常用的是流量控制和熔断降级框架是 Netflix 的 Hystrix 和 alibaba 的 Sentinel。</p>
+<h3 id="6-异步调用"><a href="#6-异步调用" class="headerlink" title="6.异步调用"></a>6.异步调用</h3><p>异步调用的话我们不需要关心最后的结果，这样我们就可以用户请求完成之后就立即返回结果，具体处理我们可以后续再做，秒杀场景用这个还是蛮多的。但是，使用异步之后我们可能需要 <strong>适当修改业务流程进行配合</strong>，比如<strong>用户在提交订单之后，不能立即返回用户订单提交成功，需要在消息队列的订单消费者进程真正处理完该订单之后，甚至出库后，再通过电子邮件或短信通知用户订单成功</strong>。除了可以在程序中实现异步之外，我们常常还使用消息队列，消息队列可以通过异步处理提高系统性能（削峰、减少响应所需时间）并且可以降低系统耦合性。</p>
+<h3 id="7-使用缓存"><a href="#7-使用缓存" class="headerlink" title="7.使用缓存"></a>7.使用缓存</h3><p>如果我们的系统属于并发量比较高的话，如果我们单纯使用数据库的话，当大量请求直接落到数据库可能数据库就会直接挂掉。使用缓存缓存热点数据，因为缓存存储在内存中，所以速度相当地快！</p>
+<h3 id="8-其他"><a href="#8-其他" class="headerlink" title="8.其他"></a>8.其他</h3><ol>
+<li><strong>核心应用和服务优先使用更好的硬件</strong></li>
+<li><strong>监控系统资源使用情况增加报警设置。</strong></li>
+<li><strong>注意备份，必要时候回滚。</strong></li>
+<li><strong>灰度发布：</strong> 将服务器集群分成若干部分，每天只发布一部分机器，观察运行稳定没有故障，第二天继续发布一部分机器，持续几天才把整个集群全部发布完毕，期间如果发现问题，只需要回滚已发布的一部分服务器即可</li>
+<li><strong>定期检查&#x2F;更换硬件：</strong> 如果不是购买的云服务的话，定期还是需要对硬件进行一波检查的，对于一些需要更换或者升级的硬件，要及时更换或者升级。</li>
+<li>…..(想起来再补充！也欢迎各位欢迎补充！)</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210213235715.png" alt="如何设计高可用系统？"></p>
 
     
 
@@ -1093,11 +1037,582 @@
   <div class="article-info article-info-index">
     
     
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
     
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/posts/4a17b156.html">展开全文 >></a>
+      <a class="article-more-a" href="/posts/75203a6f.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-interview/计算机基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/c783f2ce.html" target="_blank">计算机基础</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/c783f2ce.html" class="archive-article-date">
+        <time datetime="2021-01-30T05:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-30</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <hr>
+<h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><h2 id="介绍下Linux（Unix）操作系统的五种IO模型"><a href="#介绍下Linux（Unix）操作系统的五种IO模型" class="headerlink" title="介绍下Linux（Unix）操作系统的五种IO模型"></a>介绍下Linux（Unix）操作系统的五种IO模型</h2><p>在Linux(UNIX)操作系统中，共有五种IO模型，分别是：<strong>阻塞IO模型</strong>、<strong>非阻塞IO模型</strong>、<strong>IO复用模型</strong>、<strong>信号驱动IO模型</strong>以及<strong>异步IO模型</strong>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210126103811.jpeg" alt="图片"></p>
+<p>我们说阻塞IO模型、非阻塞IO模型、IO复用模型和信号驱动IO模型都是同步的IO模型。原因是因为，无论以上那种模型，真正的数据拷贝过程，都是同步进行的。</p>
+<p><strong>同步和异步：</strong></p>
+<p>从操作系统角度来说，<strong>网络IO的数据拷贝主要分为两个阶段，一是数据准备阶段，二是数据从内核拷贝到用户中。</strong></p>
+<p>同步IO指的是数据从内核拷贝到用户时。发起该请求的线程会自己来拷贝数据（表现为线程阻塞拷贝）。</p>
+<p>PS：一旦涉及到网络 IO必定会发生数据拷贝的阻塞（此阻塞非彼阻塞，这里的阻塞形容的是拷贝数据相对于CPU的速度来说是非常耗时的，看起来像线程阻塞了一样。我们常说的阻塞是线程挂起并让出CPU），只不过阻塞发生在其他的地方（自己来拷贝就是同步的，别人帮我拷贝就是异步的），因为IO必定会用到CPU，即使是零拷贝。</p>
+<p><strong>阻塞和非阻塞：</strong></p>
+<p>阻塞和非阻塞主要描述的是网络IO数据拷贝的第一个阶段。</p>
+<p>阻塞指的是线程一直等待数据准备好，期间什么都不干，但是会让出CPU，这样其他线程可以执行（CPU的利用率比较高），数据准备好之后自己来拷贝数据。</p>
+<p>非阻塞指的是在第一阶段，发起网络IO请求的时候会立即返回去干别的事情，但是会不断地进行询问数据是否准备好，这种方式称之为轮询。由于CPU要处理更多的系统调用（每次询问都是系统调用），这种模型的CPU利用率低。</p>
+<h2 id="NIO是如何实现同步非阻塞的呢？"><a href="#NIO是如何实现同步非阻塞的呢？" class="headerlink" title="NIO是如何实现同步非阻塞的呢？"></a>NIO是如何实现同步非阻塞的呢？</h2><p>Java的NIO实现采用了同步非阻塞IO和IO多路复用，其核心组件是Selector。Selector会不断的主动的询问Channel是否有事件发生，有事件发生，会进行事件处理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//java nio</span></span><br><span class="line"><span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">  ......</span><br><span class="line">  selector.select(<span class="number">1</span>); <span class="comment">//不阻塞</span></span><br><span class="line">  Set&lt;SelectionKey&gt; selectionKeySet= selector.selectedKeys();</span><br><span class="line">  ......</span><br><span class="line">  <span class="comment">//处理selectionKeySet中事件,线程没有阻塞</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//java socket处理连接，线程会阻塞</span></span><br><span class="line"><span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">  ......</span><br><span class="line">  <span class="type">Socket</span> <span class="variable">socket</span> <span class="operator">=</span> serverSocket.accept(); <span class="comment">//阻塞</span></span><br><span class="line">  <span class="type">InputStream</span> <span class="variable">in</span> <span class="operator">=</span> socket.getInputStream(); </span><br><span class="line">  ......</span><br><span class="line">  <span class="comment">//处理in中内容</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Netty采用的是NIO其对Java的NIO进行了改进，其内部也封装了Selector和Channel，采用串行并发来提高效率。</p>
+<p>Java的NIO采用的是Reactor线程模型中的单Reactor单线程模型（前台和服务员是一个人，全程为顾客服务，可以服务多个人），Netty的NIO采用的是主从Reactor模型，是多Reactor多线程模型。</p>
+<h2 id="I-O-多路复用"><a href="#I-O-多路复用" class="headerlink" title="I&#x2F;O 多路复用"></a>I&#x2F;O 多路复用</h2><p><a target="_blank" rel="noopener" href="https://imageslr.com/2020/02/27/select-poll-epoll.html#%E4%BB%8E%E9%98%BB%E5%A1%9E-io-%E5%88%B0-io-%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8">参考：从阻塞-io-到-io-多路复用</a></p>
+<h3 id="select-的缺点"><a href="#select-的缺点" class="headerlink" title="select 的缺点"></a>select 的缺点</h3><ol>
+<li>性能开销大<ol>
+<li>调用 <code>select</code> 时会陷入内核，这时需要将参数中的 <code>fd_set</code> 从用户空间拷贝到内核空间</li>
+<li>内核需要遍历传递进来的所有 <code>fd_set</code> 的每一位，不管它们是否就绪</li>
+</ol>
+</li>
+<li>同时能够监听的文件描述符数量太少。受限于 <code>sizeof(fd_set)</code> 的大小，在编译内核时就确定了且无法更改。一般是 1024，不同的操作系统不相同</li>
+</ol>
+<h3 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h3><p>poll 和 select 几乎没有区别。poll 采用链表的方式存储文件描述符，没有最大存储数量的限制。</p>
+<p>从性能开销上看，poll 和 select 的差别不大。</p>
+<h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h3><p>epoll 是对 select 和 poll 的改进，避免了“性能开销大”和“文件描述符数量少”两个缺点。</p>
+<p>简而言之，epoll 有以下几个特点：</p>
+<ul>
+<li>使用<strong>红黑树</strong>存储文件描述符集合</li>
+<li>使用<strong>队列</strong>存储就绪的文件描述符</li>
+<li>每个文件描述符只需在添加时传入一次；通过事件更改文件描述符状态</li>
+</ul>
+<p>select、poll 模型都只使用一个函数，而 epoll 模型使用三个函数：<code>epoll_create</code>、<code>epoll_ctl</code> 和 <code>epoll_wait</code>。</p>
+<h3 id="epoll-的优点"><a href="#epoll-的优点" class="headerlink" title="epoll 的优点"></a>epoll 的优点</h3><p>一开始说，epoll 是对 select 和 poll 的改进，避免了“性能开销大”和“文件描述符数量少”两个缺点。</p>
+<p>对于“文件描述符数量少”，select 使用整型数组存储文件描述符集合，而 epoll 使用红黑树存储，数量较大。</p>
+<p>对于“性能开销大”，<code>epoll_ctl</code> 中为每个文件描述符指定了回调函数，并在就绪时将其加入到就绪列表，因此 epoll 不需要像 <code>select</code> 那样遍历检测每个文件描述符，只需要判断就绪列表是否为空即可。这样，在没有描述符就绪时，epoll 能更早地让出系统资源。</p>
+<blockquote>
+<p>相当于时间复杂度从 O(n) 降为 O(1)</p>
+</blockquote>
+<p>此外，每次调用 <code>select</code> 时都需要向内核拷贝所有要监听的描述符集合，而 epoll 对于每个描述符，只需要在 <code>epoll_ctl</code> 传递一次，之后 <code>epoll_wait</code> 不需要再次传递。这也大大提高了效率。</p>
+<h3 id="水平触发、边缘触发"><a href="#水平触发、边缘触发" class="headerlink" title="水平触发、边缘触发"></a>水平触发、边缘触发</h3><p><code>select</code> 只支持水平触发，<code>epoll</code> 支持水平触发和边缘触发。</p>
+<p>水平触发（LT，Level Trigger）：当文件描述符就绪时，会触发通知，如果用户程序没有一次性把数据读&#x2F;写完，下次还会发出可读&#x2F;可写信号进行通知。</p>
+<p>边缘触发（ET，Edge Trigger）：仅当描述符从未就绪变为就绪时，通知一次，之后不会再通知。</p>
+<p>区别：边缘触发效率更高，<strong>减少了事件被重复触发的次数</strong>，函数不会返回大量用户程序可能不需要的文件描述符。</p>
+<blockquote>
+<p>水平触发、边缘触发的名称来源：数字电路当中的电位水平，高低电平切换瞬间的触发动作叫边缘触发，而处于高电平的触发动作叫做水平触发。</p>
+</blockquote>
+<h3 id="为什么边缘触发必须使用非阻塞-I-O？"><a href="#为什么边缘触发必须使用非阻塞-I-O？" class="headerlink" title="为什么边缘触发必须使用非阻塞 I&#x2F;O？"></a>为什么边缘触发必须使用非阻塞 I&#x2F;O？</h3><p>关于这个问题的解答，强烈建议阅读<a target="_blank" rel="noopener" href="https://eklitzke.org/blocking-io-nonblocking-io-and-epoll">这篇文章</a>。下面是一些关键摘要：</p>
+<ul>
+<li>每次通过 <code>read</code> 系统调用读取数据时，最多只能读取缓冲区大小的字节数；如果某个文件描述符一次性收到的数据超过了缓冲区的大小，那么需要对其 <code>read</code> 多次才能全部读取完毕</li>
+<li><strong><code>select</code> 可以使用阻塞 I&#x2F;O</strong>。通过 <code>select</code> 获取到所有可读的文件描述符后，遍历每个文件描述符，<code>read</code> <strong>一次</strong>数据（见上文 <a target="_blank" rel="noopener" href="https://imageslr.com/2020/02/27/select-poll-epoll.html#selectdemo">select 示例</a>）<ul>
+<li>这些文件描述符都是可读的，因此即使 <code>read</code> 是阻塞 I&#x2F;O，也一定可以读到数据，不会一直阻塞下去</li>
+<li><code>select</code> 采用水平触发模式，因此如果第一次 <code>read</code> 没有读取完全部数据，那么下次调用 <code>select</code> 时依然会返回这个文件描述符，可以再次 <code>read</code></li>
+<li><strong><code>select</code> 也可以使用非阻塞 I&#x2F;O</strong>。当遍历某个可读文件描述符时，使用 <code>for</code> 循环调用 <code>read</code> <strong>多次</strong>，直到读取完所有数据为止（返回 <code>EWOULDBLOCK</code>）。这样做会多一次 <code>read</code> 调用，但可以减少调用 <code>select</code> 的次数</li>
+</ul>
+</li>
+<li>在 <code>epoll</code> 的边缘触发模式下，只会在文件描述符的可读&#x2F;可写状态发生切换时，才会收到操作系统的通知<ul>
+<li>因此，如果使用 <code>epoll</code> 的<strong>边缘触发模式</strong>，在收到通知时，<strong>必须使用非阻塞 I&#x2F;O，并且必须循环调用 <code>read</code> 或 <code>write</code> 多次，直到返回 <code>EWOULDBLOCK</code> 为止</strong>，然后再调用 <code>epoll_wait</code> 等待操作系统的下一次通知</li>
+<li>如果没有一次性读&#x2F;写完所有数据，那么在操作系统看来这个文件描述符的状态没有发生改变，将不会再发起通知，调用 <code>epoll_wait</code> 会使得该文件描述符一直等待下去，服务端也会一直等待客户端的响应，业务流程无法走完</li>
+<li>这样做的好处是每次调用 <code>epoll_wait</code> 都是<strong>有效</strong>的——保证数据全部读写完毕了，等待下次通知。在水平触发模式下，如果调用 <code>epoll_wait</code> 时数据没有读&#x2F;写完毕，会直接返回，再次通知。因此边缘触发能显著减少事件被触发的次数</li>
+<li>为什么 <code>epoll</code> 的<strong>边缘触发模式不能使用阻塞 I&#x2F;O</strong>？很显然，边缘触发模式需要循环读&#x2F;写一个文件描述符的所有数据。如果使用阻塞 I&#x2F;O，那么一定会在最后一次调用（没有数据可读&#x2F;写）时阻塞，导致无法正常结束</li>
+</ul>
+</li>
+</ul>
+<h3 id="三者对比"><a href="#三者对比" class="headerlink" title="三者对比"></a>三者对比</h3><ul>
+<li><code>select</code>：调用开销大（需要复制集合）；集合大小有限制；需要遍历整个集合找到就绪的描述符</li>
+<li><code>poll</code>：poll 采用链表的方式存储文件描述符，没有最大存储数量的限制，其他方面和 select 没有区别</li>
+<li><code>epoll</code>：调用开销小（不需要复制）；集合大小无限制；采用回调机制，不需要遍历整个集合</li>
+</ul>
+<p><code>select</code>、<code>poll</code> 都是在用户态维护文件描述符集合，因此每次需要将完整集合传给内核；<code>epoll</code> 由操作系统在内核中维护文件描述符集合，因此只需要在创建的时候传入文件描述符。</p>
+<p>此外 <code>select</code> 只支持水平触发，<code>epoll</code> 支持边缘触发。</p>
+<h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h3><p>当连接数较多并且有很多的不活跃连接时，epoll 的效率比其它两者高很多。当连接数较少并且都十分活跃的情况下，由于 epoll 需要很多回调，因此性能可能低于其它两者。</p>
+<h3 id="Redis-的线程模型"><a href="#Redis-的线程模型" class="headerlink" title="Redis 的线程模型"></a>Redis 的线程模型</h3><p>Redis 是一个单线程的工作模型，使用 I&#x2F;O 多路复用来处理客户端的多个连接。为什么 Redis 选择单线程也能效率这么高？</p>
+<p>I&#x2F;O 设备（如磁盘、网络）等速度远远慢于 CPU，因此引入了多线程技术。当一个线程发起 I&#x2F;O 请求时，先将它挂起，切换到别的线程；当 I&#x2F;O 设备就绪时，再切换回该线程。总之，<strong>多线程技术是为了充分利用 CPU 的计算资源，适用于下层存储慢速的场景</strong>。</p>
+<p>而 redis 是纯内存操作，读写速度非常快。所有的操作都会在内存中完成，不涉及任何 I&#x2F;O 操作，因此<strong>多线程频繁的上下文切换反而是一种负优化</strong>。Redis 选择基于非阻塞 I&#x2F;O 的 <strong>I&#x2F;O 多路复用机制</strong>，在单线程里<strong>并发</strong>处理客户端的多个连接，减少多线程带来的系统开销，同时也有更好的可维护性，方便开发和调试。</p>
+<p>不过 redis 在最新的几个版本中也引入了多线程，目的是：</p>
+<ol>
+<li>异步处理删除操作。当删除超大键值对的时候，单线程内同步地删除可能会阻塞待处理的任务</li>
+<li>应对网络 I&#x2F;O 的场景，网络 I&#x2F;O 是慢速 I&#x2F;O。redis6 吞吐量提高了 1 倍</li>
+</ol>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/c783f2ce.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-interview/Redis常见面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/bf7bdd05.html" target="_blank">Redis常见面试题</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/bf7bdd05.html" class="archive-article-date">
+        <time datetime="2021-01-23T08:24:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-23</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <hr>
+<h2 id="Redis线程模型"><a href="#Redis线程模型" class="headerlink" title="Redis线程模型"></a>Redis线程模型</h2><h3 id="Redis单线程的理解，Redis-为什么早期版本选择单线程？"><a href="#Redis单线程的理解，Redis-为什么早期版本选择单线程？" class="headerlink" title="Redis单线程的理解，Redis 为什么早期版本选择单线程？"></a>Redis单线程的理解，Redis 为什么早期版本选择单线程？</h3><h4 id="官方解释"><a href="#官方解释" class="headerlink" title="官方解释"></a>官方解释</h4><p>因为 Redis 是基于内存的操作，<strong>CPU 不是 Redis 的瓶颈</strong>，Redis 的瓶颈最有可能是 <strong>机器内存的大小</strong> 或者 <strong>网络带宽</strong>。既然单线程容易实现，而且 CPU 不会成为瓶颈，那就顺理成章地采用单线程的方案了。</p>
+<blockquote>
+<p>首先，我们需要明白，多线程解决的问题。当一个线程处理的任务是I&#x2F;O密集型的，而I&#x2F;O传输数据很慢，因此线程总是处于等待数据传输，从而造成CPU资源的浪费。这时我们可以开辟多个线程，当一个线程在等待I&#x2F;O传输时，调度其他线程进行任务处理。<br>然而，redis所有的数据都存储在内存中，此时并不需要I&#x2F;O操作。而多线程调度还会造成额外的开销且实现复杂。<br>最终，选用单线程即可。</p>
+</blockquote>
+<p>一种解释：</p>
+<p>因为Redis是基于内存的操作，CPU不是Redis的瓶颈，Redis的瓶颈最有可能是机器内存的大小或者网络带宽。既然单线程容易实现，而且CPU不会成为瓶颈，那就顺理成章地采用单线程的方案了。</p>
+<h4 id="简单总结一下"><a href="#简单总结一下" class="headerlink" title="简单总结一下"></a>简单总结一下</h4><ol>
+<li>使用单线程模型能带来更好的 <strong>可维护性</strong>，方便开发和调试；</li>
+<li>使用单线程模型也能 <strong>并发</strong> 的处理客户端的请求(I&#x2F;O 多路复用机制epoll)；</li>
+<li>Redis 服务中运行的绝大多数操作的 <strong>性能瓶颈都不是 CPU</strong>；</li>
+</ol>
+<h3 id="Redis为什么这么快？"><a href="#Redis为什么这么快？" class="headerlink" title="Redis为什么这么快？"></a>Redis为什么这么快？</h3><p>简单总结：</p>
+<ol>
+<li><strong>纯内存操作</strong>：读取不需要进行磁盘 I&#x2F;O，所以比传统数据库要快上不少；*(但不要有误区说磁盘就一定慢，例如 Kafka 就是使用磁盘顺序读取但仍然较快)*</li>
+<li><strong>单线程，无锁竞争</strong>：这保证了没有线程的上下文切换，不会因为多线程的一些操作而降低性能；</li>
+<li><strong>多路 I&#x2F;O 复用模型，非阻塞 I&#x2F;O</strong>：采用多路 I&#x2F;O 复用技术可以让单个线程高效的处理多个网络连接请求（尽量减少网络 IO 的时间消耗）；</li>
+<li><strong>高效的数据结构，加上底层做了大量优化</strong>：Redis 对于底层的数据结构和内存占用做了大量的优化，例如不同长度的字符串使用不同的结构体表示，HyperLogLog 的密集型存储结构等等..</li>
+</ol>
+<h2 id="Redis数据结构"><a href="#Redis数据结构" class="headerlink" title="Redis数据结构"></a>Redis数据结构</h2><h3 id="Redis-的-SDS-和-C-中字符串相比有什么优势？"><a href="#Redis-的-SDS-和-C-中字符串相比有什么优势？" class="headerlink" title="Redis 的 SDS 和 C 中字符串相比有什么优势？"></a>Redis 的 SDS 和 C 中字符串相比有什么优势？</h3><h4 id="先简单总结一下"><a href="#先简单总结一下" class="headerlink" title="先简单总结一下"></a>先简单总结一下</h4><p>C 语言使用了一个长度为 <code>N+1</code> 的字符数组来表示长度为 <code>N</code> 的字符串，并且字符数组最后一个元素总是 <code>\0</code>，这种简单的字符串表示方式 <strong>不符合 Redis 对字符串在安全性、效率以及功能方面的要求</strong>。</p>
+<h4 id="再来说-C-语言字符串的问题"><a href="#再来说-C-语言字符串的问题" class="headerlink" title="再来说 C 语言字符串的问题"></a>再来说 C 语言字符串的问题</h4><p>这样简单的数据结构可能会造成以下一些问题：</p>
+<ul>
+<li><strong>获取字符串长度为 O(N) 级别的操作</strong> → 因为 C 不保存数组的长度，每次都需要遍历一遍整个数组；</li>
+<li>不能很好的杜绝 <strong>缓冲区溢出&#x2F;内存泄漏</strong> 的问题 → 跟上述问题原因一样，如果执行拼接 or 缩短字符串的操作，如果操作不当就很容易造成上述问题；</li>
+<li>C 字符串 <strong>只能保存文本数据</strong> → 因为 C 语言中的字符串必须符合某种编码（比如 ASCII），例如中间出现的 <code>&#39;\0&#39;</code> 可能会被判定为提前结束的字符串而识别不了；</li>
+</ul>
+<h4 id="Redis-如何解决的-SDS-的优势"><a href="#Redis-如何解决的-SDS-的优势" class="headerlink" title="Redis 如何解决的 | SDS 的优势"></a>Redis 如何解决的 | SDS 的优势</h4><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210228212624.webp" alt="图片"></p>
+<p>如果去看 Redis 的源码 <code>sds.h/sdshdr</code> 文件，你会看到 SDS 完整的实现细节，这里简单来说一下 Redis 如何解决的：</p>
+<ol>
+<li><strong>多增加 len 表示当前字符串的长度</strong>：这样就可以直接获取长度了，复杂度 O(1)；</li>
+<li><strong>自动扩展空间</strong>：当 SDS 需要对字符串进行修改时，首先借助于 <code>len</code> 和 <code>alloc</code> 检查空间是否满足修改所需的要求，如果空间不够的话，SDS 会自动扩展空间，避免了像 C 字符串操作中的覆盖情况；</li>
+<li><strong>有效降低内存分配次数</strong>：C 字符串在涉及增加或者清除操作时会改变底层数组的大小造成重新分配，SDS 使用了 <strong>空间预分配</strong> 和 <strong>惰性空间释放</strong> 机制，简单理解就是每次在扩展时是成倍的多分配的，在缩容是也是先留着并不正式归还给 OS；</li>
+<li><strong>二进制安全</strong>：C 语言字符串只能保存 <code>ascii</code> 码，对于图片、音频等信息无法保存，SDS 是二进制安全的，写入什么读取就是什么，不做任何过滤和限制；</li>
+</ol>
+<h3 id="字典是如何实现的？Rehash-了解吗？"><a href="#字典是如何实现的？Rehash-了解吗？" class="headerlink" title="字典是如何实现的？Rehash 了解吗？"></a>字典是如何实现的？Rehash 了解吗？</h3><h4 id="先总体聊一下-Redis-中的字典"><a href="#先总体聊一下-Redis-中的字典" class="headerlink" title="先总体聊一下 Redis 中的字典"></a>先总体聊一下 Redis 中的字典</h4><p>字典是 Redis 服务器中出现最为频繁的复合型数据结构。除了 <strong>hash</strong> 结构的数据会用到字典外，整个 Redis 数据库的所有 <code>key</code> 和 <code>value</code> 也组成了一个 <strong>全局字典</strong>，还有带过期时间的 <code>key</code> 也是一个字典。*(存储在 RedisDb 数据结构中)*</p>
+<h4 id="说明字典内部结构和-rehash"><a href="#说明字典内部结构和-rehash" class="headerlink" title="说明字典内部结构和 rehash"></a>说明字典内部结构和 rehash</h4><p><strong>Redis</strong> 中的字典相当于 Java 中的 <strong>HashMap</strong>，内部实现也差不多类似，都是通过 <strong>“数组 + 链表”</strong> 的 <strong>链地址法</strong> 来解决部分 哈希冲突，同时这样的结构也吸收了两种不同数据结构的优点。</p>
+<p>字典结构内部包含 <strong>两个 hashtable</strong>，通常情况下只有一个 <code>hashtable</code> 有值，但是在字典扩容缩容时，需要分配新的 <code>hashtable</code>，然后进行 <strong>渐进式搬迁</strong> *(rehash)*，这时候两个 <code>hashtable</code> 分别存储旧的和新的 <code>hashtable</code>，待搬迁结束后，旧的将被删除，新的 <code>hashtable</code> 取而代之。</p>
+<h4 id="扩缩容的条件"><a href="#扩缩容的条件" class="headerlink" title="扩缩容的条件"></a>扩缩容的条件</h4><p>正常情况下，当 hash 表中 <strong>元素的个数等于第一维数组的长度时</strong>，就会开始扩容，扩容的新数组是 <strong>原数组大小的 2 倍</strong>。不过如果 Redis 正在做 <code>bgsave(持久化命令)</code>，为了减少内存过多分离，Redis 尽量不去扩容，但是如果 hash 表非常满了，<strong>达到了第一维数组长度的 5 倍了</strong>，这个时候就会 <strong>强制扩容</strong>。</p>
+<p>当 hash 表因为元素逐渐被删除变得越来越稀疏时，Redis 会对 hash 表进行缩容来减少 hash 表的第一维数组空间占用。所用的条件是 **元素个数低于数组长度的 10%**，缩容不会考虑 Redis 是否在做 <code>bgsave</code>。</p>
+<h4 id="渐进式rehash"><a href="#渐进式rehash" class="headerlink" title="渐进式rehash"></a>渐进式rehash</h4><h6 id="为什么需要渐进式rehash呢？"><a href="#为什么需要渐进式rehash呢？" class="headerlink" title="为什么需要渐进式rehash呢？"></a>为什么需要渐进式rehash呢？</h6><p>在元素数量较少时，rehash会非常快的进行，但是当元素数量达到几百、甚至几个亿时进行rehash将会是一个非常耗时的操作。如果一次性将成万上亿的元素的键值对rehash到ht[1]，庞大的计算量可能会导致服务器在一段时间内停止服务，这是非常危险的！所以，rehash这个动作不能一次性、集中式的完成，而是分多次、渐进式地完成。</p>
+<h6 id="渐进式rehash步骤："><a href="#渐进式rehash步骤：" class="headerlink" title="渐进式rehash步骤："></a><strong>渐进式rehash步骤：</strong></h6><ol>
+<li>为<code>ht[1]</code>分配空间，让字典同时持有<code>ht[0]</code>和<code>ht[1]</code>两个哈希表。</li>
+<li>在字典中维持一个索引计数器变量rehashidx，并将它的值设置为0，表示rehash工作正式开始。</li>
+<li>在rehash进行期间，每次对字典执行CRUD：添加、删除、查找或者更新操作时，程序除了执行指定的操作以外，还会顺带将<code>ht[0]</code>哈希表在rehashidx索引上的所有键值对rehash到<code>ht[1]</code>，当rehash工作完成之后，程序将rehashidx+1(表示下次将rehash下一个桶)。</li>
+<li>随着字典操作的不断执行，最终在某个时间点上，<code>ht[0]</code>的所有键值对都会被rehash至<code>ht[1]</code>，这时程序将rehashidx属性的值设为-1，表示rehash完成。</li>
+</ol>
+<p><strong>渐进式rehash的好处在于它采取分而治之的方式，将rehash键值对所需的计算工作均摊到对字典的每个添加、删除、查找和更新操作上，从而避免了集中式rehash 而带来的庞大计算量。</strong></p>
+<p><strong>需要注意的是在渐进式rehash的过程，如果有增删改查操作时，如果<code>index</code>大于<code>rehashindex</code>，访问<code>ht[0]</code>，否则访问<code>ht[1]。</code></strong></p>
+<h6 id="搬迁是埋伏在客户端请求指令当中，如果客户端闲置下来，没有后续指令触发这个搬迁，未搬迁完的的数据怎么办？"><a href="#搬迁是埋伏在客户端请求指令当中，如果客户端闲置下来，没有后续指令触发这个搬迁，未搬迁完的的数据怎么办？" class="headerlink" title="搬迁是埋伏在客户端请求指令当中，如果客户端闲置下来，没有后续指令触发这个搬迁，未搬迁完的的数据怎么办？"></a><strong>搬迁是埋伏在客户端请求指令当中，如果客户端闲置下来，没有后续指令触发这个搬迁，未搬迁完的的数据怎么办？</strong></h6><p>Redis 还会在定时任务中对字典进行主动搬迁。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 服务器定时任务</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">databaseCron</span><span class="params">()</span> </span>&#123;</span><br><span class="line"> ...</span><br><span class="line"> <span class="keyword">if</span> (server.activerehashing) &#123;</span><br><span class="line"> <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; dbs_per_call; j++) &#123;</span><br><span class="line"> <span class="type">int</span> work_done = <span class="built_in">incrementallyRehash</span>(rehash_db);</span><br><span class="line"> <span class="keyword">if</span> (work_done) &#123;</span><br><span class="line"> <span class="comment">/* If the function did some work, stop here, we&#x27;ll do</span></span><br><span class="line"><span class="comment"> * more at the next cron loop. */</span></span><br><span class="line"> <span class="keyword">break</span>;</span><br><span class="line"> &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"> <span class="comment">/* If this db didn&#x27;t need rehash, we&#x27;ll try the next one. */</span></span><br><span class="line"> rehash_db++;</span><br><span class="line"> rehash_db %= server.dbnum;</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="渐进式rehash的疑问"><a href="#渐进式rehash的疑问" class="headerlink" title="渐进式rehash的疑问"></a><strong>渐进式rehash的疑问</strong></h6><ol>
+<li><p>在迁移的过程中，会不会造成读少数据?</p>
+<blockquote>
+<p>不会，因为在迁移时，首先会从ht[0]读取数据，如果ht[0]读不到，则会去ht[1]读。</p>
+</blockquote>
+</li>
+<li><p>在迁移过程中，新增加的数据会存放在哪个ht?</p>
+<blockquote>
+<p>迁移过程中，新增的数据只会存在ht[1]中，而不会存放到ht[0]，ht[0]只会减少不会新增。</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="跳跃表"><a href="#跳跃表" class="headerlink" title="跳跃表"></a>跳跃表</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg5MzU2NDgyNw==&mid=2247487151&idx=1&sn=30b017e0d25b80848e645fc77d772655&source=41&poc_token=HGTkhWijw4ULfZ3mXoRydh5A1uN2Dm2NbbtJxx0k">Redis(2)——跳跃表</a></li>
+</ul>
+<h2 id="Redis高可用"><a href="#Redis高可用" class="headerlink" title="Redis高可用"></a>Redis高可用</h2><h3 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h3><h4 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h4><p><strong>Redis 快照</strong> 是最简单的 Redis 持久性模式。当满足特定条件时，它将生成数据集的时间点快照，例如，如果先前的快照是在 2 分钟前创建的，并且现在已经至少有 <code>100</code> 次新写入，则将创建一个新的快照。此条件可以由用户配置 Redis 实例来控制，也可以在运行时修改而无需重新启动服务器。快照作为包含整个数据集的单个 <code>.rdb</code> 文件生成。</p>
+<h4 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h4><p><strong>快照不是很持久</strong>。如果运行 Redis 的计算机停止运行，电源线出现故障或者您 <code>kill -9</code> 的实例意外发生，则写入 Redis 的最新数据将丢失。尽管这对于某些应用程序可能不是什么大问题，但有些使用案例具有充分的耐用性，在这些情况下，快照并不是可行的选择。</p>
+<p><strong>AOF(Append Only File - 仅追加文件)</strong> 它的工作方式非常简单：每次执行 <strong>修改内存</strong> 中数据集的写操作时，都会 <strong>记录</strong> 该操作。假设 AOF 日志记录了自 Redis 实例创建以来 <strong>所有的修改性指令序列</strong>，那么就可以通过对一个空的 Redis 实例 <strong>顺序执行所有的指令</strong>，也就是 <strong>「重放」</strong>，来恢复 Redis 当前实例的内存数据结构的状态。</p>
+<h4 id="Redis-4-0-的混合持久化"><a href="#Redis-4-0-的混合持久化" class="headerlink" title="Redis 4.0 的混合持久化"></a>Redis 4.0 的混合持久化</h4><p>重启 Redis 时，我们很少使用 <code>rdb</code> 来恢复内存状态，因为会丢失大量数据。我们通常使用 AOF 日志重放，但是重放 AOF 日志性能相对 <code>rdb</code> 来说要慢很多，这样在 Redis 实例很大的情况下，启动需要花费很长的时间。</p>
+<p><strong>Redis 4.0</strong> 为了解决这个问题，带来了一个新的持久化选项——<strong>混合持久化</strong>。将 <code>rdb</code> 文件的内容和增量的 AOF 日志文件存在一起。这里的 AOF 日志不再是全量的日志，而是 <strong>自持久化开始到持久化结束</strong> 的这段时间发生的增量 AOF 日志，通常这部分 AOF 日志很小：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210509211524.webp" alt="图片"></p>
+<p>于是在 Redis 重启的时候，可以先加载 <code>rdb</code> 的内容，然后再重放增量 AOF 日志就可以完全替代之前的 AOF 全量文件重放，重启效率因此大幅得到提升。</p>
+<h4 id="RDB-和-AOF-各自有什么优缺点？"><a href="#RDB-和-AOF-各自有什么优缺点？" class="headerlink" title="RDB 和 AOF 各自有什么优缺点？"></a>RDB 和 AOF 各自有什么优缺点？</h4><h5 id="RDB-优点"><a href="#RDB-优点" class="headerlink" title="RDB | 优点"></a>RDB | 优点</h5><ol>
+<li>只有一个文件 <code>dump.rdb</code>，<strong>方便持久化</strong>。</li>
+<li><strong>容灾性好</strong>，一个文件可以保存到安全的磁盘。</li>
+<li><strong>性能最大化</strong>，<code>fork</code> 子进程来完成写操作，让主进程继续处理命令，所以使 IO 最大化。使用单独子进程来进行持久化，主进程不会进行任何 IO 操作，保证了 Redis 的高性能</li>
+<li>相对于数据集大时，比 AOF 的 <strong>启动效率</strong> 更高。</li>
+</ol>
+<h5 id="RDB-缺点"><a href="#RDB-缺点" class="headerlink" title="RDB | 缺点"></a>RDB | 缺点</h5><ol>
+<li><strong>数据安全性低</strong>。RDB 是间隔一段时间进行持久化，如果持久化之间 Redis 发生故障，会发生数据丢失。所以这种方式更适合数据要求不严谨的时候；</li>
+</ol>
+<h5 id="AOF-优点"><a href="#AOF-优点" class="headerlink" title="AOF | 优点"></a>AOF | 优点</h5><ol>
+<li><strong>数据安全</strong>，aof 持久化可以配置 <code>appendfsync</code> 属性，有 <code>always</code>，每进行一次命令操作就记录到 aof 文件中一次。</li>
+<li>通过 append 模式写文件，即使中途服务器宕机，可以通过 redis-check-aof 工具解决数据一致性问题。</li>
+<li>AOF 机制的 rewrite 模式。AOF 文件没被 rewrite 之前（文件过大时会对命令 进行合并重写），可以删除其中的某些命令（比如误操作的 flushall）</li>
+</ol>
+<h5 id="AOF-缺点"><a href="#AOF-缺点" class="headerlink" title="AOF | 缺点"></a>AOF | 缺点</h5><ol>
+<li>AOF 文件比 RDB <strong>文件大</strong>，且 <strong>恢复速度慢</strong>。</li>
+<li><strong>数据集大</strong> 的时候，比 rdb <strong>启动效率低</strong>。</li>
+</ol>
+<h4 id="两种方式如何选择？"><a href="#两种方式如何选择？" class="headerlink" title="两种方式如何选择？"></a>两种方式如何选择？</h4><ul>
+<li>一般来说， 如果想达到足以媲美 PostgreSQL 的 <strong>数据安全性</strong>，你应该 <strong>同时使用两种持久化功能</strong>。在这种情况下，当 Redis 重启的时候会优先载入 AOF 文件来恢复原始的数据，因为在通常情况下 AOF 文件保存的数据集要比 RDB 文件保存的数据集要完整。</li>
+<li>如果你非常关心你的数据， 但仍然 <strong>可以承受数分钟以内的数据丢失</strong>，那么你可以 <strong>只使用 RDB 持久化</strong>。</li>
+<li>有很多用户都只使用 AOF 持久化，但并不推荐这种方式，因为定时生成 RDB 快照（snapshot）非常便于进行数据库备份， 并且 RDB 恢复数据集的速度也要比 AOF 恢复的速度要快，除此之外，使用 RDB 还可以避免 AOF 程序的 bug。</li>
+<li>如果你只希望你的数据在服务器运行的时候存在，你也可以不使用任何持久化方式。</li>
+</ul>
+<h4 id="Redis-的数据恢复"><a href="#Redis-的数据恢复" class="headerlink" title="Redis 的数据恢复"></a>Redis 的数据恢复</h4><p><strong>Redis</strong> 的数据恢复有着如下的优先级：</p>
+<ol>
+<li>如果只配置 AOF ，重启时加载 AOF 文件恢复数据；</li>
+<li>如果同时配置了 RDB 和 AOF ，启动只加载 AOF 文件恢复数据；</li>
+<li>如果只配置 RDB，启动将加载 dump 文件恢复数据。</li>
+</ol>
+<p>拷贝 <strong>AOF</strong> 文件到 Redis 的数据目录，启动 redis-server AOF 的数据恢复过程：Redis 虚拟一个客户端，读取 AOF 文件恢复 Redis 命令和参数，然后执行命令从而恢复数据，这些过程主要在 <code>loadAppendOnlyFile()</code> 中实现。</p>
+<p>拷贝 <strong>RDB</strong> 文件到 Redis 的数据目录，启动 redis-server 即可，因为 RDB 文件和重启前保存的是真实数据而不是命令状态和参数。</p>
+<h3 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h3><h4 id="Redis主从复制核心原理"><a href="#Redis主从复制核心原理" class="headerlink" title="Redis主从复制核心原理"></a>Redis主从复制核心原理</h4><ol>
+<li>salve node启动，会发送一个<code>PSYNC</code>命令给master node</li>
+<li>如果是slave node初次连接到master node，会触发一次<code>full resynchronization</code> 全量复制。此时master回启动一个后台线程，生成<code>RDB</code>快照文件，同时将从客户端新收到的所有写命令缓存到内存中。<code>RDB</code> 文件生成完毕后， master 会将这个 <code>RDB</code> 发送给 slave，slave 会先<strong>写入本地磁盘，然后再从本地磁盘加载到内存</strong>中，接着 master 会将内存中缓存的写命令发送到 slave，slave 也会同步这些数据。</li>
+<li>slave node如果跟master node有网络故障，断开了链接，会自动重连，连接之后master node仅会复制给salve部分缺少的数据。<br><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021/20210119165016.png" alt="Redis-master-slave-replication"></li>
+</ol>
+<h4 id="主从复制是如何断点续传的？"><a href="#主从复制是如何断点续传的？" class="headerlink" title="主从复制是如何断点续传的？"></a>主从复制是如何断点续传的？</h4><p>从 Redis2.8 开始，就支持主从复制的断点续传，如果主从复制过程中，网络连接断掉了，那么可以接着上次复制的地方，继续复制下去，而不是从头开始复制一份。</p>
+<p>master node会在内存中维护一个backlog，master和slave都会保存一个replica offset还有一个master run id，offset就是保存在backlog中的。如果master和slave网络连接断掉了，slave会让master从上次replica offset开始复制，如果没有找到对应的offset，那么就会执行一次<code>resynchronization</code> 。</p>
+<blockquote>
+<p> 如果根据 host+ip 定位 master node，是不靠谱的，如果 master node 重启或者数据出现了变化，那么 slave node 应该根据不同的 run id 区分。</p>
+</blockquote>
+<h3 id="淘汰策略"><a href="#淘汰策略" class="headerlink" title="淘汰策略"></a>淘汰策略</h3><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg5MzU2NDgyNw==&mid=2247487138&idx=1&sn=0e580a60cf28707b012f7c2068ca2bbc&source=41#wechat_redirect">妈妈再也不担心我面试被Redis问得脸都绿了</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.51cto.com/article/668394.html">redis渐进式rehash</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.51cto.com/article/668394.html">Redis中的hash扩容渐进式rehash过程</a></li>
+</ol>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">redis</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/bf7bdd05.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-interview/多线程面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/531c5825.html" target="_blank">多线程面试题</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/531c5825.html" class="archive-article-date">
+        <time datetime="2021-01-23T08:23:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-23</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <hr>
+<h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><h3 id="进程和线程的区别？"><a href="#进程和线程的区别？" class="headerlink" title="进程和线程的区别？"></a>进程和线程的区别？</h3><h3 id="线程状态的切换"><a href="#线程状态的切换" class="headerlink" title="线程状态的切换"></a>线程状态的切换</h3><ul>
+<li>NEW（新建）</li>
+<li>RUNNABLE（可运行）</li>
+<li>BLOCKED（阻塞）</li>
+<li>WAITING（无限等待）</li>
+<li>TIMED_WAITING（限时等待&#x2F;超时等待）</li>
+<li>TERMINATED（终止）</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1754272950.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1754273794.png"></p>
+<h3 id="进程上下文切换开销都有哪些？"><a href="#进程上下文切换开销都有哪些？" class="headerlink" title="进程上下文切换开销都有哪些？"></a>进程上下文切换开销都有哪些？</h3><p>那么上下文切换的时候，CPU的开销都具体有哪些呢？开销分成两种，一种是直接开销、一种是间接开销。</p>
+<p>直接开销就是在切换时，cpu必须做的事情，包括：</p>
+<ul>
+<li><p>1、切换页表全局目录</p>
+</li>
+<li><p>2、切换内核态堆栈</p>
+</li>
+<li><p>3、切换硬件上下文（进程恢复前，必须装入寄存器的数据统称为硬件上下文）</p>
+</li>
+<li><ul>
+<li>ip(instruction pointer)：指向当前执行指令的下一条指令</li>
+<li>bp(base pointer): 用于存放执行中的函数对应的栈帧的栈底地址</li>
+<li>sp(stack poinger): 用于存放执行中的函数对应的栈帧的栈顶地址</li>
+<li>cr3:页目录基址寄存器，保存页目录表的物理地址</li>
+<li>……</li>
+</ul>
+</li>
+<li><p>4、刷新TLB</p>
+</li>
+<li><p>5、系统调度器的代码执行</p>
+</li>
+</ul>
+<p>间接开销主要指的是虽然切换到一个新进程后，由于各种缓存并不热，速度运行会慢一些。如果进程始终都在一个CPU上调度还好一些，如果跨CPU的话，之前热起来的TLB、L1、L2、L3因为运行的进程已经变了，所以以局部性原理cache起来的代码、数据也都没有用了，导致新进程穿透到内存的IO会变多。其实我们上面的实验并没有很好地测量到这种情况，所以实际的上下文切换开销可能比3.5us要大。</p>
+<p>想了解更详细操作过程的同学请参考《深入理解Linux内核》中的第三章和第九章。</p>
+<h3 id="线程上下文切换"><a href="#线程上下文切换" class="headerlink" title="线程上下文切换"></a>线程上下文切换</h3><p>上下文切换：</p>
+<p>多线程编程中一般线程的个数都大于 CPU 核心的个数，而一个 CPU 核心在任意时刻只能被一个线程使用，为了让这些线程都能得到有效执行，CPU 采取的策略是为每个线程分配时间片并轮转的形式。当一个线程的时间片用完的时候就会重新处于就绪状态让给其他线程使用，这个过程就属于一次上下文切换。概括来说就是：当前任务在执行完 CPU 时间片切换到另一个任务之前会先保存自己的状态，以便下次再切换回这个任务时，可以再加载这个任务的状态。<strong>任务从保存到再加载的过程就是一次上下文切换</strong>。</p>
+<p>上下文切换通常是计算密集型的。也就是说，它需要相当可观的处理器时间，在每秒几十上百次的切换中，每次切换都需要纳秒量级的时间。所以，上下文切换对系统来说意味着消耗大量的 CPU 时间，事实上，可能是操作系统中时间消耗最大的操作。</p>
+<p>Linux 相比与其他操作系统（包括其他类 Unix 系统）有很多的优点，其中有一项就是，其上下文切换和模式切换的时间消耗非常少。</p>
+<h2 id="JAVA内存模型"><a href="#JAVA内存模型" class="headerlink" title="JAVA内存模型"></a>JAVA内存模型</h2><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1754302694.png"></p>
+<h3 id="原子性、有序性和可见性"><a href="#原子性、有序性和可见性" class="headerlink" title="原子性、有序性和可见性"></a>原子性、有序性和可见性</h3><p><strong>原子性</strong>：在一个操作中CPU不可以在中途暂停然后再调度，既不能被中断操作，要不执行完成，要不就不执行。</p>
+<p><strong>可见性</strong>：多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立马看得到修改的值。</p>
+<p><strong>有序性</strong>：程序执行的顺序是按代码的先后顺序执行。</p>
+<h3 id="如何实现多线程环境下变量的可见性"><a href="#如何实现多线程环境下变量的可见性" class="headerlink" title="如何实现多线程环境下变量的可见性"></a>如何实现多线程环境下变量的可见性</h3><h4 id="volatile关键字"><a href="#volatile关键字" class="headerlink" title="volatile关键字"></a>volatile关键字</h4><ul>
+<li>禁用CPU缓存：强制读写直接操作主内存</li>
+<li>禁止指令重排序：建立内存屏障（memory barrier)</li>
+<li>保证修改后立即对其他线程可见</li>
+</ul>
+<h4 id="同步锁（synchronized）"><a href="#同步锁（synchronized）" class="headerlink" title="同步锁（synchronized）"></a>同步锁（synchronized）</h4><ul>
+<li>锁退出时强制刷新缓存到主内存</li>
+<li>锁获取时清空本地缓存，从主内存重新加载</li>
+</ul>
+<h4 id="原子类（Atomic）"><a href="#原子类（Atomic）" class="headerlink" title="原子类（Atomic）"></a>原子类（Atomic）</h4><ul>
+<li>基于<code>volatile</code> + CAS操作</li>
+<li>保证操作的原子性和可见性</li>
+<li>比锁的性能更高</li>
+</ul>
+<h4 id="final关键字"><a href="#final关键字" class="headerlink" title="final关键字"></a>final关键字</h4><ul>
+<li>JVM保证<code>final</code>字段初始化完成后对所有线程可见</li>
+<li>禁止重排序优化</li>
+<li>初始化后不可修改</li>
+</ul>
+<h3 id="final关键字的可见性"><a href="#final关键字的可见性" class="headerlink" title="final关键字的可见性"></a>final关键字的可见性</h3><h2 id="悲观锁和乐观锁"><a href="#悲观锁和乐观锁" class="headerlink" title="悲观锁和乐观锁"></a>悲观锁和乐观锁</h2><h3 id="CAS有什么问题？"><a href="#CAS有什么问题？" class="headerlink" title="CAS有什么问题？"></a>CAS有什么问题？</h3><p>CAS的缺点有如ABA问题，自旋锁消耗问题、多变量共享一致性问题：</p>
+<ol>
+<li><strong>ABA</strong>：<br>问题描述：线程t1将它的值从A变为B，再从B变为A。同时有线程t2要将值从A变为C。但CAS检查的时候会发现没有改变，但是实质上它已经发生了改变 。可能会造成数据的缺失。</li>
+</ol>
+<p>解决方法：CAS还是类似于乐观锁，同数据乐观锁的方式给它加一个版本号或者时间戳，如AtomicStampedReference</p>
+<p>2.<strong>自旋消耗资源</strong>：<br>问题描述：多个线程争夺同一个资源时，如果自旋一直不成功，将会一直<strong>占用CPU</strong>。</p>
+<p>解决方法：破坏掉for死循环，当超过一定时间或者一定次数时，return退出。</p>
+<p>JDK8新增的LongAdder和ConcurrentHashMap类似的方法。当多个线程竞争时，将粒度变小，将一个变量拆分为多个变量，达到多个线程访问多个资源的效果，最后再调用sum把它合起来。虽然base和cells都是volatile修饰的，但感觉这个sum操作没有加锁，可能sum的结果不是那么精确。</p>
+<p>3.<strong>多变量共享一致性问题</strong>：<br>解决方法： CAS操作是针对一个变量的，如果对多个变量操作，解决方案如下</p>
+<ol>
+<li>可以加锁来解决</li>
+<li>封装成对象类解决（AtomicReference）</li>
+</ol>
+<h3 id="ReenTrantLock跟synchronized的区别"><a href="#ReenTrantLock跟synchronized的区别" class="headerlink" title="ReenTrantLock跟synchronized的区别"></a>ReenTrantLock跟synchronized的区别</h3><p>1、<strong>底层实现</strong>：synchronized 是<strong>JVM</strong>层面的锁，是<strong>Java关键字</strong>，通过monitor对象来完成（monitorenter与monitorexit），ReentrantLock 是从jdk1.5以来（java.util.concurrent.locks.Lock）提供的<strong>API层面</strong>的锁。</p>
+<p> 2、<strong>实现原理</strong>：synchronized 的实现涉及到<strong>锁的升级</strong>，具体为无锁、偏向锁、自旋锁、向OS申请重量级锁；ReentrantLock实现则是通过利用<strong>CAS</strong>（CompareAndSwap）自旋机制保证线程操作的原子性和volatile保证数据可见性以实现锁的功能。</p>
+<p> 3、<strong>是否可手动释放</strong>：synchronized 不需要用户去手动释放锁，synchronized 代码执行完后系统会自动让线程释放对锁的占用； ReentrantLock则需要用户去手动释放锁，如果没有手动释放锁，就可能导致死锁现象。</p>
+<p> 4、<strong>是否可中断</strong>：synchronized是不可中断类型的锁，除非加锁的代码中出现异常或正常执行完成； ReentrantLock则可以中断，可通过trylock(long timeout,TimeUnit unit)设置超时方法或者将lockInterruptibly()放到代码块中，调用interrupt方法进行中断。</p>
+<p> 5、<strong>是否公平锁</strong>synchronized为非公平锁 ReentrantLock则即可以选公平锁也可以选非公平锁，通过构造方法new ReentrantLock时传入boolean值进行选择，为空默认false非公平锁，true为公平锁,公平锁性能非常低。</p>
+<h2 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a>Java内存模型</h2><h3 id="happens-before简介"><a href="#happens-before简介" class="headerlink" title="happens-before简介"></a>happens-before简介</h3><p>在JMM中，如果一个操作执行的结果需要对另一个操作可见，那么这两个操作之间必须要存在happens-before关系。这里提到的两个操作既可以是在一个线程里，也可以是在不同的线程里。</p>
+<p>与程序员密切相关的happens-before规则如下：</p>
+<ul>
+<li>程序顺序规则：一个线程中的每个操作，happens-before于该线程中的任意后续操作。</li>
+<li>监视器锁规则：对一个锁的解锁，happens-before于随后对这个锁的加锁。</li>
+<li>volatile变量规则：对一个volatile域的写，happens-before于任意后续对这个volatile域的读。</li>
+<li>传递性：如果A happens-before B，且B happens-before C，那么A happens-before C。</li>
+</ul>
+<blockquote>
+<p><strong>注意</strong>：两个操作之间具有happens-before关系，并不意味着前一个操作必须要在后一个操作之前执行！happens-before仅仅要求前一个操作（执行的结果）对后一个操作可见，且前一个操作按顺序排在第二个操作之前（the first is visible to and ordered before the second）。</p>
+</blockquote>
+<h3 id="单线程、多线程在单核CPU、多核CPU中的影响"><a href="#单线程、多线程在单核CPU、多核CPU中的影响" class="headerlink" title="单线程、多线程在单核CPU、多核CPU中的影响"></a>单线程、多线程在单核CPU、多核CPU中的影响</h3><p>我们分别来分析下单线程、多线程在单核CPU、多核CPU中的影响。</p>
+<p><strong>单线程。</strong>cpu核心的缓存只被一个线程访问。缓存独占，不会出现访问冲突等问题。</p>
+<p><strong>单核CPU，多线程。</strong>进程中的多个线程会同时访问进程中的共享数据，CPU将某块内存加载到缓存后，不同线程在访问相同的物理地址的时候，都会映射到相同的缓存位置，这样即使发生线程的切换，缓存仍然不会失效。但由于任何时刻只能有一个线程在执行，因此不会出现缓存访问冲突。</p>
+<p><strong>多核CPU，多线程。</strong>每个核都至少有一个L1 缓存。多个线程访问进程中的某个共享内存，且这多个线程分别在不同的核心上执行，则每个核心都会在各自的caehe中保留一份共享内存的缓冲。由于多核是可以并行的，可能会出现多个线程同时写各自的缓存的情况，而各自的cache之间的数据就有可能不同。</p>
+<p>在CPU和主存之间增加缓存，在多线程场景下就可能存在<strong>缓存一致性问题</strong>，也就是说，在多核CPU中，每个核的自己的缓存中，关于同一个数据的缓存内容可能不一致。</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/531c5825.html">展开全文 >></a>
     </p>
     
 
@@ -1129,7 +1644,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span>
+      <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
     </nav>
   
 
@@ -1260,6 +1775,14 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面经</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
@@ -1292,27 +1815,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面经</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">redis集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">架构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1321,6 +1824,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1340,10 +1847,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">限流算法原理及实现</a>
               </li>
              
@@ -1352,7 +1855,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">redis集群</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">架构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -220,7 +220,7 @@
             
 
   
-    <article id="post-study/数据结构与算法之美/学习笔记/17讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-internet/JAVA" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -228,7 +228,7 @@
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/posts/858564ec.html" target="_blank">17讲</a>
+	  <a class="article-title" href="/posts/d64d980f.html" target="_blank">那些年我们背过的JAVA面试题</a>
   
     </h1>
   
@@ -236,8 +236,8 @@
 
   
   
-<a href="/posts/858564ec.html" class="archive-article-date">
-        <time datetime="2021-05-08T23:57:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-09</time>
+<a href="/posts/d64d980f.html" class="archive-article-date">
+        <time datetime="2022-05-21T03:24:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-21</time>
 </a>
 
   
@@ -250,42 +250,305 @@
   <div class="article-entry" itemprop="articleBody">
     
     <hr>
-<h1 id="17-跳表：为什么Redis一定要用跳表来实现有序集合？"><a href="#17-跳表：为什么Redis一定要用跳表来实现有序集合？" class="headerlink" title="17 | 跳表：为什么Redis一定要用跳表来实现有序集合？"></a>17 | 跳表：为什么Redis一定要用跳表来实现有序集合？</h1><p>Redis 中的有序集合（Sorted Set）就是用跳表来实现的。如果你有一定基础，应该知道红黑树也可以实现快速地插入、删除和查找操作。那 Redis 为什么会选择用跳表来实现有序集合呢？ 为什么不用红黑树呢？学完今天的内容，你就知道答案了。</p>
-<h2 id="如何理解“跳表”？"><a href="#如何理解“跳表”？" class="headerlink" title="如何理解“跳表”？"></a>如何理解“跳表”？</h2><p>对于一个单链表来讲，即便链表中存储的数据是有序的，如果我们要想在其中查找某个数据，也只能从头到尾遍历链表。这样查找效率就会很低，时间复杂度会很高，是 O(n)。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210509151948.jpeg" alt="img"></p>
-<p>那怎么来提高查找效率呢？如果像图中那样，对链表建立一级“索引”，查找起来是不是就会更快一些呢？每两个结点提取一个结点到上一级，我们把抽出来的那一级叫做索引或索引层。你可以看我画的图。图中的 down 表示 down 指针，指向下一级结点。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210509152007.jpeg" alt="img"></p>
-<p>如果我们现在要查找某个结点，比如 16。我们可以先在索引层遍历，当遍历到索引层中值为 13 的结点时，我们发现下一个结点是 17，那要查找的结点 16 肯定就在这两个结点之间。然后我们通过索引层结点的 down 指针，下降到原始链表这一层，继续遍历。这个时候，我们只需要再遍历 2 个结点，就可以找到值等于 16 的这个结点了。这样，原来如果要查找 16，需要遍历 10 个结点，现在只需要遍历 7 个结点。</p>
-<p>从这个例子里，我们看出，<strong>加来一层索引之后，查找一个结点需要遍历的结点个数减少了，也就是说查找效率提高了</strong>。那如果我们再加一级索引呢？效率会不会提升更多呢？</p>
-<p>跟前面建立第一级索引的方式相似，我们在第一级索引的基础之上，每两个结点就抽出一个结点到第二级索引。现在我们再来查找 16，只需要遍历 6 个结点了，需要遍历的结点数量又减少了。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210509152037.jpeg" alt="img"></p>
-<p>我举的例子数据量不大，所以即便加了两级索引，查找效率的提升也并不明显。为了让你能真切地感受索引提升查询效率。我画了一个包含 64 个结点的链表，按照前面讲的这种思路，建立了五级索引。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210509152117.jpeg" alt="img"></p>
-<p>从图中我们可以看出，原来没有索引的时候，查找 62 需要遍历 62 个结点，现在只需要遍历 11 个结点，速度是不是提高了很多？所以，当链表的长度 n 比较大时，比如 1000、10000 的时候，在构建索引之后，查找效率的提升就会非常明显。</p>
-<p>前面讲的<strong>这种链表加多级索引的结构，就是跳表</strong>。我通过例子给你展示了跳表是如何减少查询次数的，现在你应该比较清晰地知道，跳表确实是可以提高查询效率的。接下来，我会定量地分析一下，用跳表查询到底有多快。</p>
-<h2 id="用跳表查询到底有多快？"><a href="#用跳表查询到底有多快？" class="headerlink" title="用跳表查询到底有多快？"></a>用跳表查询到底有多快？</h2><p>前面我讲过，算法的执行效率可以通过时间复杂度来度量，这里依旧可以用。我们知道，在一个单链表中查询某个数据的时间复杂度是 O(n)。那在一个具有多级索引的跳表中，查询某个数据的时间复杂度是多少呢？</p>
-<p>这个时间复杂度的分析方法比较难想到。我把问题分解一下，先来看这样一个问题，如果链表里有 n 个结点，会有多少级索引呢？</p>
-<p>按照我们刚才讲的，每两个结点会抽出一个结点作为上一级索引的结点，那第一级索引的结点个数大约就是 n&#x2F;2，第二级索引的结点个数大约就是 n&#x2F;4，第三级索引的结点个数大约就是 n&#x2F;8，依次类推，也就是说，<strong>第 k 级索引的结点个数是第 k-1 级索引的结点个数的 1&#x2F;2，那第 k级索引结点的个数就是 n&#x2F;(2k)。</strong></p>
-<p>假设索引有 h 级，最高级的索引有 2 个结点。通过上面的公式，我们可以得到 n&#x2F;(2h)&#x3D;2，从而求得 h&#x3D;log2n-1。如果包含原始链表这一层，整个跳表的高度就是 log2n。我们在跳表中查询某个数据的时候，如果每一层都要遍历 m 个结点，那在跳表中查询一个数据的时间复杂度就是 O(m*logn)。</p>
-<p>那这个 m 的值是多少呢？按照前面这种索引结构，我们每一级索引都最多只需要遍历 3 个结点，也就是说 m&#x3D;3，为什么是 3 呢？我来解释一下。</p>
-<p>假设我们要查找的数据是 x，在第 k 级索引中，我们遍历到 y 结点之后，发现 x 大于 y，小于后面的结点 z，所以我们通过 y 的 down 指针，从第 k 级索引下降到第 k-1 级索引。在第 k-1 级索引中，y 和 z 之间只有 3 个结点（包含 y 和 z），所以，我们在 K-1 级索引中最多只需要遍历 3 个结点，依次类推，每一级索引都最多只需要遍历 3 个结点。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210509152501.jpeg" alt="img"></p>
-<p>通过上面的分析，我们得到 m&#x3D;3，所以在跳表中查询任意数据的时间复杂度就是 O(logn)。这个查找的时间复杂度跟二分查找是一样的。换句话说，我们其实是基于单链表实现了二分查找，是不是很神奇？不过，天下没有免费的午餐，这种查询效率的提升，前提是建立了很多级索引，也就是我们在第 6 节讲过的空间换时间的设计思路。</p>
-<h2 id="解答开篇"><a href="#解答开篇" class="headerlink" title="解答开篇"></a>解答开篇</h2><p>今天的内容到此就讲完了。现在，我来讲解一下开篇的思考题：为什么 Redis 要用跳表来实现有序集合，而不是红黑树？</p>
-<p>Redis 中的有序集合是通过跳表来实现的，严格点讲，其实还用到了散列表。不过散列表我们后面才会讲到，所以我们现在暂且忽略这部分。如果你去查看 Redis 的开发手册，就会发现，Redis 中的有序集合支持的核心操作主要有下面这几个：</p>
-<ul>
-<li>插入一个数据；</li>
-<li>删除一个数据；</li>
-<li>查找一个数据；</li>
-<li>按照区间查找数据（比如查找值在[100, 356]之间的数据）；</li>
-<li>迭代输出有序序列。</li>
-</ul>
-<p>其中，插入、删除、查找以及迭代输出有序序列这几个操作，红黑树也可以完成，时间复杂度跟跳表是一样的。但是，按照区间来查找数据这个操作，红黑树的效率没有跳表高。</p>
-<p>对于按照区间查找数据这个操作，跳表可以做到 O(logn) 的时间复杂度定位区间的起点，然后在原始链表中顺序往后遍历就可以了。这样做非常高效。</p>
-<p>当然，Redis 之所以用跳表来实现有序集合，还有其他原因，比如，跳表更容易代码实现。虽然跳表的实现也不简单，但比起红黑树来说还是好懂、好写多了，而简单就意味着可读性好，不容易出错。还有，跳表更加灵活，它可以通过改变索引构建策略，有效平衡执行效率和内存消耗。</p>
-<p>不过，跳表也不能完全替代红黑树。因为红黑树比跳表的出现要早一些，很多编程语言中的 Map 类型都是通过红黑树来实现的。我们做业务开发的时候，直接拿来用就可以了，不用费劲自己去实现一个红黑树，但是跳表并没有一个现成的实现，所以在开发中，如果你想使用跳表，必须要自己实现。</p>
-<h2 id="内容小结"><a href="#内容小结" class="headerlink" title="内容小结"></a>内容小结</h2><p>今天我们讲了跳表这种数据结构。跳表使用空间换时间的设计思路，通过构建多级索引来提高查询的效率，实现了基于链表的“二分查找”。跳表是一种动态数据结构，支持快速地插入、删除、查找操作，时间复杂度都是 O(logn)。</p>
-<p>跳表的空间复杂度是 O(n)。不过，跳表的实现非常灵活，可以通过改变索引构建策略，有效平衡执行效率和内存消耗。虽然跳表的代码实现并不简单，但是作为一种动态数据结构，比起红黑树来说，实现要简单多了。所以很多时候，我们为了代码的简单、易读，比起红黑树，我们更倾向用跳表。</p>
+<!--fork from https://github.com/idaSmilence/javaDesign-->
+    
+    <a class="article-more-a" href="/posts/d64d980f.html#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">面试题</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/d64d980f.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-internet/布隆过滤器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/9a0369ec.html" target="_blank">布隆过滤器</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/9a0369ec.html" class="archive-article-date">
+        <time datetime="2022-05-16T14:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-16</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h1 id="布隆过滤器"><a href="#布隆过滤器" class="headerlink" title="布隆过滤器"></a>布隆过滤器</h1><p>海量数据处理以及缓存穿透这两个场景让我认识了 布隆过滤器 ，我查阅了一些资料来了解它，但是很多现成资料并不满足我的需求，所以就决定自己总结一篇关于布隆过滤器的文章。希望通过这篇文章让更多人了解布隆过滤器，并且会实际去使用它！</p>
+<p>下面我们将分为几个方面来介绍布隆过滤器：</p>
+<ol>
+<li>什么是布隆过滤器？</li>
+<li>布隆过滤器的原理介绍。</li>
+<li>布隆过滤器使用场景。</li>
+<li>通过 Java 编程手动实现布隆过滤器。</li>
+<li>利用 Google 开源的 Guava 中自带的布隆过滤器。</li>
+<li>Redis 中的布隆过滤器。</li>
+</ol>
+    
+    <a class="article-more-a" href="/posts/9a0369ec.html#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/9a0369ec.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-interview/2022面经" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/708d4d58.html" target="_blank">2022面经</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/708d4d58.html" class="archive-article-date">
+        <time datetime="2022-05-12T12:02:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-12</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <hr>
+    
+    <a class="article-more-a" href="/posts/708d4d58.html#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/面经//" class="article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/708d4d58.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-study/数据结构与算法之美/学习笔记/29讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/22fa690f.html" target="_blank">29讲</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/22fa690f.html" class="archive-article-date">
+        <time datetime="2021-08-23T01:30:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-23</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <hr>
+<h1 id="29-堆的应用：如何快速获取到Top-10最热门的搜索关键词？"><a href="#29-堆的应用：如何快速获取到Top-10最热门的搜索关键词？" class="headerlink" title="29 | 堆的应用：如何快速获取到Top 10最热门的搜索关键词？"></a>29 | 堆的应用：如何快速获取到Top 10最热门的搜索关键词？</h1><h2 id="堆的应用一：优先级队列"><a href="#堆的应用一：优先级队列" class="headerlink" title="堆的应用一：优先级队列"></a>堆的应用一：优先级队列</h2><h3 id="1-合并有序小文件"><a href="#1-合并有序小文件" class="headerlink" title="1. 合并有序小文件"></a>1. 合并有序小文件</h3><p>假设我们有 100 个小文件，每个文件的大小是 100MB，每个文件中存储的都是有序的字符串。我们希望将这些 100 个小文件合并成一个有序的大文件。这里就会用到优先级队列。</p>
+<p>整体思路有点像归并排序中的合并函数。我们从这 100 个文件中，各取第一个字符串，放入数组中，然后比较大小，把最小的那个字符串放入合并后的大文件中，并从数组中删除。</p>
+<p>假设，这个最小的字符串来自于 13.txt 这个小文件，我们就再从这个小文件取下一个字符串，放到数组中，重新比较大小，并且选择最小的放入合并后的大文件，将它从数组中删除。依次类推，直到所有的文件中的数据都放入到大文件为止。</p>
+<p>这里我们用数组这种数据结构，来存储从小文件中取出来的字符串。每次从数组中取最小字符串，都需要循环遍历整个数组，显然，这不是很高效。有没有更加高效方法呢？</p>
+<p>这里就可以用到优先级队列，也可以说是堆。我们将从小文件中取出来的字符串放入到小顶堆中，那堆顶的元素，也就是优先级队列队首的元素，就是最小的字符串。我们将这个字符串放入到大文件中，并将其从堆中删除。然后再从小文件中取出下一个字符串，放入到堆中。循环这个过程，就可以将 100 个小文件中的数据依次放入到大文件中。</p>
+<p>我们知道，删除堆顶数据和往堆中插入数据的时间复杂度都是 O(logn)，n 表示堆中的数据个数，这里就是 100。是不是比原来数组存储的方式高效了很多呢？</p>
 
     
 
@@ -316,7 +579,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/posts/858564ec.html">展开全文 >></a>
+      <a class="article-more-a" href="/posts/22fa690f.html">展开全文 >></a>
     </p>
     
 
@@ -346,7 +609,7 @@
 
 
   
-    <article id="post-study/数据结构与算法之美/学习笔记/16讲-二分查找_下" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-study/数据结构与算法之美/学习笔记/28讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -354,7 +617,7 @@
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/posts/dfdc8e63.html" target="_blank">16讲 | 二分查找（下）</a>
+	  <a class="article-title" href="/posts/9a460e6a.html" target="_blank">28讲</a>
   
     </h1>
   
@@ -362,8 +625,8 @@
 
   
   
-<a href="/posts/dfdc8e63.html" class="archive-article-date">
-        <time datetime="2021-05-06T23:57:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-07</time>
+<a href="/posts/9a460e6a.html" class="archive-article-date">
+        <time datetime="2021-08-23T00:30:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-23</time>
 </a>
 
   
@@ -376,67 +639,21 @@
   <div class="article-entry" itemprop="articleBody">
     
     <hr>
-<h1 id="16-二分查找（下）：如何快速定位IP对应的省份地址？"><a href="#16-二分查找（下）：如何快速定位IP对应的省份地址？" class="headerlink" title="16 | 二分查找（下）：如何快速定位IP对应的省份地址？"></a>16 | 二分查找（下）：如何快速定位IP对应的省份地址？</h1><h2 id="变体一：查找第一个值等于给定值的元素"><a href="#变体一：查找第一个值等于给定值的元素" class="headerlink" title="变体一：查找第一个值等于给定值的元素"></a>变体一：查找第一个值等于给定值的元素</h2><p>比如下面这样一个有序数组，其中，a[5]，a[6]，a[7]的值都等于 8，是重复的数据。我们希望查找第一个等于 8 的数据，也就是下标是 5 的元素。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210507081300.jpeg" alt="img"></p>
-<p>如果我们用上一节课讲的二分查找的代码实现，首先拿 8 与区间的中间值 a[4]比较，8 比 6 大，于是在下标 5 到 9 之间继续查找。下标 5 和 9 的中间位置是下标 7，a[7]正好等于 8，所以代码就返回了。</p>
-<p>尽管 a[7]也等于 8，但它并不是我们想要找的第一个等于 8 的元素，因为第一个值等于 8 的元素是数组下标为 5 的元素。我们上一节讲的二分查找代码就无法处理这种情况了。所以，针对这个变形问题，我们可以稍微改造一下上一节的代码。</p>
-<p>我换了一种实现方法，你看看是不是更容易理解呢？</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">bsearch</span><span class="params">(<span class="type">int</span>[] a, <span class="type">int</span> n, <span class="type">int</span> value)</span> &#123;</span><br><span class="line">  <span class="type">int</span> <span class="variable">low</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">  <span class="type">int</span> <span class="variable">high</span> <span class="operator">=</span> n - <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span>  low + ((high - low) &gt;&gt; <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span> (a[mid] &gt; value) &#123;</span><br><span class="line">      high = mid - <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (a[mid] &lt; value) &#123;</span><br><span class="line">      low = mid + <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> ((mid == <span class="number">0</span>) || (a[mid - <span class="number">1</span>] != value)) <span class="keyword">return</span> mid;</span><br><span class="line">      <span class="keyword">else</span> high = mid - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我来稍微解释一下这段代码。a[mid]跟要查找的 value 的大小关系有三种情况：大于、小于、等于。对于 a[mid]&gt;value 的情况，我们需要更新 high&#x3D; mid-1；对于 a[mid]&lt;value 的情况，我们需要更新 low&#x3D;mid+1。这两点都很好理解。那当 a[mid]&#x3D;value 的时候应该如何处理呢？</p>
-<p>如果我们查找的是任意一个值等于给定值的元素，当 a[mid]等于要查找的值时，a[mid]就是我们要找的元素。但是，如果我们求解的是第一个值等于给定值的元素，当 a[mid]等于要查找的值时，我们就需要确认一下这个 a[mid]是不是第一个值等于给定值的元素。</p>
-<p>我们重点看第 11 行代码。如果 mid 等于 0，那这个元素已经是数组的第一个元素，那它肯定是我们要找的；如果 mid 不等于 0，但 a[mid]的前一个元素 a[mid-1]不等于 value，那也说明 a[mid]就是我们要找的第一个值等于给定值的元素。</p>
-<p>如果经过检查之后发现 a[mid]前面的一个元素 a[mid-1]也等于 value，那说明此时的 a[mid]肯定不是我们要查找的第一个值等于给定值的元素。那我们就更新 high&#x3D;mid-1，因为要找的元素肯定出现在[low, mid-1]之间。</p>
-<p>对比上面的两段代码，是不是下面那种更好理解？实际上，<strong>很多人都觉得变形的二分查找很难写，主要原因是太追求第一种那样完美、简洁的写法</strong>。而对于我们做工程开发的人来说，代码易读懂、没 Bug，其实更重要，所以我觉得第二种写法更好。</p>
-<h2 id="变体二：查找最后一个值等于给定值的元素"><a href="#变体二：查找最后一个值等于给定值的元素" class="headerlink" title="变体二：查找最后一个值等于给定值的元素"></a>变体二：查找最后一个值等于给定值的元素</h2><p>前面的问题是查找第一个值等于给定值的元素，我现在把问题稍微改一下，查找最后一个值等于给定值的元素，又该如何做呢？</p>
-<p>如果你掌握了前面的写法，那这个问题你应该很轻松就能解决。你可以先试着实现一下，然后跟我写的对比一下。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">bsearch</span><span class="params">(<span class="type">int</span>[] a, <span class="type">int</span> n, <span class="type">int</span> value)</span> &#123;</span><br><span class="line">  <span class="type">int</span> <span class="variable">low</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">  <span class="type">int</span> <span class="variable">high</span> <span class="operator">=</span> n - <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span>  low + ((high - low) &gt;&gt; <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span> (a[mid] &gt; value) &#123;</span><br><span class="line">      high = mid - <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (a[mid] &lt; value) &#123;</span><br><span class="line">      low = mid + <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> ((mid == n - <span class="number">1</span>) || (a[mid + <span class="number">1</span>] != value)) <span class="keyword">return</span> mid;</span><br><span class="line">      <span class="keyword">else</span> low = mid + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我们还是重点看第 11 行代码。如果 a[mid]这个元素已经是数组中的最后一个元素了，那它肯定是我们要找的；如果 a[mid]的后一个元素 a[mid+1]不等于 value，那也说明 a[mid]就是我们要找的最后一个值等于给定值的元素。</p>
-<p>如果我们经过检查之后，发现 a[mid]后面的一个元素 a[mid+1]也等于 value，那说明当前的这个 a[mid]并不是最后一个值等于给定值的元素。我们就更新 low&#x3D;mid+1，因为要找的元素肯定出现在[mid+1, high]之间。</p>
-<h2 id="变体三：查找第一个大于等于给定值的元素"><a href="#变体三：查找第一个大于等于给定值的元素" class="headerlink" title="变体三：查找第一个大于等于给定值的元素"></a>变体三：查找第一个大于等于给定值的元素</h2><p>现在我们再来看另外一类变形问题。在有序数组中，查找第一个大于等于给定值的元素。比如，数组中存储的这样一个序列：3，4，6，7，10。如果查找第一个大于等于 5 的元素，那就是 6。</p>
-<p>实际上，实现的思路跟前面的那两种变形问题的实现思路类似，代码写起来甚至更简洁。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">bsearch</span><span class="params">(<span class="type">int</span>[] a, <span class="type">int</span> n, <span class="type">int</span> value)</span> &#123;</span><br><span class="line">  <span class="type">int</span> <span class="variable">low</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">  <span class="type">int</span> <span class="variable">high</span> <span class="operator">=</span> n - <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span>  low + ((high - low) &gt;&gt; <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span> (a[mid] &gt;= value) &#123;</span><br><span class="line">      <span class="keyword">if</span> ((mid == <span class="number">0</span>) || (a[mid - <span class="number">1</span>] &lt; value)) <span class="keyword">return</span> mid;</span><br><span class="line">      <span class="keyword">else</span> high = mid - <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      low = mid + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>如果 a[mid]小于要查找的值 value，那要查找的值肯定在[mid+1, high]之间，所以，我们更新 low&#x3D;mid+1。</p>
-<p>对于 a[mid]大于等于给定值 value 的情况，我们要先看下这个 a[mid]是不是我们要找的第一个值大于等于给定值的元素。如果 a[mid]前面已经没有元素，或者前面一个元素小于要查找的值 value，那 a[mid]就是我们要找的元素。这段逻辑对应的代码是第 7 行。</p>
-<p>如果 a[mid-1]也大于等于要查找的值 value，那说明要查找的元素在[low, mid-1]之间，所以，我们将 high 更新为 mid-1。</p>
-<h2 id="变体四：查找最后一个小于等于给定值的元素"><a href="#变体四：查找最后一个小于等于给定值的元素" class="headerlink" title="变体四：查找最后一个小于等于给定值的元素"></a>变体四：查找最后一个小于等于给定值的元素</h2><p>现在，我们来看最后一种二分查找的变形问题，查找最后一个小于等于给定值的元素。比如，数组中存储了这样一组数据：3，5，6，8，9，10。最后一个小于等于 7 的元素就是 6。是不是有点类似上面那一种？实际上，实现思路也是一样的。</p>
-<p>有了前面的基础，你完全可以自己写出来了，所以我就不详细分析了。我把代码贴出来，你可以写完之后对比一下。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">bsearch7</span><span class="params">(<span class="type">int</span>[] a, <span class="type">int</span> n, <span class="type">int</span> value)</span> &#123;</span><br><span class="line">  <span class="type">int</span> <span class="variable">low</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">  <span class="type">int</span> <span class="variable">high</span> <span class="operator">=</span> n - <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span>  low + ((high - low) &gt;&gt; <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span> (a[mid] &gt; value) &#123;</span><br><span class="line">      high = mid - <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> ((mid == n - <span class="number">1</span>) || (a[mid + <span class="number">1</span>] &gt; value)) <span class="keyword">return</span> mid;</span><br><span class="line">      <span class="keyword">else</span> low = mid + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="解答开篇"><a href="#解答开篇" class="headerlink" title="解答开篇"></a>解答开篇</h2><p>好了，现在我们回头来看开篇的问题：如何快速定位出一个 IP 地址的归属地？</p>
-<p>现在这个问题应该很简单了。如果 IP 区间与归属地的对应关系不经常更新，我们可以先预处理这 12 万条数据，让其按照起始 IP 从小到大排序。如何来排序呢？我们知道，IP 地址可以转化为 32 位的整型数。所以，我们可以将起始地址，按照对应的整型值的大小关系，从小到大进行排序。</p>
-<p>然后，这个问题就可以转化为我刚讲的第四种变形问题“在有序数组中，查找最后一个小于等于某个给定值的元素”了。</p>
-<p>当我们要查询某个 IP 归属地时，我们可以先通过二分查找，找到最后一个起始 IP 小于等于这个 IP 的 IP 区间，然后，检查这个 IP 是否在这个 IP 区间内，如果在，我们就取出对应的归属地显示；如果不在，就返回未查找到。</p>
-<blockquote>
-<p>假设 我们将区间对象有序的存入一个数组 arr [ (0-2),(3-5),(6-11) ,(12-15) ] ; 我们现在只关注IP区间对象的最小值 [ (0),(3),(6) ,(12) ] ; 那么，值 num 所在区间的下标k， 一定满足 arr[k]&lt;&#x3D; num 且 arr[k+1] &gt; num ； 换句话说 也就是 求最后一个小于或等于num的元素下标了。</p>
-</blockquote>
-<h2 id="内容小结"><a href="#内容小结" class="headerlink" title="内容小结"></a>内容小结</h2><p>上一节我说过，凡是用二分查找能解决的，绝大部分我们更倾向于用散列表或者二叉查找树。即便是二分查找在内存使用上更节省，但是毕竟内存如此紧缺的情况并不多。那二分查找真的没什么用处了吗？</p>
-<p>实际上，上一节讲的求“值等于给定值”的二分查找确实不怎么会被用到，二分查找更适合用在“近似”查找问题，在这类问题上，二分查找的优势更加明显。比如今天讲的这几种变体问题，用其他数据结构，比如散列表、二叉树，就比较难实现了。</p>
-<p>变体的二分查找算法写起来非常烧脑，很容易因为细节处理不好而产生 Bug，这些容易出错的细节有：<strong>终止条件、区间上下界更新方法、返回值选择</strong>。所以今天的内容你最好能用自己实现一遍，对锻炼编码能力、逻辑思维、写出 Bug free 代码，会很有帮助。</p>
-<h2 id="课后思考"><a href="#课后思考" class="headerlink" title="课后思考"></a>课后思考</h2><p>我们今天讲的都是非常规的二分查找问题，今天的思考题也是一个非常规的二分查找问题。如果有序数组是一个循环有序数组，比如 4，5，6，1，2，3。针对这种情况，如何实现一个求“值等于给定值”的二分查找算法呢？</p>
-<blockquote>
-<p>有三种方法查找循环有序数组</p>
-<p> 一、</p>
-<ol>
-<li>找到分界下标，分成两个有序数组</li>
-<li>判断目标值在哪个有序数据范围内，做二分查找</li>
-</ol>
-<p> 二、</p>
-<ol>
-<li>找到最大值的下标 x;</li>
-<li>所有元素下标 +x 偏移，超过数组范围值的取模;</li>
-<li>利用偏移后的下标做二分查找；</li>
-<li>如果找到目标下标，再作 -x 偏移，就是目标值实际下标。</li>
-</ol>
-<p> 两种情况最高时耗都在查找分界点上，所以时间复杂度是 O(N）。</p>
-<p> 复杂度有点高，能否优化呢？</p>
-<p> 三、<br>我们发现循环数组存在一个性质：以数组中间点为分区，会将数组分成一个有序数组和一个循环有序数组。</p>
-<p> 如果首元素小于 mid，说明前半部分是有序的，后半部分是循环有序数组；<br> 如果首元素大于 mid，说明后半部分是有序的，前半部分是循环有序的数组；<br> 如果目标元素在有序数组范围中，使用二分查找；<br> 如果目标元素在循环有序数组中，设定数组边界后，使用以上方法继续查找。</p>
-<p> 时间复杂度为 O(logN)。</p>
-</blockquote>
-
+<h1 id="28-堆和堆排序：为什么说堆排序没有快速排序快？"><a href="#28-堆和堆排序：为什么说堆排序没有快速排序快？" class="headerlink" title="28 | 堆和堆排序：为什么说堆排序没有快速排序快？"></a>28 | 堆和堆排序：为什么说堆排序没有快速排序快？</h1><h2 id="如何理解“堆”？"><a href="#如何理解“堆”？" class="headerlink" title="如何理解“堆”？"></a>如何理解“堆”？</h2><p>前面我们提到，堆是一种特殊的树。我们现在就来看看，什么样的树才是堆。我罗列了两点要求，只要满足这两点，它就是一个堆。</p>
+<ul>
+<li>堆是一个完全二叉树；</li>
+<li>堆中每一个节点的值都必须大于等于（或小于等于）其子树中每个节点的值。</li>
+</ul>
+<p>我分别解释一下这两点。</p>
+<p>第一点，堆必须是一个完全二叉树。还记得我们之前讲的完全二叉树的定义吗？完全二叉树要求，除了最后一层，其他层的节点个数都是满的，最后一层的节点都靠左排列。</p>
+<p>第二点，堆中的每个节点的值必须大于等于（或者小于等于）其子树中每个节点的值。实际上，我们还可以换一种说法，堆中每个节点的值都大于等于（或者小于等于）其左右子节点的值。这两种表述是等价的。</p>
+<p>对于每个节点的值都大于等于子树中每个节点值的堆，我们叫做“大顶堆”。对于每个节点的值都小于等于子树中每个节点值的堆，我们叫做“小顶堆”。</p>
+<p>定义解释清楚了，你来看看，下面这几个二叉树是不是堆？</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2021202108230804058.jpeg" alt="img"></p>
+<p>其中第 1 个和第 2 个是大顶堆，第 3 个是小顶堆，第 4 个不是堆。除此之外，从图中还可以看出来，对于同一组数据，我们可以构建多种不同形态的堆。</p>
+    
+    <a class="article-more-a" href="/posts/9a460e6a.html#more">more >></a>
+    
     
 
     
@@ -466,7 +683,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/posts/dfdc8e63.html">展开全文 >></a>
+      <a class="article-more-a" href="/posts/9a460e6a.html">展开全文 >></a>
     </p>
     
 
@@ -496,7 +713,7 @@
 
 
   
-    <article id="post-study/数据结构与算法之美/学习笔记/15讲-二分查找_上" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-study/数据结构与算法之美/学习笔记/13讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -504,7 +721,7 @@
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/posts/65beee21.html" target="_blank">15讲 | 二分查找（上）</a>
+	  <a class="article-title" href="/posts/ae7f3bb.html" target="_blank">13讲</a>
   
     </h1>
   
@@ -512,8 +729,8 @@
 
   
   
-<a href="/posts/65beee21.html" class="archive-article-date">
-        <time datetime="2021-05-05T23:57:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-06</time>
+<a href="/posts/ae7f3bb.html" class="archive-article-date">
+        <time datetime="2021-08-09T00:33:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-09</time>
 </a>
 
   
@@ -526,54 +743,13 @@
   <div class="article-entry" itemprop="articleBody">
     
     <hr>
-<h1 id="15-二分查找（上）：如何用最省内存的方式实现快速查找功能？"><a href="#15-二分查找（上）：如何用最省内存的方式实现快速查找功能？" class="headerlink" title="15 | 二分查找（上）：如何用最省内存的方式实现快速查找功能？"></a>15 | 二分查找（上）：如何用最省内存的方式实现快速查找功能？</h1><h2 id="无处不在的二分思想"><a href="#无处不在的二分思想" class="headerlink" title="无处不在的二分思想"></a>无处不在的二分思想</h2><p><strong>二分查找针对的是一个有序的数据集合，查找思想有点类似分治思想。每次都通过跟区间的中间元素对比，将待查找的区间缩小为之前的一半，直到找到要查找的元素，或者区间被缩小为 0</strong>。</p>
-<h2 id="二分查找的递归与非递归实现"><a href="#二分查找的递归与非递归实现" class="headerlink" title="二分查找的递归与非递归实现"></a>二分查找的递归与非递归实现</h2><p><strong>最简单的情况</strong>就是有序数组中<strong>不存在重复元素</strong>，我们在其中用二分查找值等于给定值的数据。我用 Java 代码实现了一个最简单的二分查找算法。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">bsearch</span><span class="params">(<span class="type">int</span>[] a, <span class="type">int</span> n, <span class="type">int</span> value)</span> &#123;</span><br><span class="line">  <span class="type">int</span> <span class="variable">low</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">  <span class="type">int</span> <span class="variable">high</span> <span class="operator">=</span> n - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> (low + high) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span> (a[mid] == value) &#123;</span><br><span class="line">      <span class="keyword">return</span> mid;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (a[mid] &lt; value) &#123;</span><br><span class="line">      low = mid + <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      high = mid - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个代码我稍微解释一下，low、high、mid 都是指数组下标，其中 low 和 high 表示当前查找的区间范围，初始 low&#x3D;0， high&#x3D;n-1。mid 表示[low, high]的中间位置。我们通过对比 a[mid]与 value 的大小，来更新接下来要查找的区间范围，直到找到或者区间缩小为 0，就退出。如果你有一些编程基础，看懂这些应该不成问题。现在，我就着重强调一下<strong>容易出错的 3 个地方</strong>。</p>
-<p><strong>1.循环退出条件</strong></p>
-<p>注意是 low&lt;&#x3D;high，而不是 low&lt;high。</p>
-<p><strong>2.mid 的取值</strong></p>
-<p>实际上，mid&#x3D;(low+high)&#x2F;2 这种写法是有问题的。因为如果 low 和 high 比较大的话，两者之和就有可能会溢出。改进的方法是将 mid 的计算方式写成 low+(high-low)&#x2F;2。更进一步，如果要将性能优化到极致的话，我们可以将这里的除以 2 操作转化成位运算 low+((high-low)&gt;&gt;1)。因为相比除法运算来说，计算机处理位运算要快得多。</p>
-<p><strong>3.low 和 high 的更新</strong></p>
-<p>low&#x3D;mid+1，high&#x3D;mid-1。注意这里的 +1 和 -1，如果直接写成 low&#x3D;mid 或者 high&#x3D;mid，就可能会发生死循环。比如，当 high&#x3D;3，low&#x3D;3 时，如果 a[3]不等于 value，就会导致一直循环不退出。</p>
-<p>如果你留意我刚讲的这三点，我想一个简单的二分查找你已经可以实现了。<strong>实际上，二分查找除了用循环来实现，还可以用递归来实现</strong>，过程也非常简单。</p>
-<p>我用 Java 语言实现了一下这个过程，正好你可以借此机会回顾一下写递归代码的技巧。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 二分查找的递归实现</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">bsearch</span><span class="params">(<span class="type">int</span>[] a, <span class="type">int</span> n, <span class="type">int</span> val)</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> bsearchInternally(a, <span class="number">0</span>, n - <span class="number">1</span>, val);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="type">int</span> <span class="title function_">bsearchInternally</span><span class="params">(<span class="type">int</span>[] a, <span class="type">int</span> low, <span class="type">int</span> high, <span class="type">int</span> value)</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (low &gt; high) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span>  low + ((high - low) &gt;&gt; <span class="number">1</span>);</span><br><span class="line">  <span class="keyword">if</span> (a[mid] == value) &#123;</span><br><span class="line">    <span class="keyword">return</span> mid;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (a[mid] &lt; value) &#123;</span><br><span class="line">    <span class="keyword">return</span> bsearchInternally(a, mid+<span class="number">1</span>, high, value);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> bsearchInternally(a, low, mid-<span class="number">1</span>, value);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="二分查找应用场景的局限性"><a href="#二分查找应用场景的局限性" class="headerlink" title="二分查找应用场景的局限性"></a>二分查找应用场景的局限性</h2><p>前面我们分析过，二分查找的时间复杂度是 O(logn)，查找数据的效率非常高。不过，并不是什么情况下都可以用二分查找，它的应用场景是有很大局限性的。那什么情况下适合用二分查找，什么情况下不适合呢？</p>
-<p><strong>首先，二分查找依赖的是顺序表结构，简单点说就是数组</strong>。</p>
-<p>那二分查找能否依赖其他数据结构呢？比如链表。答案是不可以的，主要原因是二分查找算法需要按照下标随机访问元素。我们在数组和链表那两节讲过，数组按照下标随机访问数据的时间复杂度是 O(1)，而链表随机访问的时间复杂度是 O(n)。所以，如果数据使用链表存储，二分查找的时间复杂就会变得很高。</p>
-<p>二分查找只能用在数据是通过顺序表来存储的数据结构上。如果你的数据是通过其他数据结构存储的，则无法应用二分查找。</p>
-<p><strong>其次，二分查找针对的是有序数据。</strong></p>
-<p>二分查找对这一点的要求比较苛刻，数据必须是有序的。如果数据没有序，我们需要先排序。前面章节里我们讲到，排序的时间复杂度最低是 O(nlogn)。所以，如果我们针对的是一组静态的数据，没有频繁地插入、删除，我们可以进行一次排序，多次二分查找。这样排序的成本可被均摊，二分查找的边际成本就会比较低。</p>
-<p>但是，如果我们的数据集合有频繁的插入和删除操作，要想用二分查找，要么每次插入、删除操作之后保证数据仍然有序，要么在每次二分查找之前都先进行排序。针对这种动态数据集合，无论哪种方法，维护有序的成本都是很高的。</p>
-<p>所以，二分查找只能用在插入、删除操作不频繁，一次排序多次查找的场景中。针对动态变化的数据集合，二分查找将不再适用。那针对动态数据集合，如何在其中快速查找某个数据呢？别急，等到二叉树那一节我会详细讲。</p>
-<p><strong>再次，数据量太小不适合二分查找。</strong></p>
-<p>如果要处理的数据量很小，完全没有必要用二分查找，顺序遍历就足够了。比如我们在一个大小为 10 的数组中查找一个元素，不管用二分查找还是顺序遍历，查找速度都差不多。只有数据量比较大的时候，二分查找的优势才会比较明显。</p>
-<p>不过，这里有一个例外。如果数据之间的比较操作非常耗时，不管数据量大小，我都推荐使用二分查找。比如，数组中存储的都是长度超过 300 的字符串，如此长的两个字符串之间比对大小，就会非常耗时。我们需要尽可能地减少比较次数，而比较次数的减少会大大提高性能，这个时候二分查找就比顺序遍历更有优势。</p>
-<p><strong>最后，数据量太大也不适合二分查找。</strong></p>
-<p>二分查找的底层需要依赖数组这种数据结构，而数组为了支持随机访问的特性，要求内存空间连续，对内存的要求比较苛刻。比如，我们有 1GB 大小的数据，如果希望用数组来存储，那就需要 1GB 的连续内存空间。</p>
-<p>注意这里的“连续”二字，也就是说，即便有 2GB 的内存空间剩余，但是如果这剩余的 2GB 内存空间都是零散的，没有连续的 1GB 大小的内存空间，那照样无法申请一个 1GB 大小的数组。而我们的二分查找是作用在数组这种数据结构之上的，所以太大的数据用数组存储就比较吃力了，也就不能用二分查找了。</p>
-<h2 id="内容小结"><a href="#内容小结" class="headerlink" title="内容小结"></a>内容小结</h2><p>今天我们学习了一种针对有序数据的高效查找算法，二分查找，它的时间复杂度是 O(logn)。</p>
-<p>二分查找的核心思想理解起来非常简单，有点类似分治思想。即每次都通过跟区间中的中间元素对比，将待查找的区间缩小为一半，直到找到要查找的元素，或者区间被缩小为 0。但是二分查找的代码实现比较容易写错。你需要着重掌握它的三个容易出错的地方：循环退出条件、mid 的取值，low 和 high 的更新。</p>
-<p>二分查找虽然性能比较优秀，但应用场景也比较有限。底层必须依赖数组，并且还要求数据是有序的。对于较小规模的数据查找，我们直接使用顺序遍历就可以了，二分查找的优势并不明显。二分查找更适合处理静态数据，也就是没有频繁的数据插入、删除操作。</p>
-<h2 id="课后思考"><a href="#课后思考" class="headerlink" title="课后思考"></a>课后思考</h2><ol>
-<li><p>如何编程实现“求一个数的平方根”？要求精确到小数点后 6 位。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Sqrt</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Sqrt</span> <span class="variable">sqrt</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Sqrt</span>();</span><br><span class="line">        <span class="type">double</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">1000</span>;</span><br><span class="line">        <span class="type">double</span> <span class="variable">num</span> <span class="operator">=</span> sqrt.sqrt(a, <span class="number">0.000001</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;算法结果：&quot;</span> + num);</span><br><span class="line">        System.out.println(<span class="string">&quot;实际结果：&quot;</span> + Math.sqrt(a));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">double</span> <span class="title function_">sqrt</span><span class="params">(<span class="type">double</span> a, <span class="type">double</span> precision)</span> &#123;</span><br><span class="line">        <span class="type">double</span> low, high, mid, tmp;</span><br><span class="line">        <span class="keyword">if</span> (a &gt; <span class="number">1</span>) &#123;</span><br><span class="line">            low = <span class="number">1</span>;</span><br><span class="line">            high = a;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            low = a;</span><br><span class="line">            high = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">            mid = (low + high) / <span class="number">2.000</span>;</span><br><span class="line">            tmp = mid * mid;</span><br><span class="line">            <span class="comment">// 如果当前求得的平方根在target+0.000001和target-0.000001之间，那么返回mid</span></span><br><span class="line">            <span class="keyword">if</span> (tmp &lt; a + precision &amp;&amp; tmp &gt;= a - precision) &#123;</span><br><span class="line">                <span class="keyword">return</span> mid;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (tmp &gt; a) &#123;</span><br><span class="line">                high = mid;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                low = mid;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1.000</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-</li>
-<li><p>我刚才说了，如果数据使用链表存储，二分查找的时间复杂就会变得很高，那查找的时间复杂度究竟是多少呢？如果你自己推导一下，你就会深刻地认识到，为何我们会选择用数组而不是链表来实现二分查找了。</p>
-<blockquote>
-<p>假设链表长度为n，二分查找每次都要找到中间点(计算中忽略奇偶数差异):<br>第一次查找中间点，需要移动指针n&#x2F;2次；<br>第二次，需要移动指针n&#x2F;4次；<br>第三次需要移动指针n&#x2F;8次；<br>……<br>以此类推，一直到1次为值</p>
-<p>总共指针移动次数(查找次数) &#x3D; n&#x2F;2 + n&#x2F;4 + n&#x2F;8 + …+ 1，这显然是个等比数列，根据等比数列求和公式：Sum &#x3D; n - 1.</p>
-<p>最后算法时间复杂度是：O(n-1)，忽略常数，记为O(n)，时间复杂度和顺序查找时间复杂度相同</p>
-<p>但是稍微思考下，在二分查找的时候，由于要进行多余的运算，严格来说，会比顺序查找时间慢</p>
-</blockquote>
-</li>
-</ol>
-
+<h1 id="13-线性排序：如何根据年龄给100万用户数据排序？"><a href="#13-线性排序：如何根据年龄给100万用户数据排序？" class="headerlink" title="13 | 线性排序：如何根据年龄给100万用户数据排序？"></a>13 | 线性排序：如何根据年龄给100万用户数据排序？</h1><h2 id="桶排序（Bucket-sort）"><a href="#桶排序（Bucket-sort）" class="headerlink" title="桶排序（Bucket sort）"></a>桶排序（Bucket sort）</h2><p>首先，我们来看桶排序。桶排序，顾名思义，会用到“桶”，核心思想是将要排序的数据分到几个有序的桶里，每个桶里的数据再单独进行排序。桶内排完序之后，再把每个桶里的数据按照顺序依次取出，组成的序列就是有序的了。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210809083534.jpeg" alt="img"></p>
+<p>桶排序的时间复杂度为什么是 O(n) 呢？我们一块儿来分析一下。</p>
+<p>如果要排序的数据有 n 个，我们把它们均匀地划分到 m 个桶内，每个桶里就有 k&#x3D;n&#x2F;m 个元素。每个桶内部使用快速排序，时间复杂度为 O(k * logk)。m 个桶排序的时间复杂度就是 O(m * k * logk)，因为 k&#x3D;n&#x2F;m，所以整个桶排序的时间复杂度就是 O(n*log(n&#x2F;m))。当桶的个数 m 接近数据个数 n 时，log(n&#x2F;m) 就是一个非常小的常量，这个时候桶排序的时间复杂度接近 O(n)。</p>
+    
+    <a class="article-more-a" href="/posts/ae7f3bb.html#more">more >></a>
+    
     
 
     
@@ -603,7 +779,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/posts/65beee21.html">展开全文 >></a>
+      <a class="article-more-a" href="/posts/ae7f3bb.html">展开全文 >></a>
     </p>
     
 
@@ -633,7 +809,7 @@
 
 
   
-    <article id="post-study/MySQL实战45讲/21讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-interview/限流算法详解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -641,7 +817,7 @@
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/posts/8f3bbd6e.html" target="_blank">02讲</a>
+	  <a class="article-title" href="/posts/29743003.html" target="_blank">限流算法原理及实现</a>
   
     </h1>
   
@@ -649,8 +825,8 @@
 
   
   
-<a href="/posts/8f3bbd6e.html" class="archive-article-date">
-        <time datetime="2021-05-05T05:20:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-05</time>
+<a href="/posts/29743003.html" class="archive-article-date">
+        <time datetime="2021-06-20T08:11:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-20</time>
 </a>
 
   
@@ -663,670 +839,72 @@
   <div class="article-entry" itemprop="articleBody">
     
     <hr>
-<h1 id="21-为什么我只改一行的语句，锁这么多？"><a href="#21-为什么我只改一行的语句，锁这么多？" class="headerlink" title="21 | 为什么我只改一行的语句，锁这么多？"></a>21 | 为什么我只改一行的语句，锁这么多？</h1><h2 id="间隙锁和next-lock-key加锁原则"><a href="#间隙锁和next-lock-key加锁原则" class="headerlink" title="间隙锁和next-lock key加锁原则"></a>间隙锁和next-lock key加锁原则</h2><p>因为间隙锁在可重复读隔离级别下才有效，所以本篇文章接下来的描述，若没有特殊说明，默认是可重复读隔离级别。</p>
-<p><strong>我总结的加锁规则里面，包含了两个“原则”、两个“优化”和一个“bug”。</strong></p>
-<ol>
-<li>原则 1：加锁的基本单位是 next-key lock。希望你还记得，next-key lock 是前开后闭区间。</li>
-<li>原则 2：查找过程中访问到的对象才会加锁。</li>
-<li>优化 1：索引上的等值查询，给唯一索引加锁的时候，next-key lock 退化为行锁。</li>
-<li>优化 2：索引上的等值查询，向右遍历时且最后一个值不满足等值条件的时候，next-key lock 退化为间隙锁。</li>
-<li>一个 bug：唯一索引上的范围查询会访问到不满足条件的第一个值为止。</li>
-</ol>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL实战45讲</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/8f3bbd6e.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-study/MySQL实战45讲/20讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/5ff22685.html" target="_blank">20讲</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/5ff22685.html" class="archive-article-date">
-        <time datetime="2021-05-05T05:20:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-05</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <hr>
-<h1 id="20-幻读是什么，幻读有什么问题？"><a href="#20-幻读是什么，幻读有什么问题？" class="headerlink" title="20 | 幻读是什么，幻读有什么问题？"></a>20 | 幻读是什么，幻读有什么问题？</h1><p>为了便于说明问题，这一篇文章，我们就先使用一个小一点儿的表。建表和初始化语句如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `t` (</span><br><span class="line">  `id` int(11) NOT NULL,</span><br><span class="line">  `c` int(11) DEFAULT NULL,</span><br><span class="line">  `d` int(11) DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`id`),</span><br><span class="line">  KEY `c` (`c`)</span><br><span class="line">) ENGINE=InnoDB;</span><br><span class="line"></span><br><span class="line">insert into t values(0,0,0),(5,5,5),</span><br><span class="line">(10,10,10),(15,15,15),(20,20,20),(25,25,25);</span><br></pre></td></tr></table></figure>
-
-<h2 id="幻读是什么？"><a href="#幻读是什么？" class="headerlink" title="幻读是什么？"></a>幻读是什么？</h2>
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL实战45讲</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/5ff22685.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-study/数据结构与算法之美/学习笔记/12讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/93213c3f.html" target="_blank">12讲 | 归并排序 &amp; 快速排序，查找第K大元素</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/93213c3f.html" class="archive-article-date">
-        <time datetime="2021-05-04T09:20:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-04</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <hr>
-<h1 id="12-排序（下）：如何用快排思想在O-n-内查找第K大元素？"><a href="#12-排序（下）：如何用快排思想在O-n-内查找第K大元素？" class="headerlink" title="12 | 排序（下）：如何用快排思想在O(n)内查找第K大元素？"></a>12 | 排序（下）：如何用快排思想在O(n)内查找第K大元素？</h1><h2 id="归并排序的原理"><a href="#归并排序的原理" class="headerlink" title="归并排序的原理"></a>归并排序的原理</h2><p>归并排序的核心思想还是蛮简单的。如果要排序一个数组，我们先把数组从中间分成前后两部分，然后对前后两部分分别排序，再将排好序的两部分合并在一起，这样整个数组就都有序了。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210504154821.jpeg" alt="img"></p>
-<p>归并排序使用的就是分治思想。分治，顾名思义，就是分而治之，将一个大问题分解成小的子问题来解决。小的子问题解决了，大问题也就解决了。</p>
-<p>从我刚才的描述，你有没有感觉到，分治思想跟我们前面讲的递归思想很像。是的，分治算法一般都是用递归来实现的。<strong>分治是一种解决问题的处理思想，递归是一种编程技巧</strong>，这两者并不冲突。分治算法的思想我后面会有专门的一节来讲，现在不展开讨论，我们今天的重点还是排序算法。</p>
-<p>前面我通过举例让你对归并有了一个感性的认识，又告诉你，归并排序用的是分治思想，可以用递归来实现。我们现在就来看看<strong>如何用递归代码来实现归并排序</strong>。</p>
-<p>我在第10 节讲的递归代码的编写技巧你还记得吗？写递归代码的技巧就是，分析得出递推公式，然后找到终止条件，最后将递推公式翻译成递归代码。所以，要想写出归并排序的代码，我们先写出归并排序的递推公式。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">递推公式：</span><br><span class="line">merge_sort(p…r) = merge(merge_sort(p…q), merge_sort(q+1…r))</span><br><span class="line"></span><br><span class="line">终止条件：</span><br><span class="line">p &gt;= r 不用再继续分解</span><br></pre></td></tr></table></figure>
-
-<p>我来解释一下这个递推公式。</p>
-<p>merge_sort(p…r) 表示，给下标从 p 到 r 之间的数组排序。我们将这个排序问题转化为了两个子问题，merge_sort(p…q) 和 merge_sort(q+1…r)，其中下标 q 等于 p 和 r 的中间位置，也就是 (p+r)&#x2F;2。当下标从 p 到 q 和从 q+1 到 r 这两个子数组都排好序之后，我们再将两个有序的子数组合并在一起，这样下标从 p 到 r 之间的数据就也排好序了。</p>
-<p>有了递推公式，转化成代码就简单多了。为了阅读方便，我这里只给出伪代码，你可以翻译成你熟悉的编程语言。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 归并排序算法, A是数组，n表示数组大小</span></span><br><span class="line">merge_sort(A, n) &#123;</span><br><span class="line">  merge_sort_c(A, <span class="number">0</span>, n<span class="number">-1</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 递归调用函数</span></span><br><span class="line">merge_sort_c(A, p, r) &#123;</span><br><span class="line">  <span class="comment">// 递归终止条件</span></span><br><span class="line">  <span class="keyword">if</span> p &gt;= r  then <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 取p到r之间的中间位置q</span></span><br><span class="line">  q = (p+r) / <span class="number">2</span></span><br><span class="line">  <span class="comment">// 分治递归</span></span><br><span class="line">  merge_sort_c(A, p, q)</span><br><span class="line">  merge_sort_c(A, q+<span class="number">1</span>, r)</span><br><span class="line">  <span class="comment">// 将A[p...q]和A[q+1...r]合并为A[p...r]</span></span><br><span class="line">  merge(A[p...r], A[p...q], A[q+<span class="number">1.</span>..r])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>你可能已经发现了，merge(A[p…r], A[p…q], A[q+1…r]) 这个函数的作用就是，将已经有序的 A[p…q]和 A[q+1….r]合并成一个有序的数组，并且放入 A[p….r]。那这个过程具体该如何做呢？</p>
-<p>如图所示，我们申请一个临时数组 tmp，大小与 A[p…r]相同。我们用两个游标 i 和 j，分别指向 A[p…q]和 A[q+1…r]的第一个元素。比较这两个元素 A[i]和 A[j]，如果 A[i]&lt;&#x3D;A[j]，我们就把 A[i]放入到临时数组 tmp，并且 i 后移一位，否则将 A[j]放入到数组 tmp，j 后移一位。</p>
-<p>继续上述比较过程，直到其中一个子数组中的所有数据都放入临时数组中，再把另一个数组中的数据依次加入到临时数组的末尾，这个时候，临时数组中存储的就是两个子数组合并之后的结果了。最后再把临时数组 tmp 中的数据拷贝到原数组 A[p…r]中。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210504155216.jpeg" alt="img"></p>
-<p>我们把 merge() 函数写成伪代码，就是下面这样：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">merge(A[p...r], A[p...q], A[q+<span class="number">1.</span>..r]) &#123;</span><br><span class="line">  <span class="keyword">var</span> i := p，j := q+<span class="number">1</span>，k := <span class="number">0</span> <span class="comment">// 初始化变量i, j, k</span></span><br><span class="line">  <span class="keyword">var</span> tmp := <span class="built_in">new</span> array[<span class="number">0.</span>..r-p] <span class="comment">// 申请一个大小跟A[p...r]一样的临时数组</span></span><br><span class="line">  while i&lt;=q AND j&lt;=r do &#123;</span><br><span class="line">    <span class="keyword">if</span> A[i] &lt;= A[j] &#123;</span><br><span class="line">      tmp[k++] = A[i++] <span class="comment">// i++等于i:=i+1</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      tmp[k++] = A[j++]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 判断哪个子数组中有剩余的数据</span></span><br><span class="line">  <span class="keyword">var</span> start := i，end := q</span><br><span class="line">  <span class="keyword">if</span> j&lt;=r then start := j, end:=r</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 将剩余的数据拷贝到临时数组tmp</span></span><br><span class="line">  while start &lt;= end do &#123;</span><br><span class="line">    tmp[k++] = A[start++]</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 将tmp中的数组拷贝回A[p...r]</span></span><br><span class="line">  <span class="keyword">for</span> i:=<span class="number">0</span> to r-p do &#123;</span><br><span class="line">    A[p+i] = tmp[i]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="快速排序的原理"><a href="#快速排序的原理" class="headerlink" title="快速排序的原理"></a>快速排序的原理</h2><p>快排的思想是这样的：如果要排序数组中下标从 p 到 r 之间的一组数据，我们选择 p 到 r 之间的任意一个数据作为 pivot（分区点）。</p>
-<p>我们遍历 p 到 r 之间的数据，将小于 pivot 的放到左边，将大于 pivot 的放到右边，将 pivot 放到中间。经过这一步骤之后，数组 p 到 r 之间的数据就被分成了三个部分，前面 p 到 q-1 之间都是小于 pivot 的，中间是 pivot，后面的 q+1 到 r 之间是大于 pivot 的。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427195633.jpeg" alt="img"></p>
-<p>根据分治、递归的处理思想，我们可以用递归排序下标从 p 到 q-1 之间的数据和下标从 q+1 到 r 之间的数据，直到区间缩小为 1，就说明所有的数据都有序了。</p>
-<p>如果我们用递推公式来将上面的过程写出来的话，就是这样：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">递推公式：</span><br><span class="line">quick_sort(p…r) = quick_sort(p…q-1) + quick_sort(q+1… r)</span><br><span class="line"></span><br><span class="line">终止条件：</span><br><span class="line">p &gt;= r</span><br></pre></td></tr></table></figure>
-
-<p>我将递推公式转化成递归代码。跟归并排序一样，我还是用伪代码来实现，你可以翻译成你熟悉的任何语言。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 快速排序，A是数组，n表示数组的大小</span></span><br><span class="line">quick_sort(A, n) &#123;</span><br><span class="line">  quick_sort_c(A, <span class="number">0</span>, n<span class="number">-1</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 快速排序递归函数，p,r为下标</span></span><br><span class="line">quick_sort_c(A, p, r) &#123;</span><br><span class="line">  <span class="keyword">if</span> p &gt;= r then <span class="keyword">return</span></span><br><span class="line">  </span><br><span class="line">  q = partition(A, p, r) <span class="comment">// 获取分区点</span></span><br><span class="line">  quick_sort_c(A, p, q<span class="number">-1</span>)</span><br><span class="line">  quick_sort_c(A, q+<span class="number">1</span>, r)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>归并排序中有一个 merge() 合并函数，我们这里有一个 partition() 分区函数。partition() 分区函数实际上我们前面已经讲过了，就是随机选择一个元素作为 pivot（一般情况下，可以选择 p 到 r 区间的最后一个元素），然后对 A[p…r]分区，函数返回 pivot 的下标。</p>
-<p>如果我们不考虑空间消耗的话，partition() 分区函数可以写得非常简单。我们申请两个临时数组 X 和 Y，遍历 A[p…r]，将小于 pivot 的元素都拷贝到临时数组 X，将大于 pivot 的元素都拷贝到临时数组 Y，最后再将数组 X 和数组 Y 中数据顺序拷贝到 A[p….r]。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427200346.jpeg" alt="img"></p>
-<p>但是，如果按照这种思路实现的话，partition() 函数就需要很多额外的内存空间，所以快排就不是原地排序算法了。如果我们希望快排是原地排序算法，那它的空间复杂度得是 O(1)，那 partition() 分区函数就不能占用太多额外的内存空间，我们就需要在 A[p…r]的原地完成分区操作。</p>
-<p>原地分区函数的实现思路非常巧妙，我写成了伪代码，我们一起来看一下。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">partition(A, p, r) &#123;</span><br><span class="line">  pivot := A[r]</span><br><span class="line">  i := p</span><br><span class="line">  <span class="keyword">for</span> j := p to r<span class="number">-1</span> do &#123;</span><br><span class="line">    <span class="keyword">if</span> A[j] &lt; pivot &#123;</span><br><span class="line">      swap A[i] with A[j]</span><br><span class="line">      i := i+<span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  swap A[i] with A[r]</span><br><span class="line">  <span class="keyword">return</span> i</span><br></pre></td></tr></table></figure>
-
-<p>这里的处理有点类似选择排序。我们通过游标 i 把 A[p…r-1]分成两部分。A[p…i-1]的元素都是小于 pivot 的，我们暂且叫它“已处理区间”，A[i…r-1]是“未处理区间”。我们每次都从未处理的区间 A[i…r-1]中取一个元素 A[j]，与 pivot 对比，如果小于 pivot，则将其加入到已处理区间的尾部，也就是 A[i]的位置。</p>
-<p>数组的插入操作还记得吗？在数组某个位置插入元素，需要搬移数据，非常耗时。当时我们也讲了一种处理技巧，就是交换，在 O(1) 的时间复杂度内完成插入操作。这里我们也借助这个思想，只需要将 A[i]与 A[j]交换，就可以在 O(1) 时间复杂度内将 A[j]放到下标为 i 的位置。</p>
-<p>文字不如图直观，所以我画了一张图来展示分区的整个过程。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427201802.jpeg" alt="img"></p>
-<p>因为分区的过程涉及交换操作，如果数组中有两个相同的元素，比如序列 6，8，7，6，3，5，9，4，在经过第一次分区操作之后，两个 6 的相对先后顺序就会改变。所以，快速排序并不是一个稳定的排序算法。</p>
-<p>到此，快速排序的原理你应该也掌握了。现在，我再来看另外一个问题：快排和归并用的都是分治思想，递推公式和递归代码也非常相似，那它们的区别在哪里呢？</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427201947.jpeg" alt="img"></p>
-<p>可以发现，归并排序的处理过程是<strong>由下到上</strong>的，先处理子问题，然后再合并。而快排正好相反，它的处理过程是<strong>由上到下的</strong>，先分区，然后再处理子问题。归并排序虽然是稳定的、时间复杂度为 O(nlogn) 的排序算法，但是它是非原地排序算法。我们前面讲过，归并之所以是非原地排序算法，主要原因是合并函数无法在原地执行。快速排序通过设计巧妙的原地分区函数，可以实现原地排序，解决了归并排序占用太多内存的问题。</p>
-<h2 id="解答开篇"><a href="#解答开篇" class="headerlink" title="解答开篇"></a>解答开篇</h2><p>快排核心思想就是分治和分区，我们可以利用分区的思想，来解答开篇的问题：O(n) 时间复杂度内求无序数组中的第 K 大元素。比如，4， 2， 5， 12， 3 这样一组数据，第 3 大元素就是 4。</p>
-<p>我们选择数组区间 A[0…n-1]的最后一个元素 A[n-1]作为 pivot，对数组 A[0…n-1]原地分区，这样数组就分成了三部分，A[0…p-1]、A[p]、A[p+1…n-1]。</p>
-<p>如果 p+1&#x3D;K，那 A[p]就是要求解的元素；如果 K&gt;p+1, 说明第 K 大元素出现在 A[p+1…n-1]区间，我们再按照上面的思路递归地在 A[p+1…n-1]这个区间内查找。同理，如果 K&lt;p+1，那我们就在 A[0…p-1]区间查找。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210504155824.jpeg" alt="img"></p>
-<p>我们再来看，为什么上述解决思路的时间复杂度是 O(n)？</p>
-<p>第一次分区查找，我们需要对大小为 n 的数组执行分区操作，需要遍历 n 个元素。第二次分区查找，我们只需要对大小为 n&#x2F;2 的数组执行分区操作，需要遍历 n&#x2F;2 个元素。依次类推，分区遍历元素的个数分别为、n&#x2F;2、n&#x2F;4、n&#x2F;8、n&#x2F;16.……直到区间缩小为 1。</p>
-<p>如果我们把每次分区遍历的元素个数加起来，就是：n+n&#x2F;2+n&#x2F;4+n&#x2F;8+…+1。这是一个等比数列求和，最后的和等于 2n-1。所以，上述解决思路的时间复杂度就为 O(n)。</p>
-<h2 id="内容小结"><a href="#内容小结" class="headerlink" title="内容小结"></a>内容小结</h2><p>归并排序和快速排序是两种稍微复杂的排序算法，它们用的都是分治的思想，代码都通过递归来实现，过程非常相似。理解归并排序的重点是理解递推公式和 merge() 合并函数。同理，理解快排的重点也是理解递推公式，还有 partition() 分区函数。</p>
-<p>归并排序算法是一种在任何情况下时间复杂度都比较稳定的排序算法，这也使它存在致命的缺点，即归并排序不是原地排序算法，空间复杂度比较高，是 O(n)。正因为此，它也没有快排应用广泛。</p>
-<p>快速排序算法虽然最坏情况下的时间复杂度是 O(n2)，但是平均情况下时间复杂度都是 O(nlogn)。不仅如此，快速排序算法时间复杂度退化到 O(n2) 的概率非常小，我们可以通过合理地选择 pivot 来避免这种情况。</p>
-<h2 id="课后思考"><a href="#课后思考" class="headerlink" title="课后思考"></a>课后思考</h2><p>现在你有 10 个接口访问日志文件，每个日志文件大小约 300MB，每个文件里的日志都是按照时间戳从小到大排序的。你希望将这 10 个较小的日志文件，合并为 1 个日志文件，合并之后的日志仍然按照时间戳从小到大排列。如果处理上述排序任务的机器内存只有 1GB，你有什么好的解决思路，能“快速”地将这 10 个日志文件合并吗？</p>
-<blockquote>
-<p>归并思路： </p>
-<p>1.每个文件从最小值记录开始维护一个游标，标志当前文件遍历的记录位置。 </p>
-<p>2.维护一个10空间大小的小顶堆，将每个文件的游标记录压入，顶端的就是最小值。 </p>
-<p>3.将堆顶数据取出，写入新的文件。 </p>
-<p>4.将取出的记录对应的文件游标向前拨动，取出对应的记录（就是下一个记录），压入小顶堆。没有记录说明改文件遍历完毕。 </p>
-<p>5.重复操作3。 （这里的小顶堆作用就是快速取出最小的那个值，考虑到堆结构的代码实现难度，这个地方用简单的有序列表，新的数据有序插入，取出最小的也很ok，10条记录随便搞，慢不到哪里，优化也快不到哪里，简单就好） </p>
-<p>这个简单思路占用空间很小，就是10条数据的小顶堆。但题目给出的是，1G内存，有很大的优化空间，优化点在磁盘IO，优化方式就是批量读文件，批量写文件。 1.批量读，每个文件读取50M到内存，总计500M。上面的游标就对应到内存游标，只是游标到底之后，需要读取对应文件下一个50M数据 2.批量写，上面的写文件，优化为写内存，给予500M的内存空间，写满后再一次刷入新的文件。</p>
-</blockquote>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/93213c3f.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-study/数据结构与算法之美/每周打卡/8" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/7f2c1a48.html" target="_blank">第八周</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/7f2c1a48.html" class="archive-article-date">
-        <time datetime="2021-05-01T07:06:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-01</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <hr>
-<p>数据结构与算法之美每周打卡 2021.04.26-2021.05.02</p>
-<h3 id="面试题-16-25-LRU-缓存"><a href="#面试题-16-25-LRU-缓存" class="headerlink" title="面试题 16.25. LRU 缓存"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/lru-cache-lcci/">面试题 16.25. LRU 缓存</a></h3><p>设计和构建一个“最近最少使用”缓存，该缓存会删除最近最少使用的项目。缓存应该从键映射到值(允许你插入和检索特定键对应的值)，并在初始化时指定最大容量。当缓存被填满时，它应该删除最近最少使用的项目。</p>
-<p>它应该支持以下操作： 获取数据 <code>get</code> 和 写入数据 <code>put</code> 。</p>
-<p>获取数据 <code>get(key)</code> - 如果密钥 (key) 存在于缓存中，则获取密钥的值（总是正数），否则返回 -1。<br>写入数据 <code>put(key, value)</code> - 如果密钥不存在，则写入其数据值。当缓存容量达到上限时，它应该在写入新数据之前删除最近最少使用的数据值，从而为新的数据值留出空间。</p>
-<p><strong>示例:</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">LRUCache cache = new LRUCache( 2 /* 缓存容量 */ );</span><br><span class="line"></span><br><span class="line">cache.put(1, 1);</span><br><span class="line">cache.put(2, 2);</span><br><span class="line">cache.get(1);       // 返回  1</span><br><span class="line">cache.put(3, 3);    // 该操作会使得密钥 2 作废</span><br><span class="line">cache.get(2);       // 返回 -1 (未找到)</span><br><span class="line">cache.put(4, 4);    // 该操作会使得密钥 1 作废</span><br><span class="line">cache.get(1);       // 返回 -1 (未找到)</span><br><span class="line">cache.get(3);       // 返回  3</span><br><span class="line">cache.get(4);       // 返回  4</span><br></pre></td></tr></table></figure>
-
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">LRUCache</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 使用hashmap使得查询间复杂度为O(1)，否则链表时间复杂度为O(n)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Map&lt;Integer, Node&gt; cache;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">int</span> capacity;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> size;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Node head;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Node tail;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">LRUCache</span><span class="params">(<span class="type">int</span> capacity)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.capacity = capacity;</span><br><span class="line">        cache = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        size = <span class="number">0</span>;</span><br><span class="line">        head = <span class="keyword">new</span> <span class="title class_">Node</span>();</span><br><span class="line">        tail = <span class="keyword">new</span> <span class="title class_">Node</span>();</span><br><span class="line">        head.next = tail;</span><br><span class="line">        tail.prev = head;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">get</span><span class="params">(<span class="type">int</span> key)</span> &#123;</span><br><span class="line">        <span class="type">Node</span> <span class="variable">node</span> <span class="operator">=</span> cache.get(key);</span><br><span class="line">        <span class="keyword">if</span> (node == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        moveToHead(node);</span><br><span class="line">        <span class="keyword">return</span> node.value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">put</span><span class="params">(<span class="type">int</span> key, <span class="type">int</span> value)</span> &#123;</span><br><span class="line">        <span class="type">Node</span> <span class="variable">node</span> <span class="operator">=</span> cache.get(key);</span><br><span class="line">        <span class="comment">// 该节点不存在</span></span><br><span class="line">        <span class="keyword">if</span> (node == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="comment">// 容量满了</span></span><br><span class="line">            <span class="keyword">if</span> (size == capacity) &#123;</span><br><span class="line">                <span class="type">Node</span> <span class="variable">last</span> <span class="operator">=</span> removeLast();</span><br><span class="line">                cache.remove(last.key);</span><br><span class="line">                size--;</span><br><span class="line">            &#125;</span><br><span class="line">            node = <span class="keyword">new</span> <span class="title class_">Node</span>(key, value);</span><br><span class="line">            addToHead(node);</span><br><span class="line">            cache.put(key, node);</span><br><span class="line">            size++;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            node.value = value;</span><br><span class="line">            <span class="comment">// 节点已存在</span></span><br><span class="line">            moveToHead(node);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Node <span class="title function_">removeLast</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">Node</span> <span class="variable">last</span> <span class="operator">=</span> tail.prev;</span><br><span class="line">        remove(last);</span><br><span class="line">        <span class="keyword">return</span> last;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">moveToHead</span><span class="params">(Node node)</span> &#123;</span><br><span class="line">        remove(node);</span><br><span class="line">        addToHead(node);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">addToHead</span><span class="params">(Node node)</span> &#123;</span><br><span class="line">        <span class="type">Node</span> <span class="variable">next</span> <span class="operator">=</span> head.next;</span><br><span class="line">        head.next = node;</span><br><span class="line">        next.prev = node;</span><br><span class="line"></span><br><span class="line">        node.prev = head;</span><br><span class="line">        node.next = next;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">remove</span><span class="params">(Node node)</span> &#123;</span><br><span class="line">        <span class="type">Node</span> <span class="variable">prev</span> <span class="operator">=</span> node.prev;</span><br><span class="line">        <span class="type">Node</span> <span class="variable">next</span> <span class="operator">=</span> node.next;</span><br><span class="line"></span><br><span class="line">        prev.next = next;</span><br><span class="line">        next.prev = prev;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 双向链表</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> <span class="keyword">class</span> <span class="title class_">Node</span> &#123;</span><br><span class="line">    <span class="type">int</span> key;</span><br><span class="line">    <span class="type">int</span> value;</span><br><span class="line">    Node prev;</span><br><span class="line">    Node next;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Node</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Node</span><span class="params">(<span class="type">int</span> key, <span class="type">int</span> value)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.key = key;</span><br><span class="line">        <span class="built_in">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="剑指-Offer-68-II-二叉树的最近公共祖先"><a href="#剑指-Offer-68-II-二叉树的最近公共祖先" class="headerlink" title="剑指 Offer 68 - II. 二叉树的最近公共祖先"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/er-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof/">剑指 Offer 68 - II. 二叉树的最近公共祖先</a></h3><p>给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。</p>
-<p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88/8918834?fr=aladdin">百度百科</a>中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（<strong>一个节点也可以是它自己的祖先</strong>）。”</p>
-<p>例如，给定如下二叉树: root &#x3D; [3,5,1,6,2,0,8,null,null,7,4]</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210501154050.png" alt="img"></p>
-<p><strong>示例 1:</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1</span><br><span class="line">输出: 3</span><br><span class="line">解释: 节点 5 和节点 1 的最近公共祖先是节点 3。</span><br></pre></td></tr></table></figure>
-
-<p><strong>示例 2:</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4</span><br><span class="line">输出: 5</span><br><span class="line">解释: 节点 5 和节点 4 的最近公共祖先是节点 5。因为根据定义最近公共祖先节点可以为节点本身。</span><br></pre></td></tr></table></figure>
-
-<p><strong>说明:</strong></p>
+<p>[TOC]</p>
+<h2 id="限流的算法有哪些？"><a href="#限流的算法有哪些？" class="headerlink" title="限流的算法有哪些？"></a>限流的算法有哪些？</h2><p>本文介绍几种最常用的限流算法：</p>
 <ul>
-<li>所有节点的值都是唯一的。</li>
-<li>p、q 为不同节点且均存在于给定的二叉树中。</li>
+<li>固定窗口计数器；</li>
+<li>滑动窗口计数器；</li>
+<li>漏桶；</li>
+<li>令牌桶。</li>
 </ul>
-<p>注意：本题与主站 236 题相同：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/">https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/</a></p>
-<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//TODO</span></span><br></pre></td></tr></table></figure>
-
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">每周打卡</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/7f2c1a48.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-interview/MySQL常见面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/e27205e0.html" target="_blank">MySQL常见面试题</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/e27205e0.html" class="archive-article-date">
-        <time datetime="2021-04-27T08:42:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-27</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h2 id="数据库优化："><a href="#数据库优化：" class="headerlink" title="数据库优化："></a>数据库优化：</h2><h3 id="索引失效的场景："><a href="#索引失效的场景：" class="headerlink" title="索引失效的场景："></a>索引失效的场景：</h3><ol>
-<li>like 以%开头，索引无效；当like前缀没有%，后缀有%时，索引有效。</li>
-<li>or语句前后没有同时使用索引。当or左右查询字段只有一个是索引，该索引失效，只有当or左右查询字段均为索引时，才会生效。</li>
-<li>组合索引，不是使用第一列索引，索引失效。</li>
-<li>数据类型出现隐式转化。如varchar不加单引号的话可能会自动转换为int型，使索引无效，产生全表扫描。</li>
-<li>在索引列上使用 IS NULL 或 IS NOT NULL操作。索引是不索引空值的，所以这样的操作不能使用索引，可以用其他的办法处理，例如：数字类型，判断大于0，字符串类型设置一个默认值，判断是否等于默认值即可。</li>
-<li>在索引字段上使用not，&lt;&gt;，!&#x3D;。不等于操作符是永远不会用到索引的，因此对它的处理只会产生全表扫描。 优化方法： key&lt;&gt;0 改为 key&gt;0 or key&lt;0。</li>
-<li>对索引字段进行计算操作。</li>
-<li>在索引字段上使用函数。</li>
-<li>当全表扫描速度比索引速度快时，mysql会使用全表扫描，此时索引失效。</li>
-</ol>
-<p>索引失效分析工具：</p>
-<p>可以使用explain命令加在要分析的sql语句前面，在执行结果中查看key这一列的值，如果为NULL，说明没有使用索引。</p>
-<h3 id="索引使用注意事项"><a href="#索引使用注意事项" class="headerlink" title="索引使用注意事项"></a>索引使用注意事项</h3><ol>
-<li>不要滥用索引<ul>
-<li>索引提高查询速度，却会降低更新表的速度，因为更新表时，mysql不仅要更新数据，保存数据，还要更新索引，保存索引</li>
-<li>索引会占用磁盘空间</li>
-</ul>
-</li>
-<li>索引不会包含含有NULL值的列    ，复合索引只要有一列含有NULL值，那么这一列对于此符合索引就是无效的，因此我们在设计数据库设计时不要让字段的默认值为NULL。 </li>
-<li>MySQL查询只是用一个索引，如果where字句中使用了索引的话，那么order by中的列是不会使用索引的 </li>
-<li>like：like ‘%aaa%’不会使用索引而like “aaa%”可以使用索引</li>
-</ol>
-<h3 id="联合索引最左匹配原则"><a href="#联合索引最左匹配原则" class="headerlink" title="联合索引最左匹配原则"></a>联合索引最左匹配原则</h3><ol>
-<li>是不是用索引，和查询条件的顺序无关（优化器会自动调整条件的顺序），但和这些字段的查询手段有关</li>
-<li>建立了abc的联合索引，相当于建立了 a的单列索引，ab的联合索引，以及abc的联合索引</li>
-<li>一般根据最左匹配的原则，但在遇到范围查询后，匹配终止，也就是说，当条件为：<br>a like ‘%str%’、a like ‘%str’ 时，不走索引；当条件为 a like ‘str%’ 或者 “&gt;”, “&lt;”, “between”时， 仅使用了<strong>联合索引中a的部分</strong>；<br>b，c 同理，根据查询方式不同，即便条件中的3个字段都在索引里，也不一定使用了全索引<br>假如条件是  a &#x3D; 1 and b &#x3D; 2 and c &#x3D; 3 这类情况，是必然走这个联合索引了</li>
-</ol>
-<h3 id="我们的数据库当中如何做的优化"><a href="#我们的数据库当中如何做的优化" class="headerlink" title="我们的数据库当中如何做的优化?"></a>我们的数据库当中如何做的优化?</h3><ul>
-<li>对查询进行优化，要尽量避免全表扫描，首先应考虑在 where 及 order by 涉及的列上建立索引。</li>
-<li>应尽量避免在 where 子句中对字段进行 null 值判断，否则将导致引擎放弃使用索引而进行全表扫描</li>
-<li>应尽量避免在 where 子句中使用 !&#x3D; 或 &lt;&gt; 操作符，否则将引擎放弃使用索引而进行全表扫描。</li>
-<li>应尽量避免在 where 子句中使用 or 来连接条件，如果一个字段有索引，一个字段没有索引，将导致引擎放弃使用索引而进行全表扫描</li>
-<li>in 和 not in 也要慎用，否则会导致全表扫描（当数据库人为IN和NotIn使用索引查询的效率不如全表扫描时会放弃使用索引转而使用权标扫描）</li>
-<li>like模糊全匹配也将导致全表扫描</li>
-</ul>
-<h3 id="回表查询和索引覆盖是什么？"><a href="#回表查询和索引覆盖是什么？" class="headerlink" title="回表查询和索引覆盖是什么？"></a>回表查询和索引覆盖是什么？</h3><p>概念：</p>
+<h3 id="固定窗口计数器算法"><a href="#固定窗口计数器算法" class="headerlink" title="固定窗口计数器算法"></a>固定窗口计数器算法</h3><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210620222717.png" alt="固定窗口计数器算法"></p>
+<p>固定窗口计数器算法概念如下：</p>
 <ul>
-<li>回表查询：先定位主键值，再定位行记录，它的性能较扫一遍索引树更低</li>
-<li>索引覆盖：在一棵索引树上就能获取SQL所需的所有列数据，无需回表，即实现了索引覆盖</li>
+<li><p>将时间划分为多个窗口；</p>
+</li>
+<li><p>在每个窗口内每有一次请求就将计数器加一；</p>
+</li>
+<li><p>如果计数器超过了限制数量，则本窗口内所有的请求都被丢弃当时间到达下一个窗口时，计数器重置。</p>
+</li>
 </ul>
-<p>如何实现索引覆盖：</p>
+<p>固定窗口计数器是最为简单的算法，但这个算法有时会让通过请求量允许为限制的两倍。考虑如下情况：限制1秒内最多通过5个请求，在第一个窗口的最后半秒内通过了5个请求，第二个窗口的前半秒内又通过了5个请求。这样看来就是在1秒内通过了10个请求。 </p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210620222813.png" alt="图片"></p>
+<h4 id="代码实现："><a href="#代码实现：" class="headerlink" title="代码实现："></a>代码实现：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Counter</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 最大访问数量</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">limit</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 访问时间差</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">long</span> <span class="variable">timeout</span> <span class="operator">=</span> <span class="number">1000</span>;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 请求时间</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> Long time;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 当前计数器</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">AtomicInteger</span> <span class="variable">reqCount</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AtomicInteger</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">limit</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// 初始化time</span></span><br><span class="line">        <span class="keyword">if</span> (time == <span class="literal">null</span>) &#123;</span><br><span class="line">            time = System.currentTimeMillis();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">long</span> <span class="variable">now</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">        <span class="keyword">if</span> (now &lt; time + timeout) &#123;</span><br><span class="line">            <span class="comment">// 单位时间内</span></span><br><span class="line">            reqCount.addAndGet(<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">return</span> reqCount.get() &lt;= limit;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            time = now;</span><br><span class="line">            reqCount.set(<span class="number">0</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="滑动窗口计数器算法"><a href="#滑动窗口计数器算法" class="headerlink" title="滑动窗口计数器算法"></a>滑动窗口计数器算法</h3><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210620222921.png" alt="滑动窗口计数器算法"></p>
+<p>滑动窗口计数器算法概念如下：</p>
 <ul>
-<li>主键索引存储的是主键值和行记录（即聚簇索引），无需回表查询</li>
-<li>普通索引存储的是索引和rowid的值，查询其他字段（非rowid字段和其他字段）需要回表查询，建立联合索引实现索引覆盖可以解决这个问题</li>
+<li>将时间划分为多个区间；</li>
+<li>在每个区间内每有一次请求就将计数器加一维持一个时间窗口，占据多个区间；</li>
+<li>每经过一个区间的时间，则抛弃最老的一个区间，并纳入最新的一个区间；</li>
+<li>如果当前窗口内区间的请求计数总和超过了限制数量，则本窗口内所有的请求都被丢弃。</li>
 </ul>
-<p>结合下面的实例：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># 有一张表</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `test` (</span><br><span class="line">  `id` <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `a` <span class="type">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `b` <span class="type">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `c` <span class="type">varchar</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`id`),</span><br><span class="line">  KEY `a` (`a`)</span><br><span class="line">) ENGINE<span class="operator">=</span>InnoDB AUTO_INCREMENT<span class="operator">=</span><span class="number">4</span> <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8;</span><br><span class="line"># 这几条语句有什么区别</span><br><span class="line"></span><br><span class="line"># 没有区别，没有回表查询</span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> test <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">SELECT</span> id <span class="keyword">from</span> test <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">SELECT</span> a <span class="keyword">from</span> test <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"># 第一句会出现回表查询，其余都直接可以查到数据</span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> test <span class="keyword">where</span> a <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">SELECT</span> id <span class="keyword">from</span> test <span class="keyword">where</span> a <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">SELECT</span> a <span class="keyword">from</span> test <span class="keyword">where</span> a <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"># 没有索引，都是全表查询</span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> test <span class="keyword">where</span> b <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">SELECT</span> id <span class="keyword">from</span> test <span class="keyword">where</span> b <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">SELECT</span> a <span class="keyword">from</span> test <span class="keyword">where</span> b <span class="operator">=</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<h3 id="Select-from-table-where-a-‘1’-and-b-‘2’-and-c-’3’-索引-a-b-c-是否走索引"><a href="#Select-from-table-where-a-‘1’-and-b-‘2’-and-c-’3’-索引-a-b-c-是否走索引" class="headerlink" title="Select * from table where a &#x3D; ‘1’ and b &gt; ‘2’ and c&#x3D;’3’ 索引(a,b,c)是否走索引"></a>Select * from table where a &#x3D; ‘1’ and b &gt; ‘2’ and c&#x3D;’3’ 索引(a,b,c)是否走索引</h3><p>在a、b走完索引后，c肯定是无序了，所以c就没法走索引，数据库会觉得还不如全表扫描c字段来的快（扫描全部满足a&#x3D;1和b&gt;2的纪录）</p>
-<p> 始终记得，在数据库中是先按照a排序，后按照b排序，最后按照c排序。 首先索引找a，找到后在a相等的条件下，b必然是有序的。因为先按照a排序，若a相同，按照b排序，因此a相等的条件下，b必然有序。 好，我们继续。当找到所有b&gt;2的之后，c还有序么？不，c不有序。因为（b,c）的组合可以是（100000,1），也可以是（1，100）。发现了么，当你根据b找到区间之后，c是无序的，因为b和c之间没有关系。你不能保证所有大于2的b的那些记录中，c还是有序的。</p>
-<h3 id="现在一张表table，有a-b-c三个索引，select-from-table-where-a-1-and-b-2-order-by-c，这些字段是否都能使用索引？如果不能怎么优化"><a href="#现在一张表table，有a-b-c三个索引，select-from-table-where-a-1-and-b-2-order-by-c，这些字段是否都能使用索引？如果不能怎么优化" class="headerlink" title="现在一张表table，有a,b,c三个索引，select * from table where a &#x3D; 1 and b &#x3D; 2 order by c，这些字段是否都能使用索引？如果不能怎么优化"></a>现在一张表table，有a,b,c三个索引，select * from table where a &#x3D; 1 and b &#x3D; 2 order by c，这些字段是否都能使用索引？如果不能怎么优化</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/gb4215287/article/details/78037835">https://blog.csdn.net/gb4215287/article/details/78037835</a><br>与其说是数据库只支持一条查询语句只使用一个索引，倒不如说N条独立索引同时在一条语句使用的消耗比只使用一个索引还要慢。<br>所以如上条的情况，最佳推荐是使用index(column1,column2,column3） 这种联合索引，此联合索引可以把b+tree结构的优势发挥得淋漓尽致：<br>一条主二叉树（column&#x3D;1），查询到column&#x3D;1节点后基于当前节点进行二级二叉树column2&#x3D;foo的查询，在二级二叉树查询到column2&#x3D;foo后，去三级二叉树column3&#x3D;bar查找。</p>
-<h2 id="索引底层数据结构："><a href="#索引底层数据结构：" class="headerlink" title="索引底层数据结构："></a>索引底层数据结构：</h2><h3 id="MySql中InnoDB表为什么要建议用自增列做主键"><a href="#MySql中InnoDB表为什么要建议用自增列做主键" class="headerlink" title="MySql中InnoDB表为什么要建议用自增列做主键"></a>MySql中InnoDB表为什么要建议用自增列做主键</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/bigtree_3721/article/details/73151028">https://blog.csdn.net/bigtree_3721/article/details/73151028</a></p>
-<p>InnoDB引擎表的特点：</p>
-<ol>
-<li>InnoDB引擎表是基于B+树的索引组织表(IOT)</li>
-</ol>
-<p>关于B+树<br><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210427162633.jpeg" alt="img"><br>B+ 树的特点:</p>
-<p>（1）所有关键字都出现在叶子结点的链表中(稠密索引)，且链表中的关键字恰好是有序的;</p>
-<p>（2）不可能在非叶子结点命中;</p>
-<p>（3）非叶子结点相当于是叶子结点的索引(稀疏索引)，叶子结点相当于是存储(关键字)数据的数据层;</p>
-<ol start="2">
-<li>如果我们定义了主键(PRIMARY KEY)，那么InnoDB会选择主键作为聚集索引、如果没有显式定义主键，则InnoDB会选择第一个不包含有NULL值的唯一索引作为主键索引、如果也没有这样的唯一索引，则InnoDB会选择内置6字节长的ROWID作为隐含的聚集索引(ROWID随着行记录的写入而主键递增，这个ROWID不像ORACLE的ROWID那样可引用，是隐含的)。</li>
-<li>数据记录本身被存于主索引（一颗B+Tree）的叶子节点上。这就要求同一个叶子节点内（大小为一个内存页或磁盘页）的各条数据记录按主键顺序存放，因此每当有一条新的记录插入时，MySQL会根据其主键将其插入适当的节点和位置，如果页面达到装载因子（InnoDB默认为15&#x2F;16），则开辟一个新的页（节点）</li>
-<li>如果表使用自增主键，那么每次插入新的记录，记录就会顺序添加到当前索引节点的后续位置，当一页写满，就会自动开辟一个新的页</li>
-<li>如果使用非自增主键（如果身份证号或学号等），由于每次插入主键的值近似于随机，因此每次新纪录都要被插到现有索引页得中间某个位置，此时MySQL不得不为了将新记录插到合适位置而移动数据，甚至目标页面可能已经被回写到磁盘上而从缓存中清掉，此时又要从磁盘上读回来，这增加了很多开销，同时频繁的移动、分页操作造成了大量的碎片，得到了不够紧凑的索引结构，后续不得不通过OPTIMIZE TABLE来重建表并优化填充页面。</li>
-</ol>
-<p>综上总结，如果InnoDB表的数据写入顺序能和B+树索引的叶子节点顺序一致的话，这时候存取效率是最高的，也就是下面这几种情况的存取效率最高：</p>
-<ol>
-<li>使用自增列(INT&#x2F;BIGINT类型)做主键，这时候写入顺序是自增的，和B+数叶子节点分裂顺序一致；</li>
-<li>该表不指定自增列做主键，同时也没有可以被选为主键的唯一索引(上面的条件)，这时候InnoDB会选择内置的ROWID作为主键，写入顺序和ROWID增长顺序一致；<br>除此以外，如果一个InnoDB表又没有显示主键，又有可以被选择为主键的唯一索引，但该唯一索引可能不是递增关系时(例如字符串、UUID、多字段联合唯一索引的情况)，该表的存取效率就会比较差。</li>
-</ol>
-<h3 id="MySql为什么使用B-Tree作为索引而不是其他二叉查找树（比如红黑树等）？"><a href="#MySql为什么使用B-Tree作为索引而不是其他二叉查找树（比如红黑树等）？" class="headerlink" title="MySql为什么使用B-Tree作为索引而不是其他二叉查找树（比如红黑树等）？"></a>MySql为什么使用B-Tree作为索引而不是其他二叉查找树（比如红黑树等）？</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/aspirant/p/9214485.html">https://www.cnblogs.com/aspirant/p/9214485.html</a><br>平衡二叉树不适合作为索引。那么什么才适合作为索引——B树。</p>
-<p>平衡二叉树没能充分利用磁盘预读功能，而B树是为了充分利用磁盘预读功能来而创建的一种数据结构，也就是说B树就是为了作为索引才被发明出来的的。</p>
-<p>来看看关于“局部性原理与磁盘预读”的知识： </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">局部性原理与磁盘预读：</span><br><span class="line"></span><br><span class="line">由于存储介质的特性，磁盘本身存取就比主存慢很多，再加上机械运动耗费，磁盘的存取速度往往是主存的几百分分之一，因此为了提高效率，要尽量减少磁盘I/O。为了达到这个目的，磁盘往往不是严格按需读取，而是每次都会预读，即使只需要一个字节，磁盘也会从这个位置开始，顺序向后读取一定长度的数据放入内存。这样做的理论依据是计算机科学中著名的局部性原理： </span><br><span class="line">当一个数据被用到时，其附近的数据也通常会马上被使用。 </span><br><span class="line">程序运行期间所需要的数据通常比较集中。 </span><br><span class="line">由于磁盘顺序读取的效率很高（不需要寻道时间，只需很少的旋转时间），因此对于具有局部性的程序来说，预读可以提高I/O效率。</span><br></pre></td></tr></table></figure>
+<p>滑动窗口计数器是通过将窗口再细分，并且按照时间”滑动”，这种算法避免了固定窗口计数器带来的双倍突发请求，但时间区间的精度越高，算法所需的空间容量就越大。</p>
+<h4 id="代码实现：-1"><a href="#代码实现：-1" class="headerlink" title="代码实现："></a>代码实现：</h4><h5 id="1-TreeMap版"><a href="#1-TreeMap版" class="headerlink" title="1.TreeMap版"></a>1.TreeMap版</h5><p>因为TreeMap没有线程安全版本，所以使用synchronized保证线程安全。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> java.util.TreeMap;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.atomic.AtomicInteger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SlidingWindowRateLimiter</span> <span class="keyword">implements</span> <span class="title class_">MyRateLimiter</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 每分钟限制请求数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">long</span> permitsPerMinute;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 时间窗口间隔秒数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">int</span> seconds;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 计数器, key为当前窗口的开始时间值毫秒，value为当前窗口的计数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> TreeMap&lt;Long, Integer&gt; counters;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">SlidingWindowRateLimiter</span><span class="params">(<span class="type">long</span> permitsPerMinute, <span class="type">int</span> seconds)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.permitsPerMinute = permitsPerMinute;</span><br><span class="line">        <span class="built_in">this</span>.seconds = seconds;</span><br><span class="line">        <span class="built_in">this</span>.counters = <span class="keyword">new</span> <span class="title class_">TreeMap</span>&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="type">boolean</span> <span class="title function_">tryAcquire</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// 获取当前时间的所在的子窗口值</span></span><br><span class="line">        <span class="type">long</span> <span class="variable">currentTimeMillis</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">        <span class="comment">// 获取当前窗口的请求总量</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">currentWindowCount</span> <span class="operator">=</span> getCurrentWindowCount(currentTimeMillis);</span><br><span class="line">        System.out.println(<span class="string">&quot;当前窗口计数：&quot;</span> + currentWindowCount);</span><br><span class="line">        <span class="keyword">if</span> (currentWindowCount &gt;= permitsPerMinute) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 计数器 + 1</span></span><br><span class="line">        saveCurrentTime(currentTimeMillis);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 计时器 +1</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">saveCurrentTime</span><span class="params">(<span class="type">long</span> currentTimeMillis)</span> &#123;</span><br><span class="line">        counters.merge(currentTimeMillis, <span class="number">1</span>, Integer::sum);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取当前窗口中的所有请求数（并删除所有无效的子窗口计数器）</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> currentTimesMills 当前子窗口时间</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 当前窗口中的计数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">getCurrentWindowCount</span><span class="params">(<span class="type">long</span> currentTimesMills)</span> &#123;</span><br><span class="line">        <span class="comment">// 计算出窗口的开始位置时间</span></span><br><span class="line">        <span class="type">long</span> <span class="variable">startTime</span> <span class="operator">=</span> currentTimesMills - (seconds * <span class="number">1000L</span>);</span><br><span class="line">        <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 遍历当前存储的计算器，删除无效的子窗口计数器，并累加当前窗口中的所有计数器之和</span></span><br><span class="line">        Iterator&lt;Map.Entry&lt;Long, Integer&gt;&gt; iterator = counters.entrySet().iterator();</span><br><span class="line">        <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">            Map.Entry&lt;Long, Integer&gt; entry = iterator.next();</span><br><span class="line">            <span class="type">Long</span> <span class="variable">time</span> <span class="operator">=</span> entry.getKey();</span><br><span class="line">            <span class="keyword">if</span> (time &lt; startTime) &#123;</span><br><span class="line">                iterator.remove();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                result += entry.getValue();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">// 将时间分片，seconds是时间窗口大小，max代表seconds时间最大访问上限</span></span><br><span class="line">        <span class="type">MyRateLimiter</span> <span class="variable">myRateLimiter</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SlidingWindowRateLimiter</span>(<span class="number">10</span>, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> <span class="variable">requestCnt</span> <span class="operator">=</span> <span class="number">60</span>;</span><br><span class="line">        <span class="type">AtomicInteger</span> <span class="variable">successCnt</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AtomicInteger</span>();</span><br><span class="line">        <span class="type">long</span> <span class="variable">start</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; requestCnt; i++) &#123;</span><br><span class="line">            <span class="type">boolean</span> <span class="variable">result</span> <span class="operator">=</span> myRateLimiter.tryAcquire();</span><br><span class="line">            <span class="keyword">if</span> (result) &#123;</span><br><span class="line">                successCnt.incrementAndGet();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">String</span> <span class="variable">resultStr</span> <span class="operator">=</span> result ? <span class="string">&quot;请求成功&quot;</span> : <span class="string">&quot;请求失败&quot;</span>;</span><br><span class="line">            <span class="type">long</span> <span class="variable">now</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">            System.out.println(<span class="string">&quot;第&quot;</span> + (i + <span class="number">1</span>) + <span class="string">&quot;次请求结果：&quot;</span> + resultStr + <span class="string">&quot;，耗时：&quot;</span> + (now - start));</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">100</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;全部请求结束，成功率：&quot;</span> + (successCnt.get() * <span class="number">100</span> / requestCnt) + <span class="string">&quot;%&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>搞清楚上面的意思。磁盘预读是具体实现，其理论依据是局部性原理。</p>
-<p>为什么说红黑树没能充分利用磁盘预读功能，引用一篇博文的一段话： </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">红黑树这种结构，h明显要深的多。由于逻辑上很近的节点（父子）物理上可能很远，无法利用局部性，所以红黑树的I/O渐进复杂度也为O(h)，效率明显比B-Tree差很多。</span><br></pre></td></tr></table></figure>
-
-<p>也就是说，使用红黑树（平衡二叉树）结构的话，每次磁盘预读中的很多数据是用不上的数据。因此，它没能利用好磁盘预读的提供的数据。然后又由于深度大（较B树而言），所以进行的磁盘IO操作更多。</p>
-<p>B树的每个节点可以存储多个关键字，它将节点大小设置为磁盘页的大小，充分利用了磁盘预读的功能。每次读取磁盘页时就会读取一整个节点。也正因每个节点存储着非常多个关键字，树的深度就会非常的小。进而要执行的磁盘读取操作次数就会非常少，更多的是在内存中对读取进来的数据进行查找。</p>
-<p>B树的查询，主要发生在内存中，而平衡二叉树的查询，则是发生在磁盘读取中。因此，虽然B树查询查询的次数不比平衡二叉树的次数少，但是相比起磁盘IO速度，内存中比较的耗时就可以忽略不计了。因此，B树更适合作为索引。</p>
-<h3 id="为什么用B-Tree作为索引而不是B-Tree"><a href="#为什么用B-Tree作为索引而不是B-Tree" class="headerlink" title="为什么用B+-Tree作为索引而不是B-Tree"></a>为什么用B+-Tree作为索引而不是B-Tree</h3><p>比B树更适合作为索引的结构是B+树。MySQL中也是使用B+树作为索引。它是B树的变种，因此是基于B树来改进的。为什么B+树会比B树更加优秀呢？</p>
-<p>B树：有序数组+平衡多叉树；<br>B+树：有序数组链表+平衡多叉树；</p>
-<p>B+树的关键字全部存放在叶子节点中，非叶子节点用来做索引，而叶子节点中有一个指针指向一下个叶子节点。做这个优化的目的是为了提高区间访问的性能。而正是这个特性决定了B+树更适合用来存储外部数据。</p>
-<p>引用一段话： </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">走进搜索引擎的作者梁斌老师针对B树、B+树给出了他的意见（为了真实性，特引用其原话，未作任何改动）： “B+树还有一个最大的好处，方便扫库，B树必须用中序遍历的方法按序扫库，而B+树直接从叶子结点挨个扫一遍就完了，B+树支持range-query非常方便，而B树不支持。这是数据库选用B+树的最主要原因。 </span><br><span class="line">比如要查 5-10之间的，B+树一把到5这个标记，再一把到10，然后串起来就行了，B树就非常麻烦。B树的好处，就是成功查询特别有利，因为树的高度总体要比B+树矮。不成功的情况下，B树也比B+树稍稍占一点点便宜。 </span><br><span class="line">B树比如你的例子中查，17的话，一把就得到结果了， </span><br><span class="line">有很多基于频率的搜索是选用B树，越频繁query的结点越往根上走，前提是需要对query做统计，而且要对key做一些变化。 </span><br><span class="line">另外B树也好B+树也好，根或者上面几层因为被反复query，所以这几块基本都在内存中，不会出现读磁盘IO，一般已启动的时候，就会主动换入内存。”</span><br></pre></td></tr></table></figure>
+<h5 id="2-ConcurrentLinkedQueue版"><a href="#2-ConcurrentLinkedQueue版" class="headerlink" title="2.ConcurrentLinkedQueue版"></a>2.ConcurrentLinkedQueue版</h5><p>因为ConcurrentLinkedQueue已经保证了线程安全，所以无需加锁</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.ConcurrentLinkedQueue;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.atomic.AtomicInteger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConcurrentSlidingWindowRateLimiter</span> <span class="keyword">implements</span> <span class="title class_">MyRateLimiter</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 每分钟限制请求数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">long</span> permitsPerMinute;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 时间窗口间隔秒数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">int</span> seconds;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 保存时间戳的队列</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ConcurrentLinkedQueue&lt;Long&gt; queue;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">ConcurrentSlidingWindowRateLimiter</span><span class="params">(<span class="type">long</span> permitsPerMinute, <span class="type">int</span> seconds)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.permitsPerMinute = permitsPerMinute;</span><br><span class="line">        <span class="built_in">this</span>.seconds = seconds;</span><br><span class="line">        <span class="built_in">this</span>.queue = <span class="keyword">new</span> <span class="title class_">ConcurrentLinkedQueue</span>&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">tryAcquire</span><span class="params">()</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="type">long</span> <span class="variable">currentTimeMillis</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> <span class="variable">currentWindowCount</span> <span class="operator">=</span> getCurrentWindowCount(currentTimeMillis);</span><br><span class="line">        System.out.println(<span class="string">&quot;当前窗口计数：&quot;</span> + currentWindowCount);</span><br><span class="line">        <span class="keyword">if</span> (currentWindowCount &gt;= permitsPerMinute) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 保存当前时间到队列</span></span><br><span class="line">        saveCurrentTime(currentTimeMillis);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">saveCurrentTime</span><span class="params">(<span class="type">long</span> currentTimeMillis)</span> &#123;</span><br><span class="line">        queue.offer(currentTimeMillis);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">getCurrentWindowCount</span><span class="params">(<span class="type">long</span> currentTimesMills)</span> &#123;</span><br><span class="line">        <span class="comment">// 计算出窗口的开始位置时间</span></span><br><span class="line">        <span class="type">long</span> <span class="variable">startTime</span> <span class="operator">=</span> currentTimesMills - (seconds * <span class="number">1000L</span>);</span><br><span class="line">        <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 遍历当前存储的队列，删除无效的元素，并累加当前窗口中的所有计数器之和</span></span><br><span class="line">        Iterator&lt;Long&gt; iterator = queue.iterator();</span><br><span class="line">        <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">            <span class="type">Long</span> <span class="variable">time</span> <span class="operator">=</span> iterator.next();</span><br><span class="line">            <span class="keyword">if</span> (time &lt; startTime) &#123;</span><br><span class="line">                iterator.remove();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                result++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">// 将时间分片，seconds是时间窗口大小，max代表seconds时间最大访问上限</span></span><br><span class="line">        <span class="type">MyRateLimiter</span> <span class="variable">myRateLimiter</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ConcurrentSlidingWindowRateLimiter</span>(<span class="number">10</span>, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> <span class="variable">requestCnt</span> <span class="operator">=</span> <span class="number">60</span>;</span><br><span class="line">        <span class="type">AtomicInteger</span> <span class="variable">successCnt</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AtomicInteger</span>();</span><br><span class="line">        <span class="type">long</span> <span class="variable">start</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; requestCnt; i++) &#123;</span><br><span class="line">            <span class="type">boolean</span> <span class="variable">result</span> <span class="operator">=</span> myRateLimiter.tryAcquire();</span><br><span class="line">            <span class="keyword">if</span> (result) &#123;</span><br><span class="line">                successCnt.incrementAndGet();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">String</span> <span class="variable">resultStr</span> <span class="operator">=</span> result ? <span class="string">&quot;请求成功&quot;</span> : <span class="string">&quot;请求失败&quot;</span>;</span><br><span class="line">            <span class="type">long</span> <span class="variable">now</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">            System.out.println(<span class="string">&quot;第&quot;</span> + (i + <span class="number">1</span>) + <span class="string">&quot;次请求结果：&quot;</span> + resultStr + <span class="string">&quot;，耗时：&quot;</span> + (now - start));</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">100</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;全部请求结束，成功率：&quot;</span> + (successCnt.get() * <span class="number">100</span> / requestCnt) + <span class="string">&quot;%&quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 
-<p>举个例子来对比。<br>B树： </p>
-<p>比如说，我们要查找关键字范围在3到7的关键字，在找到第一个符合条件的数字3后，访问完第一个关键字所在的块后，得遍历这个B树，获取下一个块，直到遇到一个不符合条件的关键字。遍历的过程是比较复杂的。</p>
-<p>B+树(叶节点保存数据，其他的节点 全部存放索引)： </p>
-<p>相比之下，B+树的基于范围的查询简洁很多。由于叶子节点有指向下一个叶子节点的指针，因此从块1到块2的访问，通过块1指向块2的指针即可。从块2到块3也是通过一个指针即可。</p>
-<p>引用一篇博文中网友评论的一段话： </p>
-<p>数据库索引采用B+树的主要原因是B树在提高了磁盘IO性能的同时并没有解决元素遍历的效率低下的问题。正是为了解决这个问题，B+树应运而生。<br>B+树只要遍历叶子节点就可以实现整棵树的遍历。而且在数据库中基于范围的查询是非常频繁的，而B树不支持这样的操作（或者说效率太低）。<br>正如上面所说，在数据库中基于范围的查询是非常频繁的，因此MySQL最终选择的索引结构是B+树而不是B树。 </p>
-<h3 id="B-树和-B-树在构造和查询性能上有什么差异呢？"><a href="#B-树和-B-树在构造和查询性能上有什么差异呢？" class="headerlink" title="B+ 树和 B 树在构造和查询性能上有什么差异呢？"></a>B+ 树和 B 树在构造和查询性能上有什么差异呢？</h3><p>B+ 树的中间节点并不直接存储数据。</p>
-<ol>
-<li>B+树的查询效率更加稳定：由于非终结点并不是最终指向文件内容的结点，而只是叶子结点中关键字的索引。所以任何关键字的查找必须走一条从根结点到叶子结点的路。所有关键字查询的路径长度相同，导致每一个数据的查询效率相当。</li>
-<li>B+树的磁盘读写代价更低：B+树的内部节点并没有指向关键字具体信息的指针，因此其内部节点相对B树更小，如果把所有同一内部节点的关键字存放在同一盘块中，那么盘块所能容纳的关键字数量也越多，一次性读入内存的需要查找的关键字也就越多，相对IO读写次数就降低了。</li>
-<li>由于B+树的数据都存储在叶子结点中，分支结点均为索引，方便扫库，只需要扫一遍叶子结点即可，但是B树因为其分支结点同样存储着数据，我们要找到具体的数据，需要进行一次中序遍历按序来扫，所以B+树更加适合在区间查询的情况，所以通常B+树用于数据库索引。</li>
-</ol>
-<h3 id="数据库索引，为什么不适用用二叉树："><a href="#数据库索引，为什么不适用用二叉树：" class="headerlink" title="数据库索引，为什么不适用用二叉树："></a>数据库索引，为什么不适用用二叉树：</h3><ol>
-<li>平衡二叉树必须满足（所有节点的左右子树高度差不超过1）。执行插入还是删除操作，只要不满足上述条件，就要通过旋转来保持平衡，而旋转是非常耗时的，所以AVL树适合用于查找多的情况。</li>
-<li>二叉树的数据结构，会导致“深度”，比较深，这种“瘦高”的特性，加大了平均查询的磁盘IO次数，随着数据量的增多，查询效率也会受到影响；</li>
-</ol>
-<h2 id="数据库锁"><a href="#数据库锁" class="headerlink" title="数据库锁"></a>数据库锁</h2><h3 id="MySql悲观锁和乐观锁如何实现"><a href="#MySql悲观锁和乐观锁如何实现" class="headerlink" title="MySql悲观锁和乐观锁如何实现"></a>MySql悲观锁和乐观锁如何实现</h3><ul>
-<li><p>确保在多个事务同时存取数据库中同一数据时不破坏事务的隔离性和统一性以及数据库的统一性，<strong>乐观锁和悲观锁是并发控制主要采用的技术手段。</strong></p>
+
+<h3 id="漏桶算法"><a href="#漏桶算法" class="headerlink" title="漏桶算法"></a>漏桶算法</h3><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210620202857.png" alt="漏桶算法"></p>
+<p>漏桶算法概念如下：</p>
 <ul>
-<li><p>悲观锁：假定会发生并发冲突，屏蔽一切可能违反数据完整性的操作</p>
-</li>
-<li><ul>
-<li><strong>在查询完数据的时候就把事务锁起来，直到提交事务</strong></li>
-<li>实现方式：使用数据库中的锁机制</li>
+<li>将每个请求视作”水滴”放入”漏桶”进行存储；</li>
+<li>“漏桶”以固定速率向外”漏”出请求来执行如果”漏桶”空了则停止”漏水”；</li>
+<li>如果”漏桶”满了则多余的”水滴”会被直接丢弃。</li>
 </ul>
-</li>
-<li><p>乐观锁：假设不会发生并发冲突，只在提交操作时检查是否违反数据完整性。</p>
-</li>
-<li><ul>
-<li><strong>在修改数据的时候把事务锁起来，通过version的方式来进行锁定</strong></li>
-<li>实现方式：使用version版本或者时间戳</li>
-</ul>
-</li>
-</ul>
-<p>悲观锁：缺点性能低</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> eb_sku <span class="keyword">where</span> sku_id <span class="operator">=</span> <span class="number">1001</span> <span class="keyword">for</span> <span class="keyword">update</span>;</span><br><span class="line"><span class="keyword">update</span> eb_sku <span class="keyword">set</span> stock <span class="operator">=</span> <span class="number">100</span><span class="operator">-</span> $&#123;quantity&#125; <span class="keyword">where</span> sku_id <span class="operator">=</span> <span class="number">10001</span></span><br></pre></td></tr></table></figure>
+<p>漏桶算法多使用队列实现，服务的请求会存到队列中，服务的提供方则按照固定的速率从队列中取出请求并执行，过多的请求则放在队列中排队或直接拒绝。</p>
+<p>漏桶算法的缺陷也很明显，当短时间内有大量的突发请求时，即便此时服务器没有任何负载，每个请求也都得在队列中等待一段时间才能被响应。</p>
+<h4 id="代码实现：-2"><a href="#代码实现：-2" class="headerlink" title="代码实现："></a>代码实现：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"><span class="keyword">import</span> java.util.Queue;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.ExecutorService;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.Executors;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.ScheduledExecutorService;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LeakBucketRateLimiter</span> <span class="keyword">implements</span> <span class="title class_">MyRateLimiter</span> &#123;</span><br><span class="line">    <span class="comment">// 桶的容量</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">double</span> capacity;</span><br><span class="line">    <span class="comment">// 漏出速率</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">double</span> permitsPerSecond;</span><br><span class="line">    <span class="comment">// 剩余水量</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">double</span> leftWater;</span><br><span class="line">    <span class="comment">// 上次注入时间</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">long</span> <span class="variable">timestamp</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">LeakBucketRateLimiter</span><span class="params">(<span class="type">double</span> capacity, <span class="type">double</span> permitsPerSecond)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.capacity = capacity;</span><br><span class="line">        <span class="built_in">this</span>.permitsPerSecond = permitsPerSecond;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">tryAcquire</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// 计算剩余流量</span></span><br><span class="line">        <span class="type">long</span> <span class="variable">now</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">        <span class="comment">// leftWater有可已经是0，所以减完会变成负数，所以要和0取个最大值</span></span><br><span class="line">        leftWater = Math.max(<span class="number">0</span>, leftWater - ((now - timestamp) / <span class="number">1000d</span> * permitsPerSecond));</span><br><span class="line">        System.out.println(<span class="string">&quot;leftWater = &quot;</span> + leftWater);</span><br><span class="line">        timestamp = now;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果未满，则放行；否则限流</span></span><br><span class="line">        <span class="keyword">if</span> (leftWater &lt; capacity) &#123;</span><br><span class="line">            leftWater++;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">testLeakBucketRateLimiter</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">        <span class="type">ScheduledExecutorService</span> <span class="variable">scheduledExecutorService</span> <span class="operator">=</span> Executors.newSingleThreadScheduledExecutor();</span><br><span class="line">        <span class="type">ExecutorService</span> <span class="variable">singleThread</span> <span class="operator">=</span> Executors.newSingleThreadExecutor();</span><br><span class="line"></span><br><span class="line">        <span class="type">LeakBucketRateLimiter</span> <span class="variable">rateLimiter</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">LeakBucketRateLimiter</span>(<span class="number">20</span>, <span class="number">1</span>);</span><br><span class="line">        <span class="comment">// 存储流量的队列</span></span><br><span class="line">        Queue&lt;Integer&gt; queue = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br><span class="line">        <span class="comment">// 模拟请求  不确定速率注水</span></span><br><span class="line">        singleThread.execute(() -&gt; &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">index</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">                index++;</span><br><span class="line">                <span class="type">boolean</span> <span class="variable">flag</span> <span class="operator">=</span> rateLimiter.tryAcquire();</span><br><span class="line">                <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">                    queue.offer(index);</span><br><span class="line">                    System.out.println(index + <span class="string">&quot;--------流量被放行----------&quot;</span>);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    System.out.println(index + <span class="string">&quot;流量被限制&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    Thread.sleep((<span class="type">long</span>) (Math.random() * <span class="number">1000</span>));</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="comment">// 模拟处理请求 固定速率漏水</span></span><br><span class="line">        scheduledExecutorService.scheduleAtFixedRate(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span> (!queue.isEmpty()) &#123;</span><br><span class="line">                System.out.println(queue.poll() + <span class="string">&quot;被处理&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="number">0</span>, <span class="number">100</span>, TimeUnit.MILLISECONDS);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 保证主线程不会退出</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">            Thread.sleep(<span class="number">10000</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>乐观锁：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> eb_sku <span class="keyword">set</span> stock <span class="operator">=</span> <span class="number">100</span><span class="operator">-</span>$&#123;quantity&#125;, version <span class="operator">=</span> $&#123;version&#125;<span class="operator">+</span><span class="number">1</span> <span class="keyword">where</span> sku_id <span class="operator">=</span> $&#123;sku_id&#125; <span class="keyword">and</span> version<span class="operator">=</span>$&#123;version&#125; <span class="keyword">and</span> stock <span class="operator">&gt;</span> $&#123;quantity&#125;</span><br></pre></td></tr></table></figure></li>
+
+
+<h3 id="令牌桶算法"><a href="#令牌桶算法" class="headerlink" title="令牌桶算法"></a>令牌桶算法</h3><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210620202929.png" alt="令牌桶算法"></p>
+<p>令牌桶算法概念如下：</p>
+<ul>
+<li>令牌以固定速率生成；</li>
+<li>生成的令牌放入令牌桶中存放，如果令牌桶满了则多余的令牌会直接丢弃，当请求到达时，会尝试从令牌桶中取令牌，取到了令牌的请求可以执行；</li>
+<li>如果桶空了，那么尝试取令牌的请求会被直接丢弃。</li>
 </ul>
-<h3 id="行锁、表锁"><a href="#行锁、表锁" class="headerlink" title="行锁、表锁"></a>行锁、表锁</h3><h3 id="间隙锁、临键锁"><a href="#间隙锁、临键锁" class="headerlink" title="间隙锁、临键锁"></a>间隙锁、临键锁</h3><h2 id="分库分表"><a href="#分库分表" class="headerlink" title="分库分表"></a>分库分表</h2><h3 id="为什么要分库分表"><a href="#为什么要分库分表" class="headerlink" title="为什么要分库分表"></a>为什么要分库分表</h3><h3 id="按照什么逻辑分库分表"><a href="#按照什么逻辑分库分表" class="headerlink" title="按照什么逻辑分库分表"></a>按照什么逻辑分库分表</h3><h3 id="分库分表如何扩容"><a href="#分库分表如何扩容" class="headerlink" title="分库分表如何扩容"></a>分库分表如何扩容</h3><h2 id="其他知识点"><a href="#其他知识点" class="headerlink" title="其他知识点"></a>其他知识点</h2><h3 id="Mysql中utf-8和utf8mb4的区别与使用场景"><a href="#Mysql中utf-8和utf8mb4的区别与使用场景" class="headerlink" title="Mysql中utf-8和utf8mb4的区别与使用场景"></a>Mysql中utf-8和utf8mb4的区别与使用场景</h3><p>MySQL中的<strong>utf8</strong>编码只支持最大3字节每字符，<strong>utf8mb4</strong>才是 真正意义上的“UTF-8”，utf8mb4支持4字节每字符，支持存储emoji，而utf8不支持。</p>
-<h3 id="MySql-Innodb引擎和MyIASM引擎的区别"><a href="#MySql-Innodb引擎和MyIASM引擎的区别" class="headerlink" title="MySql Innodb引擎和MyIASM引擎的区别"></a>MySql Innodb引擎和MyIASM引擎的区别</h3><h4 id="Innodb引擎"><a href="#Innodb引擎" class="headerlink" title="Innodb引擎"></a>Innodb引擎</h4><ul>
-<li>Innodb引擎提供了对数据库ACID事务的支持，并且实现了SQL标准的四种隔离级别。</li>
-<li>该引擎还提供了行级锁和外键约束</li>
-<li>使用行级锁也不是绝对的，如果在执行一个SQL语句时MySQL不能确定要扫描的范围，InnoDB表同样会锁全表。</li>
-<li>它的设计目标是处理大容量数据库系统，它本身其实就是基于MySQL后台的完整数据库系统</li>
-<li>MySQL运行时Innodb会在内存中建立缓冲池，用于缓冲数据和索引。</li>
-<li>该引擎不支持FULLTEXT类型的索引（不支持全文索引）。</li>
-<li>它没有保存表的行数，当SELECT COUNT(*) FROM TABLE时需要扫描全表。</li>
-<li>当需要使用数据库事务时，该引擎当然是首选。</li>
-<li>由于锁的粒度更小，写操作不会锁定全表，所以在并发较高时，使用Innodb引擎会提升效率。</li>
-</ul>
-<h4 id="MyIASM引擎"><a href="#MyIASM引擎" class="headerlink" title="MyIASM引擎"></a>MyIASM引擎</h4><ul>
-<li>但是它没有提供对数据库事务的支持，也不支持行级锁和外键，</li>
-<li>因此当INSERT(插入)或UPDATE(更新)数据时即写操作需要锁定整个表，效率便会低一些。</li>
-<li>MyIASM中存储了表的行数，于是SELECT COUNT(*) FROM TABLE时只需要直接读取已经保存好的值而不需要进行全表扫描。</li>
-<li>如果表的读操作远远多于写操作且不需要数据库事务的支持，那么MyIASM也是很好的选择。</li>
-</ul>
-<h4 id="主要区别："><a href="#主要区别：" class="headerlink" title="主要区别："></a>主要区别：</h4><ol>
-<li>MyIASM是非事务安全的，而InnoDB是事务安全的</li>
-<li>MyIASM锁的粒度是表级的，而InnoDB支持行级锁</li>
-<li>MyIASM支持全文类型索引，而InnoDB不支持全文索引</li>
-<li>MyIASM相对简单，效率上要优于InnoDB，小型应用可以考虑使用MyIASM</li>
-<li>MyIASM表保存成文件形式，跨平台使用更加方便</li>
+<p>令牌桶算法既能够将所有的请求平均分布到时间区间内，又能接受服务器能够承受范围内的突发请求，因此是目前使用较为广泛的一种限流算法。</p>
+<h4 id="代码实现：-3"><a href="#代码实现：-3" class="headerlink" title="代码实现："></a>代码实现：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//todo 待补充</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzkwOTIxNDQ3OA==&mid=2247532784&idx=1&sn=4105e55673af275ea26701cb6070ab48&source=41#wechat_redirect">分布式服务限流实战</a></li>
+<li><a target="_blank" rel="noopener" href="https://doocs.github.io/advanced-java/#/./docs/high-concurrency/huifer-how-to-limit-current">限流算法实现</a></li>
 </ol>
-<h4 id="应用场景："><a href="#应用场景：" class="headerlink" title="应用场景："></a>应用场景：</h4><ol>
-<li>MyIASM管理非事务表，提供高速存储和检索以及全文搜索能力，如果再应用中执行大量select操作，应该选择MyIASM</li>
-<li>InnoDB用于事务处理，具有ACID事务支持等特性，如果在应用中执行大量insert和update操作，应该选择InnoDB</li>
-</ol>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>MyIASM</th>
-<th>InnoDB</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>事务支持</td>
-<td>不支持</td>
-<td>支持</td>
-</tr>
-<tr>
-<td>锁的粒度</td>
-<td>Table</td>
-<td>Row</td>
-</tr>
-<tr>
-<td>存储容量</td>
-<td>没有上限</td>
-<td>64TB</td>
-</tr>
-<tr>
-<td><strong>哈希索引</strong></td>
-<td><strong>不支持</strong></td>
-<td><strong>支持</strong></td>
-</tr>
-<tr>
-<td><strong>全文索引</strong></td>
-<td><strong>支持</strong></td>
-<td><strong>不支持</strong></td>
-</tr>
-<tr>
-<td><strong>外键</strong></td>
-<td><strong>不支持</strong></td>
-<td><strong>支持</strong></td>
-</tr>
-</tbody></table>
-<h3 id="MySQL如何给大表加索引"><a href="#MySQL如何给大表加索引" class="headerlink" title="MySQL如何给大表加索引"></a>MySQL如何给大表加索引</h3><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000040570831">https://segmentfault.com/a/1190000040570831</a></p>
 
     
 
@@ -1347,7 +925,7 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">限流算法原理及实现</a>
         		</li>
       		
 		</ul>
@@ -1357,7 +935,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/posts/e27205e0.html">展开全文 >></a>
+      <a class="article-more-a" href="/posts/29743003.html">展开全文 >></a>
     </p>
     
 
@@ -1387,7 +965,7 @@
 
 
   
-    <article id="post-study/数据结构与算法之美/每周打卡/7" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-study/数据结构与算法之美/学习笔记/11讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -1395,7 +973,7 @@
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/posts/8847320b.html" target="_blank">第七周</a>
+	  <a class="article-title" href="/posts/a0ee3b30.html" target="_blank">11讲</a>
   
     </h1>
   
@@ -1403,8 +981,8 @@
 
   
   
-<a href="/posts/8847320b.html" class="archive-article-date">
-        <time datetime="2021-04-24T11:21:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-24</time>
+<a href="/posts/a0ee3b30.html" class="archive-article-date">
+        <time datetime="2021-06-13T07:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-13</time>
 </a>
 
   
@@ -1417,48 +995,279 @@
   <div class="article-entry" itemprop="articleBody">
     
     <hr>
-<p>数据结构与算法之美每周打卡 2021.04.19-2021.04.25</p>
-<h3 id="162-寻找峰值"><a href="#162-寻找峰值" class="headerlink" title="162. 寻找峰值"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/find-peak-element/">162. 寻找峰值</a></h3><p>峰值元素是指其值大于左右相邻值的元素。</p>
-<p>给你一个输入数组 <code>nums</code>，找到峰值元素并返回其索引。数组可能包含多个峰值，在这种情况下，返回 <strong>任何一个峰值</strong> 所在位置即可。</p>
-<p>你可以假设 <code>nums[-1] = nums[n] = -∞</code> 。</p>
-<p><strong>示例 1：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [1,2,3,1]</span><br><span class="line">输出：2</span><br><span class="line">解释：3 是峰值元素，你的函数应该返回其索引 2。</span><br></pre></td></tr></table></figure>
+<h1 id="11-排序（上）：为什么插入排序比冒泡排序更受欢迎？"><a href="#11-排序（上）：为什么插入排序比冒泡排序更受欢迎？" class="headerlink" title="11 | 排序（上）：为什么插入排序比冒泡排序更受欢迎？"></a>11 | 排序（上）：为什么插入排序比冒泡排序更受欢迎？</h1><p>排序算法太多了，有很多可能你连名字都没听说过，比如猴子排序、睡眠排序、面条排序等。我只讲众多排序算法中的一小撮，也是最经典的、最常用的：冒泡排序、插入排序、选择排序、归并排序、快速排序、计数排序、基数排序、桶排序。我按照时间复杂度把它们分成了三类，分三节课来讲解。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210613203106.jpeg" alt="img"></p>
+<p>带着问题去学习，是最有效的学习方法。所以按照惯例，我还是先给你出一个思考题：<strong>插入排序和冒泡排序的时间复杂度相同，都是 O(n^2)，在实际的软件开发里，为什么我们更倾向于使用插入排序算法而不是冒泡排序算法呢？</strong></p>
+    
+    <a class="article-more-a" href="/posts/a0ee3b30.html#more">more >></a>
+    
+    
 
-<p><strong>示例 2：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [1,2,1,3,5,6,4]</span><br><span class="line">输出：1 或 5 </span><br><span class="line">解释：你的函数可以返回索引 1，其峰值元素为 2；</span><br><span class="line">     或者返回索引 5， 其峰值元素为 6。</span><br></pre></td></tr></table></figure>
+    
 
-<p><strong>提示：</strong></p>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/a0ee3b30.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-interview/Kafka面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/32ecfb01.html" target="_blank">Kafka面试题</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/32ecfb01.html" class="archive-article-date">
+        <time datetime="2021-05-29T15:11:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-29</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <hr>
+<h2 id="kafka入门"><a href="#kafka入门" class="headerlink" title="kafka入门"></a>kafka入门</h2><h3 id="整体架构图"><a href="#整体架构图" class="headerlink" title="整体架构图"></a>整体架构图</h3><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210529223532.png" alt="image"></p>
+<h3 id="topic"><a href="#topic" class="headerlink" title="topic"></a>topic</h3><p>topic可以简单认为是一个队列，每个队列做不同的事情，队列之间相对隔离；每个队列都有不同的名字，这样我们就知道往哪个队列丢数据，也知道从哪个队列拿数据了。我们可以有多个生产者**往同一个队列(topic)<strong>丢数据，多个消费者</strong>从同一个队列(topic)**拿数据</p>
+<h3 id="partition"><a href="#partition" class="headerlink" title="partition"></a>partition</h3><p>为了提高每个队列（topic）的<strong>吞吐量</strong>，kafka会把topic进行分区(<strong>Partition</strong>)。每个topic包含多个分区。</p>
+<p>所以，生产者实际上是往一个topic名为<code>sonder</code>中的分区(<strong>Partition</strong>)丢数据，消费者实际上是从一个topic名为<code>sonder</code>的分区(<strong>Partition</strong>)取数据</p>
+<h3 id="broker"><a href="#broker" class="headerlink" title="broker"></a>broker</h3><p>一台Kafka服务器叫做<strong>Broker</strong>，Kafka集群就是多台Kafka服务器：</p>
+<p>一个topic会分为多个partition，实际上partition会<strong>分布</strong>在不同的broker中，举个例子：</p>
+<p>生产者往一个topic里面丢数据，实际上数据会在partition中，partition会分布在不同的<strong>broker</strong>（服务器）上。</p>
+<p>由此得知：<strong>Kafka是天然分布式的</strong>。</p>
+<h3 id="消费者和消费者组"><a href="#消费者和消费者组" class="headerlink" title="消费者和消费者组"></a>消费者和消费者组</h3><p>既然数据是保存在partition中的，那么消费者实际上也是从partition中取数据。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210529221224.jpeg" alt="图片"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210529221549.png" alt="img"></p>
+<p>使用 Consumer high level API 时，同一 Topic 的一条消息只能被同一个 Consumer Group 内的一个 Consumer 消费，但多个 Consumer Group 可同时消费这一消息。</p>
+<p>这是 Kafka 用来实现一个 Topic 消息的广播（发给所有的 Consumer）和单播（发给某一个 Consumer）的手段。一个 Topic 可以对应多个 Consumer Group。如果需要实现广播，只要每个 Consumer 有一个独立的 Group 就可以了。要实现单播只要所有的 Consumer 在同一个 Group 里。用 Consumer Group 还可以将 Consumer 进行自由的分组而不需要多次发送消息到不同的 Topic。</p>
+<p>多个消费者组成一个消费者组，每个消费者组之间相互独立。<strong>同一个消费者组中的不同消费者不能同时消费同一个分区的数据</strong>。但不同的消费者组可以消费相同的分区的数据（广播消费）。</p>
+<p>每个消费者组唯一对应一个topic，一个topic下面可能有多个消费者组，这样就实现了广播消费。</p>
+<blockquote>
+<p>注意：如果消费者不指定消费者组，那么将会使用默认的消费者组，每个topic都有一个默认消费者组。</p>
+</blockquote>
+<p>关于消费者数量，要注意几点：</p>
 <ul>
-<li><code>1 &lt;= nums.length &lt;= 1000</code></li>
-<li><code>-2^31 &lt;= nums[i] &lt;= 2^31 - 1</code></li>
-<li>对于所有有效的 <code>i</code> 都有 <code>nums[i] != nums[i + 1]</code></li>
+<li>如果消费者组中的某个消费者挂了，那么其中一个消费者可能就要消费两个partition了</li>
+<li>如果只有三个partition，而消费者组有4个消费者，那么一个消费者会空闲（一个分区不会被两个消费者同时消费）</li>
+<li>如果多加入一个<strong>消费者组</strong>，无论是新增的消费者组还是原本的消费者组，都能消费topic的全部数据。（消费者组之间从逻辑上它们是<strong>独立</strong>的）</li>
 </ul>
-<p> <strong>进阶：</strong>你可以实现时间复杂度为 <code>O(logN)</code> 的解决方案吗？</p>
+<h2 id="高可用"><a href="#高可用" class="headerlink" title="高可用"></a>高可用</h2><h3 id="Kafka分区如果出现故障怎么办？"><a href="#Kafka分区如果出现故障怎么办？" class="headerlink" title="Kafka分区如果出现故障怎么办？"></a>Kafka分区如果出现故障怎么办？</h3><p>现在我们已经知道了往topic里边丢数据，实际上这些数据会分到不同的partition上，这些partition存在不同的broker上。分布式肯定会带来问题：“万一其中一台broker(Kafka服务器)出现网络抖动或者挂了，怎么办？”</p>
+<p>Kafka是这样做的：我们数据存在不同的partition上，那kafka就把这些partition做<strong>备份</strong>（replica）。比如，现在我们有三个partition，分别存在三台broker上。每个partition都会备份，这些备份散落在<strong>不同</strong>的broker上。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210529215119.webp" alt="图片"></p>
+<p>红色块的partition代表的是<strong>主</strong>分区，紫色的partition块代表的是<strong>备份</strong>分区。生产者往topic丢数据，是与<strong>主</strong>分区交互，消费者消费topic的数据，也是与主分区交互。</p>
+<p><strong>备份分区仅仅用作于备份，不做读写。</strong>如果某个Broker挂了，那就会选举出其他Broker的partition来作为主分区，这就实现了<strong>高可用</strong>。</p>
+<h3 id="ISR（in-sync-replica）机制"><a href="#ISR（in-sync-replica）机制" class="headerlink" title="ISR（in-sync-replica）机制"></a>ISR（in-sync-replica）机制</h3><h2 id="可靠性"><a href="#可靠性" class="headerlink" title="可靠性"></a>可靠性</h2><h3 id="Kafka消息可靠性是如何保证的？"><a href="#Kafka消息可靠性是如何保证的？" class="headerlink" title="Kafka消息可靠性是如何保证的？"></a>Kafka消息可靠性是如何保证的？</h3><p><strong>Acks机制</strong>：</p>
+<ul>
+<li><strong>0</strong>：不进行消息接收是否成功的确认（默认值），会丢失数据。</li>
+<li><strong>1</strong>：当Leader副本接收成功后，返回接收成功确认信息，主备切换可能会丢失数据。</li>
+<li><strong>-1（all）</strong>：当Leader和Follower副本都接收成功后，返回接收成功的确认信息。</li>
+</ul>
+<h3 id="消息投递语义"><a href="#消息投递语义" class="headerlink" title="消息投递语义"></a>消息投递语义</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/luxiaoxun/p/13048474.html">https://www.cnblogs.com/luxiaoxun/p/13048474.html</a></p>
+<p>消息投递语义有三种：</p>
+<p><strong>At most once</strong>：最多一次，消息可能丢失，但不会重复</p>
+<p><strong>At least once</strong>：最少一次，消息不会丢失，可能会重复</p>
+<p><strong>Exactly once</strong>：有且只有一次，消息不会丢失或重复，只会消费一次（0.11版本实现，仅限于下游也是kafka）</p>
+<h4 id="幂等：partition内部的exactly-once顺序语义"><a href="#幂等：partition内部的exactly-once顺序语义" class="headerlink" title="幂等：partition内部的exactly-once顺序语义"></a>幂等：partition内部的exactly-once顺序语义</h4><p>幂等操作，是指可以执行多次，而不会产生与仅执行一次不同结果的操作，Producer的send操作现在是幂等的。在任何导致producer重试的情况下，相同的消息，如果被producer发送多次，也只会被写入Kafka一次。要打开此功能，并让所有partition获得exactly-once delivery、无数据丢失和in-order语义，需要修改broker的配置：<strong>enable.idempotence &#x3D; true</strong>。</p>
+<p>这个功能如何工作？它的工作方式类似于TCP：发送到Kafka的每批消息将包含一个序列号，该序列号用于重复数据的删除。与TCP不同，TCP只能在transient in-memory中提供保证。<strong>序列号将被持久化存储topic中，因此即使leader replica失败，接管的任何其他broker也将能感知到消息是否重复。</strong></p>
+<p>这种机制的开销相当低：它只是在每批消息中添加了几个额外字段:</p>
+<ul>
+<li>PID，在Producer初始化时分配，作为每个Producer会话的唯一标识；</li>
+<li>序列号（sequence number），Producer发送的每条消息（更准确地说是每一个消息批次，即ProducerBatch）都会带有此序列号，从0开始单调递增。Broker根据它来判断写入的消息是否可接受。</li>
+</ul>
+<h3 id="事务机制：跨partition的原子性写操作"><a href="#事务机制：跨partition的原子性写操作" class="headerlink" title="事务机制：跨partition的原子性写操作"></a>事务机制：跨partition的原子性写操作</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/luxiaoxun/p/13048474.html">https://www.cnblogs.com/luxiaoxun/p/13048474.html</a></p>
+<h2 id="高性能"><a href="#高性能" class="headerlink" title="高性能"></a>高性能</h2><h3 id="为什么用kafka不用本地队列"><a href="#为什么用kafka不用本地队列" class="headerlink" title="为什么用kafka不用本地队列"></a>为什么用kafka不用本地队列</h3><p>高吞吐</p>
+<p>消息持久化</p>
+<p>分布式易拓展</p>
+<h3 id="kafka为什么这么快"><a href="#kafka为什么这么快" class="headerlink" title="kafka为什么这么快"></a>kafka为什么这么快</h3><p>Kafka速度的秘诀在于，它把所有的消息都变成一个批量的文件，并且进行合理的批量压缩，减少网络IO损耗，通过mmap提高I&#x2F;O速度，写入数据的时候由于单个Partion是末尾添加所以速度最优；读取数据的时候配合sendfile直接暴力输出。</p>
+<p>具体分写入和读取两个方面：</p>
+<p><strong>写入</strong>：</p>
+<ul>
+<li>使用顺序写入</li>
+<li>Memory Mapped Files</li>
+</ul>
+<p><strong>读取</strong>：</p>
+<ul>
+<li>基于sendfile实现Zero Copy</li>
+<li>批量压缩</li>
+</ul>
+<h3 id="什么是零拷贝？"><a href="#什么是零拷贝？" class="headerlink" title="什么是零拷贝？"></a>什么是零拷贝？</h3><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210529210252.webp" alt="图片"></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/rickiyang/p/13265043.html">https://www.cnblogs.com/rickiyang/p/13265043.html</a></p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">kafka</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/posts/32ecfb01.html">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-study/数据结构与算法之美/每周打卡/10" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/b2caa2b7.html" target="_blank">五月第二周</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/b2caa2b7.html" class="archive-article-date">
+        <time datetime="2021-05-23T05:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-23</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <hr>
+<p>数据结构与算法之美每周打卡 2021.05.17-2021.05.23</p>
+<h3 id="437-路径总和-III"><a href="#437-路径总和-III" class="headerlink" title="437. 路径总和 III"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/path-sum-iii/">437. 路径总和 III</a></h3><p>给定一个二叉树，它的每个结点都存放着一个整数值。</p>
+<p>找出路径和等于给定数值的路径总数。</p>
+<p>路径不需要从根节点开始，也不需要在叶子节点结束，但是路径方向必须是向下的（只能从父节点到子节点）。</p>
+<p>二叉树不超过1000个节点，且节点数值范围是 [-1000000,1000000] 的整数。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">root = [10,5,-3,3,2,null,11,3,-2,null,1], sum = 8</span><br><span class="line"></span><br><span class="line">      10</span><br><span class="line">     /  \</span><br><span class="line">    5   -3</span><br><span class="line">   / \    \</span><br><span class="line">  3   2   11</span><br><span class="line"> / \   \</span><br><span class="line">3  -2   1</span><br><span class="line"></span><br><span class="line">返回 3。和等于 8 的路径有:</span><br><span class="line"></span><br><span class="line">1.  5 -&gt; 3</span><br><span class="line">2.  5 -&gt; 2 -&gt; 1</span><br><span class="line">3.  -3 -&gt; 11</span><br></pre></td></tr></table></figure>
+
 <h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h3 id="153-寻找旋转排序数组中的最小值"><a href="#153-寻找旋转排序数组中的最小值" class="headerlink" title="153. 寻找旋转排序数组中的最小值"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/">153. 寻找旋转排序数组中的最小值</a></h3><p>已知一个长度为 <code>n</code> 的数组，预先按照升序排列，经由 <code>1</code> 到 <code>n</code> 次 <strong>旋转</strong> 后，得到输入数组。例如，原数组 <code>nums = [0,1,2,4,5,6,7]</code> 在变化后可能得到：</p>
-<ul>
-<li>若旋转 <code>4</code> 次，则可以得到 <code>[4,5,6,7,0,1,2]</code></li>
-<li>若旋转 <code>7</code> 次，则可以得到 <code>[0,1,2,4,5,6,7]</code></li>
-</ul>
-<p>注意，数组 <code>[a[0], a[1], a[2], ..., a[n-1]]</code> <strong>旋转一次</strong> 的结果为数组 <code>[a[n-1], a[0], a[1], a[2], ..., a[n-2]]</code> 。</p>
-<p>给你一个元素值 <strong>互不相同</strong> 的数组 <code>nums</code> ，它原来是一个升序排列的数组，并按上述情形进行了多次旋转。请你找出并返回数组中的 <strong>最小元素</strong> 。</p>
-<p><strong>示例 1：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [3,4,5,1,2]</span><br><span class="line">输出：1</span><br><span class="line">解释：原数组为 [1,2,3,4,5] ，旋转 3 次得到输入数组。</span><br></pre></td></tr></table></figure>
 
-<p><strong>示例 2：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [4,5,6,7,0,1,2]</span><br><span class="line">输出：0</span><br><span class="line">解释：原数组为 [0,1,2,4,5,6,7] ，旋转 4 次得到输入数组。</span><br></pre></td></tr></table></figure>
 
-<p><strong>示例 3：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [11,13,15,17]</span><br><span class="line">输出：11</span><br><span class="line">解释：原数组为 [11,13,15,17] ，旋转 4 次得到输入数组。</span><br></pre></td></tr></table></figure>
+<h3 id="889-根据前序和后序遍历构造二叉树"><a href="#889-根据前序和后序遍历构造二叉树" class="headerlink" title="889. 根据前序和后序遍历构造二叉树"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/">889. 根据前序和后序遍历构造二叉树</a></h3><p>难度中等165</p>
+<p>返回与给定的前序和后序遍历匹配的任何二叉树。</p>
+<p> <code>pre</code> 和 <code>post</code> 遍历中的值是不同的正整数。</p>
+<p> <strong>示例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：pre = [1,2,4,5,3,6,7], post = [4,5,2,6,7,3,1]</span><br><span class="line">输出：[1,2,3,4,5,6,7]</span><br></pre></td></tr></table></figure>
 
 <p> <strong>提示：</strong></p>
 <ul>
-<li><code>n == nums.length</code></li>
-<li><code>1 &lt;= n &lt;= 5000</code></li>
-<li><code>-5000 &lt;= nums[i] &lt;= 5000</code></li>
-<li><code>nums</code> 中的所有整数 <strong>互不相同</strong></li>
-<li><code>nums</code> 原来是一个升序排序的数组，并进行了 <code>1</code> 至 <code>n</code> 次旋转</li>
+<li><code>1 &lt;= pre.length == post.length &lt;= 30</code></li>
+<li><code>pre[]</code> 和 <code>post[]</code> 都是 <code>1, 2, ..., pre.length</code> 的排列</li>
+<li>每个输入保证至少有一个答案。如果有多个答案，可以返回其中一个。</li>
 </ul>
 <h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -1492,139 +1301,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/posts/8847320b.html">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-study/数据结构与算法之美/学习笔记/10讲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/posts/18525c55.html" target="_blank">10讲</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/posts/18525c55.html" class="archive-article-date">
-        <time datetime="2021-04-24T11:20:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-24</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <hr>
-<h1 id="10-递归：如何用三行代码找到“最终推荐人”？"><a href="#10-递归：如何用三行代码找到“最终推荐人”？" class="headerlink" title="10 | 递归：如何用三行代码找到“最终推荐人”？"></a>10 | 递归：如何用三行代码找到“最终推荐人”？</h1><h2 id="递归需要满足的三个条件"><a href="#递归需要满足的三个条件" class="headerlink" title="递归需要满足的三个条件"></a>递归需要满足的三个条件</h2><h3 id="1-一个问题的解可以分解为几个子问题的解"><a href="#1-一个问题的解可以分解为几个子问题的解" class="headerlink" title="1. 一个问题的解可以分解为几个子问题的解"></a>1. 一个问题的解可以分解为几个子问题的解</h3><p>何为子问题？子问题就是数据规模更小的问题。比如，前面讲的电影院的例子，你要知道，“自己在哪一排”的问题，可以分解为“前一排的人在哪一排”这样一个子问题。</p>
-<h3 id="2-这个问题与分解之后的子问题，除了数据规模不同，求解思路完全一样"><a href="#2-这个问题与分解之后的子问题，除了数据规模不同，求解思路完全一样" class="headerlink" title="2.  这个问题与分解之后的子问题，除了数据规模不同，求解思路完全一样"></a>2.  这个问题与分解之后的子问题，除了数据规模不同，求解思路完全一样</h3><p>比如电影院那个例子，你求解“自己在哪一排”的思路，和前面一排人求解“自己在哪一排”的思路，是一模一样的。</p>
-<h3 id="3-存在递归终止条件"><a href="#3-存在递归终止条件" class="headerlink" title="3. 存在递归终止条件"></a>3. 存在递归终止条件</h3><p>把问题分解为子问题，把子问题再分解为子子问题，一层一层分解下去，不能存在无限循环，这就需要有终止条件。还是电影院的例子，第一排的人不需要再继续询问任何人，就知道自己在哪一排，也就是 f(1)&#x3D;1，这就是递归的终止条件。</p>
-<h2 id="如何编写递归代码？"><a href="#如何编写递归代码？" class="headerlink" title="如何编写递归代码？"></a>如何编写递归代码？</h2><p>写递归代码最关键的是<strong>写出递推公式，找到终止条件</strong>，剩下将递推公式转化为代码就很简单了。</p>
-<p>你先记住这个理论。我举一个例子，带你一步一步实现一个递归代码，帮你理解。</p>
-<p>假如这里有 n 个台阶，每次你可以跨 1 个台阶或者 2 个台阶，请问走这 n 个台阶有多少种走法？如果有 7 个台阶，你可以 2，2，2，1 这样子上去，也可以 1，2，1，1，2 这样子上去，总之走法有很多，那如何用编程求得总共有多少种走法呢？</p>
-<p>我们仔细想下，实际上，可以根据第一步的走法把所有走法分为两类，第一类是第一步走了 1 个台阶，另一类是第一步走了 2 个台阶。所以 n 个台阶的走法就等于先走 1 阶后，n-1 个台阶的走法 加上先走 2 阶后，n-2 个台阶的走法。用公式表示就是：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f(n) = f(n-1)+f(n-2)</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>这里其实就是斐波那契数列，或者你自己在本子上画一下就知道了，第一阶有1种走法，第二阶有2种走法，第三阶有3种走法，第四阶有5种走法，第五阶有8种走法，这个走法的规律正好符合斐波那契数列1(这个1在此例子省略了)、1、2、3、5、8、13、21….不管哪个数都是前两个数的和，那么想象每个数下面都有一个类似数组一样的下标，那么第n个数就等于第n-1位置的数加上第n-2位置的数也就是F(n) &#x3D; F(n-1) + F(n-2)</p>
-</blockquote>
-<p>有了递推公式，递归代码基本上就完成了一半。我们再来看下终止条件。当有一个台阶时，我们不需要再继续递归，就只有一种走法。所以 f(1)&#x3D;1。这个递归终止条件足够吗？我们可以用 n&#x3D;2，n&#x3D;3 这样比较小的数试验一下。</p>
-<p>n&#x3D;2 时，f(2)&#x3D;f(1)+f(0)。如果递归终止条件只有一个 f(1)&#x3D;1，那 f(2) 就无法求解了。所以除了 f(1)&#x3D;1 这一个递归终止条件外，还要有 f(0)&#x3D;1，表示走 0 个台阶有一种走法，不过这样子看起来就不符合正常的逻辑思维了。所以，我们可以把 f(2)&#x3D;2 作为一种终止条件，表示走 2 个台阶，有两种走法，一步走完或者分两步来走。</p>
-<p>所以，递归终止条件就是 f(1)&#x3D;1，f(2)&#x3D;2。这个时候，你可以再拿 n&#x3D;3，n&#x3D;4 来验证一下，这个终止条件是否足够并且正确。</p>
-<p>我们把递归终止条件和刚刚得到的递推公式放到一起就是这样的：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f(1) = 1;</span><br><span class="line">f(2) = 2;</span><br><span class="line">f(n) = f(n-1)+f(n-2)</span><br></pre></td></tr></table></figure>
-
-<p>有了这个公式，我们转化成递归代码就简单多了。最终的递归代码是这样的：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">f</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">2</span>) <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">return</span> f(n<span class="number">-1</span>) + f(n<span class="number">-2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我总结一下，<strong>写递归代码的关键就是找到如何将大问题分解为小问题的规律，并且基于此写出递推公式，然后再推敲终止条件，最后将递推公式和终止条件翻译成代码</strong>。</p>
-<p>虽然我讲了这么多方法，但是作为初学者的你，现在是不是还是有种想不太清楚的感觉呢？实际上，我刚学递归的时候，也有这种感觉，这也是文章开头我说递归代码比较难理解的地方。</p>
-<p>刚讲的电影院的例子，我们的递归调用只有一个分支，也就是说“一个问题只需要分解为一个子问题”，我们很容易能够想清楚“递”和“归”的每一个步骤，所以写起来、理解起来都不难。</p>
-<p>但是，当我们面对的是一个问题要分解为多个子问题的情况，递归代码就没那么好理解了。</p>
-<p>像我刚刚讲的第二个例子，人脑几乎没办法把整个“递”和“归”的过程一步一步都想清楚。</p>
-<p>计算机擅长做重复的事情，所以递归正合它的胃口。而我们人脑更喜欢平铺直叙的思维方式。当我们看到递归时，我们总想把递归平铺展开，脑子里就会循环，一层一层往下调，然后再一层一层返回，试图想搞清楚计算机每一步都是怎么执行的，这样就很容易被绕进去。</p>
-<p>对于递归代码，这种试图想清楚整个递和归过程的做法，实际上是进入了一个思维误区。很多时候，我们理解起来比较吃力，主要原因就是自己给自己制造了这种理解障碍。那正确的思维方式应该是怎样的呢？</p>
-<p>如果一个问题 A 可以分解为若干子问题 B、C、D，你可以假设子问题 B、C、D 已经解决，在此基础上思考如何解决问题 A。而且，你只需要思考问题 A 与子问题 B、C、D 两层之间的关系即可，不需要一层一层往下思考子问题与子子问题，子子问题与子子子问题之间的关系。屏蔽掉递归细节，这样子理解起来就简单多了。</p>
-<p>因此，<strong>编写递归代码的关键是，只要遇到递归，我们就把它抽象成一个递推公式，不用想一层层的调用关系，不要试图用人脑去分解递归的每个步骤</strong>。</p>
-<h2 id="递归代码要警惕重复计算"><a href="#递归代码要警惕重复计算" class="headerlink" title="递归代码要警惕重复计算"></a>递归代码要警惕重复计算</h2><p>除此之外，使用递归时还会出现重复计算的问题。刚才我讲的第二个递归代码的例子，如果我们把整个递归过程分解一下的话，那就是这样的：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210424195819.jpeg" alt="img"></p>
-<p>从图中，我们可以直观地看到，想要计算 f(5)，需要先计算 f(4) 和 f(3)，而计算 f(4) 还需要计算 f(3)，因此，f(3) 就被计算了很多次，这就是重复计算问题。</p>
-<p>为了避免重复计算，我们可以通过一个数据结构（比如散列表）来保存已经求解过的 f(k)。当递归调用到 f(k) 时，先看下是否已经求解过了。如果是，则直接从散列表中取值返回，不需要重复计算，这样就能避免刚讲的问题了。</p>
-<p>按照上面的思路，我们来改造一下刚才的代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">f</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">2</span>) <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// hasSolvedList可以理解成一个Map，key是n，value是f(n)</span></span><br><span class="line">  <span class="keyword">if</span> (hasSolvedList.containsKey(n)) &#123;</span><br><span class="line">    <span class="keyword">return</span> hasSolvedList.get(n);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="type">int</span> <span class="variable">ret</span> <span class="operator">=</span> f(n-<span class="number">1</span>) + f(n-<span class="number">2</span>);</span><br><span class="line">  hasSolvedList.put(n, ret);</span><br><span class="line">  <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>除了堆栈溢出、重复计算这两个常见的问题。递归代码还有很多别的问题。在时间效率上，递归代码里多了很多函数调用，当这些函数调用的数量较大时，就会积聚成一个可观的时间成本。在空间复杂度上，因为递归调用一次就会在内存栈中保存一次现场数据，所以在分析递归代码空间复杂度时，需要额外考虑这部分的开销，比如我们前面讲到的电影院递归代码，空间复杂度并不是 O(1)，而是 O(n)。</p>
-<h2 id="课后思考"><a href="#课后思考" class="headerlink" title="课后思考"></a>课后思考</h2><p>我们平时调试代码喜欢使用 IDE 的单步跟踪功能，像规模比较大、递归层次很深的递归代码，几乎无法使用这种调试方式。对于递归代码，你有什么好的调试方法呢？</p>
-<blockquote>
-<p>调试递归:<br>1.打印日志发现，递归值。<br>2.结合条件断点进行调试。</p>
-</blockquote>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构与算法之美</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/posts/18525c55.html">展开全文 >></a>
+      <a class="article-more-a" href="/posts/b2caa2b7.html">展开全文 >></a>
     </p>
     
 
@@ -1656,7 +1333,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
     </nav>
   
 
@@ -1787,6 +1464,14 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面经</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
@@ -1819,27 +1504,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面经</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">redis集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">架构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1848,6 +1513,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1867,10 +1536,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">限流算法原理及实现</a>
               </li>
              
@@ -1879,7 +1544,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">redis集群</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">架构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">
