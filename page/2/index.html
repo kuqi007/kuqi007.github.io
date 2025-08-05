@@ -223,6 +223,30 @@
     <article id="post-internet/如何保证数据库与MQ发送的一致性" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/0.html" target="_blank">如何保证数据库与MQ发送的一致性</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/0.html" class="archive-article-date">
+        <time datetime="2025-07-31T08:53:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-07-31</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
   <div class="article-entry" itemprop="articleBody">
     
     <p>消息发送与数据库事务的先后顺序是分布式系统的关键设计决策，需根据<strong>数据一致性等级</strong>和<strong>系统容错能力</strong>权衡。以下是深度分析和实战方案：</p>
@@ -359,7 +383,29 @@
   <div class="article-info article-info-index">
     
     
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MQ</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
     
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/中间件//" class="article-tag-list-link color4">中间件</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
     
     <p class="article-more-link">
@@ -396,6 +442,30 @@
     <article id="post-internet/RocketMQ事务消息的原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/0.html" target="_blank">RocketMQ事务消息的原理</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/0.html" class="archive-article-date">
+        <time datetime="2025-07-30T07:49:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-07-30</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
   <div class="article-entry" itemprop="articleBody">
     
     <p>RocketMQ事务消息的<strong>核心设计</strong>是通过”半消息机制+事务状态回查”实现分布式系统的事务最终一致性，以下是深度拆解：</p>
@@ -461,7 +531,7 @@
 <hr>
 <h3 id="生产实践最佳方案"><a href="#生产实践最佳方案" class="headerlink" title="生产实践最佳方案"></a><strong>生产实践最佳方案</strong></h3><ol>
 <li><p><strong>事务表设计</strong>（支撑回查）</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> trans_log (</span><br><span class="line">  msg_key <span class="type">VARCHAR</span>(<span class="number">64</span>) <span class="keyword">PRIMARY</span> KEY, <span class="comment">-- RocketMQ消息Key</span></span><br><span class="line">  biz_id <span class="type">BIGINT</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>,           <span class="comment">-- 业务主键</span></span><br><span class="line">  status TINYINT <span class="keyword">DEFAULT</span> <span class="number">0</span>,         <span class="comment">-- 0:未知 1:成功 2:失败</span></span><br><span class="line">  create_time <span class="type">TIMESTAMP</span> <span class="keyword">DEFAULT</span> <span class="built_in">CURRENT_TIMESTAMP</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE TABLE</span> trans_log (</span><br><span class="line">  msg_key <span class="type">VARCHAR</span>(<span class="number">64</span>) <span class="keyword">PRIMARY KEY</span>, <span class="comment">-- RocketMQ消息Key</span></span><br><span class="line">  biz_id <span class="type">BIGINT</span> <span class="keyword">NOT NULL</span>,           <span class="comment">-- 业务主键</span></span><br><span class="line">  status TINYINT <span class="keyword">DEFAULT</span> <span class="number">0</span>,         <span class="comment">-- 0:未知 1:成功 2:失败</span></span><br><span class="line">  create_time <span class="type">TIMESTAMP</span> <span class="keyword">DEFAULT</span> <span class="built_in">CURRENT_TIMESTAMP</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 </li>
 <li><p><strong>消费者幂等</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">consumer.registerMessageListener((MessageListenerOrderly) (msgs, context) -&gt; &#123;</span><br><span class="line">    <span class="keyword">for</span> (MessageExt msg : msgs) &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">msgKey</span> <span class="operator">=</span> msg.getKeys();</span><br><span class="line">        <span class="keyword">if</span>(redis.setnx(<span class="string">&quot;consumed:&quot;</span>+msgKey, <span class="string">&quot;1&quot;</span>, 24h)) &#123; </span><br><span class="line">            processMessage(msg); <span class="comment">// 业务处理</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ConsumeOrderlyStatus.SUCCESS;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
@@ -558,7 +628,33 @@
   <div class="article-info article-info-index">
     
     
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MQ</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">事务消息</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
     
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/中间件//" class="article-tag-list-link color4">中间件</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
     
     <p class="article-more-link">
@@ -595,6 +691,30 @@
     <article id="post-internet/如何解决数据库事务提交与消息发送的原子性问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/0.html" target="_blank">如何解决数据库事务提交与消息发送的原子性问题</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/0.html" class="archive-article-date">
+        <time datetime="2025-07-30T07:22:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-07-30</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
   <div class="article-entry" itemprop="articleBody">
     
     <p>要解决数据库事务提交与消息发送的原子性问题（避免数据与消息状态不一致），需通过<strong>事务消息方案</strong>实现两阶段操作的事务保障。以下是经过大规模生产验证的四大方案：</p>
@@ -605,7 +725,7 @@
 <p><strong>关键实现</strong>：</p>
 <ol>
 <li><p>创建消息事务表</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> message_transaction (</span><br><span class="line">  id <span class="type">BIGINT</span> AUTO_INCREMENT <span class="keyword">PRIMARY</span> KEY,</span><br><span class="line">  biz_id <span class="type">VARCHAR</span>(<span class="number">64</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,  <span class="comment">-- 业务ID(如订单号)</span></span><br><span class="line">  topic <span class="type">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  payload TEXT <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  status TINYINT <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>, <span class="comment">-- 0:待发送 1:已发送 2:失败</span></span><br><span class="line">  retry_count <span class="type">INT</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,</span><br><span class="line">  created_at <span class="type">TIMESTAMP</span> <span class="keyword">DEFAULT</span> <span class="built_in">CURRENT_TIMESTAMP</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE TABLE</span> message_transaction (</span><br><span class="line">  id <span class="type">BIGINT</span> AUTO_INCREMENT <span class="keyword">PRIMARY KEY</span>,</span><br><span class="line">  biz_id <span class="type">VARCHAR</span>(<span class="number">64</span>) <span class="keyword">NOT NULL</span>,  <span class="comment">-- 业务ID(如订单号)</span></span><br><span class="line">  topic <span class="type">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">NOT NULL</span>,</span><br><span class="line">  payload TEXT <span class="keyword">NOT NULL</span>,</span><br><span class="line">  status TINYINT <span class="keyword">NOT NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>, <span class="comment">-- 0:待发送 1:已发送 2:失败</span></span><br><span class="line">  retry_count <span class="type">INT</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,</span><br><span class="line">  created_at <span class="type">TIMESTAMP</span> <span class="keyword">DEFAULT</span> <span class="built_in">CURRENT_TIMESTAMP</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>使用Spring事务管理器保证原子性</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">executeBusiness</span><span class="params">(String orderId)</span> &#123;</span><br><span class="line">    <span class="comment">// 1. 更新业务表</span></span><br><span class="line">    orderDao.updateStatus(orderId, PAID);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 2. 写入本地消息表 (同一个事务)</span></span><br><span class="line">    messageDao.insertMessage(<span class="keyword">new</span> <span class="title class_">Message</span>(orderId, <span class="string">&quot;payment_success&quot;</span>, ...));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -704,7 +824,29 @@
   <div class="article-info article-info-index">
     
     
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MQ</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
     
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/中间件//" class="article-tag-list-link color4">中间件</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
     
     <p class="article-more-link">
@@ -741,6 +883,30 @@
     <article id="post-interview/2025面经" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/0.html" target="_blank">2025面经</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/0.html" class="archive-article-date">
+        <time datetime="2025-07-30T06:49:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-07-30</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
   <div class="article-entry" itemprop="articleBody">
     
     <h2 id="蚂蚁国际"><a href="#蚂蚁国际" class="headerlink" title="蚂蚁国际"></a>蚂蚁国际</h2><ul>
@@ -1253,7 +1419,33 @@
   <div class="article-info article-info-index">
     
     
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面经</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">2025面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
     
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/面经//" class="article-tag-list-link color3">面经</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
     
     <p class="article-more-link">
@@ -1290,6 +1482,30 @@
     <article id="post-internet/妈妈再也不担心我面试被Redis问得脸都绿了" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/0.html" target="_blank">妈妈再也不担心我面试被Redis问得脸都绿了</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/0.html" class="archive-article-date">
+        <time datetime="2025-07-28T06:35:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-07-28</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
   <div class="article-entry" itemprop="articleBody">
     
     <h1 id="妈妈再也不担心我面试被Redis问得脸都绿了"><a href="#妈妈再也不担心我面试被Redis问得脸都绿了" class="headerlink" title="妈妈再也不担心我面试被Redis问得脸都绿了"></a>妈妈再也不担心我面试被Redis问得脸都绿了</h1><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1753684576.webp" alt="图片"></p>
@@ -1756,7 +1972,29 @@
   <div class="article-info article-info-index">
     
     
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">redis</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
     
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/中间件//" class="article-tag-list-link color4">中间件</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
     
     <p class="article-more-link">
@@ -1793,6 +2031,30 @@
     <article id="post-internet/对比MySQL索引跟ES倒排索引" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/posts/0.html" target="_blank">对比MySQL索引跟ES倒排索引</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/posts/0.html" class="archive-article-date">
+        <time datetime="2025-07-27T09:05:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-07-27</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
   <div class="article-entry" itemprop="articleBody">
     
     <p>在<strong>大量模糊查询</strong>的场景下（尤其是中缀模糊匹配如 <code>%搜索词%</code>），传统数据库索引（如B+树）通常<strong>力不从心</strong>，而<strong>倒排索引</strong>（或其升级版）是更优的选择。以下是详细分析和解决方案：</p>
@@ -1954,7 +2216,37 @@
   <div class="article-info article-info-index">
     
     
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySql</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ES</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">倒排索引</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
     
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/分布式系统//" class="article-tag-list-link color1">分布式系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
     
     <p class="article-more-link">
@@ -2592,15 +2884,19 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">2025面经</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2628,7 +2924,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
+                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">垃圾回收</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">三色标记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">G1垃圾回收器</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2640,7 +2948,55 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">事务消息</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">线上故障排查</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">线程池</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">内存模型</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">消息丢失</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">ES</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">倒排索引</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">内存分配</a>
               </li>
              
               <li class="article-tag-list-item">

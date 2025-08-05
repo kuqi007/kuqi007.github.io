@@ -1461,7 +1461,7 @@
 
 
   
-    <article id="post-interview/多线程面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-interview/JVM面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -1469,7 +1469,7 @@
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/posts/531c5825.html" target="_blank">多线程面试题</a>
+	  <a class="article-title" href="/posts/eec2f852.html" target="_blank">JVM面试题</a>
   
     </h1>
   
@@ -1477,7 +1477,7 @@
 
   
   
-<a href="/posts/531c5825.html" class="archive-article-date">
+<a href="/posts/eec2f852.html" class="archive-article-date">
         <time datetime="2021-01-23T08:23:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-23</time>
 </a>
 
@@ -1491,101 +1491,148 @@
   <div class="article-entry" itemprop="articleBody">
     
     <hr>
-<h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><h3 id="进程和线程的区别？"><a href="#进程和线程的区别？" class="headerlink" title="进程和线程的区别？"></a>进程和线程的区别？</h3><h3 id="线程状态的切换"><a href="#线程状态的切换" class="headerlink" title="线程状态的切换"></a>线程状态的切换</h3><ul>
-<li>NEW（新建）</li>
-<li>RUNNABLE（可运行）</li>
-<li>BLOCKED（阻塞）</li>
-<li>WAITING（无限等待）</li>
-<li>TIMED_WAITING（限时等待&#x2F;超时等待）</li>
-<li>TERMINATED（终止）</li>
-</ul>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1754272950.png"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1754273794.png"></p>
-<h3 id="进程上下文切换开销都有哪些？"><a href="#进程上下文切换开销都有哪些？" class="headerlink" title="进程上下文切换开销都有哪些？"></a>进程上下文切换开销都有哪些？</h3><p>那么上下文切换的时候，CPU的开销都具体有哪些呢？开销分成两种，一种是直接开销、一种是间接开销。</p>
-<p>直接开销就是在切换时，cpu必须做的事情，包括：</p>
-<ul>
-<li><p>1、切换页表全局目录</p>
-</li>
-<li><p>2、切换内核态堆栈</p>
-</li>
-<li><p>3、切换硬件上下文（进程恢复前，必须装入寄存器的数据统称为硬件上下文）</p>
-</li>
-<li><ul>
-<li>ip(instruction pointer)：指向当前执行指令的下一条指令</li>
-<li>bp(base pointer): 用于存放执行中的函数对应的栈帧的栈底地址</li>
-<li>sp(stack poinger): 用于存放执行中的函数对应的栈帧的栈顶地址</li>
-<li>cr3:页目录基址寄存器，保存页目录表的物理地址</li>
-<li>……</li>
-</ul>
-</li>
-<li><p>4、刷新TLB</p>
-</li>
-<li><p>5、系统调度器的代码执行</p>
-</li>
-</ul>
-<p>间接开销主要指的是虽然切换到一个新进程后，由于各种缓存并不热，速度运行会慢一些。如果进程始终都在一个CPU上调度还好一些，如果跨CPU的话，之前热起来的TLB、L1、L2、L3因为运行的进程已经变了，所以以局部性原理cache起来的代码、数据也都没有用了，导致新进程穿透到内存的IO会变多。其实我们上面的实验并没有很好地测量到这种情况，所以实际的上下文切换开销可能比3.5us要大。</p>
-<p>想了解更详细操作过程的同学请参考《深入理解Linux内核》中的第三章和第九章。</p>
-<h3 id="线程上下文切换"><a href="#线程上下文切换" class="headerlink" title="线程上下文切换"></a>线程上下文切换</h3><p>上下文切换：</p>
-<p>多线程编程中一般线程的个数都大于 CPU 核心的个数，而一个 CPU 核心在任意时刻只能被一个线程使用，为了让这些线程都能得到有效执行，CPU 采取的策略是为每个线程分配时间片并轮转的形式。当一个线程的时间片用完的时候就会重新处于就绪状态让给其他线程使用，这个过程就属于一次上下文切换。概括来说就是：当前任务在执行完 CPU 时间片切换到另一个任务之前会先保存自己的状态，以便下次再切换回这个任务时，可以再加载这个任务的状态。<strong>任务从保存到再加载的过程就是一次上下文切换</strong>。</p>
-<p>上下文切换通常是计算密集型的。也就是说，它需要相当可观的处理器时间，在每秒几十上百次的切换中，每次切换都需要纳秒量级的时间。所以，上下文切换对系统来说意味着消耗大量的 CPU 时间，事实上，可能是操作系统中时间消耗最大的操作。</p>
-<p>Linux 相比与其他操作系统（包括其他类 Unix 系统）有很多的优点，其中有一项就是，其上下文切换和模式切换的时间消耗非常少。</p>
-<h2 id="JAVA内存模型"><a href="#JAVA内存模型" class="headerlink" title="JAVA内存模型"></a>JAVA内存模型</h2><p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1754302694.png"></p>
-<h3 id="原子性、有序性和可见性"><a href="#原子性、有序性和可见性" class="headerlink" title="原子性、有序性和可见性"></a>原子性、有序性和可见性</h3><p><strong>原子性</strong>：在一个操作中CPU不可以在中途暂停然后再调度，既不能被中断操作，要不执行完成，要不就不执行。</p>
-<p><strong>可见性</strong>：多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立马看得到修改的值。</p>
-<p><strong>有序性</strong>：程序执行的顺序是按代码的先后顺序执行。</p>
-<h3 id="如何实现多线程环境下变量的可见性"><a href="#如何实现多线程环境下变量的可见性" class="headerlink" title="如何实现多线程环境下变量的可见性"></a>如何实现多线程环境下变量的可见性</h3><h4 id="volatile关键字"><a href="#volatile关键字" class="headerlink" title="volatile关键字"></a>volatile关键字</h4><ul>
-<li>禁用CPU缓存：强制读写直接操作主内存</li>
-<li>禁止指令重排序：建立内存屏障（memory barrier)</li>
-<li>保证修改后立即对其他线程可见</li>
-</ul>
-<h4 id="同步锁（synchronized）"><a href="#同步锁（synchronized）" class="headerlink" title="同步锁（synchronized）"></a>同步锁（synchronized）</h4><ul>
-<li>锁退出时强制刷新缓存到主内存</li>
-<li>锁获取时清空本地缓存，从主内存重新加载</li>
-</ul>
-<h4 id="原子类（Atomic）"><a href="#原子类（Atomic）" class="headerlink" title="原子类（Atomic）"></a>原子类（Atomic）</h4><ul>
-<li>基于<code>volatile</code> + CAS操作</li>
-<li>保证操作的原子性和可见性</li>
-<li>比锁的性能更高</li>
-</ul>
-<h4 id="final关键字"><a href="#final关键字" class="headerlink" title="final关键字"></a>final关键字</h4><ul>
-<li>JVM保证<code>final</code>字段初始化完成后对所有线程可见</li>
-<li>禁止重排序优化</li>
-<li>初始化后不可修改</li>
-</ul>
-<h3 id="final关键字的可见性"><a href="#final关键字的可见性" class="headerlink" title="final关键字的可见性"></a>final关键字的可见性</h3><h2 id="悲观锁和乐观锁"><a href="#悲观锁和乐观锁" class="headerlink" title="悲观锁和乐观锁"></a>悲观锁和乐观锁</h2><h3 id="CAS有什么问题？"><a href="#CAS有什么问题？" class="headerlink" title="CAS有什么问题？"></a>CAS有什么问题？</h3><p>CAS的缺点有如ABA问题，自旋锁消耗问题、多变量共享一致性问题：</p>
+<h2 id="JVM内存划分"><a href="#JVM内存划分" class="headerlink" title="JVM内存划分"></a>JVM内存划分</h2><h3 id="唯一不会发生OOM的区域"><a href="#唯一不会发生OOM的区域" class="headerlink" title="唯一不会发生OOM的区域"></a>唯一不会发生OOM的区域</h3><p><strong>程序计数器（Program Counter Register）</strong> 是唯一 <strong>不会发生 <code>OutOfMemoryError</code>（OOM）</strong> 的区域。</p>
+<p><strong>核心原因</strong></p>
 <ol>
-<li><strong>ABA</strong>：<br>问题描述：线程t1将它的值从A变为B，再从B变为A。同时有线程t2要将值从A变为C。但CAS检查的时候会发现没有改变，但是实质上它已经发生了改变 。可能会造成数据的缺失。</li>
+<li><strong>内存分配机制</strong>：<br>程序计数器是 ​<strong>线程私有</strong>​ 的内存区域，其生命周期与线程绑定。每个线程创建时，JVM 会为它分配一个独立的程序计数器，大小固定（64位系统下通常占 ​<strong>4字节或8字节</strong>），​<strong>不依赖垃圾回收</strong>，也无法动态扩展内存空间。</li>
+<li><strong>功能限制</strong>：<br>它的功能仅是记录当前线程执行的字节码指令地址（若执行 Java 方法）或 <code>undefined</code>（若执行 Native 方法）。不存储对象、数组等数据结构，因此不受堆内存或元空间等动态区域的限制。</li>
 </ol>
-<p>解决方法：CAS还是类似于乐观锁，同数据乐观锁的方式给它加一个版本号或者时间戳，如AtomicStampedReference</p>
-<p>2.<strong>自旋消耗资源</strong>：<br>问题描述：多个线程争夺同一个资源时，如果自旋一直不成功，将会一直<strong>占用CPU</strong>。</p>
-<p>解决方法：破坏掉for死循环，当超过一定时间或者一定次数时，return退出。</p>
-<p>JDK8新增的LongAdder和ConcurrentHashMap类似的方法。当多个线程竞争时，将粒度变小，将一个变量拆分为多个变量，达到多个线程访问多个资源的效果，最后再调用sum把它合起来。虽然base和cells都是volatile修饰的，但感觉这个sum操作没有加锁，可能sum的结果不是那么精确。</p>
-<p>3.<strong>多变量共享一致性问题</strong>：<br>解决方法： CAS操作是针对一个变量的，如果对多个变量操作，解决方案如下</p>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>内存区域</strong></th>
+<th align="center"><strong>是否会发生 OOM</strong></th>
+<th align="center"><strong>原因</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">程序计数器</td>
+<td align="center">❌ 不会</td>
+<td align="center">固定大小、线程私有、仅存储指令地址</td>
+</tr>
+<tr>
+<td align="center">虚拟机栈 (Java Stack)</td>
+<td align="center">✅ 会</td>
+<td align="center">线程请求的栈深度 &gt; 栈最大深度 → <code>StackOverflowError</code>；扩展栈时内存不足 → <code>OOM</code></td>
+</tr>
+<tr>
+<td align="center">本地方法栈</td>
+<td align="center">✅ 会</td>
+<td align="center">同虚拟机栈（为 Native 方法服务）</td>
+</tr>
+<tr>
+<td align="center">堆 (Heap)</td>
+<td align="center">✅ 会</td>
+<td align="center">存储对象实例，当对象总数超过堆最大容量 → <code>OOM: Java heap space</code></td>
+</tr>
+<tr>
+<td align="center">方法区 (JDK8+ 元空间)</td>
+<td align="center">✅ 会</td>
+<td align="center">存储类元信息，类加载过多或动态生成过多类 → <code>OOM: Metaspace</code></td>
+</tr>
+</tbody></table>
+<h3 id="new一个对象，JVM到底发生了什么？"><a href="#new一个对象，JVM到底发生了什么？" class="headerlink" title="new一个对象，JVM到底发生了什么？"></a>new一个对象，JVM到底发生了什么？</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    A[new 指令] --&gt; B&#123;类已加载?&#125;</span><br><span class="line">    B -- 否 --&gt; C[加载类]</span><br><span class="line">    B -- 是 --&gt; D[选择分配策略]</span><br><span class="line">    D --&gt; E1[指针碰撞]</span><br><span class="line">    D --&gt; E2[空闲列表]</span><br><span class="line">    D --&gt; E3[TLAB分配]</span><br><span class="line">    E1 --&gt; F[分配内存]</span><br><span class="line">    E2 --&gt; F</span><br><span class="line">    E3 --&gt; F</span><br><span class="line">    F --&gt; G[初始化零值]</span><br><span class="line">    G --&gt; H[设置对象头]</span><br><span class="line">    H --&gt; I[执行构造函数]</span><br><span class="line">    I --&gt; J[对象可用]</span><br></pre></td></tr></table></figure>
+
+<h2 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h2><p><strong>过程：加载、验证、准备、解析、初始化</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/202120210610235314.jpeg" alt="img"></p>
+<p>类加载过程分为三个阶段：Load、Link和Init，即<strong>加载</strong>、<strong>链接</strong>、<strong>初始化</strong></p>
 <ol>
-<li>可以加锁来解决</li>
-<li>封装成对象类解决（AtomicReference）</li>
+<li>第一步，Load阶段读取类文件产生二进制流，并转化为特定的数据结构，初步校验cafe babe魔法数、常量池、文件长度、是否有父类等，然后创建对应类的<code>java.lang.Class</code>实例</li>
+<li>第二步，Link阶段包括<strong>验证</strong>、<strong>准备</strong>、<strong>解析</strong>三个步骤。验证是更详细的校验，比如final是否合规、类型是否正确、静态变量是否合理等；准备阶段是为静态变量分配内存，并设定默认值，解析类和方法确保类与类之间的相互引用正确性，完成内存结构布局。</li>
+<li>第三步，Init阶段执行雷构造器&lt;clinit&gt;方法，如果赋值运算是通过其他类的静态方法来完成的，那么会马上解析另外一个类，在虚拟机栈中执行完毕后通过返回值进行赋值。</li>
 </ol>
-<h3 id="ReenTrantLock跟synchronized的区别"><a href="#ReenTrantLock跟synchronized的区别" class="headerlink" title="ReenTrantLock跟synchronized的区别"></a>ReenTrantLock跟synchronized的区别</h3><p>1、<strong>底层实现</strong>：synchronized 是<strong>JVM</strong>层面的锁，是<strong>Java关键字</strong>，通过monitor对象来完成（monitorenter与monitorexit），ReentrantLock 是从jdk1.5以来（java.util.concurrent.locks.Lock）提供的<strong>API层面</strong>的锁。</p>
-<p> 2、<strong>实现原理</strong>：synchronized 的实现涉及到<strong>锁的升级</strong>，具体为无锁、偏向锁、自旋锁、向OS申请重量级锁；ReentrantLock实现则是通过利用<strong>CAS</strong>（CompareAndSwap）自旋机制保证线程操作的原子性和volatile保证数据可见性以实现锁的功能。</p>
-<p> 3、<strong>是否可手动释放</strong>：synchronized 不需要用户去手动释放锁，synchronized 代码执行完后系统会自动让线程释放对锁的占用； ReentrantLock则需要用户去手动释放锁，如果没有手动释放锁，就可能导致死锁现象。</p>
-<p> 4、<strong>是否可中断</strong>：synchronized是不可中断类型的锁，除非加锁的代码中出现异常或正常执行完成； ReentrantLock则可以中断，可通过trylock(long timeout,TimeUnit unit)设置超时方法或者将lockInterruptibly()放到代码块中，调用interrupt方法进行中断。</p>
-<p> 5、<strong>是否公平锁</strong>synchronized为非公平锁 ReentrantLock则即可以选公平锁也可以选非公平锁，通过构造方法new ReentrantLock时传入boolean值进行选择，为空默认false非公平锁，true为公平锁,公平锁性能非常低。</p>
-<h2 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a>Java内存模型</h2><h3 id="happens-before简介"><a href="#happens-before简介" class="headerlink" title="happens-before简介"></a>happens-before简介</h3><p>在JMM中，如果一个操作执行的结果需要对另一个操作可见，那么这两个操作之间必须要存在happens-before关系。这里提到的两个操作既可以是在一个线程里，也可以是在不同的线程里。</p>
-<p>与程序员密切相关的happens-before规则如下：</p>
+<h3 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h3><h4 id="什么是双亲委派机制"><a href="#什么是双亲委派机制" class="headerlink" title="什么是双亲委派机制"></a>什么是双亲委派机制</h4><p>首先，我们知道，虚拟机在加载类的过程中需要使用类加载器进行加载，而在Java中，类加载器有很多，那么当JVM想要加载一个.class文件的时候，到底应该由哪个类加载器加载呢？</p>
+<p>这就不得不提到”双亲委派机制”。</p>
+<p>首先，我们需要知道的是，Java语言系统中支持以下4种类加载器：</p>
 <ul>
-<li>程序顺序规则：一个线程中的每个操作，happens-before于该线程中的任意后续操作。</li>
-<li>监视器锁规则：对一个锁的解锁，happens-before于随后对这个锁的加锁。</li>
-<li>volatile变量规则：对一个volatile域的写，happens-before于任意后续对这个volatile域的读。</li>
-<li>传递性：如果A happens-before B，且B happens-before C，那么A happens-before C。</li>
+<li>Bootstrap ClassLoader 启动类加载器</li>
+<li>Extention ClassLoader 标准扩展类加载器</li>
+<li>Application ClassLoader 应用类加载器</li>
+<li>User ClassLoader 用户自定义类加载器</li>
 </ul>
+<p>这四种类加载器之间，是存在着一种层次关系的，如下图</p>
+<p><img src="https://cdn.jsdelivr.net/gh/kuqi007/picGo/2025/1754201674.jpeg"></p>
+<p>一般认为上一层加载器是下一层加载器的父加载器，那么，除了BootstrapClassLoader之外，所有的加载器都是有父加载器的。</p>
+<p>那么，所谓的双亲委派机制，指的就是：<strong>当一个类加载器收到了类加载的请求的时候，他不会直接去加载指定的类，而是把这个请求委托给自己的父加载器去加载。只有父加载器无法加载这个类的时候，才会由当前这个加载器来负责类的加载。</strong></p>
+<p>那么，什么情况下父加载器会无法加载某一个类呢？</p>
+<p>其实，Java中提供的这四种类型的加载器，是有各自的职责的：</p>
+<ul>
+<li>Bootstrap ClassLoader ，主要负责加载Java核心类库，%JRE_HOME%\lib下的rt.jar、resources.jar、charsets.jar和class等。</li>
+<li>Extention ClassLoader，主要负责加载目录%JRE_HOME%\lib\ext目录下的jar包和class文件。</li>
+<li>Application ClassLoader ，主要负责加载当前应用的classpath下的所有类</li>
+<li>User ClassLoader ， 用户自定义的类加载器,可加载指定路径的class文件</li>
+</ul>
+<p>那么也就是说，一个用户自定义的类，如com.hollis.ClassHollis 是无论如何也不会被Bootstrap和Extention加载器加载的（<code>-Xbootclasspath</code>参数是否可以使得自定义类被bootstrap加载？）。</p>
+<h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><h3 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h3><h4 id="JDK8-CMS：（关注最短垃圾回收停顿时间）"><a href="#JDK8-CMS：（关注最短垃圾回收停顿时间）" class="headerlink" title="JDK8-CMS：（关注最短垃圾回收停顿时间）"></a>JDK8-CMS：（关注最短垃圾回收停顿时间）</h4><p><strong>CMS回收器</strong>（Concurrent Mark Sweep Collector）是回收停顿时间比较短，目前比较常用的垃圾回收器。它通过初始标记（Initial Mark）、并发标记（Concurrent Mark）、重新标记（Remark)、并发清除（Concurrent Sweep）四个步骤完成垃圾回收工作。第1、3步的初始标记和重新标记阶段依然会引发STW。2、4步可以和应用程序并发执行。CMS采用“标记 - 清除算法”，因此产生大量的空间碎片。可以通过<code>-XX:+UseCMSCompactAtFullCollection</code>参数，强制JVM在FGC完成后对老年代进行压缩，执行一次空间碎片整理，但是会引发STW。为了减少STW次数，CMS还可以通过配置<code>-XX:+CMSFullGCsBeforeCompaction=n</code>参数，在执行了n次FGC后，JVM再在老年代执行空间碎片整理。</p>
+<h4 id="JDK9-G1：（精准控制停顿时间，避免垃圾碎片）"><a href="#JDK9-G1：（精准控制停顿时间，避免垃圾碎片）" class="headerlink" title="JDK9-G1：（精准控制停顿时间，避免垃圾碎片）"></a>JDK9-G1：（精准控制停顿时间，避免垃圾碎片）</h4><p>G1（Garbage-First Garbage Collector）垃圾回收器。</p>
+<p>是⼀款⾯向服务器的垃圾收集器,主要针对配备多颗处理器及⼤容量内存的机器.以极⾼概率满⾜GC停顿时<br>间要求的同时,还具备⾼吞吐量性能特征；相比与 CMS 收集器，G1 收集器两个最突出的改进是：</p>
+<p>【1】基于标记-整理算法，不产生内存碎片。</p>
+<p>【2】可以非常精确控制停顿时间，在不牺牲吞吐量前提下，实现低停顿垃圾回收。</p>
+<p>G1 收集器避免全区域垃圾收集，它把堆内存划分为大小固定的几个独立区域，并且跟踪这些区域的垃圾<br>收集进度，同时在后台维护一个优先级列表，每次根据所允许的收集时间，优先回收垃圾最多的区域。<strong>区域划</strong><br><strong>分</strong>和<strong>优先级区域</strong>回收机制，确保 G1 收集器可以在有限时间获得最高的垃圾收集效率。</p>
+<ul>
+<li><p><strong>初始标记</strong>：<strong>Stop The World，</strong>仅使用一条初始标记线程对GC Roots关联的对象进行标记</p>
+</li>
+<li><p><strong>并发标记</strong>：使用一条标记线程与用户线程并发执行。此过程进行<strong>可达性分析，速度很慢</strong></p>
+</li>
+<li><p><strong>最终标记</strong>：<strong>Stop The World</strong>，使用多条标记线程并发执行</p>
+</li>
+<li><p><strong>筛选回收</strong>：回收废弃对象，此时也要 <strong>Stop The World</strong>，并使用多条筛选回收线程并发执行</p>
+</li>
+</ul>
+<h5 id="G1垃圾回收期原理"><a href="#G1垃圾回收期原理" class="headerlink" title="G1垃圾回收期原理"></a>G1垃圾回收期原理</h5><p>TODO</p>
+<h4 id="ZGC"><a href="#ZGC" class="headerlink" title="ZGC"></a>ZGC</h4><p>2022年6月5日TODO（作为亮点）</p>
+<h4 id="如何配置垃圾收集器"><a href="#如何配置垃圾收集器" class="headerlink" title="如何配置垃圾收集器"></a><strong>如何配置垃圾收集器</strong></h4><ul>
+<li>首先是内存大小问题，基本上每一个内存区域我都会设置一个上限，来避免溢出问题，比如元空间。</li>
+<li>通常，堆空间我会设置成操作系统的 2&#x2F;3，超过 8GB 的堆，优先选用 G1</li>
+<li>然后我会对 JVM 进行初步优化，比如根据老年代的对象提升速度，来调整年轻代和老年代之间的比例</li>
+<li>依据系统容量、访问延迟、吞吐量等进行专项优化，我们的服务是高并发的，对 STW 的时间敏感</li>
+<li>我会通过记录详细的 GC 日志，来找到这个瓶颈点，借用 GCeasy 这样的日志分析工具，定位问题</li>
+</ul>
+<h3 id="GC触发条件"><a href="#GC触发条件" class="headerlink" title="GC触发条件"></a>GC触发条件</h3><h4 id="MinorGC触发条件"><a href="#MinorGC触发条件" class="headerlink" title="MinorGC触发条件"></a>MinorGC触发条件</h4><p>当Eden区满时触发MinorGC</p>
+<h4 id="FullGC触发条件"><a href="#FullGC触发条件" class="headerlink" title="FullGC触发条件"></a>FullGC触发条件</h4><ol>
+<li>调用System.gc时，系统建议执行FullGC，但是不必然执行</li>
+<li>老年代空间不足</li>
+<li>方法区空间不足（jdk8之前）</li>
+<li>通过MinorGC后进入老年代的平均大小大于老年代的可用内存</li>
+<li>由Eden区、FromSpace向ToSpace区复制时，对象大小大于ToSpace可用内存，则把该对象转存到老年代，且老年代的可用内存小于该对象大小</li>
+</ol>
+<h2 id="综合面试题"><a href="#综合面试题" class="headerlink" title="综合面试题"></a>综合面试题</h2><h3 id="对象已经死亡？"><a href="#对象已经死亡？" class="headerlink" title="对象已经死亡？"></a>对象已经死亡？</h3><h4 id="如何判断一个类是无用的类"><a href="#如何判断一个类是无用的类" class="headerlink" title="如何判断一个类是无用的类"></a>如何判断一个类是无用的类</h4><p>方法区主要回收的是无用的类，那么如何判断一个类是无用的类的呢？</p>
+<p>判定一个常量是否是“废弃常量”比较简单，而要判定一个类是否是“无用的类”的条件则相对苛刻许多。类需要同时满足下面 3 个条件才能算是 <strong>“无用的类”</strong> ：</p>
+<ul>
+<li>该类所有的实例都已经被回收，也就是 Java 堆中不存在该类的任何实例。</li>
+<li>加载该类的 <code>ClassLoader</code> 已经被回收。</li>
+<li>该类对应的 <code>java.lang.Class</code> 对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。</li>
+</ul>
+<p>虚拟机可以对满足上述 3 个条件的无用类进行回收，这里说的仅仅是“可以”，而并不是和对象一样不使用了就会必然被回收。</p>
+<h3 id="JVM调优"><a href="#JVM调优" class="headerlink" title="JVM调优"></a>JVM调优</h3><h4 id="JVM优化的思路"><a href="#JVM优化的思路" class="headerlink" title="JVM优化的思路"></a>JVM优化的思路</h4><p>1、一般来说，当survivor区不够大或者占用量达到50%，就会把一些对象放到老年区。通过设置合理的eden区，survivor区及使用率，可以将年轻对象保存在年轻代，从而避免full GC，使用<code>-Xmn</code>设置年轻代的大小</p>
+<p>2、对于占用内存比较多的大对象，一般会选择在老年代分配内存。如果在年轻代给大对象分配内存，年轻代内存不够了，就要在eden区移动大量对象到老年代，然后这些移动的对象可能很快消亡，因此导致full GC。通过设置参数：<code>-XX:PetenureSizeThreshold=1000000</code>，单位为B，标明对象大小超过1M时，在老年代(tenured)分配内存空间。</p>
+<p>3、一般情况下，年轻对象放在eden区，当第一次GC后，如果对象还存活，放到survivor区，此后，每GC一次，年龄增加1，当对象的年龄达到阈值，就被放到tenured老年区。这个阈值可以同构<code>-XX:MaxTenuringThreshold</code>设置。如果想让对象留在年轻代，可以设置比较大的阈值。</p>
+<p>4、设置最小堆和最大堆：<code>-Xmx</code>和<code>-Xms</code>稳定的堆大小堆垃圾回收是有利的，获得一个稳定的堆大小的方法是设置-Xms和-Xmx的值一样，即最大堆和最小堆一样，如果这样子设置，系统在运行时堆大小理论上是恒定的，稳定的堆空间可以减少GC次数，因此，很多服务端都会将这两个参数设置为一样的数值。稳定的堆大小虽然减少GC次数，但是增加每次GC的时间，因为每次GC要把堆的大小维持在一个区间内。</p>
+<p>5、一个不稳定的堆并非毫无用处。在系统不需要使用大内存的时候，压缩堆空间，使得GC每次应对一个较小的堆空间，加快单次GC次数。基于这种考虑，JVM提供两个参数，用于压缩和扩展堆空间。<br>（1）<code>-XX:MinHeapFreeRatio</code> 参数用于设置堆空间的最小空闲比率。默认值是40，当堆空间的空闲内存比率小于40，JVM便会扩展堆空间<br>（2）<code>-XX:MaxHeapFreeRatio</code> 参数用于设置堆空间的最大空闲比率。默认值是70， 当堆空间的空闲内存比率大于70，JVM便会压缩堆空间。<br>（3）当-Xmx和-Xmx相等时，上面两个参数无效</p>
+<p>6、通过增大吞吐量提高系统性能，可以通过设置并行垃圾回收收集器。<br>（1）<code>-XX:+UseParallelGC</code>:年轻代使用并行垃圾回收收集器。这是一个关注吞吐量的收集器，可以尽可能的减少垃圾回收时间。<br>（2）<code>-XX:+UseParallelOldGC</code>:设置老年代使用并行垃圾回收收集器。</p>
+<p>7、尝试使用大的内存分页：使用大的内存分页增加CPU的内存寻址能力，从而系统的性能。<code>-XX:+LargePageSizeInBytes</code> 设置内存页的大小</p>
+<p>8、使用非占用的垃圾收集器。<code>-XX:+UseConcMarkSweepGC</code>老年代使用CMS收集器降低停顿。</p>
+<p>9、<code>-XXSurvivorRatio=3</code>，表示年轻代中的分配比率：survivor:eden &#x3D; 2:3</p>
+<p>10、JVM性能调优的工具：<br>（1）jps（Java Process Status）：输出JVM中运行的进程状态信息(现在一般使用jconsole)<br>（2）jstack：查看java进程内线程的堆栈信息。<br>（3）jmap：用于生成堆转存快照<br>（4）jhat：用于分析jmap生成的堆转存快照（一般不推荐使用，而是使用Ecplise Memory Analyzer）<br>（3）jstat是JVM统计监测工具。可以用来显示垃圾回收信息、类加载信息、新生代统计信息等。<br>（4）VisualVM：故障处理工具</p>
+<h4 id="生产环境JVM调优具体步骤"><a href="#生产环境JVM调优具体步骤" class="headerlink" title="生产环境JVM调优具体步骤"></a>生产环境JVM调优具体步骤</h4><h5 id="1-监控GC的状态"><a href="#1-监控GC的状态" class="headerlink" title="1.监控GC的状态"></a>1.监控GC的状态</h5><p>使用各种JVM工具，查看当前日志，分析当前JVM参数设置，并且分析当前堆内存快照和gc日志，根据实际的各区域内存划分和GC执行时间，觉得是否进行优化。举一个例子，系统崩溃前的一些现象：每次垃圾回收的时间越来越长，由之前的10ms延长到50ms左右，FullGC的时间也由之前的0.5s延长到4、5s，FullGC的次数越来越多，最频繁时隔不到1分钟就进行一次FullGC，老年代的内存越来越大并且每次FGC后老年代没有内存释放，之后系统会无法响应新的数据，逐渐到达OutMemoryError的临界值，这个时候就需要分析JVM内存快照dump。</p>
+<h5 id="2-生成堆的dump文件"><a href="#2-生成堆的dump文件" class="headerlink" title="2.生成堆的dump文件"></a>2.生成堆的dump文件</h5><p>通过JMX的MBean生成当前的Heap信息，大小为一个3G（整个堆得大小）的hprof文件，如果没有启动JMX可以通过Java的jmap命令来生成改文件。</p>
+<h5 id="3-分析dump文件"><a href="#3-分析dump文件" class="headerlink" title="3.分析dump文件"></a>3.分析dump文件</h5><p>打开这个3G的堆信息文件，显然一般的Windows系统没有这么大的内存，必须借助高配置的Linux，几种工具打开该文件：Visual VM、IBM HeadpAnalyzer、JDK自带的Hprof工具、Mat（Eclipse专门的静态内存分析工具）推荐使用。Tips：文件太大，建议使用Eclipse专门的静态内存工具Mat打开分析。</p>
+<h5 id="4-分析结果，判断是否需要优化"><a href="#4-分析结果，判断是否需要优化" class="headerlink" title="4.分析结果，判断是否需要优化"></a>4.分析结果，判断是否需要优化</h5><p>如果各项参数设置合理，系统没有超时日志出现，GC频率不高，GC耗时不高，那么没有必要进行GC优化，如果GC时间超过1-3s，或者频繁GC，则必须优化。注意： 如果满足下面的指标，<strong>则一般不需要进行 GC 优化：</strong></p>
 <blockquote>
-<p><strong>注意</strong>：两个操作之间具有happens-before关系，并不意味着前一个操作必须要在后一个操作之前执行！happens-before仅仅要求前一个操作（执行的结果）对后一个操作可见，且前一个操作按顺序排在第二个操作之前（the first is visible to and ordered before the second）。</p>
+<ul>
+<li>MinorGC 执行时间不到50ms；</li>
+<li>Minor GC 执行不频繁，约10秒一次；</li>
+<li>Full GC 执行时间不到1s；</li>
+<li>Full GC 执行频率不算频繁，不低于10分钟1次。</li>
+</ul>
 </blockquote>
-<h3 id="单线程、多线程在单核CPU、多核CPU中的影响"><a href="#单线程、多线程在单核CPU、多核CPU中的影响" class="headerlink" title="单线程、多线程在单核CPU、多核CPU中的影响"></a>单线程、多线程在单核CPU、多核CPU中的影响</h3><p>我们分别来分析下单线程、多线程在单核CPU、多核CPU中的影响。</p>
-<p><strong>单线程。</strong>cpu核心的缓存只被一个线程访问。缓存独占，不会出现访问冲突等问题。</p>
-<p><strong>单核CPU，多线程。</strong>进程中的多个线程会同时访问进程中的共享数据，CPU将某块内存加载到缓存后，不同线程在访问相同的物理地址的时候，都会映射到相同的缓存位置，这样即使发生线程的切换，缓存仍然不会失效。但由于任何时刻只能有一个线程在执行，因此不会出现缓存访问冲突。</p>
-<p><strong>多核CPU，多线程。</strong>每个核都至少有一个L1 缓存。多个线程访问进程中的某个共享内存，且这多个线程分别在不同的核心上执行，则每个核心都会在各自的caehe中保留一份共享内存的缓冲。由于多核是可以并行的，可能会出现多个线程同时写各自的缓存的情况，而各自的cache之间的数据就有可能不同。</p>
-<p>在CPU和主存之间增加缓存，在多线程场景下就可能存在<strong>缓存一致性问题</strong>，也就是说，在多核CPU中，每个核的自己的缓存中，关于同一个数据的缓存内容可能不一致。</p>
+<h5 id="5-调整GC类型和内存分配"><a href="#5-调整GC类型和内存分配" class="headerlink" title="5.调整GC类型和内存分配"></a>5.调整GC类型和内存分配</h5><p>如果内存分配 过大或过小，或者采用的GC收集器比较慢，则应该优先调整这些参数，并且先找1台或几台机器进行beta，然后比较优化过的机器和没有优化的机器的性能对比，并有针对性的做出最后选择。</p>
+<h5 id="6-不断的分析和调整"><a href="#6-不断的分析和调整" class="headerlink" title="6.不断的分析和调整"></a>6.不断的分析和调整</h5><p>通过不断的试验和试错，分析并找出最合适的参数，如果找到了最合适的参数，则将这些参数应用到所有服务器。</p>
+<p>一般遇到问题就是打出当时的线程信息生成dump然后查异常代码。</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MjM5NzMyMjAwMA==&mid=2651485913&idx=1&sn=c40e03e94a7eb1f62baaa09173afc860&chksm=bd251aa68a5293b00dd0228451e19eef1e98684e5d596bbed2d647b8530e02eac2042580870e&scene=21#wechat_redirect">附：JVM 性能调优监控工具 jps、jstack、jmap、jhat、jstat、hprof 使用详解</a></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.hollischuang.com/archives/6055">我竟然被”双亲委派”给虐了！</a></li>
+</ul>
 
     
 
@@ -1612,7 +1659,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/posts/531c5825.html">展开全文 >></a>
+      <a class="article-more-a" href="/posts/eec2f852.html">展开全文 >></a>
     </p>
     
 
@@ -1819,15 +1866,19 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">2025面经</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1855,7 +1906,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
+                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">垃圾回收</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">三色标记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">G1垃圾回收器</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1867,7 +1930,55 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">系统设计</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">事务消息</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">线上故障排查</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">线程池</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">内存模型</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">消息丢失</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">ES</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">倒排索引</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">内存分配</a>
               </li>
              
               <li class="article-tag-list-item">
